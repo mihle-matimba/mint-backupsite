@@ -10,13 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- VARIABLES --- */
         :root {
-            --brand-dark: #31005e;
-            --brand-text: #1d1d1f;
-            --glass-card: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.8);
+            --brand-text: #ffffff; /* Switched to White */
+            --glass-card: rgba(255, 255, 255, 0.15); /* Frosted Glass */
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-highlight: rgba(255, 255, 255, 0.1);
             --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --card-width: 300px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,43 +25,53 @@
         body {
             font-family: var(--font-main);
             color: var(--brand-text);
-            overflow: hidden; /* Prevent body scroll, handle content in containers */
-            background-color: #f5f5f7;
+            overflow: hidden;
+            background-color: #111; /* Fallback dark */
             height: 100vh;
             width: 100vw;
         }
 
-        /* --- ASSET LAYERS --- */
+        /* --- BACKGROUND LAYERS --- */
         
-        /* 1. Background Image (Lowest Z-Index) */
-        .bg-layer {
+        /* 1. The Image */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: url('HeroBG.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 2. The Overlay (New: Darkens BG for text visibility) */
+        .bg-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background-image: url('HeroBG.jpg'); /* Your Repo File */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            /* Gradient: Darker at bottom/left for text, lighter top/right */
+            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+            backdrop-filter: blur(5px); /* Optional: Slight blur to background for depth */
         }
 
-        /* 2. Bottom Left Overlay (Highest Z-Index) */
+        /* 3. Bottom Left Sticker */
         .sticker-overlay {
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 350px; /* Adjusted for visibility */
+            width: 350px;
             max-width: 40vw;
             height: auto;
             z-index: 9999;
-            pointer-events: none; /* Let clicks pass through */
+            pointer-events: none;
         }
 
-        /* --- UI LAYOUT --- */
-        
-        /* Navigation (Logo Only) */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
@@ -70,173 +81,174 @@
         }
 
         .nav-logo {
-            height: 32px; /* Apple style: restrained sizing */
+            height: 32px;
             width: auto;
+            /* Optional: if logo is black, invert it to white for contrast */
+            /* filter: invert(1) brightness(2); */ 
         }
 
-        /* Main Grid */
+        /* --- LAYOUT GRID --- */
         .main-container {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Split screen */
+            grid-template-columns: 1fr 1.2fr; /* More space for carousel */
             height: 100vh;
             width: 100%;
             padding: 0 60px;
             align-items: center;
         }
 
-        /* LEFT SIDE: Title */
+        /* LEFT: Title */
         .left-content {
             z-index: 10;
-            padding-right: 40px;
         }
 
         h1.hero-title {
-            font-size: clamp(3.5rem, 6vw, 5.5rem);
+            font-size: clamp(3.5rem, 7vw, 6rem);
             font-weight: 700;
-            letter-spacing: -0.03em; /* The "Apple" tight tracking */
-            line-height: 1.05;
-            color: var(--brand-text);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: #ffffff; /* Explicitly White */
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
             
-            /* Animation */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
         }
 
-        /* RIGHT SIDE: Invisible Carousel */
+        /* RIGHT: Carousel */
         .right-content {
             height: 100%;
             display: flex;
             align-items: center;
-            overflow: hidden; /* Hide overflow from container */
-            mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            overflow: hidden;
+            /* Fade edges of carousel */
+            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 90%, transparent 100%);
         }
 
         .carousel-track {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            padding: 40px 20px; /* Padding for shadows */
+            padding: 40px 20px;
             width: 100%;
-            
-            /* Hide Scrollbar */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE */
+            scrollbar-width: none;
         }
-        
-        .carousel-track::-webkit-scrollbar { 
-            display: none; /* Chrome/Safari */
-        }
+        .carousel-track::-webkit-scrollbar { display: none; }
 
-        /* Carousel Cards */
+        /* --- CARD DESIGN (Premium Glass) --- */
         .card {
-            flex: 0 0 320px; /* Fixed width cards */
-            height: 420px;
+            flex: 0 0 var(--card-width);
+            height: 380px;
             scroll-snap-align: center;
+            position: relative;
             
-            /* Glassmorphism */
+            /* Glass Effect */
             background: var(--glass-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-top: 1px solid rgba(255,255,255,0.4); /* Highlight top edge */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 32px;
             
             padding: 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             
-            /* Shadow */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            transition: transform 0.4s ease;
-            cursor: grab;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            text-decoration: none; /* For links */
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.5);
         }
-        
-        .card:active { cursor: grabbing; }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--brand-text);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+        /* Card Typography */
+        .card-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: -0.01em;
+            line-height: 1.1;
+            color: #fff;
             margin-bottom: 8px;
+            letter-spacing: -0.02em;
         }
 
         .card p {
             font-size: 0.95rem;
-            color: #666;
+            color: rgba(255,255,255,0.8);
             line-height: 1.5;
         }
 
-        .card-footer {
+        .card-bottom {
             margin-top: auto;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--brand-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
+        /* Specific Design Elements per Card */
+        
+        /* Card 1: Date */
+        .date-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Card 3: Button Look */
+        .btn-fake {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
             .main-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr;
-                padding: 0 24px;
-                padding-top: 100px;
+                padding: 100px 24px 0 24px;
             }
-            
-            nav { padding: 24px; }
-            
-            .left-content { 
-                padding-right: 0; 
-                margin-bottom: 40px; 
-                text-align: left;
-            }
-            
-            .right-content {
-                width: 100vw;
-                margin-left: -24px; /* Break out of padding */
-            }
-            
-            .carousel-track {
-                padding-left: 24px; /* Restore visual padding */
-            }
-            
-            .sticker-overlay {
-                width: 200px;
-            }
+            .right-content { width: 100vw; margin-left: -24px; }
+            .carousel-track { padding-left: 24px; }
+            .sticker-overlay { width: 180px; }
+            h1.hero-title { text-align: left; margin-bottom: 20px; }
         }
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
 <body>
 
-    <div class="bg-layer"></div>
+    <div class="bg-image"></div>
+    
+    <div class="bg-overlay"></div>
 
     <nav>
         <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Logo" class="nav-logo">
@@ -253,37 +265,43 @@
                 
                 <div class="card">
                     <div>
-                        <div class="card-icon">I</div>
-                        <h3>Invest</h3>
-                        <p>Simple, quality investing tools designed to build long-term wealth.</p>
+                        <div class="card-label">Launch</div>
+                        <h3>App Store &<br>Google Play</h3>
+                        <div class="date-badge">Coming End of February</div>
                     </div>
-                    <div class="card-footer">
-                        Learn more <span>&rarr;</span>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="card-icon">B</div>
-                        <h3>Borrow</h3>
-                        <p>Access future capital today with transparent, fair credit assessment.</p>
-                    </div>
-                    <div class="card-footer">
-                        See options <span>&rarr;</span>
+                    <div class="card-bottom">
+                        <div style="display:flex; gap:10px; opacity:0.8;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.55-1.48 3.77-1.7 3.77-1.7C16.61 2.92 16.53 5.2 13 5.2c-.03-.84.49-1.7 0-1.7z"/></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z"/></svg>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
-                        <div class="card-icon">T</div>
-                        <h3>Transact</h3>
-                        <p>Move money in real-time. Secure, regulated, and seamless.</p>
+                        <div class="card-label">Online</div>
+                        <h3>Website</h3>
+                        <p style="opacity: 0.7;">Full platform experience.</p>
                     </div>
-                    <div class="card-footer">
-                        Get started <span>&rarr;</span>
+                    <div class="card-bottom">
+                         <div style="font-size: 1.2rem; font-weight: 500;">Coming Soon...</div>
                     </div>
                 </div>
 
+                <a href="YOUR_LINK_HERE" class="card" style="border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.2);">
+                    <div>
+                        <div class="card-label" style="color: #fff;">Priority</div>
+                        <h3>Early<br>Access</h3>
+                        <p>Be the first to experience Mint on mobile.</p>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="btn-fake">
+                            Click to Join
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                </a>
+                
                 <div style="min-width: 20px;"></div>
 
             </div>
