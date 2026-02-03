@@ -469,14 +469,15 @@
 
     <script>
         // --- 1. SUPABASE SETUP ---
-        // REPLACE WITH YOUR ACTUAL SUPABASE CREDENTIALS
+        // REPLACE THESE WITH YOUR ACTUAL SUPABASE PROJECT DETAILS
         const SUPABASE_URL = 'YOUR_SUPABASE_URL';
         const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // --- 2. NAVIGATION LOGIC ---
-        let selectedOS = 'iOS';
+        // --- 2. NAVIGATION & FORM LOGIC ---
+        let selectedOS = 'iOS'; // Default selection
 
+        // Handle OS Button Selection
         function selectOS(os) {
             selectedOS = os;
             const btns = document.querySelectorAll('.os-btn');
@@ -486,22 +487,27 @@
             });
         }
 
+        // Switch to Request Form View
         function goToRequestPage() {
             document.getElementById('view-landing').classList.add('view-hidden');
             document.getElementById('view-request').classList.remove('view-hidden');
         }
 
+        // Switch back to Home View
         function goToLandingPage() {
             document.getElementById('view-request').classList.add('view-hidden');
             document.getElementById('view-landing').classList.remove('view-hidden');
         }
 
+        // Handle Form Submission to Supabase
         async function submitForm(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
+            
+            // Collect Data
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const whatsapp = document.getElementById('whatsapp').value;
+            const email = document.getElementById('email').value;
 
             // Gmail Validation
             if (!email.endsWith('@gmail.com')) {
@@ -509,6 +515,7 @@
                 return;
             }
 
+            // Insert into Supabase
             const { error } = await supabase.from('beta_access_requests').insert({
                 first_name: firstName,
                 last_name: lastName,
@@ -517,11 +524,18 @@
                 email: email
             });
 
+            // Handle Response
             if (error) {
-                if (error.code === '23505') alert("This email has already requested access.");
-                else alert("Error submitting request. Please try again.");
+                if (error.code === '23505') {
+                    alert("This email has already requested access.");
+                } else {
+                    console.error('Supabase Error:', error);
+                    alert("Error submitting request. Please try again.");
+                }
             } else {
                 alert("Request sent successfully! We will contact you soon.");
+                // Clear form and go back
+                document.getElementById('accessForm').reset();
                 goToLandingPage();
             }
         }
@@ -593,8 +607,12 @@
         typewriterElements.forEach(el => typeObserver.observe(el));
 
         // --- 6. CAROUSEL LOGIC ---
-        const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
-        leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
+        const leftCol = document.getElementById('leftCol'); 
+        const scrollInd = document.getElementById('scrollInd');
+        leftCol.addEventListener('scroll', () => { 
+            if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; 
+            else scrollInd.style.opacity = '0.7'; 
+        });
 
         const stage = document.getElementById('stage'); 
         const originalCards = document.querySelectorAll('.card-3d');
@@ -606,8 +624,7 @@
         let isPlaying = true;
         let currentRotation = 0; 
         
-        let hasClonedForMobile = false;
-
+        // Layout Logic (Mobile vs Desktop)
         function handleLayout() {
             const isMobile = window.innerWidth <= 900;
             const heroSection = document.getElementById('hero-section');
@@ -615,19 +632,23 @@
             const gridContainer = document.querySelector('.grid-container');
 
             if (isMobile) {
+                // Mobile: Hide duplicates, move carousel to text column
                 const allCards = stage.querySelectorAll('.card-3d');
                 allCards.forEach((card, index) => {
                     card.style.transform = 'none'; 
+                    // Assuming 8 cards total: 0-3 are unique, 4-7 are clones
                     if (index >= 4) {
                         card.style.display = 'none'; 
                     } else {
                         card.style.display = 'flex';
                     }
                 });
+                // Move DOM element
                 if (heroSection.nextElementSibling !== rightCol) {
                     heroSection.after(rightCol);
                 }
             } else {
+                // Desktop: Restore grid, show all cards in 3D ring
                 if (gridContainer.lastElementChild !== rightCol) {
                     gridContainer.appendChild(rightCol);
                 }
@@ -640,9 +661,11 @@
         }
 
         window.addEventListener('resize', handleLayout);
-        handleLayout(); 
+        handleLayout(); // Run on init
 
+        // Animation Loop
         function animate() {
+            // Only rotate if playing, on desktop, and user isn't dragging manually
             if (isPlaying && window.innerWidth > 900 && !isDragging) { 
                 currentRotation -= 0.05; 
                 stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; 
@@ -657,23 +680,25 @@
             iconPlay.style.display = isPlaying ? 'none' : 'block';
         });
 
-        // Manual Rotation Logic
+        // --- 7. MANUAL CAROUSEL DRAG (DESKTOP) ---
         let isDragging = false;
         let startX = 0;
         let previousRotation = 0;
         const container = document.querySelector('.carousel-column');
 
         container.addEventListener('mousedown', (e) => {
+            // Only allow drag if paused and on desktop
             if (window.innerWidth <= 900 || isPlaying) return; 
             isDragging = true;
             startX = e.clientX;
             previousRotation = currentRotation;
-            stage.style.transition = 'none'; 
+            stage.style.transition = 'none'; // Disable transition for instant follow
         });
 
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             const deltaX = e.clientX - startX;
+            // 0.2 determines sensitivity
             currentRotation = previousRotation + (deltaX * 0.2); 
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
         });
@@ -685,13 +710,17 @@
         });
         
         function snapToNearest() {
+            // Snap to nearest 45 degrees
             const snapAngle = Math.round(currentRotation / theta) * theta;
             currentRotation = snapAngle;
             stage.style.transition = 'transform 0.5s ease-out';
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            
+            // Remove transition after snap so animation loop doesn't fight it later
             setTimeout(() => { stage.style.transition = 'none'; }, 500);
         }
 
+        // --- 8. SIDE PANEL LOGIC ---
         const sidePanel = document.getElementById('sidePanel');
         const panels = document.querySelectorAll('.panel-content'); 
 
