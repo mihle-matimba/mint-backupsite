@@ -8,477 +8,390 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-        /* --- VARIABLES --- */
-        :root {
-            --brand-white: #ffffff;
-            --brand-purple: #5c3bcf;
-            --brand-dark: #1d1d1f;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --card-width: 300px;
-            --card-height: 420px;
-        }
+    /* --- VARIABLES --- */
+    :root {
+        --brand-white: #ffffff;
+        --brand-purple: #5c3bcf;
+        --brand-dark: #1d1d1f;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --card-width: 300px;
+        --card-height: 420px;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--brand-white);
-            background-color: #050505;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            user-select: none;
-            -webkit-font-smoothing: antialiased;
-        }
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--brand-white);
+        background-color: #050505;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        user-select: none;
+        -webkit-font-smoothing: antialiased;
+    }
 
-        /* --- BACKGROUND LAYERS --- */
-        .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -3;
-            background-image: url('HeroBG.jpg'); 
-            background-size: cover;
-            background-position: center;
-            opacity: 0.4;
-        }
+    /* --- BACKGROUND LAYERS --- */
+    .bg-layer {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -3;
+        background-image: url('HeroBG.jpg'); 
+        background-size: cover;
+        background-position: center;
+        opacity: 0.4;
+    }
 
-        #particle-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
+    #particle-canvas {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -2;
+        pointer-events: none;
+    }
 
-        .cursor-glow {
-            position: fixed;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(92, 59, 207, 0.15) 0%, rgba(0,0,0,0) 60%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            mix-blend-mode: screen;
-            transition: opacity 0.3s;
-        }
+    .cursor-glow {
+        position: fixed;
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, rgba(92, 59, 207, 0.15) 0%, rgba(0,0,0,0) 60%);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        mix-blend-mode: screen;
+        transition: opacity 0.3s;
+    }
 
-        .sticker {
-            position: fixed; 
-            bottom: 0; left: 0; 
-            width: 900px; max-width: 50vw;
-            z-index: 50; 
-            pointer-events: none;
-        }
+    .sticker {
+        position: fixed; 
+        bottom: 0; left: 0; 
+        width: 900px; max-width: 50vw;
+        z-index: 50; 
+        pointer-events: none;
+    }
 
-        /* --- NAVIGATION (UPDATED) --- */
-        nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 40px; 
-            z-index: 100;
-            display: flex; 
-            justify-content: space-between; /* Logo Left, Button Right */
-            align-items: center;
-            pointer-events: none; /* Clicks pass through empty space */
-            background: transparent;
-        }
+    /* --- HEADER (Desktop & Mobile Unified) --- */
+    nav {
+        position: fixed; top: 0; left: 0; width: 100%;
+        padding: 30px 40px; 
+        z-index: 100;
+        display: flex; 
+        justify-content: space-between; /* Logo Left, Button Right */
+        align-items: center;
+        pointer-events: none; /* Clicks pass through empty space */
+        background: transparent;
+    }
+    
+    .nav-logo { 
+        height: 32px; 
+        width: auto; 
+        pointer-events: auto; 
+    }
+
+    /* Desktop CTA Button */
+    .nav-cta {
+        pointer-events: auto;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: block;
+    }
+    .nav-cta:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+
+    /* Mobile Icon Bubble (Hidden by default) */
+    .nav-icon-mobile {
+        display: none;
+        pointer-events: auto;
+        width: 40px; height: 40px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        align-items: center; justify-content: center;
+        cursor: pointer;
+        padding: 0;
+    }
+    .nav-icon-mobile img { width: 20px; height: auto; }
+
+    /* --- VIEWS MANAGER --- */
+    .view-container {
+        width: 100%; height: 100%;
+        position: absolute; top: 0; left: 0;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .view-hidden {
+        opacity: 0;
+        pointer-events: none;
+        z-index: -10;
+        transform: scale(0.95);
+    }
+
+    /* --- MAIN LAYOUT --- */
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        width: 100%;
+    }
+
+    /* --- LEFT COLUMN --- */
+    .scroll-column {
+        position: relative;
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        padding-left: 80px;
+        padding-right: 40px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth;
+        z-index: 60;
+    }
+    .scroll-column::-webkit-scrollbar { display: none; }
+
+    .snap-section {
+        height: 100vh;
+        scroll-snap-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* TYPEWRITER ANIMATION */
+    .typewriter-text {
+        display: inline-block;
+        border-right: 2px solid var(--brand-purple);
+        white-space: nowrap; overflow: hidden; width: 0; vertical-align: bottom; 
+    }
+    .typewriter-active { animation: typing 2.5s steps(30, end) forwards, blink 0.8s infinite; }
+    @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--brand-purple); } }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+
+    h1.thin-title {
+        font-size: clamp(3.5rem, 6vw, 6rem);
+        font-weight: 200; letter-spacing: -0.05em; line-height: 1; margin-bottom: 20px; min-height: 1.1em;
+    }
+
+    .info-block h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 400; color: rgba(255,255,255,0.7); margin-bottom: 24px; }
+    .info-block p { font-size: 1.4rem; font-weight: 200; line-height: 1.4; color: rgba(255,255,255,0.95); max-width: 500px; margin-bottom: 24px; }
+
+    .action-link { display: inline-flex; align-items: center; gap: 10px; font-size: 1rem; color: #ffffff; text-decoration: none; cursor: pointer; transition: all 0.3s; font-weight: 400; }
+    .action-link:hover { opacity: 0.8; transform: translateX(10px); }
+    .action-link svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* --- RIGHT COLUMN (CAROUSEL) --- */
+    .carousel-column {
+        position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 1200px; overflow: hidden; z-index: 60; cursor: grab;
+    }
+    .carousel-column:active { cursor: grabbing; }
+
+    .announcements-header { width: 100%; text-align: center; margin-bottom: 40px; z-index: 70; transform: translateY(-20px); pointer-events: none; }
+    .announcements-header h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; font-weight: 400; color: rgba(255,255,255,0.5); display: inline-block; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+
+    .carousel-stage { position: relative; width: var(--card-width); height: var(--card-height); transform-style: preserve-3d; will-change: transform; }
+
+    .card-3d {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.2);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 32px; padding: 32px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5); transition: border-color 0.3s; overflow: hidden; backface-visibility: visible; 
+    }
+    .card-3d:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+    
+    .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+    .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
+    .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
+    
+    .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; position: relative; z-index: 2; border: none; }
+    .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
+    .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
+
+    .control-dock { position: absolute; bottom: 40px; display: flex; align-items: center; gap: 12px; z-index: 200; }
+    .play-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; outline: none; }
+    .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+    .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* --- REQUEST PAGE FORM --- */
+    .request-page {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        height: 100vh; width: 100%; padding: 20px; overflow-y: auto;
+        position: relative; z-index: 200; background: #050505;
+    }
+    
+    .form-container {
+        width: 100%; max-width: 420px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        padding: 40px;
+    }
+
+    .form-title { font-size: 2rem; font-weight: 200; margin-bottom: 10px; text-align: center; }
+    .form-subtitle { text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 30px; font-weight: 300; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+    .form-input { 
+        width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+        border-radius: 12px; padding: 14px; color: #fff; font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.3s; 
+    }
+    .form-input:focus { border-color: var(--brand-purple); }
+
+    .os-options { display: flex; gap: 10px; }
+    .os-btn { 
+        flex: 1; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); 
+        background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); cursor: pointer; text-align: center; transition: all 0.2s; 
+    }
+    .os-btn.selected { background: var(--brand-purple); color: white; border-color: var(--brand-purple); }
+
+    .back-link {
+        margin-top: 20px; text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.5); cursor: pointer; text-decoration: underline;
+    }
+
+    /* --- SIDE PANEL --- */
+    .side-panel {
+        position: fixed; top: 0; right: 0; width: 50%; height: 100vh;
+        background: #ffffff; box-shadow: -20px 0 50px rgba(0,0,0,0.1);
+        z-index: 900; transform: translateX(100%);
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        padding: 80px 60px; display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .side-panel.active { transform: translateX(0); }
+    .close-btn {
+        position: absolute; top: 40px; right: 40px; width: 40px; height: 40px;
+        border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.05);
+        color: var(--brand-dark); display: flex; align-items: center; justify-content: center;
+        cursor: pointer; transition: all 0.2s;
+    }
+    .close-btn:hover { background: rgba(0,0,0,0.1); }
+    .close-btn svg { width: 24px; height: 24px; fill: currentColor; }
+    .panel-content { display: none; opacity: 0; transition: opacity 0.4s ease 0.2s; }
+    .panel-content.active { display: block; opacity: 1; }
+    .step-item { margin-bottom: 40px; padding-left: 20px; border-left: 2px solid rgba(0,0,0,0.1); }
+    .side-panel .thin-title { color: var(--brand-dark); margin-bottom: 60px; }
+    .step-num { font-size: 0.8rem; color: var(--brand-purple); margin-bottom: 8px; font-weight: 600; }
+    .step-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 12px; color: var(--brand-dark); }
+    .step-desc { font-size: 1.05rem; color: #666; line-height: 1.6; font-weight: 300; }
+
+    .legal-footer { position: fixed; bottom: 0; right: 0; padding: 20px 40px; text-align: right; font-size: 0.7rem; color: rgba(255,255,255,0.4); z-index: 100; }
+    .scroll-indicator { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.7; z-index: 60; transition: opacity 0.3s; }
+    .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
+    .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-150%) skewX(-15deg); }
+        100% { transform: translateX(150%) skewX(-15deg); }
+    }
+
+    /* --- RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 900px) {
+        body { overflow-y: auto; height: auto; overflow-x: hidden; }
         
-        .nav-logo { 
-            height: 32px; /* Smaller logo as requested */
-            width: auto; 
-            pointer-events: auto; 
-        }
-
-        /* Desktop CTA Button */
-        .nav-cta {
-            pointer-events: auto;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: block;
-        }
-        .nav-cta:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
-
-        /* Mobile Icon Button (Hidden by default) */
-        .nav-icon-mobile {
-            display: none;
-            pointer-events: auto;
-            width: 40px; height: 40px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            align-items: center; justify-content: center;
-            cursor: pointer;
-            padding: 0;
-        }
-        .nav-icon-mobile img { width: 20px; height: auto; }
-
-        /* --- VIEWS MANAGER --- */
-        .view-container {
-            width: 100%; height: 100%;
-            position: absolute; top: 0; left: 0;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+        /* -- Header Mobile Changes -- */
+        nav { padding: 20px 20px; height: 80px; }
+        .nav-logo { height: 28px; }
         
-        .view-hidden {
-            opacity: 0;
-            pointer-events: none;
-            z-index: -10;
-            transform: scale(0.95);
-        }
+        /* UTILITY: Toggle Views */
+        .nav-cta { display: none !important; } /* Hide Text Button */
+        .nav-icon-mobile { display: flex !important; } /* Show Icon Button */
 
-        /* --- MAIN LAYOUT --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            height: 100vh;
-            width: 100%;
+        .grid-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
+        .cursor-glow { display: none; }
+        
+        .scroll-column { 
+            display: block; width: 100%; height: auto; 
+            overflow: visible; padding: 120px 30px 40px 30px; 
         }
+        .snap-section { height: auto; padding: 40px 0; scroll-snap-align: none; }
+        h1.thin-title { font-size: 3rem; margin-top: 0; margin-bottom: 10px; }
 
-        /* --- LEFT COLUMN --- */
-        .scroll-column {
-            position: relative;
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            padding-left: 80px;
-            padding-right: 40px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            scroll-behavior: smooth;
-            z-index: 60;
-        }
-        .scroll-column::-webkit-scrollbar { display: none; }
-
-        .snap-section {
-            height: 100vh;
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* TYPEWRITER ANIMATION */
-        .typewriter-text {
-            display: inline-block;
-            border-right: 2px solid var(--brand-purple);
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            vertical-align: bottom; 
-        }
-
-        @keyframes blink {
-            from, to { border-color: transparent }
-            50% { border-color: var(--brand-purple); }
-        }
-
-        .typewriter-active {
-            animation: typing 2.5s steps(30, end) forwards, blink 0.8s infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        h1.thin-title {
-            font-size: clamp(3.5rem, 6vw, 6rem);
-            font-weight: 200; 
-            letter-spacing: -0.05em;
-            line-height: 1;
-            margin-bottom: 20px;
-            min-height: 1.1em;
-        }
-
-        .info-block h2 {
-            font-size: 0.8rem; text-transform: uppercase;
-            letter-spacing: 0.2em; font-weight: 400;
-            color: rgba(255,255,255,0.7); margin-bottom: 24px;
-        }
-
-        .info-block p {
-            font-size: 1.4rem; font-weight: 200;
-            line-height: 1.4; color: rgba(255,255,255,0.95);
-            max-width: 500px;
-            margin-bottom: 24px;
-        }
-
-        .action-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-            color: #ffffff; 
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 400;
-        }
-        .action-link:hover { opacity: 0.8; transform: translateX(10px); }
-        .action-link svg { width: 18px; height: 18px; fill: currentColor; }
-
-        /* --- RIGHT COLUMN (CAROUSEL) --- */
+        /* MOBILE CAROUSEL LAYOUT */
         .carousel-column {
-            position: relative;
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            perspective: 1200px;
-            overflow: hidden;
-            z-index: 60;
-            /* Allow cursor to indicate drag when paused */
-            cursor: grab;
-        }
-        .carousel-column:active {
-            cursor: grabbing;
+            height: auto;
+            width: 100vw; 
+            margin-left: -30px; 
+            margin-right: -30px;
+            z-index: 5;
+            perspective: none;
+            display: block;
+            background: transparent;
+            padding: 30px 0;
+            overflow: visible;
+            margin-bottom: 40px; 
+            cursor: auto; /* Reset cursor on mobile */
         }
 
         .announcements-header {
+            padding-left: 30px;
             width: 100%;
-            text-align: center; 
-            margin-bottom: 40px; 
-            z-index: 70;
-            transform: translateY(-20px); 
-            pointer-events: none; /* Let clicks pass through to carousel */
-        }
-
-        .announcements-header h2 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            font-weight: 400;
-            color: rgba(255,255,255,0.5);
-            display: inline-block;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-align: left; 
+            transform: none;
         }
 
         .carousel-stage {
-            position: relative;
-            width: var(--card-width);
-            height: var(--card-height);
-            transform-style: preserve-3d;
-            will-change: transform;
+            width: 100%;
+            height: 440px;
+            transform-style: flat;
+            transform: none !important;
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 10px 30px; 
+            align-items: center;
+            scrollbar-width: none;
+            background: transparent; 
+            mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
         }
+        .carousel-stage::-webkit-scrollbar { display: none; }
 
         .card-3d {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 32px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            transition: border-color 0.3s;
-            overflow: hidden;
-            backface-visibility: visible; 
+            position: relative;
+            top: auto; left: auto;
+            flex: 0 0 85%;
+            max-width: 320px;
+            height: 400px;
+            transform: none !important;
+            opacity: 1 !important;
+            scroll-snap-align: center;
+            margin: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
+
+        .card-3d::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-15deg); pointer-events: none;
+            animation: shimmer 5s infinite ease-in-out;
+        }
+
+        .control-dock { display: none; }
+        .side-panel { width: 100%; padding: 80px 30px; }
+        .sticker { width: 250px; bottom: -50px; left: -20px; opacity: 0.3; }
+        .legal-footer { position: relative; text-align: center; width: 100%; padding: 40px 20px; opacity: 0.6; }
+        .scroll-indicator { display: none; }
         
-        .card-3d:hover {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.08);
-        }
-
-        .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
-        .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
-        .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
-        .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; position: relative; z-index: 2; border:none; }
-        .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
-        .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
-
-        .control-dock { position: absolute; bottom: 40px; display: flex; align-items: center; gap: 12px; z-index: 200; }
-        .play-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; outline: none; }
-        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-        /* --- REQUEST PAGE FORM --- */
-        .request-page {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; width: 100%; padding: 20px; overflow-y: auto;
-            position: relative; z-index: 200; background: #050505;
-        }
-        
-        .form-container {
-            width: 100%; max-width: 420px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 40px;
-        }
-
-        .form-title { font-size: 2rem; font-weight: 200; margin-bottom: 10px; text-align: center; }
-        .form-subtitle { text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 30px; font-weight: 300; }
-
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
-        .form-input { 
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 12px; padding: 14px; color: #fff; font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.3s; 
-        }
-        .form-input:focus { border-color: var(--brand-purple); }
-
-        .os-options { display: flex; gap: 10px; }
-        .os-btn { 
-            flex: 1; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); cursor: pointer; text-align: center; transition: all 0.2s; 
-        }
-        .os-btn.selected { background: var(--brand-purple); color: white; border-color: var(--brand-purple); }
-
-        .back-link {
-            margin-top: 20px; text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.5); cursor: pointer; text-decoration: underline;
-        }
-
-        /* --- SIDE PANEL --- */
-        .side-panel {
-            position: fixed; top: 0; right: 0; width: 50%; height: 100vh;
-            background: #ffffff; box-shadow: -20px 0 50px rgba(0,0,0,0.1);
-            z-index: 900; transform: translateX(100%);
-            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            padding: 80px 60px; display: flex; flex-direction: column; overflow-y: auto;
-        }
-        .side-panel.active { transform: translateX(0); }
-        .close-btn {
-            position: absolute; top: 40px; right: 40px; width: 40px; height: 40px;
-            border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.05);
-            color: var(--brand-dark); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .close-btn:hover { background: rgba(0,0,0,0.1); }
-        .close-btn svg { width: 24px; height: 24px; fill: currentColor; }
-        .panel-content { display: none; opacity: 0; transition: opacity 0.4s ease 0.2s; }
-        .panel-content.active { display: block; opacity: 1; }
-        .step-item { margin-bottom: 40px; padding-left: 20px; border-left: 2px solid rgba(0,0,0,0.1); }
-        .side-panel .thin-title { color: var(--brand-dark); margin-bottom: 60px; }
-        .step-num { font-size: 0.8rem; color: var(--brand-purple); margin-bottom: 8px; font-weight: 600; }
-        .step-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 12px; color: var(--brand-dark); }
-        .step-desc { font-size: 1.05rem; color: #666; line-height: 1.6; font-weight: 300; }
-
-        .legal-footer { position: fixed; bottom: 0; right: 0; padding: 20px 40px; text-align: right; font-size: 0.7rem; color: rgba(255,255,255,0.4); z-index: 100; }
-        .scroll-indicator { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.7; z-index: 60; transition: opacity 0.3s; }
-        .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
-        .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-150%) skewX(-15deg); }
-            100% { transform: translateX(150%) skewX(-15deg); }
-        }
-
-        /* --- RESPONSIVE ADJUSTMENTS --- */
-        @media (max-width: 900px) {
-            body { overflow-y: auto; height: auto; overflow-x: hidden; }
-            
-            /* -- Header Mobile Changes -- */
-            nav { padding: 20px 20px; height: 80px; }
-            .nav-logo { height: 28px; }
-            
-            /* Toggle Buttons */
-            .nav-cta { display: none; } /* Hide Text Button */
-            .nav-icon-mobile { display: flex; } /* Show Icon Button */
-
-            .grid-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
-            .cursor-glow { display: none; }
-            
-            .scroll-column { 
-                display: block; width: 100%; height: auto; 
-                overflow: visible; padding: 120px 30px 40px 30px; 
-            }
-            .snap-section { height: auto; padding: 40px 0; scroll-snap-align: none; }
-            h1.thin-title { font-size: 3rem; margin-top: 0; margin-bottom: 10px; }
-
-            /* MOBILE CAROUSEL LAYOUT */
-            .carousel-column {
-                height: auto;
-                width: 100vw; 
-                margin-left: -30px; 
-                margin-right: -30px;
-                z-index: 5;
-                perspective: none;
-                display: block;
-                background: transparent;
-                padding: 30px 0;
-                overflow: visible;
-                margin-bottom: 40px; 
-                cursor: auto; /* Reset cursor on mobile */
-            }
-
-            .announcements-header {
-                padding-left: 30px;
-                width: 100%;
-                margin-bottom: 15px;
-                text-align: left; 
-                transform: none;
-            }
-
-            .carousel-stage {
-                width: 100%;
-                height: 440px;
-                transform-style: flat;
-                transform: none !important;
-                display: flex;
-                gap: 20px;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding: 10px 30px; 
-                align-items: center;
-                scrollbar-width: none;
-                background: transparent; 
-                mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-                -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-            }
-            .carousel-stage::-webkit-scrollbar { display: none; }
-
-            .card-3d {
-                position: relative;
-                top: auto; left: auto;
-                flex: 0 0 85%;
-                max-width: 320px;
-                height: 400px;
-                transform: none !important;
-                opacity: 1 !important;
-                scroll-snap-align: center;
-                margin: 0;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            }
-
-            .card-3d::after {
-                content: ''; position: absolute; top: 0; left: 0; width: 50%; height: 100%;
-                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-                transform: skewX(-15deg); pointer-events: none;
-                animation: shimmer 5s infinite ease-in-out;
-            }
-
-            .control-dock { display: none; }
-            .side-panel { width: 100%; padding: 80px 30px; }
-            .sticker { width: 250px; bottom: -50px; left: -20px; opacity: 0.3; }
-            .legal-footer { position: relative; text-align: center; width: 100%; padding: 40px 20px; opacity: 0.6; }
-            .scroll-indicator { display: none; }
-            
-            /* Request Page Adjustments */
-            .request-page { padding-top: 100px; justify-content: flex-start; }
-        }
-    </style>
+        /* Request Page Adjustments */
+        .request-page { padding-top: 100px; justify-content: flex-start; }
+    }
+</style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
     <div class="cursor-glow" id="cursorGlow"></div>
-
     <div class="bg-layer"></div>
     <img src="Bottom left.png" alt="MINT App" class="sticker">
 
@@ -495,7 +408,6 @@
     <div id="view-landing" class="view-container">
         <div class="grid-container">
             <div class="scroll-column" id="leftCol">
-                
                 <div class="scroll-indicator" id="scrollInd">
                     <span class="scroll-text">Scroll</span>
                     <div class="chevron"></div>
@@ -517,8 +429,7 @@
                         <h2>Invest</h2>
                         <p>Manage investments in a single, intuitive environment. We lower minimums and simplify access, letting you move money to the future.</p>
                         <a class="action-link" onclick="openPanel('invest')">
-                            Want to invest 
-                            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                            Want to invest <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -528,8 +439,7 @@
                         <h2>Borrow</h2>
                         <p>Access money from the future. Our smart credit tools offer seamless digital assessments aligned with your actual financial profile.</p>
                         <a class="action-link" onclick="openPanel('borrow')">
-                            Want to borrow 
-                            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                            Want to borrow <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -539,8 +449,7 @@
                         <h2>Transact</h2>
                         <p>Position yourself at the center of real-time money movement. MINT facilitates the constant flow of funds securely and instantly.</p>
                         <a class="action-link" onclick="openPanel('transact')">
-                            Want to transact 
-                            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                            Want to transact <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -579,7 +488,7 @@
                             <h3>Request<br>Test Access</h3>
                             <p>Join the testing phase.</p>
                         </div>
-                        <button class="btn-pill" onclick="goToRequestPage()">Join Waitlist <span>&rarr;</span></button>
+                        <button class="btn-pill" onclick="goToRequestPage()">Request Access <span>&rarr;</span></button>
                     </div>
                     <div class="card-3d">
                         <div>
@@ -618,7 +527,7 @@
                             <h3>Request<br>Test Access</h3>
                             <p>Join the testing phase.</p>
                         </div>
-                        <button class="btn-pill" onclick="goToRequestPage()">Join Waitlist <span>&rarr;</span></button>
+                        <button class="btn-pill" onclick="goToRequestPage()">Request Access <span>&rarr;</span></button>
                     </div>
                     <div class="card-3d">
                         <div>
@@ -682,27 +591,31 @@
     </div>
 
     <div class="side-panel" id="sidePanel">
-        <button class="close-btn" onclick="closePanel()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+        <button class="close-btn" onclick="closePanel()">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+
         <div class="panel-content" id="panel-invest">
             <h1 class="thin-title">Invest with Mint</h1>
             <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Discover Strategies</h3><p class="step-desc">Explore curated OpenStrategies.</p></div>
             <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Track & Analyze</h3><p class="step-desc">Track performance in real-time. Upgrade your view to access premium wealth-tracking tools and insights.</p></div>
             <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Allocate & Grow</h3><p class="step-desc">Ready to invest? Allocate funds to your chosen strategies. You only pay a performance fee on your returns.</p></div>
         </div>
+
         <div class="panel-content" id="panel-borrow">
             <h1 class="thin-title">Borrow with Mint</h1>
-            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Smart Assessment</h3><p class="step-desc">Seamless digital credit assessment.</p></div>
+            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Smart Assessment</h3><p class="step-desc">Experience a seamless digital credit assessment that looks at your holistic financial profile, not just a score.</p></div>
             <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Fair Access</h3><p class="step-desc">We prioritize suitability and affordability, ensuring you access liquidity without compromising your long-term financial health.</p></div>
             <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Efficient Capital</h3><p class="step-desc">Leverage your existing assets to secure lower rates. Borrow against your portfolio to unlock cash flow without selling your positions.</p></div>
         </div>
+
         <div class="panel-content" id="panel-transact">
             <h1 class="thin-title">Transact with Mint</h1>
-            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Real-Time Movement</h3><p class="step-desc">Move funds instantly.</p></div>
+            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Real-Time Movement</h3><p class="step-desc">Move funds instantly between accounts and peers. We are building the rails for immediate, secure financial settlement.</p></div>
             <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Seamless Integration</h3><p class="step-desc">Your payments ecosystem is fully integrated with your investment and credit portfolios.</p></div>
             <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Trusted Partnership</h3><p class="step-desc">Every transaction is secured by regulated banking standards. We act as a trusted partner ensuring your money is safe.</p></div>
         </div>
     </div>
-
     <script type="module">
         // Import local client
         import { supabase } from './supabaseClient.js';
@@ -758,7 +671,7 @@
             }
         }
 
-        // --- ANIMATIONS & LOGIC (COPIED FROM PREVIOUS WORKING VERSION) ---
+        // --- ANIMATIONS & LOGIC ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -874,7 +787,7 @@
         }
 
         window.addEventListener('resize', handleLayout);
-        handleLayout(); // Run on init
+        handleLayout(); 
 
         // Animation Loop
         function animate() {
@@ -910,7 +823,6 @@
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             const deltaX = e.clientX - startX;
-            // 0.2 determines sensitivity
             currentRotation = previousRotation + (deltaX * 0.2); 
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
         });
@@ -933,7 +845,6 @@
         const sidePanel = document.getElementById('sidePanel');
         const panels = document.querySelectorAll('.panel-content'); 
 
-        // ATTACH TO WINDOW
         window.openPanel = function(id) { 
             panels.forEach(p => p.classList.remove('active'));
             const content = document.getElementById('panel-' + id);
