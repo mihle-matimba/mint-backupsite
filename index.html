@@ -3,367 +3,422 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mint - Coming Soon</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>MINT | Money In Transit</title>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- BRAND VARIABLES (From Manual) --- */
         :root {
-            --mint-primary: #00C48C; 
-            --mint-hover: #00A374;
-            --bg-body: #F5F5F7;
-            --bg-card: #FFFFFF;
-            --text-main: #1D1D1F;
-            --text-secondary: #86868B;
-            --radius-lg: 24px;
-            --radius-btn: 999px;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --ease-apple: cubic-bezier(0.25, 1, 0.5, 1);
+            --brand-dark: #31005e;  /* Royal Deep Purple */
+            --brand-light: #5c3bcf; /* Electric Violet */
+            --brand-gold: #ddc357;  /* Wealth Gold */
+            --brand-black: #000000;
+            
+            --bg-body: #FFFFFF;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --text-main: #1A1A1A;
+            --text-muted: #666;
+            
+            --ease-lux: cubic-bezier(0.19, 1, 0.22, 1); /* Elegant finish */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: var(--font-stack);
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- HEADER --- */
-        header {
+        /* --- NAVIGATION --- */
+        nav {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
             padding: 24px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            pointer-events: none; /* Let clicks pass through to 3D background if needed */
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: var(--text-main);
-            pointer-events: auto;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            color: var(--brand-dark);
         }
-        .logo span { color: var(--mint-primary); }
 
-        .status-pill {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 8px 16px;
-            border-radius: var(--radius-btn);
-            font-size: 0.8rem;
+        /* Minimal Logo Representation */
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--brand-dark);
+            mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 4l-4 4h12v4h4v-4l-4-4h-8zM16 20l4-4h-12v-4h-4v4l4 4h8z"/></svg>') no-repeat center;
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 4l-4 4h12v4h4v-4l-4-4h-8zM16 20l4-4h-12v-4h-4v4l4 4h8z"/></svg>') no-repeat center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+        }
+
+        .nav-btn {
+            background: var(--brand-dark);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 4px; /* Bank style: Sharper corners */
+            font-size: 0.9rem;
             font-weight: 600;
-            color: var(--text-secondary);
-            border: 1px solid rgba(0,0,0,0.05);
-            pointer-events: auto;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: var(--brand-light);
+            box-shadow: 0 10px 20px rgba(92, 59, 207, 0.2);
         }
 
         /* --- HERO SECTION --- */
-        .hero-container {
+        .hero {
             position: relative;
-            width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            padding: 0 5%;
             overflow: hidden;
         }
 
-        /* The 3D Canvas sits behind the text */
-        #canvas-container {
+        /* 3D Background */
+        #canvas-wrapper {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: 0;
+            width: 55%; /* Occupy right side */
             height: 100%;
             z-index: 0;
-            opacity: 0; /* Starts hidden for fade-in */
-            animation: fadeIn 2s var(--ease-apple) forwards;
+        }
+        
+        @media (max-width: 768px) {
+            #canvas-wrapper { width: 100%; opacity: 0.3; }
         }
 
         .hero-content {
+            position: relative;
             z-index: 10;
-            max-width: 800px;
-            /* Glass backing for text legibility over 3D object */
-            background: rgba(245, 245, 247, 0.3);
-            backdrop-filter: blur(5px);
-            padding: 40px;
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 600px;
+            padding-top: 60px;
+        }
+
+        .tagline-pill {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--brand-gold);
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--brand-gold);
         }
 
         h1 {
-            font-size: clamp(3.5rem, 8vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            font-weight: 800;
+            color: var(--brand-dark);
             margin-bottom: 24px;
-            background: linear-gradient(180deg, #1D1D1F 0%, #4a4a4a 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        p.subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            color: var(--text-secondary);
+        h1 span {
+            color: var(--brand-light);
+        }
+
+        p.lead {
+            font-size: 1.25rem;
+            color: var(--text-muted);
             margin-bottom: 40px;
-            font-weight: 400;
+            line-height: 1.6;
+            max-width: 480px;
         }
 
-        /* --- CONTENT SECTION --- */
-        .details-section {
-            position: relative;
-            z-index: 20;
-            background: var(--bg-card);
-            border-radius: 40px 40px 0 0;
-            padding: 100px 20px;
-            box-shadow: 0 -20px 40px rgba(0,0,0,0.03);
-            margin-top: -50px;
-        }
-
-        .content-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .info-grid {
+        /* --- FEATURES GRID (Invest / Borrow / Transact) --- */
+        .features-strip {
             display: grid;
-            gap: 40px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: #f0f0f0; /* Separator color */
+            margin-top: 60px;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        .info-item h3 {
-            font-size: 1rem;
+        .feature-box {
+            background: #fff;
+            padding: 24px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .feature-box:hover { background: #fafafa; }
+
+        .feature-box h3 {
+            font-size: 0.9rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--text-secondary);
+            color: var(--brand-dark);
             margin-bottom: 8px;
         }
 
-        .info-item p {
-            font-size: 1.5rem;
-            font-weight: 600;
+        .feature-box p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
-        /* --- BUTTONS --- */
-        .btn {
+        /* --- CTA BUTTONS --- */
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-primary {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            padding: 18px 36px;
-            border-radius: var(--radius-btn);
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.4s var(--ease-apple);
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-mint {
-            background: var(--mint-primary);
+            padding: 16px 32px;
+            background: var(--brand-dark);
             color: white;
-            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.25);
-        }
-
-        .btn-mint:hover {
-            transform: scale(1.02) translateY(-2px);
-            background: var(--mint-hover);
-            box-shadow: 0 20px 40px rgba(0, 196, 140, 0.35);
-        }
-
-        .btn-link {
-            display: block;
-            margin-top: 24px;
-            color: var(--mint-primary);
+            border-radius: 6px;
+            font-weight: 600;
             text-decoration: none;
-            font-size: 0.9rem;
+            transition: transform 0.2s;
+            box-shadow: 0 10px 30px rgba(49, 0, 94, 0.2);
         }
-        .btn-link:hover { text-decoration: underline; }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--brand-light);
+        }
+
+        .early-access-note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .early-access-note a { color: var(--brand-light); text-decoration: none; font-weight: 600; }
+
+        /* --- FOOTER --- */
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            font-size: 0.75rem;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+        }
 
         /* --- ANIMATIONS --- */
-        @keyframes fadeIn { to { opacity: 1; } }
-
-        .reveal {
+        .reveal-up {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 1s var(--ease-apple);
+            animation: slideUp 1s var(--ease-lux) forwards;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
-    <div id="canvas-container"></div>
+    <div id="canvas-wrapper"></div>
 
-    <header>
-        <div class="logo">Mint<span>.</span></div>
-        <div class="status-pill">Beta 2.0</div>
-    </header>
-
-    <section class="hero-container">
-        <div class="hero-content reveal">
-            <h1>Finance,<br>Refined.</h1>
-            <p class="subtitle">A fresh approach to your daily spending.</p>
-            <div style="height: 20px;"></div> <div style="opacity: 0.4; font-size: 0.8rem; margin-top: 20px;">
-                Scroll to explore
-            </div>
+    <nav>
+        <div class="logo-container">
+            <div class="logo-mark"></div> MINT
         </div>
-    </section>
+        <a href="YOUR_ANDROID_LINK_HERE" class="nav-btn">Early Access</a>
+    </nav>
 
-    <section class="details-section">
-        <div class="content-wrapper reveal">
-            <div class="info-grid">
-                <div class="info-item">
-                    <h3>Release Date</h3>
-                    <p>End of February</p>
-                </div>
-                <div class="info-item">
-                    <h3>Availability</h3>
-                    <p>App Store & Google Play</p>
-                </div>
-            </div>
+    <main class="hero">
+        <div class="hero-content">
+            <div class="tagline-pill reveal-up" style="animation-delay: 0.1s;">Money In Transit</div>
+            
+            <h1 class="reveal-up" style="animation-delay: 0.2s;">
+                Invest. Borrow.<br>
+                <span>Transact.</span>
+            </h1>
+            
+            <p class="lead reveal-up" style="animation-delay: 0.3s;">
+                A comprehensive financial platform designed for modern money management. Secure your position for the launch.
+            </p>
 
-            <div style="background: #F9F9FA; padding: 40px; border-radius: 24px;">
-                <h2 style="margin-bottom: 20px; font-size: 1.8rem;">Get Early Access</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 30px;">
-                    Skip the waitlist on Android. Download the beta build today.
-                </p>
-                
-                <a href="YOUR_ANDROID_LINK_HERE" class="btn btn-mint">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <div class="cta-group reveal-up" style="animation-delay: 0.4s;">
+                <a href="YOUR_ANDROID_LINK_HERE" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z" />
                     </svg>
-                    Download for Android
+                    Android Early Access
                 </a>
-                
-                <a href="YOUR_ANDROID_LINK_HERE" class="btn-link">I have an invite code</a>
+            </div>
+            
+            <p class="early-access-note reveal-up" style="animation-delay: 0.5s;">
+                Coming end of Feb on <a href="#" onclick="return false;">App Store</a> & <a href="#" onclick="return false;">Google Play</a>.
+            </p>
+
+            <div class="features-strip reveal-up" style="animation-delay: 0.6s;">
+                <div class="feature-box">
+                    <h3>Invest</h3>
+                    <p>Simple & Quality</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Borrow</h3>
+                    <p>Smart & Fair</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Transact</h3>
+                    <p>Real-time Moves</p>
+                </div>
             </div>
         </div>
-    </section>
+    </main>
+
+    <footer>
+        <div>&copy; 2026 MINT (Pty) Ltd. FSP 55118.</div>
+        <div>NCRCP22892</div>
+    </footer>
 
     <script>
-        // --- SCROLL REVEAL ANIMATION ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+        const container = document.getElementById('canvas-wrapper');
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-
-        // --- THREE.JS SCENE SETUP ---
-        const container = document.getElementById('canvas-container');
-        
-        // 1. Scene & Camera
+        // Scene
         const scene = new THREE.Scene();
-        // Add subtle fog to blend the object into the background
-        scene.fog = new THREE.FogExp2(0xF5F5F7, 0.002);
+        // Background color: Clean white to blend with body
+        scene.background = new THREE.Color(0xffffff);
+        // Add fog for depth
+        scene.fog = new THREE.Fog(0xffffff, 5, 15);
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+        // Camera
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, 10);
 
-        // 2. Renderer
+        // Renderer
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio); // Sharpness on retina
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
         container.appendChild(renderer.domElement);
 
-        // 3. Object: Abstract Torus Knot (Infinity Shape)
-        // This looks like a modern art sculpture
-        const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 150, 20);
+        // --- OBJECTS ---
+        // We will create two interlocking rings to represent "Exchange" (The Logo Concept)
         
-        // "Physical" Material for glass/plastic apple look
-        const material = new THREE.MeshPhysicalMaterial({
-            color: 0x00C48C,        // Mint Green
-            metalness: 0.1,         // Low metal
-            roughness: 0.2,         // Smooth
-            transmission: 0.1,      // Slight see-through
-            clearcoat: 1.0,         // Shiny top layer
+        // Material 1: Royal Purple Metallic
+        const matPurple = new THREE.MeshPhysicalMaterial({
+            color: 0x31005e,
+            metalness: 0.7,
+            roughness: 0.2,
+            clearcoat: 1.0,
             clearcoatRoughness: 0.1
         });
 
-        const shape = new THREE.Mesh(geometry, material);
-        scene.add(shape);
-
-        // 4. Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-        scene.add(ambientLight);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(5, 10, 7);
-        scene.add(dirLight);
-
-        const blueLight = new THREE.PointLight(0x00C48C, 0.5);
-        blueLight.position.set(-5, -2, -5);
-        scene.add(blueLight);
-
-
-        // 5. Interaction (Mouse Movement)
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetX = 0;
-        let targetY = 0;
-
-        const windowHalfX = window.innerWidth / 2;
-        const windowHalfY = window.innerHeight / 2;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX - windowHalfX);
-            mouseY = (event.clientY - windowHalfY);
+        // Material 2: Wealth Gold
+        const matGold = new THREE.MeshPhysicalMaterial({
+            color: 0xddc357,
+            metalness: 1.0,
+            roughness: 0.3,
+            clearcoat: 0.8
         });
 
-        // 6. Animation Loop
+        // Shape 1: Torus (Ring)
+        const geoTorus = new THREE.TorusGeometry(2.2, 0.4, 64, 100);
+        const ring1 = new THREE.Mesh(geoTorus, matPurple);
+        ring1.position.x = -1;
+        scene.add(ring1);
+
+        // Shape 2: Torus (Ring) - Interlocked
+        const ring2 = new THREE.Mesh(geoTorus, matGold);
+        ring2.position.x = 1;
+        ring2.rotation.x = Math.PI / 2;
+        scene.add(ring2);
+
+        // Floating Particles (Money in Transit)
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 200;
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 15;
+        }
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0x5c3bcf
+        });
+        const particleMesh = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particleMesh);
+
+
+        // --- LIGHTING ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+
+        const spotLight = new THREE.SpotLight(0xffffff, 2);
+        spotLight.position.set(10, 10, 10);
+        spotLight.angle = 0.5;
+        spotLight.penumbra = 1;
+        scene.add(spotLight);
+
+        const purpleLight = new THREE.PointLight(0x5c3bcf, 2, 10);
+        purpleLight.position.set(-5, -5, 5);
+        scene.add(purpleLight);
+
+
+        // --- ANIMATION LOOP ---
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
 
-            const elapsedTime = clock.getElapsedTime();
+            // Rotate Rings
+            ring1.rotation.x = time * 0.2;
+            ring1.rotation.y = time * 0.1;
 
-            // Constant gentle rotation
-            shape.rotation.y += 0.005;
-            shape.rotation.x += 0.002;
+            ring2.rotation.x = (time * 0.2) + (Math.PI / 2);
+            ring2.rotation.y = -time * 0.1;
 
-            // Mouse Interaction (Smooth easing)
-            targetX = mouseX * 0.001;
-            targetY = mouseY * 0.001;
+            // Float entire group slightly
+            ring1.position.y = Math.sin(time) * 0.1;
+            ring2.position.y = Math.sin(time + 1) * 0.1;
 
-            shape.rotation.y += 0.05 * (targetX - shape.rotation.y);
-            shape.rotation.x += 0.05 * (targetY - shape.rotation.x);
-
-            // Floating bobbing effect
-            shape.position.y = Math.sin(elapsedTime * 0.5) * 0.2;
+            // Rotate particles
+            particleMesh.rotation.y = time * 0.05;
 
             renderer.render(scene, camera);
         }
 
         animate();
 
-        // 7. Handle Resize
+        // --- RESIZE HANDLER ---
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(container.clientWidth, container.clientHeight);
         });
+
     </script>
 </body>
 </html>
