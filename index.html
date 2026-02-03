@@ -662,9 +662,27 @@
             iconPlay.style.display = isPlaying ? 'none' : 'block';
         });
 
+        // --- 6. SIDE PANEL LOGIC (FIXED) ---
         const sidePanel = document.getElementById('sidePanel');
-        function openPanel(id) { sidePanel.classList.add('active'); }
-        function closePanel() { sidePanel.classList.remove('active'); }
+        const panels = document.querySelectorAll('.panel-content'); // Define this!
+
+        function openPanel(id) { 
+            // 1. Hide all inner panels first
+            panels.forEach(p => p.classList.remove('active'));
+
+            // 2. Find the specific panel matching the ID (e.g., 'panel-invest')
+            const content = document.getElementById('panel-' + id);
+            
+            // 3. If found, show it
+            if(content) content.classList.add('active');
+
+            // 4. Open the main side drawer
+            sidePanel.classList.add('active'); 
+        }
+
+        function closePanel() { 
+            sidePanel.classList.remove('active'); 
+        }
     </script>
 </body>
 </html>
