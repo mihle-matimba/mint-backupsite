@@ -16,6 +16,7 @@
             --brand-purple: #5c3bcf; /* MINT Electric Violet */
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
+            --panel-bg: rgba(10, 10, 10, 0.95); /* Darker background for panel for readability */
             --card-width: 300px;
             --card-height: 420px;
         }
@@ -50,17 +51,14 @@
         }
 
         /* BOTTOM LEFT STICKER */
-        /* Fixed: max-width 50vw prevents it from covering the Right Carousel Column */
         .sticker {
             position: fixed; 
             bottom: 0; 
             left: 0; 
-            width: 900px; /* Target Size (3x) */
-            max-width: 50vw; /* Hard Limit to protect Carousel visibility */
-            z-index: 50; /* High, but below nav/popups if needed */
+            width: 900px; 
+            max-width: 50vw;
+            z-index: 50; 
             pointer-events: none;
-            object-fit: contain;
-            object-position: bottom left;
         }
 
         /* --- NAVIGATION --- */
@@ -91,7 +89,7 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
             scroll-behavior: smooth;
-            z-index: 60; /* Above sticker */
+            z-index: 60;
         }
         .scroll-column::-webkit-scrollbar { display: none; }
 
@@ -122,24 +120,24 @@
             font-size: 1.4rem; font-weight: 200;
             line-height: 1.4; color: rgba(255,255,255,0.95);
             max-width: 500px;
+            margin-bottom: 24px;
         }
 
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: fixed; bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
-            opacity: 0.7; animation: bounce 2s infinite; z-index: 60;
-            transition: opacity 0.3s;
+        /* Action Link (Want to invest ->) */
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: var(--brand-purple);
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.3s;
+            font-weight: 400;
         }
-        .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
-        .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
+        .action-link:hover { opacity: 0.8; transform: translateX(5px); }
+        .action-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
-        }
 
         /* --- RIGHT COLUMN: 3D CAROUSEL --- */
         .carousel-column {
@@ -149,7 +147,7 @@
             overflow: hidden;
             cursor: grab;
             touch-action: pan-y;
-            z-index: 60; /* Ensures it sits above any background elements */
+            z-index: 60;
         }
         .carousel-column:active { cursor: grabbing; }
 
@@ -173,64 +171,105 @@
             padding: 32px;
             display: flex; flex-direction: column; justify-content: space-between;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            /* Removed backface-visibility: hidden to prevent disappearing */
         }
 
-        /* Buttons & Links */
-        .btn-pill {
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            background: var(--brand-purple); 
-            color: #fff; 
-            padding: 14px 24px;
-            border-radius: 100px; 
-            font-weight: 500; font-size: 0.85rem;
-            text-decoration: none;
-            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s;
-            box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3);
-            cursor: pointer;
-            width: 100%;
-        }
-        
-        .btn-pill:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5);
-        }
-
-        /* Controls */
-        .control-dock {
-            position: absolute; bottom: 40px;
-            display: flex; align-items: center; gap: 12px; z-index: 200;
-        }
-        .play-btn {
-            width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px); color: white;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease; outline: none;
-        }
-        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-        /* Content Styles */
+        /* Card Content */
         .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
         .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
         .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
+        .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; }
+        .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
         .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
 
-        /* --- GLOBAL FOOTER --- */
-        .legal-footer {
-            position: fixed; bottom: 0; right: 0; 
-            padding: 20px 40px; text-align: right; font-size: 0.7rem; 
-            color: rgba(255,255,255,0.4); z-index: 100;
+        /* Controls */
+        .control-dock { position: absolute; bottom: 40px; display: flex; align-items: center; gap: 12px; z-index: 200; }
+        .play-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; outline: none; }
+        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+        .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* --- SLIDE-IN PANEL --- */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100vh;
+            background: var(--panel-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: 900; /* Above carousel (60), below sticker (99999)? No, needs to be above everything on right */
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
         }
 
-        /* --- RESPONSIVE --- */
+        .side-panel.active {
+            transform: translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .close-btn:hover { background: rgba(255,255,255,0.1); }
+        .close-btn svg { width: 24px; height: 24px; fill: currentColor; }
+
+        .panel-content { display: none; opacity: 0; transition: opacity 0.4s ease 0.2s; }
+        .panel-content.active { display: block; opacity: 1; }
+
+        .step-item {
+            margin-bottom: 40px;
+            padding-left: 20px;
+            border-left: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .step-num {
+            font-size: 0.8rem;
+            color: var(--brand-purple);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .step-desc {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Footer */
+        .legal-footer { position: fixed; bottom: 0; right: 0; padding: 20px 40px; text-align: right; font-size: 0.7rem; color: rgba(255,255,255,0.4); z-index: 100; }
+        .scroll-indicator { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.7; animation: bounce 2s infinite; z-index: 60; transition: opacity 0.3s; }
+        .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
+        .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
+
+        /* Responsive */
         @media (max-width: 900px) {
             .grid-container { grid-template-columns: 1fr; }
             .scroll-column { display: none; }
-            .sticker { width: 100%; max-width: 100%; bottom: -50px; }
-            .legal-footer { width: 100%; text-align: center; }
-            .control-dock { bottom: 100px; } 
+            .side-panel { width: 100%; }
         }
 
     </style>
@@ -246,7 +285,6 @@
     </nav>
 
     <div class="grid-container">
-
         <div class="scroll-column" id="leftCol">
             
             <div class="scroll-indicator" id="scrollInd">
@@ -269,6 +307,10 @@
                 <div class="info-block">
                     <h2>Invest</h2>
                     <p>Manage investments in a single, intuitive environment. We lower minimums and simplify access, letting you move money to the future.</p>
+                    <a class="action-link" onclick="openPanel('invest')">
+                        Want to invest 
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
                 </div>
             </div>
 
@@ -276,6 +318,10 @@
                 <div class="info-block">
                     <h2>Borrow</h2>
                     <p>Access money from the future. Our smart credit tools offer seamless digital assessments aligned with your actual financial profile.</p>
+                    <a class="action-link" onclick="openPanel('borrow')">
+                        Want to borrow 
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
                 </div>
             </div>
 
@@ -283,14 +329,16 @@
                 <div class="info-block">
                     <h2>Transact</h2>
                     <p>Position yourself at the center of real-time money movement. MINT facilitates the constant flow of funds securely and instantly.</p>
+                    <a class="action-link" onclick="openPanel('transact')">
+                        Want to transact 
+                        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="carousel-column">
-            
             <div class="carousel-stage" id="stage">
-                
                 <div class="card-3d">
                     <div>
                         <div class="card-tag">Launch</div>
@@ -302,7 +350,6 @@
                          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z"/></svg>
                     </div>
                 </div>
-
                 <div class="card-3d">
                     <div>
                         <div class="card-tag">Online</div>
@@ -311,18 +358,14 @@
                     </div>
                     <div style="margin-top:auto; font-weight: 500;">Coming Soon...</div>
                 </div>
-
                 <div class="card-3d">
                     <div>
                         <div class="card-tag" style="color:#fff;">Priority</div>
                         <h3>Request<br>Access</h3>
                         <p>Secure your spot for the mobile release.</p>
                     </div>
-                    <a href="YOUR_LINK_HERE" class="btn-pill">
-                        Join Waitlist <span>&rarr;</span>
-                    </a>
+                    <a href="YOUR_LINK_HERE" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
-
                 <div class="card-3d">
                     <div>
                         <div class="card-tag">Community</div>
@@ -330,27 +373,92 @@
                         <p>Join the conversation.</p>
                     </div>
                     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" target="_blank" class="btn-pill">
-                            LinkedIn
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/mymint_africa?igsh=MXRqNTUyemkxdXQ4eQ==" target="_blank" class="btn-pill">
-                            Instagram
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" target="_blank" class="btn-pill">LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                        <a href="https://www.instagram.com/mymint_africa?igsh=MXRqNTUyemkxdXQ4eQ==" target="_blank" class="btn-pill">Instagram <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
-
             </div>
-
+            
             <div class="control-dock">
                 <button class="play-btn" id="toggleBtn">
                     <svg id="iconPause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                     <svg id="iconPlay" viewBox="0 0 24 24" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
                 </button>
             </div>
-
         </div>
+    </div>
+
+    <div class="side-panel" id="sidePanel">
+        <button class="close-btn" onclick="closePanel()">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+
+        <div class="panel-content" id="panel-invest">
+            <h1 class="thin-title" style="margin-bottom:60px;">Invest with Mint</h1>
+            
+            <div class="step-item">
+                <div class="step-num">01</div>
+                <h3 class="step-title">Discover Strategies</h3>
+                <p class="step-desc">Explore our curated list of "OpenStrategies" across asset classes like Equities, FX, and Crypto. Each strategy is backed by historical data and a clear methodology, allowing you to find a fit for your risk appetite and financial goals.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">02</div>
+                <h3 class="step-title">Track & Analyze</h3>
+                <p class="step-desc">Track performance in real-time. Upgrade your view to access premium wealth-tracking tools and insights that give you a deeper understanding of market movements before you allocate capital.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">03</div>
+                <h3 class="step-title">Allocate & Grow</h3>
+                <p class="step-desc">Ready to invest? Allocate funds to your chosen strategies. You only pay a performance fee on your returns, never on your assets under management. We only succeed when you do.</p>
+            </div>
+        </div>
+
+        <div class="panel-content" id="panel-borrow">
+            <h1 class="thin-title" style="margin-bottom:60px;">Borrow with Mint</h1>
+            
+            <div class="step-item">
+                <div class="step-num">01</div>
+                <h3 class="step-title">Smart Assessment</h3>
+                <p class="step-desc">Experience a seamless digital credit assessment that looks at your holistic financial profile, not just a score. We use advanced metrics to understand your true borrowing power.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">02</div>
+                <h3 class="step-title">Fair Access</h3>
+                <p class="step-desc">We prioritize suitability and affordability, ensuring you access liquidity without compromising your long-term financial health. Borrow responsibly with terms designed for your benefit.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">03</div>
+                <h3 class="step-title">Efficient Capital</h3>
+                <p class="step-desc">Leverage your existing assets to secure lower rates. Borrow against your portfolio to unlock cash flow without selling your positions, keeping your long-term strategy intact.</p>
+            </div>
+        </div>
+
+        <div class="panel-content" id="panel-transact">
+            <h1 class="thin-title" style="margin-bottom:60px;">Transact with Mint</h1>
+            
+            <div class="step-item">
+                <div class="step-num">01</div>
+                <h3 class="step-title">Real-Time Movement</h3>
+                <p class="step-desc">Move funds instantly between accounts and peers. We are building the rails for immediate, secure financial settlement, putting you in control of your cash flow speed.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">02</div>
+                <h3 class="step-title">Seamless Integration</h3>
+                <p class="step-desc">Your payments ecosystem is fully integrated with your investment and credit portfolios. Pay, transfer, and receive funds within the same unified environment.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-num">03</div>
+                <h3 class="step-title">Trusted Partnership</h3>
+                <p class="step-desc">Every transaction is secured by regulated banking standards. We act as a trusted partner ensuring your money is safe while it moves at the speed of life.</p>
+            </div>
+        </div>
+
     </div>
 
     <div class="legal-footer">
@@ -358,7 +466,7 @@
     </div>
 
     <script>
-        // 1. Scroll Indicator Logic
+        // Scroll Indicator
         const leftCol = document.getElementById('leftCol');
         const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => {
@@ -366,111 +474,60 @@
             else scrollInd.style.opacity = '0.7';
         });
 
-        // 2. Carousel Logic
+        // Carousel JS (Same as before)
         const stage = document.getElementById('stage');
         const container = document.querySelector('.carousel-column');
         const cards = document.querySelectorAll('.card-3d');
         const toggleBtn = document.getElementById('toggleBtn');
         const iconPause = document.getElementById('iconPause');
         const iconPlay = document.getElementById('iconPlay');
-        
-        const theta = 45; // Separation angle
-        const radius = 400; 
-        
-        // Initial Positions
-        cards.forEach((card, index) => {
-            card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`;
-        });
-
-        // State
-        let currentRotation = 0;
-        let isDragging = false;
-        let isSnapping = false; 
-        let startX = 0;
-        let isPlaying = true;
-        let animationFrameId;
-
-        // --- ANIMATION LOOP ---
+        const theta = 45; const radius = 400; 
+        cards.forEach((card, index) => { card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; });
+        let currentRotation = 0; let isDragging = false; let isSnapping = false; let startX = 0; let isPlaying = true; let animationFrameId;
         function animate() {
-            if (isPlaying && !isDragging && !isSnapping) {
-                // Rotate slowly counter-clockwise
-                currentRotation -= 0.05; 
-                stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
-            }
+            if (isPlaying && !isDragging && !isSnapping) { currentRotation -= 0.05; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; }
             animationFrameId = requestAnimationFrame(animate);
         }
-        
-        // Start Loop
         animate();
-
-        // --- TOGGLE PLAY/PAUSE ---
         toggleBtn.addEventListener('click', () => {
             isPlaying = !isPlaying;
-            if (isPlaying) {
-                iconPause.style.display = 'block';
-                iconPlay.style.display = 'none';
-            } else {
-                iconPause.style.display = 'none';
-                iconPlay.style.display = 'block';
-                snapToNearest();
-            }
+            if (isPlaying) { iconPause.style.display = 'block'; iconPlay.style.display = 'none'; } 
+            else { iconPause.style.display = 'none'; iconPlay.style.display = 'block'; snapToNearest(); }
         });
-
-        // --- SNAP LOGIC ---
         function snapToNearest() {
-            isSnapping = true; 
-            const snapAngle = Math.round(currentRotation / theta) * theta;
-            currentRotation = snapAngle;
-            
-            stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
-            
-            const handleEnd = () => {
-                stage.style.transition = 'none';
-                isSnapping = false;
-                stage.removeEventListener('transitionend', handleEnd);
-            };
+            isSnapping = true; const snapAngle = Math.round(currentRotation / theta) * theta; currentRotation = snapAngle;
+            stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            const handleEnd = () => { stage.style.transition = 'none'; isSnapping = false; stage.removeEventListener('transitionend', handleEnd); };
             stage.addEventListener('transitionend', handleEnd);
         }
+        container.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; stage.style.transition = 'none'; });
+        window.addEventListener('mouseup', (e) => { if (!isDragging) return; isDragging = false; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
+        container.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
+        window.addEventListener('touchend', (e) => { if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
 
-        // --- SWIPE LOGIC ---
-        container.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            stage.style.transition = 'none';
-        });
+        // PANEL LOGIC
+        const sidePanel = document.getElementById('sidePanel');
+        const panels = document.querySelectorAll('.panel-content');
 
-        window.addEventListener('mouseup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const endX = e.clientX;
-            const diff = endX - startX;
-            if (Math.abs(diff) > 30) {
-                if (diff > 0) currentRotation += theta; 
-                else currentRotation -= theta; 
-            }
-            snapToNearest();
-        });
+        function openPanel(id) {
+            // Hide all contents first
+            panels.forEach(p => p.classList.remove('active'));
+            // Show requested content
+            const content = document.getElementById('panel-' + id);
+            if(content) content.classList.add('active');
+            
+            // Slide in panel
+            sidePanel.classList.add('active');
+            
+            // Optional: Pause carousel when reading
+            if(isPlaying) toggleBtn.click();
+        }
 
-        // Touch
-        container.addEventListener('touchstart', (e) => {
-            isDragging = true;
-            startX = e.touches[0].clientX;
-            stage.style.transition = 'none';
-        });
-        
-        window.addEventListener('touchend', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            const endX = e.changedTouches[0].clientX;
-            const diff = endX - startX;
-            if (Math.abs(diff) > 30) {
-                if (diff > 0) currentRotation += theta;
-                else currentRotation -= theta;
-            }
-            snapToNearest();
-        });
-
+        function closePanel() {
+            sidePanel.classList.remove('active');
+            // Optional: Resume carousel?
+            // if(!isPlaying) toggleBtn.click();
+        }
     </script>
 </body>
 </html>
