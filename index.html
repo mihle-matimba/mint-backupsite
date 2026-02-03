@@ -167,7 +167,6 @@
             padding: 32px;
             display: flex; flex-direction: column; justify-content: space-between;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            /* Removed backface-visibility: hidden to prevent disappearing */
         }
 
         /* Card Content */
@@ -217,79 +216,69 @@
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
         @media (max-width: 900px) {
-            /* Enable body scroll on mobile */
-            body {
-                overflow-y: auto;
-                height: auto;
-                overflow-x: hidden;
-            }
-
-            /* Stack layout vertically, putting Carousel (2nd child) on top */
-            .grid-container { 
-                display: flex;
-                flex-direction: column-reverse; 
-                height: auto;
-                overflow: visible;
-            }
-
-            /* Unhide and adjust scroll column */
+            body { overflow-y: auto; height: auto; overflow-x: hidden; }
+            .grid-container { display: flex; flex-direction: column-reverse; height: auto; overflow: visible; }
+            
+            /* Text Column */
             .scroll-column { 
-                display: block; 
-                width: 100%;
-                height: auto;
-                overflow: visible;
-                padding: 20px 30px 100px 30px; /* Added bottom padding for footer */
+                display: block; width: 100%; height: auto; 
+                overflow: visible; padding: 20px 30px 100px 30px; 
             }
-
-            /* Disable snapping for smooth mobile flow */
-            .snap-section {
-                height: auto;
-                min-height: auto;
-                padding: 60px 0;
-                scroll-snap-align: none;
-            }
-
-            /* Adjust typography */
+            .snap-section { height: auto; min-height: auto; padding: 60px 0; scroll-snap-align: none; }
             h1.thin-title { font-size: 3rem; margin-top: 20px; }
             .info-block p { font-size: 1.1rem; max-width: 100%; }
 
-            /* Carousel adjustments for mobile */
+            /* Mobile Carousel - FLAT SLIDER (Not 3D) */
             .carousel-column {
-                height: 50vh; /* Fixed height for the visual top area */
+                height: 520px; /* Adjusted height for mobile slider */
                 width: 100%;
                 z-index: 5;
-                /* Scale the whole 3D container down so it fits */
-                transform: scale(0.65); 
-                /* Counteract the scale on margins if needed, or leave as is */
-            }
-            
-            /* Move controls to a better spot */
-            .control-dock {
-                bottom: 20px;
-                right: 20px;
-                width: auto;
+                perspective: none; /* Disable 3D perspective */
+                display: block;
             }
 
-            /* Side panel full width */
-            .side-panel { width: 100%; padding: 80px 30px; }
-
-            /* Sticker adjustment */
-            .sticker {
-                width: 250px;
-                bottom: -50px;
-                left: -20px;
-                opacity: 0.3; /* Fade out so it doesn't block text */
-            }
-
-            /* Footer static or less intrusive */
-            .legal-footer {
-                position: relative;
-                text-align: center;
+            .carousel-stage {
                 width: 100%;
-                padding: 20px;
-                opacity: 0.6;
+                height: 100%;
+                /* Reset 3D Props */
+                transform-style: flat;
+                transform: none !important; /* Override JS inline styles */
+                
+                /* Horizontal Scroll Logic */
+                display: flex;
+                gap: 20px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding: 40px 30px; /* Left/Right padding for peek effect */
+                align-items: center;
+                
+                /* Hide scrollbar */
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .carousel-stage::-webkit-scrollbar { display: none; }
+
+            .card-3d {
+                /* Reset Absolute Positioning */
+                position: relative;
+                top: auto; left: auto;
+                
+                /* Flex Item Sizing */
+                flex: 0 0 85%; /* Shows 85% of card to hint at next one */
+                max-width: 320px;
+                height: 420px;
+                
+                /* Reset 3D Transforms */
+                transform: none !important; /* Override JS inline styles */
+                opacity: 1 !important;
+                scroll-snap-align: center;
+                margin: 0;
             }
 
+            .control-dock { display: none; } /* Hide play button on mobile */
+            .side-panel { width: 100%; padding: 80px 30px; }
+            .sticker { width: 250px; bottom: -50px; left: -20px; opacity: 0.3; }
+            .legal-footer { position: relative; text-align: center; width: 100%; padding: 20px; opacity: 0.6; }
             .scroll-indicator { display: none; }
         }
 
@@ -489,12 +478,22 @@
         const toggleBtn = document.getElementById('toggleBtn'); const iconPause = document.getElementById('iconPause'); const iconPlay = document.getElementById('iconPlay');
         const theta = 45; const radius = 400; // 45 deg * 8 cards = 360 deg
         
-        cards.forEach((card, index) => { card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; });
+        // Initialize 3D positions
+        cards.forEach((card, index) => { 
+            card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; 
+        });
         
         let currentRotation = 0; let isDragging = false; let isSnapping = false; let startX = 0; let isPlaying = true; let animationFrameId;
         
         function animate() {
-            if (isPlaying && !isDragging && !isSnapping) { currentRotation -= 0.05; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; }
+            // Check if mobile (using same breakpoint as CSS)
+            const isMobile = window.innerWidth <= 900;
+            
+            // Only rotate if playing, not dragging/snapping, AND not on mobile
+            if (isPlaying && !isDragging && !isSnapping && !isMobile) { 
+                currentRotation -= 0.05; 
+                stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; 
+            }
             animationFrameId = requestAnimationFrame(animate);
         }
         animate();
@@ -506,20 +505,21 @@
         });
 
         function snapToNearest() {
+            if(window.innerWidth <= 900) return; // Disable snapping logic on mobile
             isSnapping = true; const snapAngle = Math.round(currentRotation / theta) * theta; currentRotation = snapAngle;
             stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
             const handleEnd = () => { stage.style.transition = 'none'; isSnapping = false; stage.removeEventListener('transitionend', handleEnd); };
             stage.addEventListener('transitionend', handleEnd);
         }
 
-        container.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; stage.style.transition = 'none'; });
-        window.addEventListener('mouseup', (e) => { if (!isDragging) return; isDragging = false; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
-        container.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
-        window.addEventListener('touchend', (e) => { if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
+        container.addEventListener('mousedown', (e) => { if(window.innerWidth <= 900) return; isDragging = true; startX = e.clientX; stage.style.transition = 'none'; });
+        window.addEventListener('mouseup', (e) => { if(window.innerWidth <= 900) return; if (!isDragging) return; isDragging = false; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
+        container.addEventListener('touchstart', (e) => { if(window.innerWidth <= 900) return; isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
+        window.addEventListener('touchend', (e) => { if(window.innerWidth <= 900) return; if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
 
         // PANEL LOGIC
         const sidePanel = document.getElementById('sidePanel'); const panels = document.querySelectorAll('.panel-content');
-        function openPanel(id) { panels.forEach(p => p.classList.remove('active')); const content = document.getElementById('panel-' + id); if(content) content.classList.add('active'); sidePanel.classList.add('active'); if(isPlaying) toggleBtn.click(); }
+        function openPanel(id) { panels.forEach(p => p.classList.remove('active')); const content = document.getElementById('panel-' + id); if(content) content.classList.add('active'); sidePanel.classList.add('active'); if(isPlaying && window.innerWidth > 900) toggleBtn.click(); }
         function closePanel() { sidePanel.classList.remove('active'); }
     </script>
 </body>
