@@ -15,8 +15,8 @@
             --brand-white: #ffffff;
             --brand-purple: #5c3bcf;
             --brand-dark: #1d1d1f;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --card-width: 300px;
             --card-height: 420px;
         }
@@ -32,22 +32,37 @@
             overflow: hidden;
             user-select: none;
             -webkit-font-smoothing: antialiased;
+            cursor: default; /* Custom cursor behavior handled by glow */
         }
 
-        /* --- LAYERS --- */
+        /* --- BACKGROUND LAYERS --- */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background-image: url('HeroBG.jpg');
+            z-index: -3;
+            background-image: url('HeroBG.jpg'); /* Fallback */
             background-size: cover;
             background-position: center;
+            opacity: 0.4;
         }
 
-        .overlay-layer {
+        /* PARTICLE CANVAS */
+        #particle-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* CURSOR GLOW (Desktop) */
+        .cursor-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(92, 59, 207, 0.15) 0%, rgba(0,0,0,0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
             z-index: -1;
-            background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
-            backdrop-filter: blur(2px);
+            mix-blend-mode: screen;
+            transition: opacity 0.3s;
         }
 
         /* BOTTOM LEFT STICKER */
@@ -99,6 +114,13 @@
             justify-content: center;
         }
 
+        /* SCRAMBLE TEXT STYLES */
+        .scramble-text {
+            font-family: 'Inter', monospace; /* Monospace helps effect */
+            display: inline-block;
+            min-width: 10px;
+        }
+
         h1.thin-title {
             font-size: clamp(3.5rem, 6vw, 6rem);
             font-weight: 200; 
@@ -129,13 +151,13 @@
             color: #ffffff; 
             text-decoration: none;
             cursor: pointer;
-            transition: opacity 0.3s, transform 0.3s;
+            transition: all 0.3s;
             font-weight: 400;
         }
-        .action-link:hover { opacity: 0.8; transform: translateX(5px); }
+        .action-link:hover { opacity: 0.8; transform: translateX(10px); }
         .action-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* --- RIGHT COLUMN --- */
+        /* --- RIGHT COLUMN (CAROUSEL) --- */
         .carousel-column {
             position: relative;
             display: flex; align-items: center; justify-content: center;
@@ -160,20 +182,27 @@
             width: 100%; height: 100%;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 32px;
             padding: 32px;
             display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: border-color 0.3s;
+            overflow: hidden; /* For shimmer effect */
+        }
+        
+        .card-3d:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
         }
 
         /* Card Content */
         .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
         .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
         .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
-        .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; }
+        .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; position: relative; z-index: 2; }
         .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
         .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
 
@@ -214,10 +243,18 @@
         .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
 
+        /* SHIMMER EFFECT KEYFRAMES */
+        @keyframes shimmer {
+            0% { transform: translateX(-150%) skewX(-15deg); }
+            50% { transform: translateX(150%) skewX(-15deg); }
+            100% { transform: translateX(150%) skewX(-15deg); }
+        }
+
         /* --- RESPONSIVE ADJUSTMENTS --- */
         @media (max-width: 900px) {
             body { overflow-y: auto; height: auto; overflow-x: hidden; }
             .grid-container { display: flex; flex-direction: column-reverse; height: auto; overflow: visible; }
+            .cursor-glow { display: none; } /* Disable cursor glow on touch */
             
             /* Text Column */
             .scroll-column { 
@@ -228,54 +265,61 @@
             h1.thin-title { font-size: 3rem; margin-top: 20px; }
             .info-block p { font-size: 1.1rem; max-width: 100%; }
 
-            /* Mobile Carousel - FLAT SLIDER (Not 3D) */
+            /* Mobile Carousel - "INVISIBLE" CONTAINER FIX */
             .carousel-column {
-                height: 520px; /* Adjusted height for mobile slider */
+                height: 480px;
                 width: 100%;
                 z-index: 5;
-                perspective: none; /* Disable 3D perspective */
+                perspective: none;
                 display: block;
+                background: transparent; /* Ensure no bg */
             }
 
             .carousel-stage {
                 width: 100%;
                 height: 100%;
-                /* Reset 3D Props */
                 transform-style: flat;
-                transform: none !important; /* Override JS inline styles */
-                
-                /* Horizontal Scroll Logic */
+                transform: none !important;
                 display: flex;
                 gap: 20px;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                padding: 40px 30px; /* Left/Right padding for peek effect */
+                padding: 40px 30px; 
                 align-items: center;
-                
-                /* Hide scrollbar */
                 -ms-overflow-style: none;
                 scrollbar-width: none;
+                /* FADE MASK: Makes cards fade in from sides instead of hitting a wall */
+                mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+                -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
             }
             .carousel-stage::-webkit-scrollbar { display: none; }
 
             .card-3d {
-                /* Reset Absolute Positioning */
                 position: relative;
                 top: auto; left: auto;
-                
-                /* Flex Item Sizing */
-                flex: 0 0 85%; /* Shows 85% of card to hint at next one */
+                flex: 0 0 85%;
                 max-width: 320px;
-                height: 420px;
-                
-                /* Reset 3D Transforms */
-                transform: none !important; /* Override JS inline styles */
+                height: 400px;
+                transform: none !important;
                 opacity: 1 !important;
                 scroll-snap-align: center;
                 margin: 0;
+                /* Reset shadows for flatter mobile look if desired, or keep depth */
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             }
 
-            .control-dock { display: none; } /* Hide play button on mobile */
+            /* AUTOMATIC SHIMMER (Mobile Only) */
+            .card-3d::after {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; width: 50%; height: 100%;
+                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+                transform: skewX(-15deg);
+                pointer-events: none;
+                animation: shimmer 5s infinite ease-in-out; /* 3s wait, 2s move */
+            }
+
+            .control-dock { display: none; }
             .side-panel { width: 100%; padding: 80px 30px; }
             .sticker { width: 250px; bottom: -50px; left: -20px; opacity: 0.3; }
             .legal-footer { position: relative; text-align: center; width: 100%; padding: 20px; opacity: 0.6; }
@@ -285,6 +329,9 @@
     </style>
 </head>
 <body>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="cursor-glow" id="cursorGlow"></div>
 
     <div class="bg-layer"></div>
     <div class="overlay-layer"></div>
@@ -303,19 +350,19 @@
             </div>
 
             <div class="snap-section">
-                <h1 class="thin-title">Mint is here.</h1>
+                <h1 class="thin-title scramble-text" data-text="Mint is here.">Mint is here.</h1>
             </div>
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2>The Ecosystem</h2>
+                    <h2 class="scramble-text" data-text="The Ecosystem">The Ecosystem</h2>
                     <p>MINT is a comprehensive financial platform. We’ve built an integrated ecosystem where investing, borrowing, and transacting are interconnected flows.</p>
                 </div>
             </div>
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2>Invest</h2>
+                    <h2 class="scramble-text" data-text="Invest">Invest</h2>
                     <p>Manage investments in a single, intuitive environment. We lower minimums and simplify access, letting you move money to the future.</p>
                     <a class="action-link" onclick="openPanel('invest')">
                         Want to invest 
@@ -326,7 +373,7 @@
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2>Borrow</h2>
+                    <h2 class="scramble-text" data-text="Borrow">Borrow</h2>
                     <p>Access money from the future. Our smart credit tools offer seamless digital assessments aligned with your actual financial profile.</p>
                     <a class="action-link" onclick="openPanel('borrow')">
                         Want to borrow 
@@ -337,7 +384,7 @@
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2>Transact</h2>
+                    <h2 class="scramble-text" data-text="Transact">Transact</h2>
                     <p>Position yourself at the center of real-time money movement. MINT facilitates the constant flow of funds securely and instantly.</p>
                     <a class="action-link" onclick="openPanel('transact')">
                         Want to transact 
@@ -469,6 +516,89 @@
     </div>
 
     <script>
+        // --- 1. AMBIENT PARTICLE SYSTEM ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width; this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, i) => {
+                p.update(); p.draw();
+                // Connect dots
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[j].x - p.x; const dy = particles[j].y - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(255,255,255,${0.05 - dist/2000})`;
+                        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        // --- 2. CURSOR GLOW ---
+        const glow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+
+        // --- 3. SCRAMBLE TEXT EFFECT ---
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
+        const scrambleElements = document.querySelectorAll('.scramble-text');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const originalText = target.getAttribute('data-text');
+                    let iterations = 0;
+                    const interval = setInterval(() => {
+                        target.innerText = originalText.split('').map((letter, index) => {
+                            if(index < iterations) return originalText[index];
+                            return chars[Math.floor(Math.random() * 26)];
+                        }).join('');
+                        if (iterations >= originalText.length) clearInterval(interval);
+                        iterations += 1/3;
+                    }, 30);
+                    observer.unobserve(target); // Only run once
+                }
+            });
+        }, { threshold: 0.5 });
+
+        scrambleElements.forEach(el => observer.observe(el));
+
+
+        // --- EXISTING LOGIC ---
         // Scroll Indicator
         const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
