@@ -13,10 +13,10 @@
         /* --- VARIABLES --- */
         :root {
             --brand-white: #ffffff;
-            --brand-purple: #5c3bcf; /* MINT Electric Violet */
+            --brand-purple: #5c3bcf;
+            --brand-dark: #1d1d1f; /* Apple Dark Grey for text on white */
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
-            --panel-bg: rgba(10, 10, 10, 0.95); /* Darker background for panel for readability */
             --card-width: 300px;
             --card-height: 420px;
         }
@@ -53,10 +53,8 @@
         /* BOTTOM LEFT STICKER */
         .sticker {
             position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            width: 900px; 
-            max-width: 50vw;
+            bottom: 0; left: 0; 
+            width: 900px; max-width: 50vw;
             z-index: 50; 
             pointer-events: none;
         }
@@ -78,7 +76,7 @@
             width: 100%;
         }
 
-        /* --- LEFT COLUMN: Snap Scroll --- */
+        /* --- LEFT COLUMN --- */
         .scroll-column {
             position: relative;
             height: 100vh;
@@ -101,7 +99,6 @@
             justify-content: center;
         }
 
-        /* Typography */
         h1.thin-title {
             font-size: clamp(3.5rem, 6vw, 6rem);
             font-weight: 200; 
@@ -123,23 +120,23 @@
             margin-bottom: 24px;
         }
 
-        /* Action Link (Want to invest ->) */
+        /* UPDATED: Action Link is now WHITE */
         .action-link {
             display: inline-flex;
             align-items: center;
             gap: 10px;
             font-size: 1rem;
-            color: var(--brand-purple);
+            color: #ffffff; /* Changed to White */
             text-decoration: none;
             cursor: pointer;
             transition: opacity 0.3s, transform 0.3s;
             font-weight: 400;
+            border-bottom: 1px solid transparent;
         }
         .action-link:hover { opacity: 0.8; transform: translateX(5px); }
         .action-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-
-        /* --- RIGHT COLUMN: 3D CAROUSEL --- */
+        /* --- RIGHT COLUMN --- */
         .carousel-column {
             position: relative;
             display: flex; align-items: center; justify-content: center;
@@ -181,24 +178,22 @@
         .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
         .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
 
-        /* Controls */
         .control-dock { position: absolute; bottom: 40px; display: flex; align-items: center; gap: 12px; z-index: 200; }
         .play-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; outline: none; }
         .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
         .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* --- SLIDE-IN PANEL --- */
+        /* --- UPDATED SIDE PANEL (WHITE) --- */
         .side-panel {
             position: fixed;
             top: 0;
             right: 0;
             width: 50%;
             height: 100vh;
-            background: var(--panel-bg);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            z-index: 900; /* Above carousel (60), below sticker (99999)? No, needs to be above everything on right */
+            /* White Background */
+            background: #ffffff;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.1);
+            z-index: 900;
             transform: translateX(100%);
             transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
             padding: 80px 60px;
@@ -207,10 +202,9 @@
             overflow-y: auto;
         }
 
-        .side-panel.active {
-            transform: translateX(0);
-        }
+        .side-panel.active { transform: translateX(0); }
 
+        /* Invert Close Button for White Background */
         .close-btn {
             position: absolute;
             top: 40px;
@@ -218,14 +212,14 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: transparent;
-            color: white;
+            border: 1px solid rgba(0,0,0,0.1); /* Darker border */
+            background: rgba(0,0,0,0.05);
+            color: var(--brand-dark); /* Dark Icon */
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .close-btn:hover { background: rgba(255,255,255,0.1); }
+        .close-btn:hover { background: rgba(0,0,0,0.1); }
         .close-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
         .panel-content { display: none; opacity: 0; transition: opacity 0.4s ease 0.2s; }
@@ -234,7 +228,13 @@
         .step-item {
             margin-bottom: 40px;
             padding-left: 20px;
-            border-left: 1px solid rgba(255,255,255,0.1);
+            border-left: 2px solid rgba(0,0,0,0.1); /* Darker border */
+        }
+
+        /* Text Colors Inside Panel (Dark on White) */
+        .side-panel .thin-title {
+            color: var(--brand-dark);
+            margin-bottom: 60px;
         }
 
         .step-num {
@@ -246,14 +246,14 @@
         
         .step-title {
             font-size: 1.5rem;
-            font-weight: 300;
+            font-weight: 500;
             margin-bottom: 12px;
-            color: #fff;
+            color: var(--brand-dark); /* Dark Text */
         }
 
         .step-desc {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.7);
+            font-size: 1.05rem;
+            color: #666; /* Grey Text */
             line-height: 1.6;
             font-weight: 300;
         }
@@ -394,20 +394,17 @@
         </button>
 
         <div class="panel-content" id="panel-invest">
-            <h1 class="thin-title" style="margin-bottom:60px;">Invest with Mint</h1>
-            
+            <h1 class="thin-title">Invest with Mint</h1>
             <div class="step-item">
                 <div class="step-num">01</div>
                 <h3 class="step-title">Discover Strategies</h3>
                 <p class="step-desc">Explore our curated list of "OpenStrategies" across asset classes like Equities, FX, and Crypto. Each strategy is backed by historical data and a clear methodology, allowing you to find a fit for your risk appetite and financial goals.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">02</div>
                 <h3 class="step-title">Track & Analyze</h3>
                 <p class="step-desc">Track performance in real-time. Upgrade your view to access premium wealth-tracking tools and insights that give you a deeper understanding of market movements before you allocate capital.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">03</div>
                 <h3 class="step-title">Allocate & Grow</h3>
@@ -416,20 +413,17 @@
         </div>
 
         <div class="panel-content" id="panel-borrow">
-            <h1 class="thin-title" style="margin-bottom:60px;">Borrow with Mint</h1>
-            
+            <h1 class="thin-title">Borrow with Mint</h1>
             <div class="step-item">
                 <div class="step-num">01</div>
                 <h3 class="step-title">Smart Assessment</h3>
                 <p class="step-desc">Experience a seamless digital credit assessment that looks at your holistic financial profile, not just a score. We use advanced metrics to understand your true borrowing power.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">02</div>
                 <h3 class="step-title">Fair Access</h3>
                 <p class="step-desc">We prioritize suitability and affordability, ensuring you access liquidity without compromising your long-term financial health. Borrow responsibly with terms designed for your benefit.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">03</div>
                 <h3 class="step-title">Efficient Capital</h3>
@@ -438,27 +432,23 @@
         </div>
 
         <div class="panel-content" id="panel-transact">
-            <h1 class="thin-title" style="margin-bottom:60px;">Transact with Mint</h1>
-            
+            <h1 class="thin-title">Transact with Mint</h1>
             <div class="step-item">
                 <div class="step-num">01</div>
                 <h3 class="step-title">Real-Time Movement</h3>
                 <p class="step-desc">Move funds instantly between accounts and peers. We are building the rails for immediate, secure financial settlement, putting you in control of your cash flow speed.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">02</div>
                 <h3 class="step-title">Seamless Integration</h3>
                 <p class="step-desc">Your payments ecosystem is fully integrated with your investment and credit portfolios. Pay, transfer, and receive funds within the same unified environment.</p>
             </div>
-            
             <div class="step-item">
                 <div class="step-num">03</div>
                 <h3 class="step-title">Trusted Partnership</h3>
                 <p class="step-desc">Every transaction is secured by regulated banking standards. We act as a trusted partner ensuring your money is safe while it moves at the speed of life.</p>
             </div>
         </div>
-
     </div>
 
     <div class="legal-footer">
@@ -474,7 +464,7 @@
             else scrollInd.style.opacity = '0.7';
         });
 
-        // Carousel JS (Same as before)
+        // Carousel JS
         const stage = document.getElementById('stage');
         const container = document.querySelector('.carousel-column');
         const cards = document.querySelectorAll('.card-3d');
@@ -510,23 +500,15 @@
         const panels = document.querySelectorAll('.panel-content');
 
         function openPanel(id) {
-            // Hide all contents first
             panels.forEach(p => p.classList.remove('active'));
-            // Show requested content
             const content = document.getElementById('panel-' + id);
             if(content) content.classList.add('active');
-            
-            // Slide in panel
             sidePanel.classList.add('active');
-            
-            // Optional: Pause carousel when reading
             if(isPlaying) toggleBtn.click();
         }
 
         function closePanel() {
             sidePanel.classList.remove('active');
-            // Optional: Resume carousel?
-            // if(!isPlaying) toggleBtn.click();
         }
     </script>
 </body>
