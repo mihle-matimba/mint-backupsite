@@ -3,294 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINT | Is Here</title>
+    <title>MINT | Money In Transit</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- VARIABLES --- */
         :root {
-            --brand-dark: #31005e;
-            --brand-text: #1d1d1f;
-            --glass-card: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.8);
-            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --brand-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.10); /* Subtle Frost */
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --card-width: 280px; 
+            --spacing-gap: 24px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: var(--font-main);
-            color: var(--brand-text);
-            overflow: hidden; /* Prevent body scroll, handle content in containers */
-            background-color: #f5f5f7;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--brand-white);
+            background-color: #050505; /* Fallback */
             height: 100vh;
             width: 100vw;
+            overflow: hidden; /* Prevent body scroll */
         }
 
-        /* --- ASSET LAYERS --- */
+        /* --- LAYERS --- */
         
-        /* 1. Background Image (Lowest Z-Index) */
+        /* 1. Background Image */
         .bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background-image: url('HeroBG.jpg'); /* Your Repo File */
+            z-index: -2;
+            background-image: url('HeroBG.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
         }
 
-        /* 2. Bottom Left Overlay (Highest Z-Index) */
-        .sticker-overlay {
+        /* 2. Cinematic Overlay (Darkens image for text readability) */
+        .overlay-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 100%);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 3. Bottom Left Sticker */
+        .sticker {
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 350px; /* Adjusted for visibility */
-            max-width: 40vw;
-            height: auto;
-            z-index: 9999;
-            pointer-events: none; /* Let clicks pass through */
+            width: 320px;
+            z-index: 999;
+            pointer-events: none;
         }
 
-        /* --- UI LAYOUT --- */
-        
-        /* Navigation (Logo Only) */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
             padding: 40px 60px;
             z-index: 100;
         }
-
+        
         .nav-logo {
-            height: 32px; /* Apple style: restrained sizing */
+            height: 30px;
             width: auto;
+            /* Invert to make the purple logo white if needed, or keep original if readable */
+            /* filter: brightness(0) invert(1); */ 
         }
 
-        /* Main Grid */
-        .main-container {
+        /* --- MAIN LAYOUT --- */
+        .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Split screen */
+            grid-template-columns: 1fr 1fr; /* 50/50 Split */
             height: 100vh;
             width: 100%;
             padding: 0 60px;
-            align-items: center;
         }
 
-        /* LEFT SIDE: Title */
-        .left-content {
-            z-index: 10;
+        /* --- LEFT COLUMN: Vertical Scroll --- */
+        .scroll-column {
+            height: 100vh;
+            overflow-y: auto;
+            padding-top: 150px; /* Offset for header */
+            padding-bottom: 100px;
             padding-right: 40px;
+            
+            /* Hide Scrollbar */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
+        .scroll-column::-webkit-scrollbar { display: none; }
 
-        h1.hero-title {
+        h1.title {
             font-size: clamp(3.5rem, 6vw, 5.5rem);
             font-weight: 700;
-            letter-spacing: -0.03em; /* The "Apple" tight tracking */
-            line-height: 1.05;
-            color: var(--brand-text);
-            
-            /* Animation */
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 60px;
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.2s;
+            animation: slideUp 1s ease forwards;
         }
 
-        /* RIGHT SIDE: Invisible Carousel */
-        .right-content {
-            height: 100%;
+        /* Content Blocks */
+        .info-block {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s ease forwards;
+        }
+
+        .info-block h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 16px;
+        }
+
+        .info-block p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+            max-width: 520px;
+            font-weight: 400;
+        }
+
+        /* --- RIGHT COLUMN: Horizontal Carousel --- */
+        .carousel-column {
             display: flex;
             align-items: center;
-            overflow: hidden; /* Hide overflow from container */
-            mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            justify-content: center;
+            position: relative;
+            height: 100%;
+            /* Mask to fade edges */
+            mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
         }
 
         .carousel-track {
             display: flex;
-            gap: 24px;
+            gap: var(--spacing-gap);
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            padding: 40px 20px; /* Padding for shadows */
+            padding: 40px 0;
             width: 100%;
+            align-items: center;
             
             /* Hide Scrollbar */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-        
-        .carousel-track::-webkit-scrollbar { 
-            display: none; /* Chrome/Safari */
-        }
+        .carousel-track::-webkit-scrollbar { display: none; }
 
-        /* Carousel Cards */
+        /* --- CARDS --- */
         .card {
-            flex: 0 0 320px; /* Fixed width cards */
-            height: 420px;
+            flex: 0 0 var(--card-width);
+            height: 380px;
             scroll-snap-align: center;
             
-            /* Glassmorphism */
-            background: var(--glass-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-top: 1px solid rgba(255,255,255,0.3); /* Top highlight */
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 32px;
             
             padding: 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             
-            /* Shadow */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            transition: transform 0.4s ease;
-            cursor: grab;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Typography inside cards */
+        .card-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 12px;
+            font-weight: 600;
         }
         
-        .card:active { cursor: grabbing; }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--brand-text);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
         .card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 8px;
+            line-height: 1.1;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        
+        .card p.sub {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.4;
         }
 
-        .card p {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
+        /* Ghost Items (The Spacers for the "Cut" effect) */
+        .ghost {
+            flex: 0 0 50px; /* Controls how much of the side cards are "cut" off */
+            visibility: hidden;
         }
 
-        .card-footer {
-            margin-top: auto;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--brand-dark);
+        /* Visual Elements */
+        .btn-pill {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            background: #fff;
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: auto;
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
+        .date-badge {
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-                padding: 0 24px;
-                padding-top: 100px;
+            .grid-container { grid-template-columns: 1fr; padding: 0; }
+            .scroll-column { 
+                height: auto; 
+                min-height: 60vh; 
+                padding: 120px 24px 60px 24px; 
+                overflow-y: visible;
             }
-            
-            nav { padding: 24px; }
-            
-            .left-content { 
-                padding-right: 0; 
-                margin-bottom: 40px; 
-                text-align: left;
-            }
-            
-            .right-content {
-                width: 100vw;
-                margin-left: -24px; /* Break out of padding */
-            }
-            
-            .carousel-track {
-                padding-left: 24px; /* Restore visual padding */
-            }
-            
-            .sticker-overlay {
-                width: 200px;
-            }
+            .carousel-column { height: 50vh; mask-image: none; -webkit-mask-image: none; }
+            .sticker { width: 180px; }
+            h1.title { font-size: 3.5rem; margin-bottom: 40px; }
         }
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
     </style>
 </head>
 <body>
 
     <div class="bg-layer"></div>
+    <div class="overlay-layer"></div>
+    <img src="Bottom left.png" alt="MINT App" class="sticker">
 
     <nav>
         <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Logo" class="nav-logo">
     </nav>
 
-    <div class="main-container">
-        
-        <div class="left-content">
-            <h1 class="hero-title">Mint is here.</h1>
+    <div class="grid-container">
+
+        <div class="scroll-column">
+            <h1 class="title">Mint is here.</h1>
+
+            <div class="info-block" style="animation-delay: 0.2s;">
+                <h2>Integrated Platform</h2>
+                <p>
+                    [cite_start]MINT is a comprehensive, regulated financial platform designed for modern money management[cite: 98]. 
+                    We have built a fully integrated ecosystem where investing, borrowing, and transacting are interconnected flows within one environment.
+                </p>
+            </div>
+
+            <div class="info-block" style="animation-delay: 0.3s;">
+                <h2>Invest</h2>
+                <p>
+                    [cite_start]Manage your investments in a single, intuitive environment[cite: 75]. 
+                    [cite_start]We remove traditional barriers by lowering minimums and simplifying access, allowing you to move money to the future through quality investing without compromising governance[cite: 75, 81].
+                </p>
+            </div>
+
+            <div class="info-block" style="animation-delay: 0.4s;">
+                <h2>Borrow</h2>
+                <p>
+                    [cite_start]Access money from the future with smarter, fairer credit tools built around suitability and transparency[cite: 76, 82]. 
+                    [cite_start]MINT offers seamless digital credit assessments aligned with your actual financial profile, enabling efficient borrowing against your assets[cite: 76].
+                </p>
+            </div>
+
+            <div class="info-block" style="animation-delay: 0.5s;">
+                <h2>Transact</h2>
+                <p>
+                    [cite_start]Position yourself at the center of real-time money movement[cite: 77]. 
+                    [cite_start]Whether paying or transferring, MINT facilitates the constant flow of funds, acting as a trusted partner in the growth and movement of your money[cite: 80, 84].
+                </p>
+            </div>
+
+            <div style="margin-top: 80px; opacity: 0.4; font-size: 0.75rem; line-height: 1.5;">
+                MINT (Pty) Ltd is a Financial Services Provider (FSP 55118) and a Registered Credit Provider (NCRCP22892). MINT Reg no: 2024/644796/07.
+            </div>
         </div>
 
-        <div class="right-content">
+        <div class="carousel-column">
             <div class="carousel-track">
                 
+                <div class="ghost"></div>
+
                 <div class="card">
                     <div>
-                        <div class="card-icon">I</div>
-                        <h3>Invest</h3>
-                        <p>Simple, quality investing tools designed to build long-term wealth.</p>
+                        <div class="card-tag">Launch</div>
+                        <h3>App Store &<br>Google Play</h3>
+                        <div class="date-badge">End of February</div>
                     </div>
-                    <div class="card-footer">
-                        Learn more <span>&rarr;</span>
+                    <div style="margin-top:auto; opacity:0.8; display:flex; gap:12px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.55-1.48 3.77-1.7 3.77-1.7C16.61 2.92 16.53 5.2 13 5.2c-.03-.84.49-1.7 0-1.7z"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z"/></svg>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
-                        <div class="card-icon">B</div>
-                        <h3>Borrow</h3>
-                        <p>Access future capital today with transparent, fair credit assessment.</p>
+                        <div class="card-tag">Online</div>
+                        <h3>Website<br>Platform</h3>
+                        <p class="sub">Full desktop experience.</p>
                     </div>
-                    <div class="card-footer">
-                        See options <span>&rarr;</span>
+                    <div style="margin-top:auto; font-weight: 500;">
+                        Coming Soon...
                     </div>
                 </div>
 
-                <div class="card">
+                <a href="#" class="card" style="background: rgba(255,255,255,0.2);">
                     <div>
-                        <div class="card-icon">T</div>
-                        <h3>Transact</h3>
-                        <p>Move money in real-time. Secure, regulated, and seamless.</p>
+                        <div class="card-tag" style="color:#fff;">Priority</div>
+                        <h3>Request<br>Access</h3>
+                        <p class="sub">Secure your spot for the mobile release.</p>
                     </div>
-                    <div class="card-footer">
-                        Get started <span>&rarr;</span>
+                    <div class="btn-pill">
+                        Join Waitlist <span>&rarr;</span>
                     </div>
-                </div>
+                </a>
 
-                <div style="min-width: 20px;"></div>
+                <div class="ghost"></div>
 
             </div>
         </div>
-    </div>
 
-    <img src="Bottom left.png" alt="Overlay" class="sticker-overlay">
+    </div>
 
 </body>
 </html>
