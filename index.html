@@ -1,644 +1,369 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MINT | Money In Transit</title>
-    <meta
-      name="description"
-      content="MINT is coming. Private wealth tools, re-engineered for a new generation."
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mint - Coming Soon</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap");
-
-      @font-face {
-        font-family: "Future Earth";
-        src:
-          url("assets/fonts/FutureEarth-Regular.woff2") format("woff2"),
-          url("assets/fonts/FutureEarth-Regular.woff") format("woff"),
-          url("assets/fonts/FutureEarth-Regular.ttf") format("truetype");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-      }
-
-      :root {
-        color-scheme: light;
-        --white: #ffffff;
-        
-        /* Brand Manual Palette */
-        --ink: #000000;           /* Official Black */
-        --purple: #5c3bcf;        /* Secondary Purple */
-        --purple-deep: #31005e;   /* Primary Purple */
-        --gold: #ddc357;          /* Brand Gold */
-
-        /* Functional/Derived Colors */
-        --purple-soft: rgba(92, 59, 207, 0.08);
-        --purple-line: rgba(49, 0, 94, 0.15);
-        --gold-soft: rgba(221, 195, 87, 0.15);
-        --shadow: 0 35px 110px rgba(49, 0, 94, 0.2);
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
-        font-weight: 300;
-        background: var(--white);
-        color: var(--ink);
-        min-height: 100vh;
-        letter-spacing: 0.01em;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background:
-          radial-gradient(circle at 15% 15%, rgba(92, 59, 207, 0.08), transparent 48%),
-          radial-gradient(circle at 85% 10%, rgba(49, 0, 94, 0.05), transparent 45%),
-          radial-gradient(circle at 70% 85%, rgba(221, 195, 87, 0.04), transparent 55%);
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .page {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 48px 28px 72px;
-        display: flex;
-        flex-direction: column;
-        gap: 64px;
-      }
-
-      .site-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        font-size: 12px;
-      }
-
-      .brand {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .brand-logo {
-        width: 140px;
-        height: auto;
-        display: block;
-      }
-
-      .brand-sub {
-        color: var(--purple-deep);
-        opacity: 0.8;
-        letter-spacing: 0.16em;
-        font-weight: 500;
-      }
-
-      .status-pill {
-        border: 1px solid var(--gold);
-        padding: 8px 18px;
-        border-radius: 999px;
-        font-size: 11px;
-        color: var(--purple-deep);
-        background: var(--gold-soft);
-        font-weight: 500;
-      }
-
-      main {
-        display: flex;
-        flex-direction: column;
-        gap: 72px;
-      }
-
-      .hero {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: 32px;
-        padding: 52px;
-        border-radius: 28px;
-        border: 1px solid var(--purple-line);
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(10px);
-      }
-
-      .hero-copy {
-        grid-column: span 6;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
-
-      .eyebrow {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.34em;
-        color: var(--purple);
-        font-weight: 500;
-      }
-
-      h1,
-      h2 {
-        font-family: "Future Earth", "Times New Roman", serif;
-        font-weight: 400;
-        letter-spacing: 0.02em;
-      }
-
-      h1 {
-        font-size: clamp(40px, 5vw, 66px);
-        color: var(--purple-deep);
-      }
-
-      h2 {
-        font-size: clamp(24px, 3.5vw, 34px);
-        color: var(--purple-deep);
-      }
-
-      .subheadline {
-        font-size: 20px;
-        max-width: 520px;
-        color: var(--ink);
-        opacity: 0.85;
-      }
-
-      .supporting {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.26em;
-        color: var(--ink);
-        opacity: 0.5;
-      }
-
-      .hero-visual {
-        grid-column: 7 / span 6;
-        position: relative;
-        min-height: 380px;
-        display: grid;
-        align-items: center;
-        justify-items: center;
-        clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
-        padding: 24px;
-      }
-
-      .visual-layer {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transform: translate(var(--base-x, 0%), var(--base-y, 0%))
-          translateY(var(--parallax, 0px));
-        transition: transform 0.4s ease-out;
-        will-change: transform;
-      }
-
-      .image-card {
-        width: clamp(190px, 30vw, 300px);
-        height: clamp(250px, 34vw, 380px);
-        border-radius: 26px;
-        border: 1px solid var(--purple-line);
-        background: var(--white);
-        box-shadow: 0 30px 70px rgba(49, 0, 94, 0.2);
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: stretch;
-        clip-path: polygon(0 2%, 100% 0, 98% 100%, 0 98%);
-      }
-
-      .image-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .image-card--one {
-        transform: rotate(-7deg) scale(0.95);
-      }
-
-      .image-card--two {
-        transform: rotate(4deg) scale(1.02);
-      }
-
-      .image-card--three {
-        transform: rotate(-2deg) scale(0.9);
-        opacity: 0.95;
-      }
-
-      .image-card--four {
-        width: clamp(230px, 32vw, 340px);
-        height: clamp(240px, 32vw, 340px);
-        border-radius: 32px;
-        transform: rotate(-3deg);
-      }
-
-      .glow-orb {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(92, 59, 207, 0.35),
-          rgba(92, 59, 207, 0)
-        );
-        top: 6%;
-        right: 16%;
-        filter: blur(8px);
-      }
-
-      .section-heading {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .divider {
-        flex: 1;
-        height: 1px;
-        background: var(--purple-line);
-      }
-
-      .availability,
-      .invitation {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .body-copy {
-        max-width: 640px;
-        font-size: 17px;
-        line-height: 1.7;
-        color: var(--ink);
-        opacity: 0.8;
-      }
-
-      .badge-row {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-
-      .badge {
-        border: 1px solid var(--purple-line);
-        background: var(--purple-soft);
-        color: var(--purple-deep);
-        padding: 14px 22px;
-        border-radius: 14px;
-        min-width: 190px;
-        text-align: left;
-        cursor: not-allowed;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        font-size: 12px;
-        box-shadow: 0 20px 50px rgba(49, 0, 94, 0.1);
-        transition: border-color 0.3s ease;
-      }
-
-      .badge:hover {
-        border-color: var(--purple);
-      }
-
-      .badge-title {
-        font-weight: 500;
-        color: var(--purple-deep);
-      }
-
-      .badge-subtitle {
-        font-size: 11px;
-        opacity: 0.6;
-      }
-
-      .invitation-grid {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: 24px;
-        align-items: center;
-      }
-
-      .invitation-copy {
-        grid-column: span 6;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .invitation-visual {
-        grid-column: 7 / span 6;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-      }
-
-      .cta {
-        align-self: flex-start;
-        padding: 16px 34px;
-        border-radius: 999px;
-        border: 1px solid var(--purple);
-        color: var(--white);
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 0.26em;
-        text-transform: uppercase;
-        background: var(--purple);
-        transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.3s ease;
-        box-shadow: 0 20px 50px rgba(92, 59, 207, 0.25);
-      }
-
-      .cta:hover,
-      .cta:focus {
-        transform: translateY(-2px);
-        box-shadow: 0 24px 60px rgba(92, 59, 207, 0.35);
-        background: var(--purple-deep);
-        border-color: var(--purple-deep);
-      }
-
-      .fine-print {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.24em;
-        color: var(--ink);
-        opacity: 0.45;
-      }
-
-      .ripple {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        border: 1px solid var(--purple);
-        animation: ripple 8s infinite ease;
-        opacity: 0.6;
-      }
-
-      .site-footer {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        border-top: 1px solid var(--purple-line);
-        padding-top: 28px;
-        font-size: 12px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--purple-deep);
-        opacity: 0.6;
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .footer-links a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-
-      .footer-links a:hover {
-        color: var(--purple);
-        opacity: 1;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(28px);
-        transition: opacity 1.2s ease, transform 1.2s ease;
-        transition-delay: var(--delay, 0s);
-      }
-
-      .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .float {
-        will-change: transform;
-      }
-
-      .float-slow {
-        animation: floatSlow 12s ease-in-out infinite;
-      }
-
-      .float-medium {
-        animation: floatMedium 10s ease-in-out infinite;
-      }
-
-      .float-fast {
-        animation: floatFast 8s ease-in-out infinite;
-      }
-
-      @keyframes floatSlow {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
-        100% { transform: translateY(0); }
-      }
-
-      @keyframes floatMedium {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(14px); }
-        100% { transform: translateY(0); }
-      }
-
-      @keyframes floatFast {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-16px); }
-        100% { transform: translateY(0); }
-      }
-
-      @keyframes ripple {
-        0% { transform: scale(0.9); opacity: 0.7; }
-        50% { transform: scale(1.2); opacity: 0.3; }
-        100% { transform: scale(0.9); opacity: 0.7; }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.001ms !important;
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --mint-primary: #00C48C; 
+            --mint-hover: #00A374;
+            --bg-body: #F5F5F7;
+            --bg-card: #FFFFFF;
+            --text-main: #1D1D1F;
+            --text-secondary: #86868B;
+            --radius-lg: 24px;
+            --radius-btn: 999px;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --ease-apple: cubic-bezier(0.25, 1, 0.5, 1);
         }
-      }
 
-      @media (max-width: 960px) {
-        .hero { grid-template-columns: 1fr; }
-        .hero-copy, .hero-visual { grid-column: 1 / -1; }
-        .hero-visual { min-height: 320px; clip-path: none; }
-        .invitation-grid { grid-template-columns: 1fr; }
-        .invitation-copy, .invitation-visual { grid-column: 1 / -1; }
-      }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      @media (max-width: 640px) {
-        .page { padding: 32px 20px 52px; }
-        .site-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-        .hero { padding: 32px; }
-        .cta { width: 100%; text-align: center; }
-      }
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none; /* Let clicks pass through to 3D background if needed */
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            pointer-events: auto;
+        }
+        .logo span { color: var(--mint-primary); }
+
+        .status-pill {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: var(--radius-btn);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid rgba(0,0,0,0.05);
+            pointer-events: auto;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        /* The 3D Canvas sits behind the text */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0; /* Starts hidden for fade-in */
+            animation: fadeIn 2s var(--ease-apple) forwards;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+            /* Glass backing for text legibility over 3D object */
+            background: rgba(245, 245, 247, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #1D1D1F 0%, #4a4a4a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* --- CONTENT SECTION --- */
+        .details-section {
+            position: relative;
+            z-index: 20;
+            background: var(--bg-card);
+            border-radius: 40px 40px 0 0;
+            padding: 100px 20px;
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.03);
+            margin-top: -50px;
+        }
+
+        .content-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .info-item h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .info-item p {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 36px;
+            border-radius: var(--radius-btn);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-apple);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-mint {
+            background: var(--mint-primary);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.25);
+        }
+
+        .btn-mint:hover {
+            transform: scale(1.02) translateY(-2px);
+            background: var(--mint-hover);
+            box-shadow: 0 20px 40px rgba(0, 196, 140, 0.35);
+        }
+
+        .btn-link {
+            display: block;
+            margin-top: 24px;
+            color: var(--mint-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .btn-link:hover { text-decoration: underline; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s var(--ease-apple);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
-  </head>
-  <body>
-    <div class="page">
-      <header class="site-header">
-        <div class="brand">
-          <img
-            class="brand-logo"
-            src="assets/mint-logo.png"
-            alt="MINT"
-            loading="lazy"
-          />
-          <div class="brand-sub">Money In Transit</div>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <header>
+        <div class="logo">Mint<span>.</span></div>
+        <div class="status-pill">Beta 2.0</div>
+    </header>
+
+    <section class="hero-container">
+        <div class="hero-content reveal">
+            <h1>Finance,<br>Refined.</h1>
+            <p class="subtitle">A fresh approach to your daily spending.</p>
+            <div style="height: 20px;"></div> <div style="opacity: 0.4; font-size: 0.8rem; margin-top: 20px;">
+                Scroll to explore
+            </div>
         </div>
-        <div class="status-pill">Launching soon</div>
-      </header>
+    </section>
 
-      <main>
-        <section class="hero reveal" style="--delay: 0s">
-          <div class="hero-copy">
-            <p class="eyebrow">If you know, you know</p>
-            <h1>MINT is coming.</h1>
-            <p class="subheadline">
-              Private wealth tools, re-engineered for a new generation.
-            </p>
-            <p class="supporting">Our website is launching soon.</p>
-          </div>
-
-          <div class="hero-visual" aria-hidden="true">
-            <div
-              class="visual-layer"
-              data-parallax="0.08"
-              style="--base-x: -12%; --base-y: -8%"
-            >
-              <div class="float float-slow">
-                <div class="image-card image-card--one">
-                  <img
-                    src="assets/mint-screen-01.png"
-                    alt="MINT screen"
-                    loading="lazy"
-                  />
+    <section class="details-section">
+        <div class="content-wrapper reveal">
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Release Date</h3>
+                    <p>End of February</p>
                 </div>
-              </div>
-            </div>
-            <div
-              class="visual-layer"
-              data-parallax="0.14"
-              style="--base-x: 12%; --base-y: 6%"
-            >
-              <div class="float float-medium">
-                <div class="image-card image-card--two">
-                  <img
-                    src="assets/mint-screen-01.png"
-                    alt="MINT screen"
-                    loading="lazy"
-                  />
+                <div class="info-item">
+                    <h3>Availability</h3>
+                    <p>App Store & Google Play</p>
                 </div>
-              </div>
             </div>
-            <div
-              class="visual-layer"
-              data-parallax="0.2"
-              style="--base-x: 0%; --base-y: 20%"
-            >
-              <div class="float float-fast">
-                <div class="image-card image-card--three">
-                  <img
-                    src="assets/mint-screen-01.png"
-                    alt="MINT screen"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="glow-orb" aria-hidden="true"></div>
-          </div>
-        </section>
 
-        <section class="availability reveal" style="--delay: 0.08s">
-          <div class="section-heading">
-            <h2>App availability</h2>
-            <div class="divider"></div>
-          </div>
-          <p class="body-copy">
-            The MINT app will be available on the App Store and Google Play at the
-            end of February.
-          </p>
-          <div class="badge-row" aria-label="App badges, coming soon">
-            <button class="badge" type="button" aria-disabled="true">
-              <span class="badge-title">App Store</span>
-              <span class="badge-subtitle">Coming soon</span>
-            </button>
-            <button class="badge" type="button" aria-disabled="true">
-              <span class="badge-title">Google Play</span>
-              <span class="badge-subtitle">Coming soon</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="invitation reveal" style="--delay: 0.16s">
-          <div class="section-heading">
-            <h2>By invitation.</h2>
-            <div class="divider"></div>
-          </div>
-          <div class="invitation-grid">
-            <div class="invitation-copy">
-              <p class="body-copy">
-                We are opening limited early access to MINT for select users.
-                Apply for an invitation to preview the platform ahead of public
-                release.
-              </p>
-              <a
-                class="cta"
-                href="https://forms.gle/your-mint-invitation"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Request an invitation
-              </a>
-              <p class="fine-print">Selection is intentional. Access is discreet.</p>
+            <div style="background: #F9F9FA; padding: 40px; border-radius: 24px;">
+                <h2 style="margin-bottom: 20px; font-size: 1.8rem;">Get Early Access</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                    Skip the waitlist on Android. Download the beta build today.
+                </p>
+                
+                <a href="YOUR_ANDROID_LINK_HERE" class="btn btn-mint">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z" />
+                    </svg>
+                    Download for Android
+                </a>
+                
+                <a href="YOUR_ANDROID_LINK_HERE" class="btn-link">I have an invite code</a>
             </div>
-            <div class="invitation-visual" aria-hidden="true">
-              <div class="image-card image-card--four">
-                <img
-                  src="assets/mint-screen-01.png"
-                  alt="MINT screen"
-                  loading="lazy"
-                />
-              </div>
-              <div class="ripple" aria-hidden="true"></div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer reveal" style="--delay: 0.2s">
-        <div class="footer-line">MINT © 2026</div>
-        <div class="footer-line">
-          Secure. Regulated. Money In Transit.
         </div>
-        <div class="footer-links">
-          <a href="#" aria-label="Privacy Policy">Privacy Policy</a>
-          <span aria-hidden="true">|</span>
-          <a href="#" aria-label="Terms">Terms</a>
-        </div>
-      </footer>
-    </div>
+    </section>
 
-    <script src="script.js"></script>
-  </body>
+    <script>
+        // --- SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+        // --- THREE.JS SCENE SETUP ---
+        const container = document.getElementById('canvas-container');
+        
+        // 1. Scene & Camera
+        const scene = new THREE.Scene();
+        // Add subtle fog to blend the object into the background
+        scene.fog = new THREE.FogExp2(0xF5F5F7, 0.002);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // 2. Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio); // Sharpness on retina
+        container.appendChild(renderer.domElement);
+
+        // 3. Object: Abstract Torus Knot (Infinity Shape)
+        // This looks like a modern art sculpture
+        const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 150, 20);
+        
+        // "Physical" Material for glass/plastic apple look
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0x00C48C,        // Mint Green
+            metalness: 0.1,         // Low metal
+            roughness: 0.2,         // Smooth
+            transmission: 0.1,      // Slight see-through
+            clearcoat: 1.0,         // Shiny top layer
+            clearcoatRoughness: 0.1
+        });
+
+        const shape = new THREE.Mesh(geometry, material);
+        scene.add(shape);
+
+        // 4. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        const blueLight = new THREE.PointLight(0x00C48C, 0.5);
+        blueLight.position.set(-5, -2, -5);
+        scene.add(blueLight);
+
+
+        // 5. Interaction (Mouse Movement)
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - windowHalfX);
+            mouseY = (event.clientY - windowHalfY);
+        });
+
+        // 6. Animation Loop
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+
+            // Constant gentle rotation
+            shape.rotation.y += 0.005;
+            shape.rotation.x += 0.002;
+
+            // Mouse Interaction (Smooth easing)
+            targetX = mouseX * 0.001;
+            targetY = mouseY * 0.001;
+
+            shape.rotation.y += 0.05 * (targetX - shape.rotation.y);
+            shape.rotation.x += 0.05 * (targetY - shape.rotation.x);
+
+            // Floating bobbing effect
+            shape.position.y = Math.sin(elapsedTime * 0.5) * 0.2;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // 7. Handle Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
 </html>
