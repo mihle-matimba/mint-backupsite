@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MINT | Money In Transit</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -30,55 +29,64 @@
             background-color: #050505;
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* Intro handles scroll initially */
+            overflow: hidden;
             user-select: none;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 3D INTRO LAYER --- */
-        #intro-container {
+        /* --- INTRO MASK LAYER --- */
+        #intro-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10000;
-            background: #000;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            background-color: #000;
+            /* The Magic: Radial gradient makes center transparent (visible site) and outer black */
+            -webkit-mask-image: radial-gradient(circle at center, transparent var(--hole-size, 150px), black var(--hole-edge, 200px));
+            mask-image: radial-gradient(circle at center, transparent var(--hole-size, 150px), black var(--hole-edge, 200px));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto; /* Catch scroll events initially */
         }
-        
+
         #intro-text {
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 20%; /* Positioned above the hole */
+            width: 100%;
             text-align: center;
             pointer-events: none;
-            z-index: 10001;
-            width: 100%;
-            mix-blend-mode: exclusion; /* Blends text with the mountain image */
             transition: opacity 0.5s;
+            z-index: 10001;
         }
 
         #intro-text h1 {
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(3rem, 5vw, 6rem);
             font-weight: 700;
             letter-spacing: -0.05em;
             text-transform: uppercase;
             color: #fff;
-            line-height: 1;
+            margin: 0;
         }
 
-        /* --- MAIN WEBSITE (Hidden behind intro) --- */
+        /* --- MAIN WEBSITE --- */
+        /* Z-index 1 ensures it's below intro but visible through hole */
         #main-site {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 1s ease;
-            pointer-events: none; /* Disabled until intro finishes */
+            z-index: 1; 
+            opacity: 1; /* Always visible now */
         }
 
-        /* --- WEBSITE STYLES --- */
+        /* --- ASSETS & LAYOUT --- */
         .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background-image: url('HeroBG.jpg'); background-size: cover; background-position: center; }
         .overlay-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%); backdrop-filter: blur(2px); }
-        .sticker { position: fixed; bottom: 0; left: 0; width: 900px; max-width: 50vw; z-index: 50; pointer-events: none; }
+        
+        /* Fixed Bottom Left Sticker (Capped width to prevent carousel overlap) */
+        .sticker { 
+            position: fixed; bottom: 0; left: 0; 
+            width: 900px; max-width: 50vw; 
+            z-index: 50; pointer-events: none; 
+        }
         
         nav { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 0; z-index: 100; display: flex; justify-content: center; pointer-events: none; }
         .nav-logo { height: 36px; width: auto; pointer-events: auto; }
@@ -139,12 +147,12 @@
 </head>
 <body>
 
-    <div id="intro-container">
+    <div id="intro-layer">
         <div id="intro-text">
             <h1>Mint is here.</h1>
-            <p style="margin-top:20px; opacity:0.6; font-size:0.9rem;">Scroll to enter</p>
+            <p style="margin-top:20px; font-weight:300; letter-spacing:0.1em; opacity:0.7;">SCROLL TO ENTER</p>
         </div>
-        </div>
+    </div>
 
     <div id="main-site">
         <div class="bg-layer"></div>
@@ -203,85 +211,46 @@
     </div>
 
     <script>
-        // --- 1. THREE.JS IMAGE INTRO ---
-        const introContainer = document.getElementById('intro-container');
-        const mainSite = document.getElementById('main-site');
+        // --- 1. INTRO MASK LOGIC ---
+        const introLayer = document.getElementById('intro-layer');
         const introText = document.getElementById('intro-text');
         
-        let scene, camera, renderer, imageMesh;
-        let isIntroComplete = false;
         let scrollProgress = 0;
+        let isIntroComplete = false;
 
-        function initThree() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            introContainer.appendChild(renderer.domElement);
-
-            // Load Image Texture (Placeholder)
-            const loader = new THREE.TextureLoader();
-            loader.load('mountains.jpg', (texture) => {
-                // Create a circular clipping mask geometry
-                const geometry = new THREE.CircleGeometry(2, 64);
-                const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-                imageMesh = new THREE.Mesh(geometry, material);
-                scene.add(imageMesh);
-                animateThree();
-            });
-        }
-
-        function animateThree() {
-            if (isIntroComplete) return;
-            requestAnimationFrame(animateThree);
-            renderer.render(scene, camera);
-        }
-
-        initThree();
-
-        // SCROLL ZOOM LOGIC
+        // Intro Scroll Handler
         window.addEventListener('wheel', (e) => {
             if (isIntroComplete) return;
             
-            // Normalize
-            const delta = e.deltaY * 0.003;
+            // Speed factor
+            const delta = e.deltaY * 0.5; 
             scrollProgress += delta;
-            if (scrollProgress < 0) scrollProgress = 0;
+            
+            // Limit min
+            if(scrollProgress < 0) scrollProgress = 0;
 
-            if (imageMesh) {
-                // Scale up to simulate flying through
-                const scale = 1 + scrollProgress * 15; 
-                imageMesh.scale.set(scale, scale, 1);
-                
-                // Fade text out quickly
-                introText.style.opacity = Math.max(0, 1 - scrollProgress * 3);
-            }
+            // Update Hole Size (starts at 150px, grows to 4000px)
+            const baseHole = 150;
+            const newHole = baseHole + (scrollProgress * 2);
+            
+            // Apply CSS Variable
+            introLayer.style.setProperty('--hole-size', `${newHole}px`);
+            introLayer.style.setProperty('--hole-edge', `${newHole + 100}px`); // Smooth edge
 
-            // Threshold to switch to site
-            if (scrollProgress > 2.5) {
-                finishIntro();
+            // Fade Text
+            introText.style.opacity = Math.max(0, 1 - (scrollProgress / 300));
+
+            // End Intro
+            if(newHole > window.innerWidth * 1.5) {
+                isIntroComplete = true;
+                introLayer.style.display = 'none'; // Remove from DOM
             }
         });
 
-        function finishIntro() {
-            isIntroComplete = true;
-            // Fade out intro layer
-            introContainer.style.opacity = '0';
-            introContainer.style.visibility = 'hidden'; // Ensure clicks pass through
-            
-            // Fade in site
-            mainSite.style.opacity = '1';
-            mainSite.style.pointerEvents = 'auto';
-        }
-
         // --- 2. SITE LOGIC ---
-        // Scroll Indicators
         const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
 
-        // Carousel
         const stage = document.getElementById('stage'); const container = document.querySelector('.carousel-column'); const cards = document.querySelectorAll('.card-3d');
         const toggleBtn = document.getElementById('toggleBtn'); const iconPause = document.getElementById('iconPause'); const iconPlay = document.getElementById('iconPlay');
         const theta = 45; const radius = 400; 
@@ -298,7 +267,6 @@
 
         toggleBtn.addEventListener('click', () => { isPlaying = !isPlaying; if (isPlaying) { iconPause.style.display='block'; iconPlay.style.display='none'; } else { iconPause.style.display='none'; iconPlay.style.display='block'; } });
 
-        // Swipe & Snap
         function snapToNearest() {
             isSnapping = true; const snapAngle = Math.round(currentRotation / theta) * theta; currentRotation = snapAngle;
             stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
@@ -311,7 +279,6 @@
         container.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
         window.addEventListener('touchend', (e) => { if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
 
-        // Panels
         const sidePanel = document.getElementById('sidePanel'); const panels = document.querySelectorAll('.panel-content');
         window.openPanel = function(id) { panels.forEach(p => p.classList.remove('active')); document.getElementById('panel-'+id).classList.add('active'); sidePanel.classList.add('active'); if(isPlaying) isPlaying = false; }
         window.closePanel = function() { sidePanel.classList.remove('active'); }
