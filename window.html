@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINT | Is Here</title>
+    <title>MINT | Money In Transit</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,8 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET & CORE --- */
+        /* --- CORE VARIABLES --- */
         :root {
+            --brand-white: #ffffff;
             --brand-purple: #5c3bcf;
             --brand-dark: #1d1d1f;
             --glass-bg: rgba(255, 255, 255, 0.08);
@@ -20,24 +21,27 @@
             --card-width: 300px;
             --card-height: 420px;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--brand-white);
             background-color: #050505;
-            color: #fff;
-            overflow-x: hidden;
-            /* We handle scroll manually for the intro */
             height: 100vh;
             width: 100vw;
+            overflow: hidden; /* Intro handles scroll initially */
+            user-select: none;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* --- 3D INTRO LAYER --- */
         #intro-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10000; /* Topmost layer */
-            transition: opacity 0.5s ease;
+            z-index: 10000;
             background: #000;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
         
         #intro-text {
@@ -48,7 +52,8 @@
             pointer-events: none;
             z-index: 10001;
             width: 100%;
-            mix-blend-mode: exclusion; /* Cool blending with video */
+            mix-blend-mode: exclusion; /* Blends text with the mountain image */
+            transition: opacity 0.5s;
         }
 
         #intro-text h1 {
@@ -60,22 +65,24 @@
             line-height: 1;
         }
 
-        /* --- MAIN WEBSITE CONTENT (Initially Hidden/Fixed) --- */
+        /* --- MAIN WEBSITE (Hidden behind intro) --- */
         #main-site {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
             opacity: 0;
-            pointer-events: none; /* Disabled until intro done */
             transition: opacity 1s ease;
+            pointer-events: none; /* Disabled until intro finishes */
         }
 
-        /* --- REUSED WEBSITE STYLES (From Previous Build) --- */
+        /* --- WEBSITE STYLES --- */
         .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background-image: url('HeroBG.jpg'); background-size: cover; background-position: center; }
         .overlay-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%); backdrop-filter: blur(2px); }
         .sticker { position: fixed; bottom: 0; left: 0; width: 900px; max-width: 50vw; z-index: 50; pointer-events: none; }
+        
         nav { position: fixed; top: 0; left: 0; width: 100%; padding: 30px 0; z-index: 100; display: flex; justify-content: center; pointer-events: none; }
         .nav-logo { height: 36px; width: auto; pointer-events: auto; }
+
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; height: 100vh; width: 100%; }
         
         /* Left Column */
@@ -85,14 +92,16 @@
         .thin-title { font-size: clamp(3.5rem, 6vw, 6rem); font-weight: 200; letter-spacing: -0.05em; line-height: 1; margin-bottom: 20px; }
         .info-block h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 400; color: rgba(255,255,255,0.7); margin-bottom: 24px; }
         .info-block p { font-size: 1.4rem; font-weight: 200; line-height: 1.4; color: rgba(255,255,255,0.95); max-width: 500px; margin-bottom: 24px; }
+        
         .action-link { display: inline-flex; align-items: center; gap: 10px; font-size: 1rem; color: #ffffff; text-decoration: none; cursor: pointer; transition: opacity 0.3s, transform 0.3s; font-weight: 400; }
         .action-link:hover { opacity: 0.8; transform: translateX(5px); }
         .action-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* Right Column (Carousel) */
+        /* Right Column */
         .carousel-column { position: relative; display: flex; align-items: center; justify-content: center; perspective: 1200px; overflow: hidden; cursor: grab; touch-action: pan-y; z-index: 60; }
         .carousel-column:active { cursor: grabbing; }
         .carousel-stage { position: relative; width: var(--card-width); height: var(--card-height); transform-style: preserve-3d; will-change: transform; }
+        
         .card-3d { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--glass-bg); border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: 32px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
         .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
@@ -100,6 +109,7 @@
         .btn-pill { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--brand-purple); color: #fff; padding: 14px 24px; border-radius: 100px; font-weight: 500; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3); cursor: pointer; width: 100%; }
         .btn-pill:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5); }
         .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
+
         .control-dock { position: absolute; bottom: 40px; display: flex; align-items: center; gap: 12px; z-index: 200; }
         .play-btn { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; outline: none; }
         .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
@@ -132,7 +142,7 @@
     <div id="intro-container">
         <div id="intro-text">
             <h1>Mint is here.</h1>
-            <p style="margin-top:20px; opacity:0.6; font-size:0.9rem;">Scroll to explore</p>
+            <p style="margin-top:20px; opacity:0.6; font-size:0.9rem;">Scroll to enter</p>
         </div>
         </div>
 
@@ -147,10 +157,7 @@
 
         <div class="grid-container">
             <div class="scroll-column" id="leftCol">
-                <div class="scroll-indicator" id="scrollInd">
-                    <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em;">Scroll</span>
-                    <div class="chevron"></div>
-                </div>
+                <div class="scroll-indicator" id="scrollInd"><span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em;">Scroll</span><div class="chevron"></div></div>
                 <div class="snap-section"><h1 class="thin-title">Mint is here.</h1></div>
                 <div class="snap-section"><div class="info-block"><h2>The Ecosystem</h2><p>MINT is a comprehensive financial platform. We’ve built an integrated ecosystem where investing, borrowing, and transacting are interconnected flows.</p></div></div>
                 <div class="snap-section">
@@ -196,12 +203,12 @@
     </div>
 
     <script>
-        // --- 1. THREE.JS INTRO ---
+        // --- 1. THREE.JS IMAGE INTRO ---
         const introContainer = document.getElementById('intro-container');
         const mainSite = document.getElementById('main-site');
-        const scrollCol = document.getElementById('leftCol');
+        const introText = document.getElementById('intro-text');
         
-        let scene, camera, renderer, videoMesh;
+        let scene, camera, renderer, imageMesh;
         let isIntroComplete = false;
         let scrollProgress = 0;
 
@@ -214,24 +221,16 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             introContainer.appendChild(renderer.domElement);
 
-            // Load Video
-            const video = document.createElement('video');
-            video.src = 'background video.mp4'; // USER MUST PROVIDE THIS
-            video.crossOrigin = 'anonymous';
-            video.loop = true;
-            video.muted = true;
-            video.play();
-
-            const texture = new THREE.VideoTexture(video);
-            
-            // Create a plane with the video
-            // To do a "clipping mask" of a circle, we use a CircleGeometry
-            const geometry = new THREE.CircleGeometry(2, 64); // Radius 2
-            const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-            videoMesh = new THREE.Mesh(geometry, material);
-            scene.add(videoMesh);
-
-            animateThree();
+            // Load Image Texture (Placeholder)
+            const loader = new THREE.TextureLoader();
+            loader.load('mountains.jpg', (texture) => {
+                // Create a circular clipping mask geometry
+                const geometry = new THREE.CircleGeometry(2, 64);
+                const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+                imageMesh = new THREE.Mesh(geometry, material);
+                scene.add(imageMesh);
+                animateThree();
+            });
         }
 
         function animateThree() {
@@ -242,27 +241,25 @@
 
         initThree();
 
-        // Handle Scroll for Intro Zoom
+        // SCROLL ZOOM LOGIC
         window.addEventListener('wheel', (e) => {
             if (isIntroComplete) return;
-
-            // Normalize scroll speed
-            const delta = e.deltaY * 0.005;
+            
+            // Normalize
+            const delta = e.deltaY * 0.003;
             scrollProgress += delta;
-
-            // Clamp
             if (scrollProgress < 0) scrollProgress = 0;
 
-            // Zoom Effect: Move camera closer or scale mesh up
-            // Let's scale mesh up to simulate flying into it
-            const scale = 1 + scrollProgress * 15; 
-            if(videoMesh) {
-                videoMesh.scale.set(scale, scale, 1);
-                // Also fade text
-                document.getElementById('intro-text').style.opacity = 1 - scrollProgress * 2;
+            if (imageMesh) {
+                // Scale up to simulate flying through
+                const scale = 1 + scrollProgress * 15; 
+                imageMesh.scale.set(scale, scale, 1);
+                
+                // Fade text out quickly
+                introText.style.opacity = Math.max(0, 1 - scrollProgress * 3);
             }
 
-            // Threshold to trigger site
+            // Threshold to switch to site
             if (scrollProgress > 2.5) {
                 finishIntro();
             }
@@ -270,17 +267,23 @@
 
         function finishIntro() {
             isIntroComplete = true;
+            // Fade out intro layer
             introContainer.style.opacity = '0';
-            setTimeout(() => {
-                introContainer.style.display = 'none';
-                mainSite.style.opacity = '1';
-                mainSite.style.pointerEvents = 'auto';
-            }, 500);
+            introContainer.style.visibility = 'hidden'; // Ensure clicks pass through
+            
+            // Fade in site
+            mainSite.style.opacity = '1';
+            mainSite.style.pointerEvents = 'auto';
         }
 
-        // --- 2. WEBSITE LOGIC (Carousel + Panels) ---
-        const stage = document.getElementById('stage');
-        const cards = document.querySelectorAll('.card-3d');
+        // --- 2. SITE LOGIC ---
+        // Scroll Indicators
+        const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
+        leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
+
+        // Carousel
+        const stage = document.getElementById('stage'); const container = document.querySelector('.carousel-column'); const cards = document.querySelectorAll('.card-3d');
+        const toggleBtn = document.getElementById('toggleBtn'); const iconPause = document.getElementById('iconPause'); const iconPlay = document.getElementById('iconPlay');
         const theta = 45; const radius = 400; 
         
         cards.forEach((card, index) => { card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; });
@@ -293,20 +296,25 @@
         }
         animateCarousel();
 
-        const toggleBtn = document.getElementById('toggleBtn');
-        toggleBtn.addEventListener('click', () => { isPlaying = !isPlaying; });
+        toggleBtn.addEventListener('click', () => { isPlaying = !isPlaying; if (isPlaying) { iconPause.style.display='block'; iconPlay.style.display='none'; } else { iconPause.style.display='none'; iconPlay.style.display='block'; } });
 
-        // Panel Logic
-        const sidePanel = document.getElementById('sidePanel');
-        const panels = document.querySelectorAll('.panel-content');
-        window.openPanel = function(id) {
-            panels.forEach(p => p.classList.remove('active'));
-            document.getElementById('panel-'+id).classList.add('active');
-            sidePanel.classList.add('active');
-            if(isPlaying) isPlaying = false; // Pause when reading
+        // Swipe & Snap
+        function snapToNearest() {
+            isSnapping = true; const snapAngle = Math.round(currentRotation / theta) * theta; currentRotation = snapAngle;
+            stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            const handleEnd = () => { stage.style.transition = 'none'; isSnapping = false; stage.removeEventListener('transitionend', handleEnd); };
+            stage.addEventListener('transitionend', handleEnd);
         }
-        window.closePanel = function() { sidePanel.classList.remove('active'); }
+        
+        container.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; stage.style.transition = 'none'; });
+        window.addEventListener('mouseup', (e) => { if (!isDragging) return; isDragging = false; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
+        container.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
+        window.addEventListener('touchend', (e) => { if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
 
+        // Panels
+        const sidePanel = document.getElementById('sidePanel'); const panels = document.querySelectorAll('.panel-content');
+        window.openPanel = function(id) { panels.forEach(p => p.classList.remove('active')); document.getElementById('panel-'+id).classList.add('active'); sidePanel.classList.add('active'); if(isPlaying) isPlaying = false; }
+        window.closePanel = function() { sidePanel.classList.remove('active'); }
     </script>
 </body>
 </html>
