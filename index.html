@@ -70,7 +70,7 @@
             pointer-events: none;
         }
 
-        /* --- NAVIGATION (Desktop Default) --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 0; z-index: 100;
@@ -182,6 +182,11 @@
             perspective: 1200px;
             overflow: hidden;
             z-index: 60;
+            /* Allow cursor to indicate drag when paused */
+            cursor: grab;
+        }
+        .carousel-column:active {
+            cursor: grabbing;
         }
 
         .announcements-header {
@@ -190,6 +195,7 @@
             margin-bottom: 40px; 
             z-index: 70;
             transform: translateY(-20px); 
+            pointer-events: none; /* Let clicks pass through to carousel */
         }
 
         .announcements-header h2 {
@@ -286,20 +292,19 @@
             .grid-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
             .cursor-glow { display: none; }
             
-            /* --- NEW WHITE HEADER (MOBILE) --- */
+            /* WHITE HEADER (MOBILE) */
             nav {
-                background: #ffffff; /* White background */
+                background: #ffffff; 
                 border-bottom-left-radius: 36px;
                 border-bottom-right-radius: 36px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Subtle shadow */
+                box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
                 padding: 15px 0;
                 height: 100px;
                 align-items: center;
                 pointer-events: auto;
             }
             
-            /* If your logo is white, invert it for the white header. If logo is dark, remove this line. */
-            .nav-logo { filter: invert(1); } 
+            /* .nav-logo { filter: invert(1); }  <-- REMOVED INVERSION */
 
             .scroll-column { 
                 display: block; width: 100%; height: auto; 
@@ -321,6 +326,7 @@
                 padding: 30px 0;
                 overflow: visible;
                 margin-bottom: 40px; 
+                cursor: auto; /* Reset cursor on mobile */
             }
 
             .announcements-header {
@@ -657,24 +663,22 @@
             const gridContainer = document.querySelector('.grid-container');
 
             if (isMobile) {
-                // 1. DUPLICATE CARDS FOR ENDLESS SCROLL (Once)
-                if (!hasClonedForMobile) {
-                    originalCards.forEach(card => {
-                        let clone = card.cloneNode(true);
-                        stage.appendChild(clone);
-                    });
-                    hasClonedForMobile = true;
-                }
+                // 1. NO DUPLICATION ON MOBILE - Hide the duplicates (indices 4,5,6,7)
+                // We assume there are 8 cards in HTML. We only want 0,1,2,3 visible on mobile.
+                const allCards = stage.querySelectorAll('.card-3d');
+                allCards.forEach((card, index) => {
+                    card.style.transform = 'none'; // Reset transform
+                    if (index >= 4) {
+                        card.style.display = 'none'; // Hide clones on mobile
+                    } else {
+                        card.style.display = 'flex';
+                    }
+                });
 
                 // 2. MOVE CAROUSEL INSIDE LEFT COLUMN (Between Hero and Ecosystem)
-                // This puts the Announcements + Carousel ABOVE the Ecosystem section
                 if (heroSection.nextElementSibling !== rightCol) {
                     heroSection.after(rightCol);
                 }
-                
-                // Reset transforms for mobile
-                const allCards = stage.querySelectorAll('.card-3d');
-                allCards.forEach(c => c.style.transform = 'none');
 
             } else {
                 // DESKTOP: Move Carousel back to Grid Container (Right side)
@@ -682,11 +686,10 @@
                     gridContainer.appendChild(rightCol);
                 }
                 
-                // Restore 3D Ring positions
+                // Restore 3D Ring positions (Show all 8 cards)
                 const allCards = stage.querySelectorAll('.card-3d');
                 allCards.forEach((card, index) => {
-                    // Show all cards for desktop loop too if desired, or just first 8
-                    card.style.display = 'flex';
+                    card.style.display = 'flex'; // Ensure all are visible for loop
                     card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; 
                 });
             }
@@ -710,6 +713,41 @@
             iconPause.style.display = isPlaying ? 'block' : 'none';
             iconPlay.style.display = isPlaying ? 'none' : 'block';
         });
+
+        // Manual Rotation Logic (Desktop)
+        let isDragging = false;
+        let startX = 0;
+        let previousRotation = 0;
+        const container = document.querySelector('.carousel-column');
+
+        container.addEventListener('mousedown', (e) => {
+            if (window.innerWidth <= 900 || isPlaying) return; 
+            isDragging = true;
+            startX = e.clientX;
+            previousRotation = currentRotation;
+            stage.style.transition = 'none'; 
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - startX;
+            currentRotation = previousRotation + (deltaX * 0.2); 
+            stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+        });
+
+        window.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            snapToNearest();
+        });
+        
+        function snapToNearest() {
+            const snapAngle = Math.round(currentRotation / theta) * theta;
+            currentRotation = snapAngle;
+            stage.style.transition = 'transform 0.5s ease-out';
+            stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            setTimeout(() => { stage.style.transition = 'none'; }, 500);
+        }
 
         // --- 6. SIDE PANEL LOGIC ---
         const sidePanel = document.getElementById('sidePanel');
