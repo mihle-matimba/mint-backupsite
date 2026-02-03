@@ -81,7 +81,8 @@
             display: flex; justify-content: center;
             pointer-events: none;
         }
-        .nav-logo { height: 36px; width: auto; pointer-events: auto; }
+        .nav-logo-desktop { height: 36px; width: auto; pointer-events: auto; display: block; }
+        .nav-logo-mobile { display: none; height: 40px; width: auto; pointer-events: auto; }
 
         /* --- MAIN LAYOUT --- */
         .grid-container {
@@ -160,7 +161,9 @@
         /* --- RIGHT COLUMN (CAROUSEL) --- */
         .carousel-column {
             position: relative;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; 
+            flex-direction: column; /* Changed to column to stack title */
+            align-items: center; justify-content: center;
             perspective: 1200px;
             overflow: hidden;
             cursor: grab;
@@ -169,12 +172,44 @@
         }
         .carousel-column:active { cursor: grabbing; }
 
+        /* Announcement Title */
+        .carousel-announcement {
+            position: absolute;
+            top: 15%; /* Positioned above carousel */
+            text-align: center;
+            z-index: 70;
+            pointer-events: none;
+            opacity: 0.7;
+            transform: translateY(-20px);
+            animation: fadeInDrop 1s ease forwards 0.5s;
+        }
+        .carousel-announcement h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-weight: 400;
+            color: var(--brand-purple);
+            margin-bottom: 8px;
+        }
+        .carousel-announcement span {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 0.05em;
+        }
+        @keyframes fadeInDrop {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
         .carousel-stage {
             position: relative;
             width: var(--card-width);
             height: var(--card-height);
             transform-style: preserve-3d;
             will-change: transform;
+            /* Center nicely vertically if column layout is used */
+            margin: auto; 
         }
 
         .card-3d {
@@ -256,6 +291,15 @@
             .grid-container { display: flex; flex-direction: column-reverse; height: auto; overflow: visible; }
             .cursor-glow { display: none; } /* Disable cursor glow on touch */
             
+            /* MOBILE NAV */
+            nav {
+                justify-content: flex-start; /* Align Left */
+                padding-left: 30px; /* Invisible Header Margin */
+            }
+            .nav-logo-desktop { display: none; }
+            .nav-logo-mobile { display: block; }
+
+
             /* Text Column */
             .scroll-column { 
                 display: block; width: 100%; height: auto; 
@@ -271,26 +315,39 @@
                 width: 100%;
                 z-index: 5;
                 perspective: none;
-                display: block;
+                display: flex;
+                flex-direction: column; /* Ensure title stacks */
+                justify-content: flex-end; /* Push content down a bit */
                 background: transparent; /* Ensure no bg */
+                padding-top: 80px; /* Space for top-left header */
+            }
+
+            .carousel-announcement {
+                position: relative;
+                top: auto;
+                margin-bottom: 10px;
+                opacity: 1;
+                transform: none;
+                animation: none;
             }
 
             .carousel-stage {
                 width: 100%;
-                height: 100%;
+                height: 420px; /* Fixed height for scroll area */
                 transform-style: flat;
                 transform: none !important;
                 display: flex;
                 gap: 20px;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                padding: 40px 30px; 
+                padding: 10px 30px 40px 30px; /* Padding for scroll bounce */
                 align-items: center;
                 -ms-overflow-style: none;
                 scrollbar-width: none;
                 /* FADE MASK: Makes cards fade in from sides instead of hitting a wall */
                 mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
                 -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+                margin: 0; /* Reset auto margin */
             }
             .carousel-stage::-webkit-scrollbar { display: none; }
 
@@ -338,7 +395,8 @@
     <img src="Bottom left.png" alt="MINT App" class="sticker">
 
     <nav>
-        <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo">
+        <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo-desktop">
+        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon" class="nav-logo-mobile">
     </nav>
 
     <div class="grid-container">
@@ -397,6 +455,11 @@
         </div>
 
         <div class="carousel-column">
+            <div class="carousel-announcement">
+                <h4>Coming Soon</h4>
+                <span>Early Access</span>
+            </div>
+
             <div class="carousel-stage" id="stage">
                 
                 <div class="card-3d">
