@@ -32,27 +32,24 @@
             overflow: hidden;
             user-select: none;
             -webkit-font-smoothing: antialiased;
-            cursor: default;
         }
 
         /* --- BACKGROUND LAYERS --- */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -3;
-            background-image: url('HeroBG.jpg'); /* Fallback */
+            background-image: url('HeroBG.jpg');
             background-size: cover;
             background-position: center;
             opacity: 0.4;
         }
 
-        /* PARTICLE CANVAS */
         #particle-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
             pointer-events: none;
         }
 
-        /* CURSOR GLOW (Desktop) */
         .cursor-glow {
             position: fixed;
             width: 600px; height: 600px;
@@ -65,7 +62,6 @@
             transition: opacity 0.3s;
         }
 
-        /* BOTTOM LEFT STICKER */
         .sticker {
             position: fixed; 
             bottom: 0; left: 0; 
@@ -80,10 +76,9 @@
             padding: 30px 0; z-index: 100;
             display: flex; justify-content: center;
             pointer-events: none;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
         }
-        /* Desktop Logo Visible by default */
-        .nav-logo-desktop { height: 36px; width: auto; pointer-events: auto; display: block; }
-        .nav-logo-mobile { display: none; height: 40px; width: auto; pointer-events: auto; }
+        .nav-logo { height: 36px; width: auto; pointer-events: auto; }
 
         /* --- MAIN LAYOUT --- */
         .grid-container {
@@ -116,18 +111,27 @@
             justify-content: center;
         }
 
-        /* --- TYPEWRITER CSS --- */
+        /* NEW TYPEWRITER ANIMATION STYLES */
         .typewriter-text {
             display: inline-block;
-            border-right: 3px solid var(--brand-purple); /* The blinking cursor */
-            padding-right: 5px;
-            animation: blink-caret 0.75s step-end infinite;
-            min-height: 1em; /* Prevents layout shift */
+            border-right: 2px solid var(--brand-purple);
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
         }
 
-        @keyframes blink-caret {
+        @keyframes blink {
             from, to { border-color: transparent }
-            50% { border-color: var(--brand-purple) }
+            50% { border-color: var(--brand-purple); }
+        }
+
+        .typewriter-active {
+            animation: typing 2.5s steps(30, end) forwards, blink 0.8s infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
         }
 
         h1.thin-title {
@@ -151,7 +155,6 @@
             margin-bottom: 24px;
         }
 
-        /* Action Link (White) */
         .action-link {
             display: inline-flex;
             align-items: center;
@@ -170,43 +173,28 @@
         .carousel-column {
             position: relative;
             display: flex; 
-            flex-direction: column; 
-            align-items: center; justify-content: center;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
             perspective: 1200px;
             overflow: hidden;
-            cursor: grab;
-            touch-action: pan-y;
             z-index: 60;
         }
-        .carousel-column:active { cursor: grabbing; }
 
-        /* Announcement Title Styles */
-        .carousel-announcement {
-            position: absolute;
-            top: 15%; 
-            text-align: center;
+        /* NEW ANNOUNCEMENTS TITLE */
+        .announcements-header {
+            width: var(--card-width);
+            text-align: left;
+            margin-bottom: 20px;
             z-index: 70;
-            pointer-events: none;
-            opacity: 0; /* Starts hidden, animates in */
-            transform: translateY(-20px);
-            animation: fadeInDrop 1s ease forwards 0.5s;
         }
-        .carousel-announcement h4 {
-            font-size: 0.8rem;
+
+        .announcements-header h2 {
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.3em;
             font-weight: 400;
-            color: var(--brand-purple);
-            margin-bottom: 8px;
-        }
-        .carousel-announcement span {
-            font-size: 0.9rem;
-            font-weight: 300;
-            color: white;
-            letter-spacing: 0.05em;
-        }
-        @keyframes fadeInDrop {
-            to { opacity: 1; transform: translateY(0); }
+            color: rgba(255,255,255,0.5);
         }
 
         .carousel-stage {
@@ -215,7 +203,6 @@
             height: var(--card-height);
             transform-style: preserve-3d;
             will-change: transform;
-            margin: auto; 
         }
 
         .card-3d {
@@ -231,7 +218,7 @@
             display: flex; flex-direction: column; justify-content: space-between;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             transition: border-color 0.3s;
-            overflow: hidden; 
+            overflow: hidden;
         }
         
         .card-3d:hover {
@@ -239,7 +226,6 @@
             background: rgba(255,255,255,0.08);
         }
 
-        /* Card Content */
         .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
         .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
         .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
@@ -252,7 +238,7 @@
         .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
         .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* --- SIDE PANEL (WHITE) --- */
+        /* --- SIDE PANEL --- */
         .side-panel {
             position: fixed; top: 0; right: 0; width: 50%; height: 100vh;
             background: #ffffff; box-shadow: -20px 0 50px rgba(0,0,0,0.1);
@@ -277,83 +263,61 @@
         .step-title { font-size: 1.5rem; font-weight: 500; margin-bottom: 12px; color: var(--brand-dark); }
         .step-desc { font-size: 1.05rem; color: #666; line-height: 1.6; font-weight: 300; }
 
-        /* Footer */
         .legal-footer { position: fixed; bottom: 0; right: 0; padding: 20px 40px; text-align: right; font-size: 0.7rem; color: rgba(255,255,255,0.4); z-index: 100; }
-        .scroll-indicator { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.7; animation: bounce 2s infinite; z-index: 60; transition: opacity 0.3s; }
+        .scroll-indicator { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.7; z-index: 60; transition: opacity 0.3s; }
         .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
         .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
 
-        /* SHIMMER EFFECT KEYFRAMES */
         @keyframes shimmer {
             0% { transform: translateX(-150%) skewX(-15deg); }
-            50% { transform: translateX(150%) skewX(-15deg); }
             100% { transform: translateX(150%) skewX(-15deg); }
         }
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
         @media (max-width: 900px) {
             body { overflow-y: auto; height: auto; overflow-x: hidden; }
-            .grid-container { display: flex; flex-direction: column-reverse; height: auto; overflow: visible; }
-            .cursor-glow { display: none; } /* Disable cursor glow on touch */
+            .grid-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
+            .cursor-glow { display: none; }
             
-            /* MOBILE NAV */
-            nav {
-                justify-content: flex-start; /* Align Left */
-                padding-left: 30px; /* Invisible Header Margin */
-            }
-            .nav-logo-desktop { display: none; }
-            .nav-logo-mobile { display: block; }
-
-            /* Text Column */
             .scroll-column { 
                 display: block; width: 100%; height: auto; 
-                overflow: visible; padding: 20px 30px 100px 30px; 
+                overflow: visible; padding: 120px 30px 40px 30px; 
             }
-            .snap-section { height: auto; min-height: auto; padding: 60px 0; scroll-snap-align: none; }
-            h1.thin-title { font-size: 3rem; margin-top: 20px; }
-            .info-block p { font-size: 1.1rem; max-width: 100%; }
+            .snap-section { height: auto; padding: 40px 0; scroll-snap-align: none; }
+            h1.thin-title { font-size: 3rem; margin-top: 0; }
 
-            /* Mobile Carousel - "INVISIBLE" CONTAINER FIX */
+            /* MOBILE CAROUSEL - REMOVED CONTAINER & HEADER OVERLAP FIX */
             .carousel-column {
-                height: 480px;
+                height: auto;
                 width: 100%;
                 z-index: 5;
                 perspective: none;
-                display: flex;
-                flex-direction: column; 
-                justify-content: flex-end; 
-                background: transparent; 
-                padding-top: 80px; /* Space for top-left header */
+                display: block;
+                background: transparent;
+                padding: 0; /* No vertical container padding */
+                margin-top: 20px;
+                overflow: visible;
             }
 
-            /* Adjust Announcement for Mobile */
-            .carousel-announcement {
-                position: relative;
-                top: auto;
+            .announcements-header {
+                padding-left: 30px;
+                width: 100%;
                 margin-bottom: 10px;
-                opacity: 1;
-                transform: none;
-                animation: none;
             }
 
             .carousel-stage {
                 width: 100%;
-                height: 420px; 
+                height: 460px;
                 transform-style: flat;
                 transform: none !important;
                 display: flex;
                 gap: 20px;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                padding: 10px 30px 40px 30px; 
+                padding: 20px 30px; 
                 align-items: center;
-                -ms-overflow-style: none;
                 scrollbar-width: none;
-                /* FADE MASK: Makes cards fade in from sides */
-                mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
-                -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
-                margin: 0; 
+                background: transparent; /* Makes the container "invisible" */
             }
             .carousel-stage::-webkit-scrollbar { display: none; }
 
@@ -370,21 +334,10 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             }
 
-            /* AUTOMATIC SHIMMER (Mobile Only) */
-            .card-3d::after {
-                content: '';
-                position: absolute;
-                top: 0; left: 0; width: 50%; height: 100%;
-                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-                transform: skewX(-15deg);
-                pointer-events: none;
-                animation: shimmer 5s infinite ease-in-out; 
-            }
-
             .control-dock { display: none; }
             .side-panel { width: 100%; padding: 80px 30px; }
             .sticker { width: 250px; bottom: -50px; left: -20px; opacity: 0.3; }
-            .legal-footer { position: relative; text-align: center; width: 100%; padding: 20px; opacity: 0.6; }
+            .legal-footer { position: relative; text-align: center; width: 100%; padding: 40px 20px; opacity: 0.6; }
             .scroll-indicator { display: none; }
         }
 
@@ -396,12 +349,10 @@
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <div class="bg-layer"></div>
-    <div class="overlay-layer"></div>
     <img src="Bottom left.png" alt="MINT App" class="sticker">
 
     <nav>
-        <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo-desktop">
-        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon" class="nav-logo-mobile">
+        <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo">
     </nav>
 
     <div class="grid-container">
@@ -413,19 +364,19 @@
             </div>
 
             <div class="snap-section">
-                <h1 class="thin-title typewriter-text" data-text="Mint is here.">Mint is here.</h1>
+                <h1 class="thin-title"><span class="typewriter-text" data-text="Mint is here."></span></h1>
             </div>
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2 class="typewriter-text" data-text="The Ecosystem">The Ecosystem</h2>
+                    <h2>The Ecosystem</h2>
                     <p>MINT is a comprehensive financial platform. We’ve built an integrated ecosystem where investing, borrowing, and transacting are interconnected flows.</p>
                 </div>
             </div>
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2 class="typewriter-text" data-text="Invest">Invest</h2>
+                    <h2>Invest</h2>
                     <p>Manage investments in a single, intuitive environment. We lower minimums and simplify access, letting you move money to the future.</p>
                     <a class="action-link" onclick="openPanel('invest')">
                         Want to invest 
@@ -436,7 +387,7 @@
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2 class="typewriter-text" data-text="Borrow">Borrow</h2>
+                    <h2>Borrow</h2>
                     <p>Access money from the future. Our smart credit tools offer seamless digital assessments aligned with your actual financial profile.</p>
                     <a class="action-link" onclick="openPanel('borrow')">
                         Want to borrow 
@@ -447,7 +398,7 @@
 
             <div class="snap-section">
                 <div class="info-block">
-                    <h2 class="typewriter-text" data-text="Transact">Transact</h2>
+                    <h2>Transact</h2>
                     <p>Position yourself at the center of real-time money movement. MINT facilitates the constant flow of funds securely and instantly.</p>
                     <a class="action-link" onclick="openPanel('transact')">
                         Want to transact 
@@ -460,13 +411,11 @@
         </div>
 
         <div class="carousel-column">
-            <div class="carousel-announcement">
-                <h4>Coming Soon</h4>
-                <span>Early Access</span>
+            <div class="announcements-header">
+                <h2>Announcements</h2>
             </div>
 
             <div class="carousel-stage" id="stage">
-                
                 <div class="card-3d">
                     <div>
                         <div class="card-tag">Launch</div>
@@ -488,11 +437,11 @@
                 </div>
                 <div class="card-3d">
                     <div>
-                        <div class="card-tag" style="color:#fff;">Priority</div>
+                        <div class="card-tag">Priority</div>
                         <h3>Request<br>Access</h3>
                         <p>Secure your spot for the mobile release.</p>
                     </div>
-                    <a href="YOUR_LINK_HERE" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
+                    <a href="#" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
                 <div class="card-3d">
                     <div>
@@ -501,23 +450,10 @@
                         <p>Join the conversation.</p>
                     </div>
                     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" target="_blank" class="btn-pill">LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                        <a href="https://www.instagram.com/mymint_africa?igsh=MXRqNTUyemkxdXQ4eQ==" target="_blank" class="btn-pill">Instagram <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" target="_blank" class="btn-pill">LinkedIn</a>
+                        <a href="https://www.instagram.com/mymint_africa?igsh=MXRqNTUyemkxdXQ4eQ==" target="_blank" class="btn-pill">Instagram</a>
                     </div>
                 </div>
-
-                <div class="card-3d">
-                    <div>
-                        <div class="card-tag">Launch</div>
-                        <h3>App Store &<br>Google Play</h3>
-                        <div class="date-badge">End of February</div>
-                    </div>
-                    <div style="margin-top:auto; opacity:0.8; display:flex; gap:12px;">
-                         <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.55-1.48 3.77-1.7 3.77-1.7C16.61 2.92 16.53 5.2 13 5.2c-.03-.84.49-1.7 0-1.7z"/></svg>
-                         <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z"/></svg>
-                    </div>
-                </div>
-
             </div>
             
             <div class="control-dock">
@@ -533,26 +469,9 @@
         <button class="close-btn" onclick="closePanel()">
             <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
-
         <div class="panel-content" id="panel-invest">
             <h1 class="thin-title">Invest with Mint</h1>
-            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Discover Strategies</h3><p class="step-desc">Explore our curated list of "OpenStrategies" across asset classes like Equities, FX, and Crypto. Each strategy is backed by historical data and a clear methodology.</p></div>
-            <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Track & Analyze</h3><p class="step-desc">Track performance in real-time. Upgrade your view to access premium wealth-tracking tools and insights.</p></div>
-            <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Allocate & Grow</h3><p class="step-desc">Ready to invest? Allocate funds to your chosen strategies. You only pay a performance fee on your returns.</p></div>
-        </div>
-
-        <div class="panel-content" id="panel-borrow">
-            <h1 class="thin-title">Borrow with Mint</h1>
-            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Smart Assessment</h3><p class="step-desc">Experience a seamless digital credit assessment that looks at your holistic financial profile, not just a score.</p></div>
-            <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Fair Access</h3><p class="step-desc">We prioritize suitability and affordability, ensuring you access liquidity without compromising your long-term financial health.</p></div>
-            <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Efficient Capital</h3><p class="step-desc">Leverage your existing assets to secure lower rates. Borrow against your portfolio to unlock cash flow without selling your positions.</p></div>
-        </div>
-
-        <div class="panel-content" id="panel-transact">
-            <h1 class="thin-title">Transact with Mint</h1>
-            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Real-Time Movement</h3><p class="step-desc">Move funds instantly between accounts and peers. We are building the rails for immediate, secure financial settlement.</p></div>
-            <div class="step-item"><div class="step-num">02</div><h3 class="step-title">Seamless Integration</h3><p class="step-desc">Your payments ecosystem is fully integrated with your investment and credit portfolios.</p></div>
-            <div class="step-item"><div class="step-num">03</div><h3 class="step-title">Trusted Partnership</h3><p class="step-desc">Every transaction is secured by regulated banking standards. We act as a trusted partner ensuring your money is safe.</p></div>
+            <div class="step-item"><div class="step-num">01</div><h3 class="step-title">Discover</h3><p class="step-desc">Explore curated list of OpenStrategies.</p></div>
         </div>
     </div>
 
@@ -583,14 +502,12 @@
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
         for (let i = 0; i < 60; i++) particles.push(new Particle());
 
         function animateParticles() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach((p, i) => {
                 p.update(); p.draw();
-                // Connect dots
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[j].x - p.x; const dy = particles[j].y - p.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
@@ -604,7 +521,6 @@
         }
         animateParticles();
 
-
         // --- 2. CURSOR GLOW ---
         const glow = document.getElementById('cursorGlow');
         document.addEventListener('mousemove', (e) => {
@@ -612,91 +528,50 @@
             glow.style.top = e.clientY + 'px';
         });
 
-
-        // --- 3. TYPEWRITER EFFECT ---
-        // Replaced the scramble logic with a clean typing loop
+        // --- 3. UPDATED TYPEWRITER ANIMATION ---
         const typewriterElements = document.querySelectorAll('.typewriter-text');
-
-        const observer = new IntersectionObserver((entries) => {
+        const typeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const target = entry.target;
-                    const originalText = target.getAttribute('data-text');
-                    target.innerText = ''; // Start empty
-                    
-                    let i = 0;
-                    const speed = 60; // Typing speed in ms (lower is faster)
-
-                    function type() {
-                        if (i < originalText.length) {
-                            target.innerText += originalText.charAt(i);
-                            i++;
-                            setTimeout(type, speed);
-                        } else {
-                            // Typing complete. Cursor keeps blinking via CSS.
-                        }
-                    }
-                    type();
-                    observer.unobserve(target); // Ensure it only runs once per element
+                    target.textContent = target.getAttribute('data-text');
+                    target.classList.add('typewriter-active');
+                    typeObserver.unobserve(target);
                 }
             });
         }, { threshold: 0.5 });
+        typewriterElements.forEach(el => typeObserver.observe(el));
 
-        typewriterElements.forEach(el => observer.observe(el));
-
-
-        // --- EXISTING LOGIC ---
-        // Scroll Indicator
+        // --- 4. CAROUSEL & PANEL LOGIC ---
         const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
 
-        // Carousel JS
         const stage = document.getElementById('stage'); const container = document.querySelector('.carousel-column'); const cards = document.querySelectorAll('.card-3d');
         const toggleBtn = document.getElementById('toggleBtn'); const iconPause = document.getElementById('iconPause'); const iconPlay = document.getElementById('iconPlay');
-        const theta = 45; const radius = 400; // 45 deg * 8 cards = 360 deg
+        const theta = 45; const radius = 400; 
         
-        // Initialize 3D positions
         cards.forEach((card, index) => { 
-            card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; 
+            if(window.innerWidth > 900) card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; 
         });
         
-        let currentRotation = 0; let isDragging = false; let isSnapping = false; let startX = 0; let isPlaying = true; let animationFrameId;
-        
+        let currentRotation = 0; let isPlaying = true;
         function animate() {
-            // Check if mobile (using same breakpoint as CSS)
-            const isMobile = window.innerWidth <= 900;
-            
-            // Only rotate if playing, not dragging/snapping, AND not on mobile
-            if (isPlaying && !isDragging && !isSnapping && !isMobile) { 
+            if (isPlaying && window.innerWidth > 900) { 
                 currentRotation -= 0.05; 
                 stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; 
             }
-            animationFrameId = requestAnimationFrame(animate);
+            requestAnimationFrame(animate);
         }
         animate();
 
         toggleBtn.addEventListener('click', () => {
             isPlaying = !isPlaying;
-            if (isPlaying) { iconPause.style.display = 'block'; iconPlay.style.display = 'none'; } 
-            else { iconPause.style.display = 'none'; iconPlay.style.display = 'block'; snapToNearest(); }
+            iconPause.style.display = isPlaying ? 'block' : 'none';
+            iconPlay.style.display = isPlaying ? 'none' : 'block';
         });
 
-        function snapToNearest() {
-            if(window.innerWidth <= 900) return; // Disable snapping logic on mobile
-            isSnapping = true; const snapAngle = Math.round(currentRotation / theta) * theta; currentRotation = snapAngle;
-            stage.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'; stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
-            const handleEnd = () => { stage.style.transition = 'none'; isSnapping = false; stage.removeEventListener('transitionend', handleEnd); };
-            stage.addEventListener('transitionend', handleEnd);
-        }
-
-        container.addEventListener('mousedown', (e) => { if(window.innerWidth <= 900) return; isDragging = true; startX = e.clientX; stage.style.transition = 'none'; });
-        window.addEventListener('mouseup', (e) => { if(window.innerWidth <= 900) return; if (!isDragging) return; isDragging = false; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
-        container.addEventListener('touchstart', (e) => { if(window.innerWidth <= 900) return; isDragging = true; startX = e.touches[0].clientX; stage.style.transition = 'none'; });
-        window.addEventListener('touchend', (e) => { if(window.innerWidth <= 900) return; if (!isDragging) return; isDragging = false; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) currentRotation += theta; else currentRotation -= theta; } snapToNearest(); });
-
-        // PANEL LOGIC
-        const sidePanel = document.getElementById('sidePanel'); const panels = document.querySelectorAll('.panel-content');
-        function openPanel(id) { panels.forEach(p => p.classList.remove('active')); const content = document.getElementById('panel-' + id); if(content) content.classList.add('active'); sidePanel.classList.add('active'); if(isPlaying && window.innerWidth > 900) toggleBtn.click(); }
+        const sidePanel = document.getElementById('sidePanel');
+        function openPanel(id) { sidePanel.classList.add('active'); }
         function closePanel() { sidePanel.classList.remove('active'); }
     </script>
 </body>
