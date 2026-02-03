@@ -45,7 +45,7 @@
             background-position: center;
         }
 
-        /* 2. Cinematic Overlay (Darkens image for text readability) */
+        /* 2. Cinematic Overlay (Opacity reduced by half) */
         .overlay-layer {
             position: fixed;
             top: 0;
@@ -53,8 +53,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 100%);
-            backdrop-filter: blur(5px);
+            /* Previous was 0.85 -> 0.5. Now 0.43 -> 0.25 */
+            background: linear-gradient(90deg, rgba(0,0,0,0.43) 0%, rgba(0,0,0,0.25) 100%);
+            backdrop-filter: blur(2px); /* Reduced blur slightly to match lighter overlay */
         }
 
         /* 3. Bottom Left Sticker */
@@ -80,8 +81,6 @@
         .nav-logo {
             height: 30px;
             width: auto;
-            /* Invert to make the purple logo white if needed, or keep original if readable */
-            /* filter: brightness(0) invert(1); */ 
         }
 
         /* --- MAIN LAYOUT --- */
@@ -129,16 +128,17 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.8); /* Slightly brighter due to lighter BG */
             margin-bottom: 16px;
         }
 
         .info-block p {
             font-size: 1.15rem;
             line-height: 1.6;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.95);
             max-width: 520px;
             font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Added shadow for readability on lighter BG */
         }
 
         /* --- RIGHT COLUMN: Horizontal Carousel --- */
@@ -190,6 +190,7 @@
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .card:hover {
@@ -202,7 +203,7 @@
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6);
             margin-bottom: 12px;
             font-weight: 600;
         }
@@ -218,7 +219,7 @@
         .card p.sub {
             margin-top: 12px;
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.8);
             line-height: 1.4;
         }
 
@@ -288,7 +289,7 @@
             <div class="info-block" style="animation-delay: 0.2s;">
                 <h2>Integrated Platform</h2>
                 <p>
-                    [cite_start]MINT is a comprehensive, regulated financial platform designed for modern money management[cite: 98]. 
+                    MINT is a comprehensive, regulated financial platform designed for modern money management. 
                     We have built a fully integrated ecosystem where investing, borrowing, and transacting are interconnected flows within one environment.
                 </p>
             </div>
@@ -296,28 +297,28 @@
             <div class="info-block" style="animation-delay: 0.3s;">
                 <h2>Invest</h2>
                 <p>
-                    [cite_start]Manage your investments in a single, intuitive environment[cite: 75]. 
-                    [cite_start]We remove traditional barriers by lowering minimums and simplifying access, allowing you to move money to the future through quality investing without compromising governance[cite: 75, 81].
+                    Manage your investments in a single, intuitive environment. 
+                    We remove traditional barriers by lowering minimums and simplifying access, allowing you to move money to the future through quality investing without compromising governance.
                 </p>
             </div>
 
             <div class="info-block" style="animation-delay: 0.4s;">
                 <h2>Borrow</h2>
                 <p>
-                    [cite_start]Access money from the future with smarter, fairer credit tools built around suitability and transparency[cite: 76, 82]. 
-                    [cite_start]MINT offers seamless digital credit assessments aligned with your actual financial profile, enabling efficient borrowing against your assets[cite: 76].
+                    Access money from the future with smarter, fairer credit tools built around suitability and transparency. 
+                    MINT offers seamless digital credit assessments aligned with your actual financial profile, enabling efficient borrowing against your assets.
                 </p>
             </div>
 
             <div class="info-block" style="animation-delay: 0.5s;">
                 <h2>Transact</h2>
                 <p>
-                    [cite_start]Position yourself at the center of real-time money movement[cite: 77]. 
-                    [cite_start]Whether paying or transferring, MINT facilitates the constant flow of funds, acting as a trusted partner in the growth and movement of your money[cite: 80, 84].
+                    Position yourself at the center of real-time money movement. 
+                    Whether paying or transferring, MINT facilitates the constant flow of funds, acting as a trusted partner in the growth and movement of your money.
                 </p>
             </div>
 
-            <div style="margin-top: 80px; opacity: 0.4; font-size: 0.75rem; line-height: 1.5;">
+            <div style="margin-top: 80px; opacity: 0.6; font-size: 0.75rem; line-height: 1.5; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
                 MINT (Pty) Ltd is a Financial Services Provider (FSP 55118) and a Registered Credit Provider (NCRCP22892). MINT Reg no: 2024/644796/07.
             </div>
         </div>
