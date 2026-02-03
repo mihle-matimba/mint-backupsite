@@ -70,17 +70,6 @@
             pointer-events: none;
         }
 
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 30px 0; z-index: 100;
-            display: flex; justify-content: center;
-            pointer-events: none;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
-            transition: all 0.3s ease;
-        }
-        .nav-logo { height: 36px; width: auto; pointer-events: auto; }
-
         /* --- MAIN LAYOUT --- */
         .grid-container {
             display: grid;
@@ -110,6 +99,14 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        /* Hero Logo Styling */
+        .hero-logo {
+            height: 48px;
+            width: auto;
+            margin-bottom: 40px;
+            display: block;
         }
 
         /* TYPEWRITER ANIMATION */
@@ -182,7 +179,6 @@
             perspective: 1200px;
             overflow: hidden;
             z-index: 60;
-            /* Allow cursor to indicate drag when paused */
             cursor: grab;
         }
         .carousel-column:active {
@@ -195,7 +191,7 @@
             margin-bottom: 40px; 
             z-index: 70;
             transform: translateY(-20px); 
-            pointer-events: none; /* Let clicks pass through to carousel */
+            pointer-events: none; 
         }
 
         .announcements-header h2 {
@@ -292,23 +288,9 @@
             .grid-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
             .cursor-glow { display: none; }
             
-            /* WHITE HEADER (MOBILE) */
-            nav {
-                background: #ffffff; 
-                border-bottom-left-radius: 36px;
-                border-bottom-right-radius: 36px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-                padding: 15px 0;
-                height: 100px;
-                align-items: center;
-                pointer-events: auto;
-            }
-            
-            /* .nav-logo { filter: invert(1); }  <-- REMOVED INVERSION */
-
             .scroll-column { 
                 display: block; width: 100%; height: auto; 
-                overflow: visible; padding: 120px 30px 40px 30px; 
+                overflow: visible; padding: 40px 30px 40px 30px; 
             }
             .snap-section { height: auto; padding: 40px 0; scroll-snap-align: none; }
             h1.thin-title { font-size: 3rem; margin-top: 0; margin-bottom: 10px; }
@@ -326,7 +308,7 @@
                 padding: 30px 0;
                 overflow: visible;
                 margin-bottom: 40px; 
-                cursor: auto; /* Reset cursor on mobile */
+                cursor: auto; 
             }
 
             .announcements-header {
@@ -391,10 +373,6 @@
     <div class="bg-layer"></div>
     <img src="Bottom left.png" alt="MINT App" class="sticker">
 
-    <nav>
-        <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo">
-    </nav>
-
     <div class="grid-container">
         <div class="scroll-column" id="leftCol">
             
@@ -404,6 +382,7 @@
             </div>
 
             <div class="snap-section" id="hero-section">
+                <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="hero-logo">
                 <h1 class="thin-title"><span class="typewriter-text" data-text="Mint is here."></span></h1>
             </div>
 
@@ -477,11 +456,11 @@
                 </div>
                 <div class="card-3d">
                     <div>
-                        <div class="card-tag">Priority</div>
-                        <h3>Request<br>Access</h3>
-                        <p>Secure your spot for the mobile release.</p>
+                        <div class="card-tag">Beta</div>
+                        <h3>Request<br>Test Access</h3>
+                        <p>Join the testing phase.</p>
                     </div>
-                    <a href="#" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
+                    <a href="YOUR_LINK_HERE" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
                 <div class="card-3d">
                     <div>
@@ -516,11 +495,11 @@
                 </div>
                 <div class="card-3d">
                     <div>
-                        <div class="card-tag">Priority</div>
-                        <h3>Request<br>Access</h3>
-                        <p>Secure your spot for the mobile release.</p>
+                        <div class="card-tag">Beta</div>
+                        <h3>Request<br>Test Access</h3>
+                        <p>Join the testing phase.</p>
                     </div>
-                    <a href="#" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
+                    <a href="YOUR_LINK_HERE" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
                 <div class="card-3d">
                     <div>
@@ -700,7 +679,7 @@
 
         // 3D Animation Loop (Desktop Only)
         function animate() {
-            if (isPlaying && window.innerWidth > 900) { 
+            if (isPlaying && window.innerWidth > 900 && !isDragging) { 
                 currentRotation -= 0.05; 
                 stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`; 
             }
