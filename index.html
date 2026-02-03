@@ -7,12 +7,13 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         /* --- VARIABLES --- */
         :root {
             --brand-white: #ffffff;
+            --brand-purple: #5c3bcf; /* MINT Electric Violet */
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
             --card-width: 300px;
@@ -27,7 +28,7 @@
             background-color: #050505;
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* Main body locked */
+            overflow: hidden;
             user-select: none;
         }
 
@@ -47,25 +48,25 @@
             backdrop-filter: blur(2px);
         }
 
-        /* Bottom Left Sticker */
+        /* BOTTOM LEFT STICKER (Fixed, 3x Size) */
         .sticker {
-            position: fixed; bottom: 80px; /* Moved up slightly for footer */
-            left: 0; width: 300px;
-            z-index: 50; pointer-events: none;
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 900px; 
+            max-width: 80vw;
+            z-index: 99999;
+            pointer-events: none;
         }
 
-        /* --- NAVIGATION (Centered) --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
             padding: 30px 0; z-index: 100;
-            display: flex; justify-content: center; /* Centering */
-            pointer-events: none; /* Let clicks pass through to content */
+            display: flex; justify-content: center;
+            pointer-events: none;
         }
-        
-        .nav-logo {
-            height: 36px; width: auto;
-            pointer-events: auto;
-        }
+        .nav-logo { height: 36px; width: auto; pointer-events: auto; }
 
         /* --- MAIN LAYOUT --- */
         .grid-container {
@@ -77,14 +78,12 @@
 
         /* --- LEFT COLUMN: Snap Scroll --- */
         .scroll-column {
-            position: relative; /* For indicator positioning */
+            position: relative;
             height: 100vh;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             padding-left: 80px;
             padding-right: 40px;
-            
-            /* Hide Scrollbar */
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -92,7 +91,7 @@
 
         .snap-section {
             height: 100vh;
-            scroll-snap-align: start;
+            scroll-snap-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -108,67 +107,41 @@
         }
 
         .info-block h2 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: 400;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 24px;
+            font-size: 0.8rem; text-transform: uppercase;
+            letter-spacing: 0.2em; font-weight: 400;
+            color: rgba(255,255,255,0.7); margin-bottom: 24px;
         }
 
         .info-block p {
-            font-size: 1.4rem; 
-            font-weight: 200;
-            line-height: 1.4;
-            color: rgba(255,255,255,0.95);
+            font-size: 1.4rem; font-weight: 200;
+            line-height: 1.4; color: rgba(255,255,255,0.95);
             max-width: 500px;
         }
 
-        /* --- SCROLL INDICATOR --- */
+        /* Scroll Indicator */
         .scroll-indicator {
-            position: fixed;
-            bottom: 120px;
-            left: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.7;
-            animation: bounce 2s infinite;
-            z-index: 60;
+            position: fixed; bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            opacity: 0.7; animation: bounce 2s infinite; z-index: 60;
             transition: opacity 0.3s;
         }
-        
-        .scroll-text {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-        }
-        
-        /* Simple Chevron */
-        .chevron {
-            width: 20px; height: 20px;
-            border-bottom: 1px solid #fff;
-            border-right: 1px solid #fff;
-            transform: rotate(45deg);
-        }
+        .scroll-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; }
+        .chevron { width: 20px; height: 20px; border-bottom: 1px solid #fff; border-right: 1px solid #fff; transform: rotate(45deg); }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
         }
 
-        /* --- RIGHT COLUMN: 3D OCTAGON CAROUSEL --- */
+        /* --- RIGHT COLUMN: 3D CAROUSEL --- */
         .carousel-column {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-            overflow: hidden;
-            cursor: grab; /* Indicates Swipe-ability */
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            perspective: 1000px; overflow: hidden;
+            cursor: grab;
         }
-        
         .carousel-column:active { cursor: grabbing; }
 
         .carousel-stage {
@@ -176,78 +149,85 @@
             width: var(--card-width);
             height: var(--card-height);
             transform-style: preserve-3d;
+            /* Transition handled in JS for mixed modes (play vs drag) */
         }
 
         .card-3d {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-top: 1px solid rgba(255,255,255,0.3);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border-radius: 32px;
-            
             padding: 32px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            display: flex; flex-direction: column; justify-content: space-between;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
-        /* Card Content */
-        .card-tag {
-            font-size: 0.65rem; text-transform: uppercase;
-            letter-spacing: 0.15em; font-weight: 500;
-            color: rgba(255,255,255,0.6); margin-bottom: 12px;
-        }
-        
-        .card-3d h3 {
-            font-size: 2rem; font-weight: 300; 
-            letter-spacing: -0.03em; line-height: 1.1;
-        }
-        
-        .card-3d p {
-            margin-top: 16px; font-size: 0.95rem; font-weight: 300;
-            color: rgba(255,255,255,0.8); line-height: 1.5;
-        }
-
+        /* BRANDED CTA BUTTONS */
         .btn-pill {
             display: flex; justify-content: space-between; align-items: center;
-            background: #fff; color: #000; padding: 14px 24px;
-            border-radius: 100px; font-weight: 500; font-size: 0.85rem;
+            background: var(--brand-purple); /* Brand Purple */
+            color: #fff; /* White Text */
+            padding: 14px 24px;
+            border-radius: 100px; 
+            font-weight: 500; font-size: 0.85rem;
             margin-top: auto;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(92, 59, 207, 0.3);
+        }
+        
+        .btn-pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(92, 59, 207, 0.5);
         }
 
-        .date-badge {
-            display: inline-block; border: 1px solid rgba(255,255,255,0.3);
-            padding: 6px 14px; border-radius: 20px;
-            font-size: 0.8rem; margin-top: 12px; font-weight: 300;
+        /* PLAY/PAUSE CONTROLLER */
+        .control-dock {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 200;
         }
+
+        .play-btn {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .play-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+        .play-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Card Content */
+        .card-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+        .card-3d h3 { font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
+        .card-3d p { margin-top: 16px; font-size: 0.95rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.5; }
+        .date-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; margin-top: 12px; font-weight: 300; }
 
         /* --- GLOBAL FOOTER --- */
         .legal-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.4);
-            z-index: 9999;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            position: fixed; bottom: 0; right: 0; 
+            padding: 20px 40px; text-align: right; font-size: 0.7rem; 
+            color: rgba(255,255,255,0.4); z-index: 100;
         }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
             .grid-container { grid-template-columns: 1fr; }
             .scroll-column { display: none; }
-            .sticker { display: none; }
-            .scroll-indicator { display: none; }
+            .sticker { width: 100%; max-width: 100%; bottom: -50px; }
+            .legal-footer { width: 100%; text-align: center; }
+            .control-dock { bottom: 100px; } /* Move up on mobile to avoid sticker overlap */
         }
 
     </style>
@@ -302,12 +282,10 @@
                     <p>Position yourself at the center of real-time money movement. MINT facilitates the constant flow of funds securely and instantly.</p>
                 </div>
             </div>
-
-            <div style="height: 100px;"></div>
-
         </div>
 
         <div class="carousel-column">
+            
             <div class="carousel-stage" id="stage">
                 
                 <div class="card-3d">
@@ -317,7 +295,7 @@
                         <div class="date-badge">End of February</div>
                     </div>
                     <div style="margin-top:auto; opacity:0.8; display:flex; gap:12px;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.55-1.48 3.77-1.7 3.77-1.7C16.61 2.92 16.53 5.2 13 5.2c-.03-.84.49-1.7 0-1.7z"/></svg>
+                         <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.55-1.48 3.77-1.7 3.77-1.7C16.61 2.92 16.53 5.2 13 5.2c-.03-.84.49-1.7 0-1.7z"/></svg>
                          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.523 15.3414C17.523 16.738 16.3826 17.8732 14.9754 17.8732C13.5682 17.8732 12.433 16.738 12.433 15.3414C12.433 13.9449 13.5682 12.8097 14.9754 12.8097C16.3826 12.8097 17.523 13.9449 17.523 15.3414ZM8.24075 15.3414C8.24075 16.738 7.10037 17.8732 5.69317 17.8732C4.28597 17.8732 3.15075 16.738 3.15075 15.3414C3.15075 13.9449 4.28597 12.8097 5.69317 12.8097C7.10037 12.8097 8.24075 13.9449 8.24075 15.3414ZM18.4727 7.02554L20.2443 3.96166C20.3541 3.7702 20.2917 3.52349 20.0993 3.41178C19.9048 3.30335 19.6603 3.36701 19.5492 3.5592L17.7554 6.66223C16.0355 5.87539 14.1032 5.43883 12.043 5.43883C9.98275 5.43883 8.05047 5.87539 6.33056 6.66223L4.53678 3.5592C4.42566 3.36701 4.18005 3.30449 3.98671 3.41178C3.79449 3.52349 3.73204 3.7702 3.84183 3.96166L5.61337 7.02554C2.52047 8.71077 0.399536 11.8384 0.0526428 15.5428H24.0333C23.6864 11.8384 21.5655 8.71077 18.4727 7.02554Z"/></svg>
                     </div>
                 </div>
@@ -348,10 +326,18 @@
                         <h3>How it<br>Works</h3>
                         <p>Discover the integrated ecosystem.</p>
                     </div>
-                    <div class="btn-pill" style="opacity:0.6">View Guide</div>
+                    <div class="btn-pill" style="opacity:0.6; background: rgba(255,255,255,0.2);">View Guide</div>
                 </div>
 
             </div>
+
+            <div class="control-dock">
+                <button class="play-btn" id="toggleBtn">
+                    <svg id="iconPause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    <svg id="iconPlay" viewBox="0 0 24 24" style="display:none;"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+            </div>
+
         </div>
     </div>
 
@@ -360,92 +346,131 @@
     </div>
 
     <script>
-        // 1. Hide Scroll Indicator on Scroll
+        // 1. Scroll Indicator Logic
         const leftCol = document.getElementById('leftCol');
         const scrollInd = document.getElementById('scrollInd');
-        
         leftCol.addEventListener('scroll', () => {
-            if(leftCol.scrollTop > 50) {
-                scrollInd.style.opacity = '0';
-            } else {
-                scrollInd.style.opacity = '0.7';
-            }
+            if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0';
+            else scrollInd.style.opacity = '0.7';
         });
 
-        // 2. 3D Swipe Carousel
+        // 2. Carousel Logic
         const stage = document.getElementById('stage');
         const container = document.querySelector('.carousel-column');
         const cards = document.querySelectorAll('.card-3d');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const iconPause = document.getElementById('iconPause');
+        const iconPlay = document.getElementById('iconPlay');
         
         const theta = 45; // 45 degrees separation
         const radius = 400; 
         
-        // Initial Position
+        // Initial Positions
         cards.forEach((card, index) => {
             card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`;
         });
 
+        // State
+        let currentRotation = 0;
         let isDragging = false;
         let startX = 0;
-        let currentRotation = 0;
-        let tempRotation = 0;
+        let isPlaying = true;
+        let animationFrameId;
 
+        // --- ANIMATION LOOP ---
+        function animate() {
+            if (isPlaying && !isDragging) {
+                // Rotate slowly counter-clockwise (move right to left)
+                currentRotation -= 0.05; 
+                stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            }
+            animationFrameId = requestAnimationFrame(animate);
+        }
+        
+        // Start Loop
+        animate();
+
+        // --- TOGGLE PLAY/PAUSE ---
+        toggleBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                iconPause.style.display = 'block';
+                iconPlay.style.display = 'none';
+            } else {
+                iconPause.style.display = 'none';
+                iconPlay.style.display = 'block';
+                // Snap to nearest 45 when pausing for cleanliness
+                const snapAngle = Math.round(currentRotation / theta) * theta;
+                currentRotation = snapAngle;
+                stage.style.transition = 'transform 0.5s ease';
+                stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+                
+                setTimeout(() => { stage.style.transition = 'none'; }, 500);
+            }
+        });
+
+        // --- SWIPE LOGIC ---
         // Mouse Down
         container.addEventListener('mousedown', (e) => {
             isDragging = true;
             startX = e.clientX;
-            stage.style.transition = 'none'; // Instant feel for "grab"
+            stage.style.transition = 'none';
         });
 
-        // Mouse Move (Drag/Swipe)
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-            const deltaX = e.clientX - startX;
-            // "Throw" factor: divide by 4 for weight
-            tempRotation = currentRotation + (deltaX / 4); 
-            stage.style.transform = `translateZ(-${radius}px) rotateY(${tempRotation}deg)`;
-        });
-
-        // Mouse Up (Snap)
-        window.addEventListener('mouseup', () => {
+        // Mouse Up (Swipe)
+        window.addEventListener('mouseup', (e) => {
             if (!isDragging) return;
             isDragging = false;
             
-            // Snap to nearest 45
-            const snapAngle = Math.round(tempRotation / theta) * theta;
-            currentRotation = snapAngle;
+            const endX = e.clientX;
+            const diff = endX - startX;
+            
+            // If dragging happened, snap to next/prev card
+            if (Math.abs(diff) > 30) {
+                if (diff > 0) currentRotation += theta; // Swipe Right -> Prev
+                else currentRotation -= theta; // Swipe Left -> Next
+            }
 
-            // Restore smooth transition for the snap
+            // Snap animation
+            // Note: We round to nearest theta to keep alignment perfect
+            const snapAngle = Math.round(currentRotation / theta) * theta;
+            currentRotation = snapAngle;
+            
             stage.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+
+            // Remove transition after it completes so auto-play can resume smoothly
+            setTimeout(() => {
+                stage.style.transition = 'none';
+            }, 600);
         });
 
-        // Touch Events (Mobile)
+        // Touch (Mobile)
         container.addEventListener('touchstart', (e) => {
             isDragging = true;
             startX = e.touches[0].clientX;
             stage.style.transition = 'none';
         });
         
-        window.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.touches[0].clientX - startX;
-            tempRotation = currentRotation + (deltaX / 4);
-            stage.style.transform = `translateZ(-${radius}px) rotateY(${tempRotation}deg)`;
-        });
-
-        window.addEventListener('touchend', () => {
+        window.addEventListener('touchend', (e) => {
             if (!isDragging) return;
             isDragging = false;
-            const snapAngle = Math.round(tempRotation / theta) * theta;
+            const endX = e.changedTouches[0].clientX;
+            const diff = endX - startX;
+            
+            if (Math.abs(diff) > 30) {
+                if (diff > 0) currentRotation += theta;
+                else currentRotation -= theta;
+            }
+            
+            const snapAngle = Math.round(currentRotation / theta) * theta;
             currentRotation = snapAngle;
+            
             stage.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
+            
+            setTimeout(() => { stage.style.transition = 'none'; }, 600);
         });
-
-        // Set initial state
-        stage.style.transform = `translateZ(-${radius}px) rotateY(0deg)`;
 
     </script>
 </body>
