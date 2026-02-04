@@ -222,6 +222,18 @@
         cursor: grabbing;
     }
 
+    /* Ensure carousel card content is clickable */
+    .card-3d * {
+        pointer-events: auto;
+    }
+    
+    /* Specifically ensure the buttons are interactive */
+    .card-3d .btn-pill {
+        position: relative;
+        z-index: 10;
+        pointer-events: auto;
+    }
+
     .announcements-header {
         width: 100%;
         text-align: center; 
@@ -619,37 +631,56 @@
         
         <div class="panel-content" id="panel-waitlist">
             <h1 class="thin-title" style="color: var(--brand-dark)">Join the Waitlist</h1>
-            <p style="color: #666; margin-bottom: 30px;">Be among the first to experience the future of MINT.</p>
-            
-            <form id="waitlistForm" class="waitlist-form">
-                <div class="input-group">
-                    <input type="text" id="first_name" placeholder="First Name" required>
-                    <input type="text" id="last_name" placeholder="Last Name" required>
-                </div>
-                <input type="email" id="email" placeholder="Email (must be @gmail.com)" required>
-                <input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
+            <div id="waitlist-ui-area">
+                <p style="color: #666; margin-bottom: 30px;">Be among the first to experience the future of MINT.</p>
                 
-                <label style="display:block; margin: 15px 0 5px; font-size: 0.8rem; color: #888;">Preferred Device</label>
-                <select id="os_type" required>
-                    <option value="iOS">iOS</option>
-                    <option value="Android">Android</option>
-                </select>
-        
-                <button type="submit" id="submitBtn" class="btn-pill" style="margin-top: 30px; width: 100%; border:none;">
-                    Submit Request
-                </button>
-            </form>
+                <form id="waitlistForm" class="waitlist-form">
+                    <div class="input-group">
+                        <input type="text" id="first_name" placeholder="First Name" required>
+                        <input type="text" id="last_name" placeholder="Last Name" required>
+                    </div>
+                    <input type="email" id="email" placeholder="Email (must be @gmail.com)" required>
+                    <input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
+                    
+                    <label style="display:block; margin: 15px 0 5px; font-size: 0.8rem; color: #888;">Preferred Device</label>
+                    <select id="os_type" required>
+                        <option value="iOS">iOS</option>
+                        <option value="Android">Android</option>
+                    </select>
+            
+                    <button type="submit" id="submitBtn" class="btn-pill" style="margin-top: 30px; width: 100%; border:none;">
+                        Submit Request
+                    </button>
+                </form>
+            </div>
+            
+            <div id="waitlist-status" style="display:none; text-align:center; padding: 40px 0;">
+                <h2 id="status-title" style="color: var(--brand-purple); margin-bottom: 15px; font-weight: 500;"></h2>
+                <p id="status-msg" style="color: #666; line-height: 1.6;"></p>
+                <button class="btn-pill" style="margin-top: 30px; width: auto; display: inline-flex;" onclick="closePanel()">Close</button>
+            </div>
         </div>
     </div>
 
     <script type="module">
-    // --- 0. SUPABASE INTEGRATION ---
+
         import { submitRequest } from './supabase.js';
     
-        // We attach these to 'window' so your HTML onclick="openPanel()" still works
+
         window.openPanel = function(id) { 
             const panels = document.querySelectorAll('.panel-content');
             panels.forEach(p => p.classList.remove('active'));
+            
+  
+            if (id === 'waitlist') {
+                const uiArea = document.getElementById('waitlist-ui-area');
+                const statusArea = document.getElementById('waitlist-status');
+                if (uiArea && statusArea) {
+                    uiArea.style.display = 'block';
+                    statusArea.style.display = 'none';
+                }
+            }
+    
             const content = document.getElementById('panel-' + id);
             if(content) content.classList.add('active');
             document.getElementById('sidePanel').classList.add('active'); 
@@ -659,20 +690,20 @@
             document.getElementById('sidePanel').classList.remove('active'); 
         };
     
-        // Handle the Waitlist Form Submission
+    
         document.addEventListener('DOMContentLoaded', () => {
             const waitlistForm = document.getElementById('waitlistForm');
             const submitBtn = document.getElementById('submitBtn');
             const requestAccessBtn = document.getElementById('requestAccessBtn');
     
-            // Header Button Trigger
-            if (requestAccessBtn) {
-                requestAccessBtn.addEventListener('click', () => window.openPanel('waitlist'));
-            }
-    
             if (waitlistForm) {
                 waitlistForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
+                    
+                    const uiArea = document.getElementById('waitlist-ui-area');
+                    const statusArea = document.getElementById('waitlist-status');
+                    const statusTitle = document.getElementById('status-title');
+                    const statusMsg = document.getElementById('status-msg');
                     
                     // Visual Feedback
                     const originalText = submitBtn.innerText;
@@ -697,12 +728,26 @@
                         email
                     );
     
+            
+                    uiArea.style.display = 'none';
+                    statusArea.style.display = 'block';
+    
                     if (error) {
-                        console.error(error);
-                        alert("Error: " + error.message);
+                        
+                        if (error.code === '23505') {
+                            statusTitle.innerText = "Already on the list!";
+                            statusTitle.style.color = "var(--brand-purple)";
+                            statusMsg.innerText = "It looks like you've already registered for MINT access. We will reach out to you via email or WhatsApp as soon as your spot is ready.";
+                        } else {
+                            statusTitle.innerText = "Submission Error";
+                            statusTitle.style.color = "#ff4d4d";
+                            statusMsg.innerText = "We couldn't process your request: " + error.message;
+                        }
                     } else {
-                        alert("Success! You've been added to the waitlist.");
-                        window.closePanel();
+                        // Success Message
+                        statusTitle.innerText = "You're in!";
+                        statusTitle.style.color = "var(--brand-purple)";
+                        statusMsg.innerText = "Success! You have been added to the waitlist. If selected, you will be contacted by us via email or WhatsApp. Thank you for your interest in MINT.";
                         waitlistForm.reset();
                     }
     
@@ -711,8 +756,7 @@
                 });
             }
         });
-    
-        // --- 1. AMBIENT PARTICLE SYSTEM ---
+
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -757,14 +801,13 @@
         }
         animateParticles();
     
-        // --- 2. CURSOR GLOW ---
         const glow = document.getElementById('cursorGlow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
     
-        // --- 3. TYPEWRITER ANIMATION ---
+
         const typewriterElements = document.querySelectorAll('.typewriter-text');
         const typeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -778,7 +821,7 @@
         }, { threshold: 0.5 });
         typewriterElements.forEach(el => typeObserver.observe(el));
     
-        // --- 4. CAROUSEL LOGIC ---
+
         const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
     
