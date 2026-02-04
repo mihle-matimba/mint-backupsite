@@ -643,17 +643,86 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+    // --- 0. SUPABASE INTEGRATION ---
+        import { submitRequest } from './supabase.js';
+    
+        // We attach these to 'window' so your HTML onclick="openPanel()" still works
+        window.openPanel = function(id) { 
+            const panels = document.querySelectorAll('.panel-content');
+            panels.forEach(p => p.classList.remove('active'));
+            const content = document.getElementById('panel-' + id);
+            if(content) content.classList.add('active');
+            document.getElementById('sidePanel').classList.add('active'); 
+        };
+    
+        window.closePanel = function() { 
+            document.getElementById('sidePanel').classList.remove('active'); 
+        };
+    
+        // Handle the Waitlist Form Submission
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitlistForm = document.getElementById('waitlistForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const requestAccessBtn = document.getElementById('requestAccessBtn');
+    
+            // Header Button Trigger
+            if (requestAccessBtn) {
+                requestAccessBtn.addEventListener('click', () => window.openPanel('waitlist'));
+            }
+    
+            if (waitlistForm) {
+                waitlistForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Visual Feedback
+                    const originalText = submitBtn.innerText;
+                    submitBtn.innerText = "Processing...";
+                    submitBtn.disabled = true;
+    
+                    const email = document.getElementById('email').value;
+    
+                    // Gmail check to match your SQL constraint
+                    if (!email.toLowerCase().endsWith('@gmail.com')) {
+                        alert("Please use a valid @gmail.com address.");
+                        submitBtn.innerText = originalText;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+    
+                    const { data, error } = await submitRequest(
+                        document.getElementById('first_name').value,
+                        document.getElementById('last_name').value,
+                        document.getElementById('whatsapp').value,
+                        document.getElementById('os_type').value,
+                        email
+                    );
+    
+                    if (error) {
+                        console.error(error);
+                        alert("Error: " + error.message);
+                    } else {
+                        alert("Success! You've been added to the waitlist.");
+                        window.closePanel();
+                        waitlistForm.reset();
+                    }
+    
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                });
+            }
+        });
+    
         // --- 1. AMBIENT PARTICLE SYSTEM ---
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-
+    
         function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
-
+    
         class Particle {
             constructor() {
                 this.x = Math.random() * width; this.y = Math.random() * height;
@@ -671,7 +740,7 @@
             }
         }
         for (let i = 0; i < 60; i++) particles.push(new Particle());
-
+    
         function animateParticles() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach((p, i) => {
@@ -688,14 +757,14 @@
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
-
+    
         // --- 2. CURSOR GLOW ---
         const glow = document.getElementById('cursorGlow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
-
+    
         // --- 3. TYPEWRITER ANIMATION ---
         const typewriterElements = document.querySelectorAll('.typewriter-text');
         const typeObserver = new IntersectionObserver((entries) => {
@@ -709,13 +778,12 @@
             });
         }, { threshold: 0.5 });
         typewriterElements.forEach(el => typeObserver.observe(el));
-
+    
         // --- 4. CAROUSEL LOGIC ---
         const leftCol = document.getElementById('leftCol'); const scrollInd = document.getElementById('scrollInd');
         leftCol.addEventListener('scroll', () => { if(leftCol.scrollTop > 50) scrollInd.style.opacity = '0'; else scrollInd.style.opacity = '0.7'; });
-
+    
         const stage = document.getElementById('stage'); 
-        const originalCards = document.querySelectorAll('.card-3d');
         const toggleBtn = document.getElementById('toggleBtn'); 
         const iconPause = document.getElementById('iconPause'); 
         const iconPlay = document.getElementById('iconPlay');
@@ -725,51 +793,42 @@
         let currentRotation = 0; 
         
         // --- 5. MOBILE LAYOUT & CLONING ---
-        let hasClonedForMobile = false;
-
         function handleLayout() {
             const isMobile = window.innerWidth <= 900;
             const heroSection = document.getElementById('hero-section');
             const rightCol = document.getElementById('rightCol');
             const gridContainer = document.querySelector('.grid-container');
-
+    
             if (isMobile) {
-                // 1. NO DUPLICATION ON MOBILE - Hide the duplicates (indices 4,5,6,7)
-                // We assume there are 8 cards in HTML. We only want 0,1,2,3 visible on mobile.
                 const allCards = stage.querySelectorAll('.card-3d');
                 allCards.forEach((card, index) => {
-                    card.style.transform = 'none'; // Reset transform
+                    card.style.transform = 'none'; 
                     if (index >= 4) {
-                        card.style.display = 'none'; // Hide clones on mobile
+                        card.style.display = 'none'; 
                     } else {
                         card.style.display = 'flex';
                     }
                 });
-
-                // 2. MOVE CAROUSEL INSIDE LEFT COLUMN (Between Hero and Ecosystem)
+    
                 if (heroSection.nextElementSibling !== rightCol) {
                     heroSection.after(rightCol);
                 }
-
             } else {
-                // DESKTOP: Move Carousel back to Grid Container (Right side)
                 if (gridContainer.lastElementChild !== rightCol) {
                     gridContainer.appendChild(rightCol);
                 }
                 
-                // Restore 3D Ring positions (Show all 8 cards)
                 const allCards = stage.querySelectorAll('.card-3d');
                 allCards.forEach((card, index) => {
-                    card.style.display = 'flex'; // Ensure all are visible for loop
+                    card.style.display = 'flex'; 
                     card.style.transform = `rotateY(${index * theta}deg) translateZ(${radius}px)`; 
                 });
             }
         }
-
+    
         window.addEventListener('resize', handleLayout);
         handleLayout(); 
-
-        // 3D Animation Loop (Desktop Only)
+    
         function animate() {
             if (isPlaying && window.innerWidth > 900) { 
                 currentRotation -= 0.05; 
@@ -778,19 +837,19 @@
             requestAnimationFrame(animate);
         }
         animate();
-
+    
         toggleBtn.addEventListener('click', () => {
             isPlaying = !isPlaying;
             iconPause.style.display = isPlaying ? 'block' : 'none';
             iconPlay.style.display = isPlaying ? 'none' : 'block';
         });
-
+    
         // Manual Rotation Logic (Desktop)
         let isDragging = false;
         let startX = 0;
         let previousRotation = 0;
         const container = document.querySelector('.carousel-column');
-
+    
         container.addEventListener('mousedown', (e) => {
             if (window.innerWidth <= 900 || isPlaying) return; 
             isDragging = true;
@@ -798,42 +857,23 @@
             previousRotation = currentRotation;
             stage.style.transition = 'none'; 
         });
-
+    
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
             const deltaX = e.clientX - startX;
             currentRotation = previousRotation + (deltaX * 0.2); 
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
         });
-
-        window.addEventListener('mouseup', (e) => {
+    
+        window.addEventListener('mouseup', () => {
             if (!isDragging) return;
             isDragging = false;
-            snapToNearest();
-        });
-        
-        function snapToNearest() {
             const snapAngle = Math.round(currentRotation / theta) * theta;
             currentRotation = snapAngle;
             stage.style.transition = 'transform 0.5s ease-out';
             stage.style.transform = `translateZ(-${radius}px) rotateY(${currentRotation}deg)`;
             setTimeout(() => { stage.style.transition = 'none'; }, 500);
-        }
-
-        // --- 6. SIDE PANEL LOGIC ---
-        const sidePanel = document.getElementById('sidePanel');
-        const panels = document.querySelectorAll('.panel-content'); 
-
-        function openPanel(id) { 
-            panels.forEach(p => p.classList.remove('active'));
-            const content = document.getElementById('panel-' + id);
-            if(content) content.classList.add('active');
-            sidePanel.classList.add('active'); 
-        }
-
-        function closePanel() { 
-            sidePanel.classList.remove('active'); 
-        }
+        });
     </script>
 </body>
 </html>
