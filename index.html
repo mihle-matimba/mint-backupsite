@@ -437,9 +437,8 @@
         <div class="logo-bubble">
             <img src="https://static.wixstatic.com/media/f82622_c476b77f4e3f4ab2bb0fa799b5b3e2ac~mv2.png" alt="MINT Logo" class="nav-logo">
         </div>
-        <button class="cta-bubble" onclick="openPanel('waitlist')">
-            Request Access
-        </button>
+        
+        <button class="cta-bubble" id="requestAccessBtn" onclick="openPanel('waitlist')">Request Access</button>
     </nav>
 
     <div class="grid-container">
@@ -528,7 +527,7 @@
                         <h3>Request<br>Access</h3>
                         <p>Secure your spot for the mobile release.</p>
                     </div>
-                    <a href="#" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
+                    <a href="javascript:void(0)" onclick="openPanel('waitlist')" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
                 <div class="card-3d">
                     <div>
@@ -567,7 +566,7 @@
                         <h3>Request<br>Access</h3>
                         <p>Secure your spot for the mobile release.</p>
                     </div>
-                    <a href="#" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
+                    <a href="javascript:void(0)" onclick="openPanel('waitlist')" class="btn-pill">Join Waitlist <span>&rarr;</span></a>
                 </div>
                 <div class="card-3d">
                     <div>
@@ -636,7 +635,7 @@
                     <option value="Android">Android</option>
                 </select>
         
-                <button type="submit" class="btn-pill" style="margin-top: 30px; width: 100%; border:none;">
+                <button type="submit" id="submitBtn" class="btn-pill" style="margin-top: 30px; width: 100%; border:none;">
                     Submit Request
                 </button>
             </form>
