@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mint-dark-purple: #31005e;
-            --mint-primary-purple: #5c3bcf;
-            --mint-gold: #ddc357;
+            --mint-dark-purple: #31005e; /* [cite: 37] */
+            --mint-primary-purple: #5c3bcf; /*  */
+            --mint-gold: #ddc357; /* [cite: 40] */
             --mint-black: #000000;
         }
 
@@ -43,7 +43,39 @@
             opacity: 1;
         }
 
-        /* Background Rectangle with 75% opacity */
+        /* Float Animation */
+        @keyframes float {
+            0% { transform: rotate(5deg) scale(2.0) translateY(40px); }
+            50% { transform: rotate(5deg) scale(2.0) translateY(20px); }
+            100% { transform: rotate(5deg) scale(2.0) translateY(40px); }
+        }
+
+        /* Light effect/shadow underneath */
+        .light-glow {
+            width: 200px;
+            height: 40px;
+            background: rgba(92, 59, 207, 0.3);
+            filter: blur(30px);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .phone-mockup-container {
+            position: relative;
+            z-index: 50;
+            perspective: 1000px;
+        }
+
+        .phone-mockup {
+            transform: rotate(5deg) scale(2.0) translateY(40px);
+            animation: float 5s ease-in-out infinite;
+            transition: transform 0.1s ease-out; /* Smooth reactive movement */
+        }
+
         .hero-rectangle {
             position: relative;
             width: 95%;
@@ -57,7 +89,6 @@
             z-index: 10;
         }
 
-        /* Slow Carousel (60s loop) */
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -80,15 +111,6 @@
             opacity: 0.1;
         }
         .dot { color: var(--mint-gold); margin: 0 40px; opacity: 0.3; }
-
-        /* Phone mockup: Tilted 10deg Right & 2x Scale */
-        .phone-mockup {
-            transform: rotate(10deg) scale(2.0) translateY(40px);
-            z-index: 50;
-            position: relative;
-            filter: drop-shadow(0 60px 50px rgba(0,0,0,0.2));
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-        }
     </style>
 </head>
 <body>
@@ -105,45 +127,55 @@
         </div>
         
         <div class="tooltip-container">
-            <button class="bg-gray-100 text-gray-600 border border-gray-200 px-6 py-2.5 rounded-full text-[11px] font-medium uppercase tracking-widest cursor-default">
+            <button class="bg-white text-gray-600 border border-gray-100 px-6 py-2.5 rounded-full text-[11px] font-semibold uppercase tracking-widest shadow-sm">
                 Switch to institution
             </button>
             <span class="tooltip-text">Coming soon</span>
         </div>
     </nav>
 
-    <section class="relative pt-12 pb-24">
+    <section class="relative pt-[100px] pb-24">
         <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             
             <div class="lg:col-span-4">
-                <h1 class="text-5xl font-light leading-tight mb-10 text-gray-900">
+                <h1 class="text-5xl font-light leading-tight mb-12 text-gray-900">
                     Start Managing <br>
                     Your Finance <br>
                     <span class="text-gray-200">With Our Tool</span>
                 </h1>
                 
-                <button onclick="checkDevice()" class="flex items-center gap-4 bg-white border border-gray-100 pl-6 pr-1.5 py-1.5 rounded-full shadow-sm hover:shadow-md transition-all group">
-                    <span class="text-[11px] font-medium text-gray-500 uppercase tracking-[0.2em]">Go to mint</span>
-                    <div class="bg-[var(--mint-primary-purple)] text-white p-2.5 rounded-full">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                <button onclick="checkDevice()" class="flex items-center gap-8 bg-[#f5f2ff] pl-8 pr-2 py-2 rounded-full border border-[rgba(92,59,207,0.1)] hover:shadow-md transition-all group">
+                    <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
+                    <div class="bg-[var(--mint-primary-purple)] text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:scale-105 transition-transform">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     </div>
                 </button>
             </div>
 
-            <div class="lg:col-span-4 flex justify-center">
-                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]">
+            <div class="lg:col-span-4 flex justify-center phone-mockup-container" id="phoneContainer">
+                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]" id="phoneImg">
+                <div class="light-glow"></div>
             </div>
 
             <div class="lg:col-span-4 flex flex-col items-end text-right">
-                <div class="max-w-[300px] mb-16">
+                <div class="max-w-[300px] mb-20">
                     <p class="text-gray-400 text-lg leading-relaxed font-light">
                         Simplify your financial life. Our intuitive app makes managing your money effortless[cite: 10].
                     </p>
                 </div>
 
-                <div class="flex flex-col items-end">
-                    <div class="text-5xl font-extralight text-[var(--mint-dark-purple)] mb-2">200+</div>
-                    <p class="text-[10px] uppercase tracking-[0.4em] text-gray-300">Trusted global users</p>
+                <div class="flex items-center gap-5">
+                    <div class="flex -space-x-3">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
+                    </div>
+                    <div class="text-left">
+                        <div class="text-4xl font-light text-[var(--mint-black)] leading-none">200+</div>
+                        <p class="text-[10px] text-gray-400 mt-1 max-w-[150px] leading-tight">
+                            Trusted to use by millions users over 140 countries
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,8 +183,8 @@
 
     <div class="hero-rectangle">
         <div class="carousel-track">
-            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
-            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
+            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact [cite: 8]</div>
+            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact [cite: 8]</div>
         </div>
         
         <div class="absolute bottom-10 left-10 opacity-30">
@@ -161,6 +193,28 @@
     </div>
 
     <script>
+        // Cursor reactivity for the phone
+        const container = document.getElementById('phoneContainer');
+        const phone = document.getElementById('phoneImg');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Adjust tilt based on cursor position while maintaining the 5deg base
+            const tiltX = y / 20;
+            const tiltY = x / 20;
+            
+            phone.style.transform = `rotate(${5 + tiltY}deg) scale(2.0) translateY(${40 + tiltX}px) rotateX(${-tiltX}deg) rotateY(${tiltY}deg)`;
+            phone.style.animation = 'none'; // Pause floating while interacting
+        });
+
+        container.addEventListener('mouseleave', () => {
+            phone.style.transform = `rotate(5deg) scale(2.0) translateY(40px)`;
+            phone.style.animation = 'float 5s ease-in-out infinite';
+        });
+
         function checkDevice() {
             if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
                 alert("MINT is currently available only on mobile devices.");
