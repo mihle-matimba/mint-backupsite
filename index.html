@@ -297,6 +297,32 @@
             transform: scale(1.05);
         }
 
+        /* TRANSACT CARD STACK ANIMATION */
+        .transact-stack-card {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fanOut 6s ease-in-out infinite;
+        }
+
+        @keyframes fanOut {
+            0%, 100% {
+                transform: translateY(0) scale(0.95);
+            }
+            50% {
+                transform: translateY(var(--y-offset, -60px)) scale(1);
+            }
+        }
+
+        /* Specific delays and offsets for each card */
+        .transact-card-1 { --y-offset: -180px; animation-delay: 0s; }
+        .transact-card-2 { --y-offset: -90px; animation-delay: 0.1s; }
+        .transact-card-3 { --y-offset: 0px; animation-delay: 0.2s; }
+        
+        /* Pause on hover for easier viewing */
+        .transact-stack-container:hover .transact-stack-card {
+            animation-play-state: paused;
+            transform: translateY(var(--y-offset)) scale(1);
+        }
+
     </style>
 </head>
 <body>
@@ -522,13 +548,62 @@
                 </div>
             </div>
     
-            <div class="lg:col-span-8 feature-card" style="background-color: #ddd6fe;">
-                <div class="flex justify-between items-start h-full relative">
+            <div class="lg:col-span-8 feature-card transact-stack-container" style="background-color: #ddd6fe;">
+                <div class="relative h-full z-10">
                     <div>
                         <h3 class="text-2xl font-semibold mb-2">Transact</h3>
                         <p class="text-gray-500 font-light max-w-xs">Innovative payment capabilities for real-time money movement.</p>
                     </div>
+                </div>
+                
+                <div class="absolute right-0 bottom-0 w-[300px] h-[300px] pointer-events-none translate-y-10 translate-x-10">
+                    
+                    <div class="transact-stack-card transact-card-1 bg-white/90 backdrop-blur p-4 rounded-2xl shadow-lg absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-10">
+                         <div class="flex items-center gap-3">
+                             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                             </div>
+                             <div>
+                                 <div class="text-sm font-bold text-gray-800">S&P 500</div>
+                                 <div class="text-xs text-green-500">+1.2%</div>
+                             </div>
+                         </div>
+                         <div class="h-10 w-20">
+                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-blue-500 fill-none stroke-2"><path d="M0 15 Q 10 5, 20 10 T 40 5 L 50 0"/></svg>
+                         </div>
                     </div>
+
+                    <div class="transact-stack-card transact-card-2 bg-white/95 backdrop-blur p-4 rounded-2xl shadow-lg absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-20">
+                         <div class="flex items-center gap-3">
+                             <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
+                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                             </div>
+                             <div>
+                                 <div class="text-sm font-bold text-gray-800">Bitcoin</div>
+                                 <div class="text-xs text-green-500">+5.4%</div>
+                             </div>
+                         </div>
+                         <div class="h-10 w-20">
+                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-orange-500 fill-none stroke-2"><path d="M0 18 Q 10 15, 20 8 T 40 12 L 50 2"/></svg>
+                         </div>
+                    </div>
+
+                    <div class="transact-stack-card transact-card-3 bg-white p-4 rounded-2xl shadow-xl absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-30">
+                         <div class="flex items-center gap-3">
+                             <div class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white">
+                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                             </div>
+                             <div>
+                                 <div class="text-sm font-bold text-gray-800">Apple Inc.</div>
+                                 <div class="text-xs text-green-500">+2.8%</div>
+                             </div>
+                         </div>
+                         <div class="h-10 w-20">
+                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-gray-900 fill-none stroke-2"><path d="M0 10 Q 15 20, 30 5 T 50 0"/></svg>
+                         </div>
+                    </div>
+
+                </div>
             </div>
     
             <div class="lg:col-span-4 bg-[var(--mint-primary-purple)] rounded-[24px] p-10 flex flex-col justify-between text-white relative overflow-hidden group">
