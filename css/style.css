@@ -1,62 +1,35 @@
-/* Core Setup */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: #ffffff;
-    overflow-x: hidden;
-}
+body { font-family: sans-serif; overflow-x: hidden; }
 
-/* Navbar stays on top */
+/* Navbar stays on top of everything */
 .navbar {
     position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    top: 0; width: 100%;
+    display: flex; justify-content: space-between;
     padding: 25px 50px;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
 }
 
-.logo img { height: 35px; width: auto; }
-
-/* Hamburger Animation */
-.menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+/* The container that defines HOW LONG the scroll lasts */
+.pin-container {
+    height: 300vh; /* Adjust this to make the animation slower or faster */
+    position: relative;
 }
 
-.bar {
-    width: 30px;
-    height: 2px;
-    background: #000;
-    transition: 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-}
-
-.menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.menu-toggle.active .bar:nth-child(2) { opacity: 0; transform: translateX(-10px); }
-.menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-/* Hero Zoom & Rise Section */
+/* The actual Hero section that stays stuck */
 #hero {
+    position: sticky;
+    top: 0;
     height: 100vh;
     width: 100%;
-    position: relative;
-    overflow: hidden; /* Crucial: hides the 4x zoom overflow */
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    overflow: hidden;
+    background: #fff;
 }
 
 .hero-image-wrapper {
@@ -70,21 +43,19 @@ body {
 .hero-image {
     width: 100%;
     height: auto;
-    display: block;
-    /* Initial state: Large and partially hidden below the screen edge */
+    /* Starting state: zoomed and slightly below */
     transform: scale(4) translateY(50%);
     transform-origin: bottom center;
     will-change: transform;
 }
 
-/* Following Content */
 .next-section {
     height: 100vh;
-    background: #f9f9f9;
+    background: #1a1a1a;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    position: relative;
+    z-index: 10; /* Ensures it slides OVER the pinned hero at the end */
 }
-
-.container h2 { font-size: 3rem; margin-bottom: 20px; }
