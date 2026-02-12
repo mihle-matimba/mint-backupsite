@@ -312,7 +312,7 @@
 
         /* Active state triggered by scroll - UPDATED POSITIONS */
         .transact-stack-container.active .transact-card-1 {
-            /* Back card: Kept as is */
+            /* Back card: Kept as is (-20px) */
             transform: translateY(-160px) translateX(-20px) scale(0.9);
             opacity: 1;
             z-index: 10;
@@ -320,16 +320,16 @@
         }
         
         .transact-stack-container.active .transact-card-2 {
-            /* Middle card: Shifted left by 10px from -10px to -20px */
-            transform: translateY(-80px) translateX(-20px) scale(0.95);
+            /* Middle card: Shifted left by 100px */
+            transform: translateY(-80px) translateX(-100px) scale(0.95);
             opacity: 1;
             z-index: 20;
             transition-delay: 0.15s;
         }
         
         .transact-stack-container.active .transact-card-3 {
-            /* Front card: Shifted left by 20px from 0 to -20px */
-            transform: translateY(0) translateX(-20px) scale(1);
+            /* Front card: Shifted left by 200px */
+            transform: translateY(0) translateX(-200px) scale(1);
             opacity: 1;
             z-index: 30;
             transition-delay: 0.3s;
