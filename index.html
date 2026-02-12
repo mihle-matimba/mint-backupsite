@@ -95,7 +95,7 @@
         .carousel-track {
             display: flex;
             width: max-content; /* Allows track to be as wide as content */
-            animation: scroll 40s linear infinite;
+            animation: scroll 80s linear infinite; /* SLOWED BY HALF */
             padding: 80px 0 60px;
         }
         
@@ -773,12 +773,13 @@
         </div>
 
         <div class="relative flex flex-col items-center">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0">
-                <span class="text-[120px] md:text-[180px] font-bold text-gray-50 opacity-[0.03] whitespace-nowrap select-none">VARIED FEATURES</span>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center items-center pointer-events-none z-0">
+                <span id="leftBgText" class="text-[120px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
+                <span id="rightBgText" class="text-[120px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
             </div>
 
             <div class="relative z-10 mb-16" id="heroTarget">
-                <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[280px] drop-shadow-2xl rounded-[3rem]">
+                <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[280px] drop-shadow-2xl rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);">
             </div>
 
             <div class="text-center relative z-10">
@@ -866,6 +867,32 @@
             
             canvas.innerHTML = svgContent;
         }
+
+        /* NEW SCROLL ANIMATION FOR IMAGE SCALE AND SLIDING TEXT */
+        window.addEventListener('scroll', () => {
+            const section = document.getElementById('stepsSection');
+            const img = document.querySelector('#heroTarget img');
+            const leftText = document.getElementById('leftBgText');
+            const rightText = document.getElementById('rightBgText');
+            
+            if (!section || !img) return;
+
+            const rect = section.getBoundingClientRect();
+            const viewHeight = window.innerHeight;
+            
+            // Calculate progress (0 when section bottom enters, 1 when middle is reached)
+            let progress = (viewHeight - rect.top) / (viewHeight * 0.8);
+            progress = Math.min(Math.max(progress, 0), 1);
+
+            // Scale from 2.5 down to 1
+            const currentScale = 2.5 - (progress * 1.5);
+            img.style.transform = `scale(${currentScale})`;
+
+            // Slide text out (Start together, move apart)
+            const textOffset = progress * 200; // Distance of slide
+            leftText.style.transform = `translateX(-${textOffset}px)`;
+            rightText.style.transform = `translateX(${textOffset}px)`;
+        });
 
         window.addEventListener('load', drawConnectingLines);
         window.addEventListener('resize', drawConnectingLines);
