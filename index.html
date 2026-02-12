@@ -21,165 +21,196 @@
             overflow-x: hidden;
         }
 
-        /* Phone mockup: Highest z-index & Reactive Logic */
-        .phone-mockup-container {
-            position: relative;
-            z-index: 100 !important; /* Highest depth */
-            perspective: 1200px;
+        /* Tooltip logic */
+        .tooltip-container { position: relative; }
+        .tooltip-text {
+            visibility: hidden;
+            background-color: var(--mint-black);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg) scale(1.6); }
+            50% { transform: translateY(-12px) rotate(-5deg) scale(1.6); }
+        }
+
+        /* Small Floats for 3D assets */
+        @keyframes miniFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .phone-mockup {
             transform: rotate(-5deg) scale(1.6) translateY(32px);
+            animation: float 6s ease-in-out infinite;
             transition: transform 0.2s cubic-bezier(0.1, 0, 0.3, 1);
             will-change: transform;
         }
 
-        /* Global Button Animation (Go to Mint style) */
-        .mint-cta-btn {
+        /* Hero Rectangle */
+        .hero-rectangle {
+            position: relative;
+            width: 95%;
+            max-width: 1400px;
+            margin: -40px auto 0; 
+            min-height: 550px;
+            background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
+            border-radius: 60px;
+            opacity: 0.75; 
+            overflow: hidden;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Carousel */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .carousel-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 60s linear infinite;
+            padding: 80px 0 60px;
+        }
+        .carousel-item {
+            color: white;
+            font-size: 8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            padding: 0 60px;
             display: flex;
             align-items: center;
-            gap: 2rem;
-            background-color: #f5f2ff;
-            padding: 0.5rem 0.5rem 0.5rem 2rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(92, 59, 207, 0.15);
-            transition: all 0.3s ease;
+            opacity: 0.1;
         }
 
-        .mint-cta-btn:hover {
-            box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2);
+        /* New Section Styles */
+        .solution-section {
+            padding: 160px 20px;
+            text-align: center;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 40px 40px; /* Grid effect from screenshot */
+            position: relative;
         }
 
-        .mint-cta-icon {
-            background-color: var(--mint-primary-purple);
-            color: white;
-            width: 3rem;
-            height: 3rem;
+        .floating-asset {
+            position: absolute;
+            animation: miniFloat 4s ease-in-out infinite;
+        }
+
+        .asset-blob {
+            border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 9999px;
-            position: relative;
             overflow: hidden;
-        }
-
-        .mint-cta-btn:hover .mint-cta-icon svg:first-child {
-            transform: translate(2rem, -2rem);
-        }
-
-        .mint-cta-btn:hover .mint-cta-icon svg:last-child {
-            transform: translate(0, 0);
-        }
-
-        /* Sections and Grids */
-        .solution-section {
-            padding: 120px 20px;
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        .feature-card {
-            background: #f9f9fb;
-            border-radius: 24px;
-            padding: 40px;
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
     </style>
 </head>
 <body>
 
-    <section class="relative pt-[100px] pb-24 z-20">
+    <nav class="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto">
+        <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4"> 
+        <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
+            <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
+            <a href="#" class="hover:text-purple-600 transition-all">Features</a>
+            <a href="#" class="hover:text-purple-600 transition-all">About</a>
+            <a href="#" class="hover:text-purple-600 transition-all">Pricing</a>
+            <a href="#" class="hover:text-purple-600 transition-all">Blog</a>
+        </div>
+        <div class="tooltip-container">
+            <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                Switch to institution
+            </button>
+            <span class="tooltip-text">Coming soon</span>
+        </div>
+    </nav>
+
+    <section class="relative pt-[100px] pb-24">
         <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             <div class="lg:col-span-4">
-                <h1 class="text-5xl font-light leading-tight mb-12">Start Managing <br> Your Finance <br> <span class="text-gray-200">With Our Tool</span></h1>
-                <button class="mint-cta-btn group">
+                <h1 class="text-5xl font-light leading-tight mb-12 text-gray-900">Start Managing <br> Your Finance <br> <span class="text-gray-200">With Our Tool</span></h1>
+                <button onclick="checkDevice()" class="flex items-center gap-8 bg-[#f5f2ff] pl-8 pr-2 py-2 rounded-full border border-[rgba(92,59,207,0.15)] group">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
-                    <div class="mint-cta-icon">
-                        <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                    <div class="bg-[var(--mint-primary-purple)] text-white w-12 h-12 flex items-center justify-center rounded-full">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     </div>
                 </button>
             </div>
-
             <div class="lg:col-span-4 flex justify-center phone-mockup-container" id="phoneContainer">
                 <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]" id="phoneImg">
             </div>
-
             <div class="lg:col-span-4 flex flex-col items-end text-right">
-                <p class="text-black text-lg mb-20 max-w-[300px]">Simplify your financial life. Our intuitive app makes managing your money effortless.</p>
+                <div class="max-w-[300px] mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">Simplify your financial life. Our intuitive app makes managing your money effortless.</p></div>
                 <div class="flex items-center gap-5">
-                    <div class="text-4xl font-light">200+</div>
-                    <p class="text-[10px] text-gray-400 max-w-[150px] text-left">Trusted to use by millions users over 140 countries</p>
+                    <div class="flex -space-x-3"><img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white"></div>
+                    <div class="text-left"><div class="text-4xl font-light">200+</div><p class="text-[10px] text-gray-400 leading-tight">Trusted to use by millions users over 140 countries</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="solution-section text-center">
-        <h2 class="text-[var(--mint-primary-purple)] text-6xl font-normal leading-tight mb-8">Our app is an all-in-one solution for <br> managing your money.</h2>
-        <button class="mint-cta-btn group mx-auto mb-16">
-            <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
-            <div class="mint-cta-icon">
-                <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-            </div>
-        </button>
-    </section>
-
-    <section class="max-w-7xl mx-auto px-10 py-24">
-        <div class="text-center mb-16">
-            <span class="text-[10px] uppercase tracking-widest text-purple-400 border border-purple-100 px-4 py-1.5 rounded-full">Key Features</span>
-            <h2 class="text-5xl font-light mt-6">Explore Our <span class="text-[var(--mint-primary-purple)]">Standout Features</span></h2>
+    <div class="hero-rectangle">
+        <div class="carousel-track">
+            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
+            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
         </div>
+        <div class="w-[80%] h-[1px] bg-white/20"></div>
+        <div class="py-20 text-center px-10">
+            <h2 class="text-white text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
+            <div class="flex justify-center gap-8 flex-wrap">
+                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">NPN</div>
+                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">FSR</div>
+                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">SBK</div>
+                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">MTN</div>
+            </div>
+        </div>
+    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[400px]">
-            <div class="lg:col-span-7 feature-card">
-                <h3 class="text-2xl font-semibold mb-2">Invest</h3>
-                <p class="text-gray-500 font-light max-w-sm">MINT enables high-quality, accessible investing in a single platform[cite: 10].</p>
-                <div class="mt-12 bg-white rounded-3xl p-8 shadow-sm">
-                    <div class="h-32 bg-purple-50 rounded-2xl animate-pulse"></div>
-                </div>
+    <section class="solution-section">
+        <div class="floating-asset top-20 left-[10%] asset-blob w-32 h-20 bg-purple-100"><span class="text-2xl">🐷</span></div>
+        <div class="floating-asset top-32 right-[15%] asset-blob w-28 h-28 bg-cyan-50"><span class="text-3xl">⏰</span></div>
+        <div class="floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 bg-blue-50"><span class="text-3xl">🪙</span></div>
+        <div class="floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 bg-pink-100"><span class="text-3xl">💎</span></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h2 class="text-[var(--mint-primary-purple)] text-6xl font-normal leading-tight mb-8">
+                Our app is an <br> all-in-one solution for <br> managing your money <br> and financial goals.
+            </h2>
+            
+            <div class="flex items-center justify-center gap-4 mb-12">
+                <div class="w-12 h-[1px] bg-purple-200"></div>
+                <p class="text-gray-600 font-light text-lg">
+                    Experience the peace of mind that comes with having your finances under control.
+                </p>
+                <div class="w-12 h-[1px] bg-purple-200"></div>
             </div>
 
-            <div class="lg:col-span-5 feature-card">
-                <h3 class="text-2xl font-semibold mb-2">Borrow</h3>
-                <p class="text-gray-500 font-light">Smarter, fairer credit tools built on affordability and transparency[cite: 12].</p>
-                <div class="mt-12 space-y-4">
-                    <div class="bg-white p-4 rounded-xl flex justify-between shadow-sm">
-                        <span class="text-sm text-gray-400">Credit Score</span>
-                        <span class="text-[var(--mint-primary-purple)] font-bold">Excellent</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-8 feature-card">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2">Transact</h3>
-                        <p class="text-gray-500 font-light max-w-xs">Innovative payment capabilities for real-time money movement[cite: 14].</p>
-                    </div>
-                    <div class="w-64 h-64 bg-gray-100 rounded-3xl -mr-20 -mb-20"></div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-4 bg-[var(--mint-primary-purple)] rounded-[24px] p-10 flex flex-col justify-between text-white relative overflow-hidden group">
-                <div class="relative z-10">
-                    <h3 class="text-4xl font-light leading-tight">Take Control of <br> Your Future</h3>
-                </div>
-                
-                <button class="flex items-center gap-4 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-full transition-all relative z-10">
-                    <span class="font-semibold uppercase text-xs tracking-widest">Go to Mint</span>
+            <button class="flex items-center gap-6 bg-[#f5f2ff] pl-8 pr-2 py-2 rounded-full border border-[rgba(92,59,207,0.1)] mx-auto group">
+                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Get Started Free</span>
+                <div class="bg-[var(--mint-primary-purple)] text-white w-10 h-10 flex items-center justify-center rounded-full group-hover:scale-110 transition-transform">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                </button>
-
-                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform"></div>
-            </div>
+                </div>
+            </button>
         </div>
     </section>
 
@@ -197,11 +228,17 @@
         function animate() {
             currentX += (mouseX - currentX) * 0.1;
             currentY += (mouseY - currentY) * 0.1;
-            phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${32 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+            if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
+                phone.style.animation = 'none';
+                phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${32 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+            } else {
+                phone.style.animation = 'float 6s ease-in-out infinite';
+            }
             requestAnimationFrame(animate);
         }
         animate();
         container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
+        function checkDevice() { if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) alert("MINT is currently available only on mobile devices."); }
     </script>
 </body>
 </html>
