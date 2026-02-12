@@ -7,8 +7,8 @@
     <style>
         /* --- CSS STYLES --- */
         :root {
-            /* Purple represents inclusive wealth building and prosperity */
             --brand-purple-deep: #4c1d95;
+            --brand-purple-mid: #6d28d9;
             --brand-purple-light: #8b5cf6;
             --apple-gray: #86868b;
             --apple-black: #1d1d1f;
@@ -21,8 +21,8 @@
         }
 
         body {
-            /* Changed to Inter Semi-Bold per request */
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            /* Official Apple System Font Stack */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #ffffff;
             overflow-x: hidden;
             color: var(--apple-black);
@@ -53,8 +53,7 @@
             border: none;
             cursor: pointer;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            flex-direction: column; gap: 6px;
         }
 
         .bar {
@@ -86,12 +85,10 @@
             background: #fff;
         }
 
-        
         .hero-text-layer {
             position: absolute;
-            
             top: calc(15vh + 100px); 
-            z-index: 1; 
+            z-index: 3; /* Higher than image to stay on top */
             text-align: center;
             width: 100%;
             pointer-events: none;
@@ -99,31 +96,44 @@
 
         .hero-text-layer h1 {
             font-size: clamp(3.5rem, 12vw, 9rem);
-            /* Updated to Semi-Bold (600) */
-            font-weight: 600;
-            letter-spacing: -0.04em;
+            font-weight: 700;
+            letter-spacing: -0.03em;
             line-height: 0.95;
-            margin-bottom: 12px;
+            margin-bottom: 24px;
             
-            /* Purple gradient representing value creation [cite: 28] */
-            background: linear-gradient(135deg, var(--brand-purple-deep), var(--brand-purple-light));
+            /* Lava Lamp Gradient Animation */
+            background: linear-gradient(
+                270deg, 
+                var(--brand-purple-deep), 
+                var(--brand-purple-light), 
+                var(--brand-purple-mid), 
+                var(--brand-purple-deep)
+            );
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: lavaFlow 12s ease-in-out infinite;
+        }
+
+        @keyframes lavaFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero-text-layer p {
-            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
-            /* Updated to Semi-Bold (600) */
-            font-weight: 600;
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            font-weight: 400;
             color: var(--apple-black);
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
+            text-transform: none; 
+            letter-spacing: -0.01em;
+            line-height: 1.4;
         }
 
-        /* Image Layer: Sits BEHIND the text layer */
+        /* Image Layer Wrapper */
         .hero-image-wrapper {
             position: absolute;
             bottom: 0;
@@ -135,6 +145,26 @@
             align-items: flex-end; 
         }
 
+        /* Purple Light Effect (Ambient Glow) */
+        .hero-image-wrapper::before {
+            content: "";
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60vw;
+            height: 40vw;
+            max-width: 900px;
+            background: radial-gradient(
+                circle, 
+                rgba(139, 92, 246, 0.18) 0%, 
+                rgba(139, 92, 246, 0) 70%
+            );
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .hero-image {
             width: 100%;
             max-width: 1100px;
@@ -144,7 +174,7 @@
             will-change: transform;
         }
 
-        /* Content Sections for Invest, Borrow, and Transact pillars [cite: 16] */
+        /* Content Sections for Invest, Borrow, and Transact pillars */
         .next-section {
             padding: 100px 5%;
             background: #000;
@@ -158,8 +188,18 @@
             margin-bottom: 60px;
         }
 
-        .section-header h2 { font-size: 3.5rem; font-weight: 600; letter-spacing: -0.04em; }
-        .section-header p { color: #a1a1a6; font-size: 1.2rem; margin-top: 10px; }
+        .section-header h2 { 
+            font-size: 3.5rem; 
+            font-weight: 600; 
+            letter-spacing: -0.03em; 
+        }
+        
+        .section-header p { 
+            color: #a1a1a6; 
+            font-size: 1.2rem; 
+            margin-top: 10px; 
+            font-weight: 400;
+        }
 
         .pillars-grid {
             display: grid;
@@ -181,12 +221,14 @@
             font-size: 2rem;
             margin-bottom: 20px;
             font-weight: 600;
+            letter-spacing: -0.02em;
         }
 
         .pillar-card p {
             color: #d1d1d6;
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 1.1rem;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -207,7 +249,7 @@
         <section id="hero">
             <div class="hero-text-layer">
                 <h1>MONEY IN<br>TRANSIT</h1>
-                <p>MINT (Money In Transit) is an integrated financial ecosystem built to Invest, Borrow, and Transact. It democratises wealth through a partnership-driven platform that manages the perpetual movement and growth of money.</p>
+                <p>MINT is an integrated financial ecosystem built to Invest, Borrow, and Transact. It democratises wealth through a partnership-driven platform that manages the perpetual movement and growth of money.</p>
             </div>
 
             <div class="hero-image-wrapper">
@@ -219,21 +261,21 @@
     <section class="next-section">
         <div class="section-header">
             <h2>The Movement of Money</h2>
-            <p>A unified financial ecosystem designed for modern wealth flows[cite: 5, 10].</p>
+            <p>A unified financial ecosystem designed for modern wealth flows.</p>
         </div>
 
         <div class="pillars-grid">
             <div class="pillar-card">
                 <h3>INVEST</h3>
-                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment[cite: 17, 23].</p>
+                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment.</p>
             </div>
             <div class="pillar-card">
                 <h3>BORROW</h3>
-                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability and transparency[cite: 18, 24].</p>
+                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability and transparency.</p>
             </div>
             <div class="pillar-card">
                 <h3>TRANSACT</h3>
-                <p>Move in real time. Positioning you at the centre of payments and global money movement[cite: 19, 25].</p>
+                <p>Move in real time. Positioning you at the centre of payments and global money movement.</p>
             </div>
         </div>
     </section>
@@ -244,12 +286,10 @@
             const pinContainer = document.querySelector('.pin-container');
             const menuToggle = document.querySelector('.menu-toggle');
 
-            // Hamburger menu toggle interaction
             menuToggle.addEventListener('click', () => {
                 menuToggle.classList.toggle('active');
             });
 
-            // Parallax scroll zoom and position logic
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const maxScroll = pinContainer.offsetHeight - window.innerHeight;
@@ -258,7 +298,6 @@
                 if (progress > 1) progress = 1;
                 if (progress < 0) progress = 0;
 
-                // Scale shrinks from 4x to 1x | Y position rises from 50% to 0%
                 const imgScale = 4 - (progress * 3);
                 const imgY = 50 - (progress * 50);
                 
