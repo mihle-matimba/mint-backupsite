@@ -1,31 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Hamburger Menu Toggle Logic
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        // You can add logic here to show/hide a menu overlay later
-    });
-
-    // 2. Scroll-Based Hero Zoom Logic
     const heroImage = document.querySelector('.hero-image');
     
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
         const windowHeight = window.innerHeight;
 
-        // Progress goes from 0 to 1 over the course of the first 100vh
+        // Progress 0 at top, 1 when you've scrolled one full screen
         let progress = scrollY / windowHeight;
-        
-        // Cap progress at 1 so it doesn't shrink smaller than its original size
         if (progress > 1) progress = 1;
         if (progress < 0) progress = 0;
 
-        // Calculation: Start at 4, subtract 3 (multiplied by progress) to reach 1.
+        // Zoom: from 4 down to 1
         const scaleValue = 4 - (progress * 3);
         
-        heroImage.style.transform = `scale(${scaleValue})`;
+        // Position: from 50% down to 0% (moving it up into view)
+        const translateYValue = 50 - (progress * 50);
+
+        heroImage.style.transform = `scale(${scaleValue}) translateY(${translateYValue}%)`;
     });
 
+    // Logo & Menu logic
+    const menuToggle = document.querySelector('.menu-toggle');
+    menuToggle.addEventListener('click', () => menuToggle.classList.toggle('active'));
 });
