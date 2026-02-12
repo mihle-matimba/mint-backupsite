@@ -94,7 +94,7 @@
         .carousel-track {
             display: flex;
             width: max-content;
-            animation: scroll 60s linear infinite;
+            animation: scroll 40s linear infinite; /* Adjusted speed slightly for smoothness */
             padding: 80px 0 60px;
         }
         .carousel-item {
@@ -103,11 +103,15 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.02em;
-            padding: 0 60px;
+            padding: 0 20px; /* Reduced padding for seamlessness */
             display: flex;
             align-items: center;
             opacity: 0.1;
             white-space: nowrap; /* Ensures text doesn't wrap */
+        }
+        
+        .dot {
+            padding: 0 40px;
         }
 
         /* New CTA Button Styles (Sliding Animation) */
@@ -169,6 +173,14 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* Transition for the scale effect */
+            transition: transform 0.3s ease; 
+        }
+        
+        /* Hover effect for blobs */
+        .asset-blob:hover {
+            transform: scale(1.15) !important; /* Force scale on hover */
+            z-index: 50;
         }
 
         /* Feature Card Styles */
@@ -184,6 +196,37 @@
         .feature-card:hover {
             transform: translateY(-8px);
         }
+
+        /* Shimmer/Reflection Text Effect */
+        .shimmer-text {
+            background: linear-gradient(
+                110deg, 
+                #111827 30%, 
+                #5c3bcf 45%, 
+                #d1d5db 50%, 
+                #5c3bcf 55%, 
+                #111827 70%
+            );
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            to {
+                background-position: -250% center;
+            }
+        }
+        
+        /* Hover Zoom Class */
+        .hover-zoom {
+            transition: transform 0.3s ease;
+        }
+        .hover-zoom:hover {
+            transform: scale(1.2);
+        }
+
     </style>
 </head>
 <body>
@@ -208,7 +251,7 @@
     <section class="relative pt-[100px] pb-24">
         <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
             <div class="lg:col-span-4">
-                <h1 class="text-5xl font-light leading-tight mb-12 text-gray-900">Elevate your<br>Investment Portfolio<br> <span class="text-gray-200">With MINT</span></h1>
+                <h1 class="text-5xl font-light leading-tight mb-12 shimmer-text">Elevate your<br>Investment Portfolio<br> <span>With MINT</span></h1>
                 <button onclick="checkDevice()" class="mint-cta-btn group">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
                     <div class="mint-cta-icon">
@@ -220,11 +263,20 @@
             <div class="lg:col-span-4 flex justify-center phone-mockup-container" id="phoneContainer">
                 <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]" id="phoneImg">
             </div>
+            
             <div class="lg:col-span-4 flex flex-col items-end text-right">
                 <div class="max-w-[300px] mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
-                <div class="flex items-center gap-5">
-                    <div class="flex -space-x-3"><img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white"></div>
-                    <div class="text-left"><div class="text-4xl font-light">200+</div><p class="text-[10px] text-gray-400 leading-tight"></p>Trusted by 200+ early users.</div>
+                
+                <div class="flex items-center justify-end gap-6 w-full">
+                    <div class="flex -space-x-3 shrink-0">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white">
+                    </div>
+                    <div class="text-left shrink-0">
+                        <div class="text-4xl font-light">200+</div>
+                        <p class="text-[10px] text-gray-400 leading-tight mt-1">Trusted by 200+<br>early users.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,68 +284,64 @@
 
     <div class="hero-rectangle">
         <div class="carousel-track">
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
-
-            <span class="dot"> • </span>
-            
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact</div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact</div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact</div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact</div>
-
-            <span class="dot"> • </span>
-            
+            <div class="carousel-item"> 
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+            </div>
+            <div class="carousel-item"> 
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
+            </div>
         </div>
         <div class="w-[80%] h-[1px] bg-white/20"></div>
         <div class="py-20 text-center px-10">
             <h2 class="text-white text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
             <div class="flex justify-center gap-8 flex-wrap">
-                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-3">
-                    </div>
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
                     
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                        <img src="https://s3-symbol-logo.tradingview.com/british-american-tobacco--big.svg" alt="FSR" class="w-full h-full object-contain p-3">
-                    </div>
-                    
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                        <img src="https://s3-symbol-logo.tradingview.com/anheuser-busch-inbev--big.svg" alt="SBK" class="w-full h-full object-contain p-3">
-                    </div>
-                    
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                        <img src="https://s3-symbol-logo.tradingview.com/prosus--big.svg" alt="MTN" class="w-full h-full object-contain p-3">
-                    </div>
-                    
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                        <img src="https://s3-symbol-logo.tradingview.com/richemont-n--big.svg" alt="VOD" class="w-full h-full object-contain p-3">
-                    </div>
-                    
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                        <img src="https://s3-symbol-logo.tradingview.com/glencore--big.svg" alt="ABS" class="w-full h-full object-contain p-3">
-                    </div>
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/british-american-tobacco--big.svg" alt="FSR" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
+                
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/anheuser-busch-inbev--big.svg" alt="SBK" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
+                
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/prosus--big.svg" alt="MTN" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
+                
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/richemont-n--big.svg" alt="VOD" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
+                
+                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
+                    <img src="https://s3-symbol-logo.tradingview.com/glencore--big.svg" alt="ABS" class="w-full h-full object-contain p-2 hover-zoom">
+                </div>
             </div>
         </div>
     </div>
 
     <section class="solution-section">
         
-        <div class="floating-asset top-20 left-[10%] asset-blob w-32 h-20 bg-purple-100 flex items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-12 h-12 object-contain" />
+        <div class="floating-asset top-20 left-[10%] asset-blob w-32 h-20 flex items-center justify-center">
+          <img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset top-32 right-[15%] asset-blob w-28 h-28 bg-cyan-50 flex items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-14 h-14 object-contain" />
+        <div class="floating-asset top-32 right-[15%] asset-blob w-28 h-28 flex items-center justify-center">
+          <img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 bg-blue-50 flex items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-14 h-14 object-contain" />
+        <div class="floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 flex items-center justify-center">
+          <img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 bg-pink-100 flex items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-14 h-14 object-contain" />
+        <div class="floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 flex items-center justify-center">
+          <img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" />
         </div>
         
         <div class="max-w-4xl mx-auto relative z-10">
