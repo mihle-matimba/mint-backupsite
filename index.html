@@ -21,7 +21,6 @@
         }
 
         body {
-            /* Official Apple System Font Stack */
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: #ffffff;
             overflow-x: hidden;
@@ -53,7 +52,8 @@
             border: none;
             cursor: pointer;
             display: flex;
-            flex-direction: column; gap: 6px;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .bar {
@@ -82,16 +82,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #fff;
+            /* Background Gradient at z-index -30 */
+            background: radial-gradient(circle at 50% 50%, #fdfbff 0%, #f5f0ff 100%);
+            z-index: 0;
         }
 
+        /* Hero Text Layer: Set behind the image */
         .hero-text-layer {
             position: absolute;
-            top: calc(15vh + 100px); 
-            z-index: -1;
+            top: calc(15vh + 80px); 
+            z-index: -1; 
             text-align: center;
             width: 100%;
             pointer-events: none;
+            padding: 0 10%; /* Ensures text doesn't touch edges on mobile */
         }
 
         .hero-text-layer h1 {
@@ -101,7 +105,6 @@
             line-height: 0.95;
             margin-bottom: 24px;
             
-            /* Lava Lamp Gradient Animation */
             background: linear-gradient(
                 270deg, 
                 var(--brand-purple-deep), 
@@ -123,46 +126,48 @@
         }
 
         .hero-text-layer p {
-            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            font-size: clamp(1rem, 2.2vw, 1.5rem);
             font-weight: 400;
-            color: var(--apple-black);
-            max-width: 700px;
+            /* Body text color to White per request */
+            color: #ffffff;
+            max-width: 650px;
             margin: 0 auto;
             text-transform: none; 
             letter-spacing: -0.01em;
-            line-height: 1.4;
+            line-height: 1.5;
+            /* Added text shadow for legibility against dynamic backgrounds */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Image Layer Wrapper */
+        /* Image Layer: Always on Top */
         .hero-image-wrapper {
             position: absolute;
             bottom: 0;
-            z-index: 2; 
+            z-index: 10; 
             width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: flex-end; 
+            pointer-events: none;
         }
 
-        /* Purple Light Effect (Ambient Glow) */
+        /* Ambient Purple Glow behind image */
         .hero-image-wrapper::before {
             content: "";
             position: absolute;
-            bottom: 15%;
+            bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
-            width: 60vw;
-            height: 40vw;
-            max-width: 900px;
+            width: 70vw;
+            height: 50vw;
             background: radial-gradient(
                 circle, 
-                rgba(139, 92, 246, 0.18) 0%, 
+                rgba(139, 92, 246, 0.15) 0%, 
                 rgba(139, 92, 246, 0) 70%
             );
-            filter: blur(80px);
+            filter: blur(100px);
             z-index: -1;
-            pointer-events: none;
         }
 
         .hero-image {
@@ -174,22 +179,22 @@
             will-change: transform;
         }
 
-        /* Content Sections for Invest, Borrow, and Transact pillars */
+        /* Content Sections */
         .next-section {
-            padding: 100px 5%;
+            padding: 120px 8%;
             background: #000;
             color: #fff;
             position: relative;
-            z-index: 10;
+            z-index: 20;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
         .section-header h2 { 
-            font-size: 3.5rem; 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
             font-weight: 600; 
             letter-spacing: -0.03em; 
         }
@@ -197,28 +202,36 @@
         .section-header p { 
             color: #a1a1a6; 
             font-size: 1.2rem; 
-            margin-top: 10px; 
+            margin-top: 15px; 
             font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .pillar-card {
-            padding: 50px;
+            padding: 60px 40px;
             background: #111;
-            border-radius: 30px;
+            border-radius: 34px;
             border: 1px solid #222;
+            transition: transform 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-5px);
         }
 
         .pillar-card h3 {
             color: var(--brand-purple-light);
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
             font-weight: 600;
             letter-spacing: -0.02em;
