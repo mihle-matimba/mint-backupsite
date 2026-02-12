@@ -3,242 +3,526 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINT - Money In Transit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>MINT | Money In Transit</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mint-dark-purple: #31005e;
+            --brand-purple: #6d28d9;
+            --brand-purple-light: #8b5cf6;
+            --brand-purple-deep: #4c1d95;
             --mint-primary-purple: #5c3bcf;
-            --mint-gold: #ddc357;
-            --mint-black: #000000;
+            --apple-black: #1d1d1f;
+            --apple-gray: #86868b;
+            --bg-light: #fbfbfd;
+            --card-bg: #ffffff;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             background-color: #ffffff;
-            color: var(--mint-black);
+            color: var(--apple-black);
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* Tooltip logic */
-        .tooltip-container { position: relative; }
-        .tooltip-text {
-            visibility: hidden;
-            background-color: var(--mint-black);
+        /* --- NAVIGATION --- */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 0.5px solid rgba(0,0,0,0.1);
+        }
+
+        .logo img { height: 22px; width: auto; }
+
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+
+        .btn-nav {
+            padding: 10px 20px;
+            background: var(--brand-purple);
             color: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* --- HERO SECTION (Pinning Container) --- */
+        .pin-container { height: 300vh; position: relative; }
+
+        #hero {
+            position: sticky;
+            top: 0; height: 100vh; width: 100%;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            background: radial-gradient(circle at 50% 30%, #f9f7ff 0%, #ffffff 70%);
+        }
+
+        .hero-text-layer {
             position: absolute;
-            bottom: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            font-size: 0.7rem;
-            white-space: nowrap;
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+            top: 16.6vh; /* 1/6th start position */
+            z-index: -1; 
+            text-align: center;
+            width: 100%;
+            padding: 0 5%;
         }
 
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-5deg) scale(1.6); }
-            50% { transform: translateY(-12px) rotate(-5deg) scale(1.6); }
+        /* Social Proof Tag */
+        .social-proof {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; margin-bottom: 20px;
         }
 
-        /* Small Floats for 3D assets */
+        .avatar-group { display: flex; }
+        .avatar-group img {
+            width: 32px; height: 32px;
+            border-radius: 50%; border: 2px solid #fff;
+            margin-left: -10px;
+        }
+
+        .trust-text { font-size: 0.9rem; font-weight: 600; color: var(--apple-gray); }
+
+        .hero-text-layer h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800; letter-spacing: -0.04em; line-height: 0.9;
+            margin-bottom: 24px;
+            background: linear-gradient(270deg, var(--brand-purple-deep), var(--brand-purple-light), var(--brand-purple-deep));
+            background-size: 400% 400%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: lavaFlow 12s ease-in-out infinite;
+        }
+
+        @keyframes lavaFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-text-layer p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 500; color: #000;
+            max-width: 600px; margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            margin-top: 30px; opacity: 0; transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; justify-content: center;
+        }
+
+        .hero-cta.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- HERO IMAGE (UNTOUCHED ANIMATION) --- */
+        .hero-image-wrapper {
+            position: absolute; bottom: 0; 
+            z-index: 999; /* HIGHEST Z-INDEX AS REQUESTED */
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .hero-image {
+            width: 100%; max-width: 1100px; height: auto;
+            transform: scale(4) translateY(50%);
+            transform-origin: bottom center; will-change: transform;
+        }
+
+        /* --- PARTNER LOGOS --- */
+        .partners {
+            padding: 60px 0; background: #fff; text-align: center;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .partners p { font-weight: 600; color: var(--apple-gray); margin-bottom: 30px; font-size: 0.9rem; }
+
+        .logo-grid {
+            display: flex; justify-content: center; align-items: center;
+            gap: 60px; flex-wrap: wrap; opacity: 0.5;
+        }
+
+        .logo-grid img { height: 24px; filter: grayscale(1); }
+
+        /* --- FEATURES SECTION --- */
+        .section { padding: 120px 10%; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: #f2f2f7;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+            color: var(--brand-purple); margin-bottom: 20px;
+        }
+
+        .section-title { font-size: 3rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px; }
+        .section-desc { font-size: 1.25rem; color: var(--apple-gray); max-width: 600px; margin-bottom: 60px; }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: var(--bg-light); border-radius: 32px; padding: 40px;
+            transition: transform 0.3s ease; border: 1px solid transparent;
+        }
+
+        .feature-card:hover { transform: translateY(-10px); background: #fff; border-color: #f2f2f2; box-shadow: 0 20px 40px rgba(0,0,0,0.03); }
+
+        .feature-icon {
+            width: 60px; height: 60px; background: #fff; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 30px; font-size: 1.5rem;
+        }
+
+        .feature-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; }
+        .feature-card p { color: var(--apple-gray); line-height: 1.6; }
+
+        /* --- CUSTOM "GO TO MINT" BUTTON STYLES --- */
+        .mint-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 32px; /* gap-8 */
+            background-color: #f5f2ff;
+            padding: 8px 8px 8px 32px; /* pl-8 pr-2 py-2 */
+            border-radius: 9999px;
+            border: 1px solid rgba(92,59,207,0.15);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .mint-btn:hover .mint-btn-icon {
+            transform: scale(1.1);
+        }
+
+        .mint-btn-text {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 600;
+            color: var(--mint-primary-purple);
+        }
+
+        .mint-btn-icon {
+            background-color: var(--mint-primary-purple);
+            color: white;
+            width: 48px; /* w-12 */
+            height: 48px; /* h-12 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        /* --- NEW SOLUTION SECTION STYLES --- */
+        .solution-section {
+            padding: 160px 20px;
+            text-align: center;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-content {
+            max-width: 896px; /* max-w-4xl */
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .solution-title {
+            color: var(--mint-primary-purple);
+            font-size: 3.75rem; /* text-6xl */
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 32px;
+        }
+
+        .solution-divider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .solution-line {
+            width: 48px;
+            height: 1px;
+            background-color: #e9d5ff; /* purple-200 */
+        }
+
+        .solution-desc {
+            color: #4b5563; /* gray-600 */
+            font-weight: 300;
+            font-size: 1.125rem; /* text-lg */
+        }
+
+        /* Floats */
         @keyframes miniFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        .phone-mockup {
-            transform: rotate(-5deg) scale(1.6) translateY(32px);
-            animation: float 6s ease-in-out infinite;
-            transition: transform 0.2s cubic-bezier(0.1, 0, 0.3, 1);
-            will-change: transform;
-        }
-
-        /* Hero Rectangle */
-        .hero-rectangle {
-            position: relative;
-            width: 95%;
-            max-width: 1400px;
-            margin: -40px auto 0; 
-            min-height: 550px;
-            background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
-            border-radius: 60px;
-            opacity: 0.75; 
-            overflow: hidden;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Carousel */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .carousel-track {
-            display: flex;
-            width: max-content;
-            animation: scroll 60s linear infinite;
-            padding: 80px 0 60px;
-        }
-        .carousel-item {
-            color: white;
-            font-size: 8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            padding: 0 60px;
-            display: flex;
-            align-items: center;
-            opacity: 0.1;
-        }
-
-        /* New Section Styles */
-        .solution-section {
-            padding: 160px 20px;
-            text-align: center;
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 40px 40px; /* Grid effect from screenshot */
-            position: relative;
-        }
-
         .floating-asset {
             position: absolute;
             animation: miniFloat 4s ease-in-out infinite;
-        }
-
-        .asset-blob {
-            border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            border-radius: 50px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .asset-1 { top: 5rem; left: 10%; width: 8rem; height: 5rem; background-color: #f3e8ff; font-size: 1.5rem; }
+        .asset-2 { top: 8rem; right: 15%; width: 7rem; height: 7rem; background-color: #ecfeff; font-size: 1.875rem; }
+        .asset-3 { bottom: 5rem; left: 15%; width: 9rem; height: 6rem; background-color: #eff6ff; font-size: 1.875rem; }
+        .asset-4 { bottom: 2.5rem; right: 10%; width: 8rem; height: 8rem; background-color: #fce7f3; font-size: 1.875rem; }
+
+        /* --- STATS SECTION --- */
+        .stats-banner {
+            background: var(--brand-purple); color: #fff;
+            padding: 100px 10%; border-radius: 50px; margin: 0 5% 120px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; text-align: center;
+        }
+
+        .stat-item h2 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; }
+        .stat-item p { opacity: 0.8; font-weight: 500; }
+
+        /* --- FOOTER --- */
+        footer { padding: 80px 10%; background: #fbfbfd; border-top: 1px solid #f2f2f2; }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px; margin-bottom: 60px;
+        }
+
+        .footer-col h4 { margin-bottom: 25px; font-weight: 700; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { text-decoration: none; color: var(--apple-gray); font-size: 0.95rem; transition: 0.2s; }
+        .footer-col ul li a:hover { color: var(--brand-purple); }
+
+        .copyright {
+            padding-top: 40px; border-top: 1px solid #e5e5e5;
+            display: flex; justify-content: space-between;
+            color: var(--apple-gray); font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .section-title { font-size: 2.5rem; }
+            .hero-text-layer h1 { font-size: 4rem; }
+            .solution-title { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto">
-        <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4"> 
-        <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
-            <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Features</a>
-            <a href="#" class="hover:text-purple-600 transition-all">About</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Pricing</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Blog</a>
-        </div>
-        <div class="tooltip-container">
-            <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                Switch to institution
-            </button>
-            <span class="tooltip-text">Coming soon</span>
+    <nav class="navbar">
+        <div class="logo"><img src="images/ICON MINT.png" alt="MINT"></div>
+        <div class="nav-right">
+            <a href="#" style="text-decoration: none; color: var(--apple-black); font-weight: 600;">Login</a>
+            <a href="#" class="btn-nav">Get Started</a>
         </div>
     </nav>
 
-    <section class="relative pt-[100px] pb-24">
-        <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <div class="lg:col-span-4">
-                <h1 class="text-5xl font-light leading-tight mb-12 text-gray-900">Start Managing <br> Your Finance <br> <span class="text-gray-200">With Our Tool</span></h1>
-                <button onclick="checkDevice()" class="flex items-center gap-8 bg-[#f5f2ff] pl-8 pr-2 py-2 rounded-full border border-[rgba(92,59,207,0.15)] group">
-                    <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
-                    <div class="bg-[var(--mint-primary-purple)] text-white w-12 h-12 flex items-center justify-center rounded-full">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+    <div class="pin-container">
+        <section id="hero">
+            <div class="hero-text-layer">
+                <div class="social-proof">
+                    <div class="avatar-group">
+                        <img src="https://i.pravatar.cc/100?u=1" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=2" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=3" alt="User">
                     </div>
-                </button>
-            </div>
-            <div class="lg:col-span-4 flex justify-center phone-mockup-container" id="phoneContainer">
-                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]" id="phoneImg">
-            </div>
-            <div class="lg:col-span-4 flex flex-col items-end text-right">
-                <div class="max-w-[300px] mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">Simplify your financial life. Our intuitive app makes managing your money effortless.</p></div>
-                <div class="flex items-center gap-5">
-                    <div class="flex -space-x-3"><img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white"><img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white"></div>
-                    <div class="text-left"><div class="text-4xl font-light">200+</div><p class="text-[10px] text-gray-400 leading-tight">Trusted to use by millions users over 140 countries</p></div>
+                    <span class="trust-text">Trusted by 2.3M+ users worldwide</span>
+                </div>
+                <h1>MONEY IN<br>TRANSIT</h1>
+                <p>MINT is an integrated financial ecosystem built to Invest, Borrow, and Transact. Democratising wealth through a platform built for perpetual growth.</p>
+                
+                <div class="hero-cta" id="hero-cta">
+                    <button onclick="checkDevice()" class="mint-btn">
+                        <span class="mint-btn-text">Go to Mint</span>
+                        <div class="mint-btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        </div>
+                    </button>
                 </div>
             </div>
+
+            <div class="hero-image-wrapper">
+                <img src="images/HERO MAIN IMG.png" alt="Mockup" class="hero-image">
+            </div>
+        </section>
+    </div>
+
+    <section class="partners">
+        <p>Partnering with top tier brands to revolutionize financial services.</p>
+        <div class="logo-grid">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg" alt="Slack">
         </div>
     </section>
 
-    <div class="hero-rectangle">
-        <div class="carousel-track">
-            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
-            <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
-        </div>
-        <div class="w-[80%] h-[1px] bg-white/20"></div>
-        <div class="py-20 text-center px-10">
-            <h2 class="text-white text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
-            <div class="flex justify-center gap-8 flex-wrap">
-                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">NPN</div>
-                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">FSR</div>
-                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">SBK</div>
-                <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/20 text-[10px] font-bold">MTN</div>
+    <section class="section">
+        <span class="badge">Key Features</span>
+        <h2 class="section-title">Explore Our Standout Features</h2>
+        <p class="section-desc">Simplify your financial life. Our intuitive app makes managing your money effortless.</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Invest</h3>
+                <p>Manage investments in a rich, digitised environment built for long-term growth and accessibility.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Borrow</h3>
+                <p>Access smarter, fairer credit tools built around suitability, transparency, and real-time speed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Transact</h3>
+                <p>Move money in real time. Positioning you at the centre of payments and global movement.</p>
             </div>
         </div>
-    </div>
+
+        <div style="display: flex; justify-content: center;">
+            <button onclick="checkDevice()" class="mint-btn">
+                <span class="mint-btn-text">Go to Mint</span>
+                <div class="mint-btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                </div>
+            </button>
+        </div>
+    </section>
 
     <section class="solution-section">
-        <div class="floating-asset top-20 left-[10%] asset-blob w-32 h-20 bg-purple-100"><span class="text-2xl">🐷</span></div>
-        <div class="floating-asset top-32 right-[15%] asset-blob w-28 h-28 bg-cyan-50"><span class="text-3xl">⏰</span></div>
-        <div class="floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 bg-blue-50"><span class="text-3xl">🪙</span></div>
-        <div class="floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 bg-pink-100"><span class="text-3xl">💎</span></div>
+        <div class="floating-asset asset-1"><span style="font-size: 1.5rem;">🐷</span></div>
+        <div class="floating-asset asset-2"><span style="font-size: 1.875rem;">⏰</span></div>
+        <div class="floating-asset asset-3"><span style="font-size: 1.875rem;">🪙</span></div>
+        <div class="floating-asset asset-4"><span style="font-size: 1.875rem;">💎</span></div>
 
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h2 class="text-[var(--mint-primary-purple)] text-6xl font-normal leading-tight mb-8">
+        <div class="solution-content">
+            <h2 class="solution-title">
                 Our app is an <br> all-in-one solution for <br> managing your money <br> and financial goals.
             </h2>
             
-            <div class="flex items-center justify-center gap-4 mb-12">
-                <div class="w-12 h-[1px] bg-purple-200"></div>
-                <p class="text-gray-600 font-light text-lg">
+            <div class="solution-divider-container">
+                <div class="solution-line"></div>
+                <p class="solution-desc">
                     Experience the peace of mind that comes with having your finances under control.
                 </p>
-                <div class="w-12 h-[1px] bg-purple-200"></div>
+                <div class="solution-line"></div>
             </div>
 
-            <button class="flex items-center gap-6 bg-[#f5f2ff] pl-8 pr-2 py-2 rounded-full border border-[rgba(92,59,207,0.1)] mx-auto group">
-                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Get Started Free</span>
-                <div class="bg-[var(--mint-primary-purple)] text-white w-10 h-10 flex items-center justify-center rounded-full group-hover:scale-110 transition-transform">
+            <button onclick="checkDevice()" class="mint-btn">
+                <span class="mint-btn-text">Get Started Free</span>
+                <div class="mint-btn-icon">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                 </div>
             </button>
         </div>
     </section>
 
+    <div class="stats-banner">
+        <div class="stat-item">
+            <h2>6%</h2>
+            <p>Processing Success</p>
+        </div>
+        <div class="stat-item">
+            <h2>$20K+</h2>
+            <p>Average User Wealth</p>
+        </div>
+        <div class="stat-item">
+            <h2>140+</h2>
+            <p>Countries Supported</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <img src="images/ICON MINT.png" alt="MINT" style="height: 30px; margin-bottom: 20px;">
+                <p style="color: var(--apple-gray); line-height: 1.6;">The integrated financial ecosystem built for modern wealth movement.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2026 MINT Financial. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" style="margin-left: 20px; color: var(--apple-gray);">Twitter</a>
+                <a href="#" style="margin-left: 20px; color: var(--apple-gray);">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        const container = document.getElementById('phoneContainer');
-        const phone = document.getElementById('phoneImg');
-        let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
-
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left - rect.width / 2) / 25;
-            mouseY = (e.clientY - rect.top - rect.height / 2) / 25;
-        });
-
-        function animate() {
-            currentX += (mouseX - currentX) * 0.1;
-            currentY += (mouseY - currentY) * 0.1;
-            if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
-                phone.style.animation = 'none';
-                phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${32 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-            } else {
-                phone.style.animation = 'float 6s ease-in-out infinite';
+        function checkDevice() { 
+            if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                alert("MINT is currently available only on mobile devices."); 
             }
-            requestAnimationFrame(animate);
         }
-        animate();
-        container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
-        function checkDevice() { if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) alert("MINT is currently available only on mobile devices."); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroImage = document.querySelector('.hero-image');
+            const pinContainer = document.querySelector('.pin-container');
+            const cta = document.getElementById('hero-cta');
+
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const maxScroll = pinContainer.offsetHeight - window.innerHeight;
+                let progress = scrollY / maxScroll;
+
+                if (progress > 1) progress = 1;
+                if (progress < 0) progress = 0;
+
+                // UNTOUCHED image logic
+                const imgScale = 4 - (progress * 3);
+                const imgY = 50 - (progress * 50);
+                heroImage.style.transform = `scale(${imgScale}) translateY(${imgY}%)`;
+
+                // CTA Reveal
+                if (progress > 0.92) {
+                    cta.classList.add('visible');
+                } else {
+                    cta.classList.remove('visible');
+                }
+            });
+        });
     </script>
 </body>
 </html>
