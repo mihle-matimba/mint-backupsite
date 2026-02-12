@@ -1,145 +1,100 @@
-/* Core Variables */
-:root {
-  --mint-green: #00d63f;
-  --dark-bg: #0a0b10;
-  --text-white: #ffffff;
-  --text-gray: #9ca3af;
-  --font-main: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* Base Styles */
+/* Reset and Base Styles */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--dark-bg);
-  color: var(--text-white);
-  font-family: var(--font-main);
-  line-height: 1.5;
-  overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    overflow-x: hidden;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 5%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
 }
 
-/* Navigation */
-.header {
-  padding: 20px 0;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  background: rgba(10, 11, 16, 0.8);
-  backdrop-filter: blur(10px);
+.logo img {
+    height: 32px;
+    width: auto;
 }
 
-.nav-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Hamburger Menu & Animation */
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
 }
 
-.nav-link {
-  color: var(--text-white);
-  text-decoration: none;
-  margin-left: 30px;
-  font-weight: 500;
-  transition: color 0.3s;
+.bar {
+    width: 28px;
+    height: 2px;
+    background-color: #000;
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
-.nav-link:hover {
-  color: var(--mint-green);
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* Hero Section */
-.hero-section {
-  padding: 160px 0 100px;
-  text-align: center;
-  background: radial-gradient(circle at top, #1a1c2e 0%, var(--dark-bg) 70%);
+#hero {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Bottom align the image */
+    overflow: hidden;
+    position: relative;
+    background: #fff;
 }
 
-.display-h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 20px;
+.hero-image {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    display: block;
+    /* Important for the zoom-out effect */
+    transform: scale(4); 
+    transform-origin: bottom center;
+    will-change: transform;
 }
 
-.display-h1._02 {
-  color: var(--mint-green);
+/* Spacer for scrolling */
+.content-spacer {
+    height: 150vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    background: #fdfdfd;
 }
 
-.hero-subtitle {
-  color: var(--text-gray);
-  max-width: 600px;
-  margin: 0 auto 40px;
-  font-size: 1.2rem;
-}
-
-/* Buttons */
-.button-primary {
-  background-color: var(--mint-green);
-  color: #000;
-  padding: 14px 28px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 700;
-  transition: transform 0.2s ease;
-  display: inline-block;
-}
-
-.button-primary:hover {
-  transform: scale(1.05);
-}
-
-.store-button {
-  border: 1px solid #333;
-  padding: 10px 20px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: white;
-  margin: 0 10px;
-  display: inline-flex;
-  align-items: center;
-  background: #161821;
-}
-
-/* Stats Grid */
-.counter-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
-  padding: 60px 0;
-  border-top: 1px solid #1f2937;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  font-size: 3rem;
-  color: var(--mint-green);
-  margin-bottom: 5px;
-}
-
-.stat-label {
-  color: var(--text-gray);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.8rem;
-}
-
-/* Images */
-.hero-main-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 60px;
-  filter: drop-shadow(0 0 50px rgba(0, 214, 63, 0.1));
+.placeholder-text {
+    text-align: center;
+    opacity: 0.5;
 }
