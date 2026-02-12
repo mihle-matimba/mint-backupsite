@@ -3,42 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mint - Manage Your Finance</title>
+    <title>MINT - Money In Transit</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --mint-dark-purple: #31005e;
+            --mint-primary-purple: #5c3bcf;
+            --mint-gold: #ddc357;
+            --mint-black: #000000;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #ffffff;
+            color: var(--mint-black);
             overflow-x: hidden;
         }
 
-        .purple-accent { color: #7C3AED; }
-        .bg-purple-accent { background-color: #7C3AED; }
-        .border-purple-accent { border-color: #7C3AED; }
+        /* Typography */
+        h1 { font-weight: 300; letter-spacing: -0.02em; }
+        .light-text { font-weight: 200; color: #666; }
 
-        /* Coming Soon Tooltip */
+        /* Tooltip logic */
         .tooltip-container { position: relative; }
         .tooltip-text {
             visibility: hidden;
-            background-color: #333;
+            background-color: var(--mint-black);
             color: #fff;
-            text-align: center;
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             position: absolute;
-            z-index: 1;
-            bottom: -130%;
+            bottom: -45px;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
             white-space: nowrap;
         }
         .tooltip-container:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
+        }
+
+        /* Straddling Rectangle */
+        .straddle-box {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 400px;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            transform: translateY(50%); /* Sits half on hero, half on next section */
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .carousel-zone {
+            height: 33.33%; /* Top 1/3 */
+            background-color: var(--mint-dark-purple);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
         }
 
         /* Carousel Animation */
@@ -49,132 +78,120 @@
         .carousel-track {
             display: flex;
             width: max-content;
-            animation: scroll 20s linear infinite;
+            animation: scroll 25s linear infinite;
         }
-
-        .hero-gradient-text {
-            background: linear-gradient(90deg, #111 0%, #7C3AED 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .carousel-item {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
         }
+        .dot { color: var(--mint-gold); margin: 0 20px; }
 
-        /* Phone mockup tilt */
         .phone-mockup {
-            transform: rotate(-10deg) translateY(20px);
-            transition: transform 0.5s ease;
+            transform: rotate(-8deg);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .phone-mockup:hover {
-            transform: rotate(-5deg) translateY(0px);
-        }
+        .phone-mockup:hover { transform: rotate(-3deg) scale(1.02); }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <nav class="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto">
-        <div class="flex items-center gap-12">
-            <img src="images/LOGO 2 MINT.png" alt="Mint Logo" class="h-8">
-            <div class="hidden md:flex items-center gap-8 text-gray-500 font-medium bg-gray-50 px-6 py-2 rounded-full border border-gray-100">
-                <a href="#" class="text-black">• Home</a>
-                <a href="#" class="hover:text-purple-600">Features</a>
-                <a href="#" class="hover:text-purple-600">About</a>
-                <a href="#" class="hover:text-purple-600">Pricing</a>
-                <a href="#" class="hover:text-purple-600">Blog</a>
-                <a href="#" class="hover:text-purple-600">All pages</a>
+    <nav class="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto">
+        <div class="flex items-center gap-16">
+            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4"> 
+            <div class="hidden lg:flex items-center gap-10 text-sm font-light text-gray-400">
+                <a href="#" class="text-black font-medium">• Home</a>
+                <a href="#" class="hover:text-purple-600 transition-colors">Features</a>
+                <a href="#" class="hover:text-purple-600 transition-colors">About</a>
+                <a href="#" class="hover:text-purple-600 transition-colors">Pricing</a>
+                <a href="#" class="hover:text-purple-600 transition-colors">Blog</a>
             </div>
         </div>
         
         <div class="tooltip-container">
-            <button class="bg-purple-accent text-white px-6 py-3 rounded-full font-semibold opacity-80 cursor-not-allowed">
-                Switch to Institution
+            <button class="bg-[#f4f4f4] text-gray-400 px-7 py-3 rounded-full text-sm font-medium cursor-default">
+                Switch to institution
             </button>
             <span class="tooltip-text">Coming soon</span>
         </div>
     </nav>
 
-    <main class="relative pt-12 pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section class="relative pt-16 pb-20">
+        <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            <div class="lg:col-span-4 z-10">
-                <h1 class="text-6xl font-bold leading-[1.1] mb-8 text-gray-900">
+            <div class="lg:col-span-4 pt-10">
+                <h1 class="text-7xl leading-[1.05] mb-10 text-[var(--mint-black)]">
                     Start Managing <br>
                     Your Finance <br>
-                    <span class="text-gray-400">—</span> <span class="hero-gradient-text">With Our Tool</span>
+                    <span class="text-gray-200">With Our Tool</span>
                 </h1>
                 
-                <button onclick="handleMintRedirect()" class="flex items-center gap-3 bg-gray-50 border border-gray-200 pl-6 pr-2 py-2 rounded-full hover:bg-white transition-all group">
-                    <span class="font-semibold text-gray-700">Go to Mint</span>
-                    <div class="bg-purple-accent text-white p-3 rounded-full group-hover:scale-110 transition-transform">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                <button onclick="checkDevice()" class="flex items-center gap-4 bg-white border border-gray-100 pl-8 pr-2 py-2 rounded-full shadow-sm hover:shadow-md transition-all group">
+                    <span class="text-sm font-medium text-gray-600 uppercase tracking-widest">Go to mint</span>
+                    <div class="bg-[var(--mint-primary-purple)] text-white p-3 rounded-full">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     </div>
                 </button>
             </div>
 
-            <div class="lg:col-span-4 flex justify-center relative">
-                <div class="absolute -inset-4 bg-purple-100/50 blur-3xl rounded-full -z-10"></div>
-                <img src="images/MINT WEBSITE PHONE.png" alt="Mint App" class="phone-mockup w-full max-w-[320px] drop-shadow-2xl">
+            <div class="lg:col-span-4 flex justify-center">
+                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[340px] drop-shadow-2xl">
             </div>
 
-            <div class="lg:col-span-4 space-y-12">
-                <div class="max-w-[280px]">
-                    <div class="text-purple-500 mb-4">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <div class="lg:col-span-4 pt-10 space-y-16">
+                <div class="max-w-[300px]">
+                    <div class="text-[var(--mint-gold)] mb-6">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     </div>
-                    <p class="text-gray-500 leading-relaxed text-lg">
+                    <p class="light-text text-xl leading-relaxed">
                         Simplify your financial life. Our intuitive app makes managing your money effortless.
                     </p>
                 </div>
 
-                <div class="flex items-center gap-4">
-                    <div class="flex -space-x-3">
-                        <div class="w-12 h-12 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/150?u=1" alt="User">
-                        </div>
-                        <div class="w-12 h-12 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/150?u=2" alt="User">
-                        </div>
-                        <div class="w-12 h-12 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                            <img src="https://i.pravatar.cc/150?u=3" alt="User">
-                        </div>
+                <div class="flex items-center gap-5">
+                    <div class="flex -space-x-4">
+                        <img src="https://i.pravatar.cc/100?u=a" class="w-12 h-12 rounded-full border-4 border-white shadow-sm">
+                        <img src="https://i.pravatar.cc/100?u=b" class="w-12 h-12 rounded-full border-4 border-white shadow-sm">
+                        <img src="https://i.pravatar.cc/100?u=c" class="w-12 h-12 rounded-full border-4 border-white shadow-sm">
                     </div>
                     <div>
-                        <div class="text-2xl font-bold">200+</div>
-                        <p class="text-xs text-gray-400">Trusted by users over 140 countries</p>
+                        <div class="text-2xl font-light text-[var(--mint-dark-purple)]">200+</div>
+                        <p class="text-[10px] uppercase tracking-widest text-gray-400">Trusted global users</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-20 bg-purple-accent py-12 rotate-[-2deg] scale-105 overflow-hidden">
-            <div class="carousel-track">
-                <div class="flex gap-20 items-center px-10">
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Invest</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Borrow</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Transact</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
-                </div>
-                <div class="flex gap-20 items-center px-10">
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Invest</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Borrow</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
-                    <span class="text-white text-7xl font-bold opacity-30 uppercase tracking-tighter italic">Transact</span>
-                    <span class="text-white text-5xl opacity-50">•</span>
+        <div class="straddle-box">
+            <div class="carousel-zone">
+                <div class="carousel-track">
+                    <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
+                    <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
+                    <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
+                    <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
                 </div>
             </div>
+            <div class="p-12 flex items-end h-[66.66%]">
+                <p class="text-sm text-gray-300 uppercase tracking-[0.4em]">Money In Transit Philosophy</p>
+            </div>
         </div>
-    </main>
+    </section>
+
+    <div class="h-screen bg-gray-50 pt-60"></div>
 
     <script>
-        function handleMintRedirect() {
+        function checkDevice() {
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            
-            if (isMobile) {
-                // Replace with your actual app store link
-                window.location.href = "https://mintapp.example.com/download";
+            if (!isMobile) {
+                alert("MINT is currently available only on mobile devices. Please visit us from your smartphone.");
             } else {
-                alert("This application is available only on mobile devices. Please visit us from your phone!");
+                window.location.href = "#download-link";
             }
         }
     </script>
