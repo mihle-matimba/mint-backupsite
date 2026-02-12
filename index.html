@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINT | Wealth In Motion</title>
+    <title>MINT | Money In Transit</title>
     <style>
         /* --- CSS STYLES --- */
         :root {
-            /* Brand purple logic: ambition, value creation, and long-term prosperity  */
+            /* Purple represents inclusive wealth building and prosperity [cite: 28] */
             --brand-purple-deep: #4c1d95;
             --brand-purple-light: #8b5cf6;
             --apple-gray: #86868b;
@@ -21,15 +21,15 @@
         }
 
         body {
-            /* Heavy sans-serif stack similar to 'Upwize' and Apple UI */
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            /* Changed to Inter Semi-Bold per request */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
             background-color: #ffffff;
             overflow-x: hidden;
             color: var(--apple-black);
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navbar */
+        /* Navbar with Frosted Glass effect */
         .navbar {
             position: fixed;
             top: 0;
@@ -43,7 +43,6 @@
             backdrop-filter: blur(20px);
         }
 
-        /* Logo: Minimalist at 18px height */
         .logo img {
             height: 18px; 
             width: auto;
@@ -87,25 +86,26 @@
             background: #fff;
         }
 
-        /* Text Layer: Always 100% opacity and sits ABOVE the image */
+        /* Text Layer: Always 100% Opacity | Sits ABOVE the image */
         .hero-text-layer {
             position: absolute;
-            top: 15vh; /* Positioned high so title bottom is above image top */
-            z-index: 3; /* High z-index to sit on top of the image */
+            /* Moved down by 20px (15vh -> calc(15vh + 20px)) */
+            top: calc(15vh + 20px); 
+            z-index: 3; 
             text-align: center;
             width: 100%;
             pointer-events: none;
         }
 
         .hero-text-layer h1 {
-            /* Extra bold for that high-impact look */
             font-size: clamp(3.5rem, 12vw, 9rem);
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            line-height: 0.9;
-            margin-bottom: 10px;
+            /* Updated to Semi-Bold (600) */
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 12px;
             
-            /* Slight purple gradient  */
+            /* Purple gradient representing value creation [cite: 28] */
             background: linear-gradient(135deg, var(--brand-purple-deep), var(--brand-purple-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -114,19 +114,20 @@
 
         .hero-text-layer p {
             font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+            /* Updated to Semi-Bold (600) */
             font-weight: 600;
             color: var(--apple-black);
             max-width: 800px;
             margin: 0 auto;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
         }
 
-        /* Image Layer: Sits BEHIND the text */
+        /* Image Layer: Sits BEHIND the text layer */
         .hero-image-wrapper {
             position: absolute;
             bottom: 0;
-            z-index: 2; /* Sits below text layer */
+            z-index: 2; 
             width: 100%;
             height: 100%;
             display: flex;
@@ -143,7 +144,7 @@
             will-change: transform;
         }
 
-        /* Next Section based on MINT pillars [cite: 16] */
+        /* Content Sections for Invest, Borrow, and Transact pillars [cite: 16] */
         .next-section {
             padding: 100px 5%;
             background: #000;
@@ -157,7 +158,7 @@
             margin-bottom: 60px;
         }
 
-        .section-header h2 { font-size: 3.5rem; letter-spacing: -0.04em; }
+        .section-header h2 { font-size: 3.5rem; font-weight: 600; letter-spacing: -0.04em; }
         .section-header p { color: #a1a1a6; font-size: 1.2rem; margin-top: 10px; }
 
         .pillars-grid {
@@ -179,7 +180,7 @@
             color: var(--brand-purple-light);
             font-size: 2rem;
             margin-bottom: 20px;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .pillar-card p {
@@ -195,7 +196,7 @@
         <a href="#hero" class="logo">
             <img src="images/ICON MINT.png" alt="MINT Logo">
         </a>
-        <button class="menu-toggle">
+        <button class="menu-toggle" aria-label="Toggle Menu">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
@@ -206,33 +207,33 @@
         <section id="hero">
             <div class="hero-text-layer">
                 <h1>WEALTH IN<br>MOTION</h1>
-                <p>Modern Money Movement</p>
+                <p>Money In Transit</p>
             </div>
 
             <div class="hero-image-wrapper">
-                <img src="images/HERO MAIN IMG.png" alt="MINT Platform" class="hero-image">
+                <img src="images/HERO MAIN IMG.png" alt="MINT Platform Mockup" class="hero-image">
             </div>
         </section>
     </div>
 
     <section class="next-section">
         <div class="section-header">
-            <h2>Money In Transit</h2>
-            <p>Moving from the future, to the future, in real time. [cite: 23, 24, 25]</p>
+            <h2>The Movement of Money</h2>
+            <p>A unified financial ecosystem designed for modern wealth flows[cite: 5, 10].</p>
         </div>
 
         <div class="pillars-grid">
             <div class="pillar-card">
                 <h3>INVEST</h3>
-                <p>Move toward the future. A digitised environment built to remove barriers and simplify your growth. [cite: 17, 23]</p>
+                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment[cite: 17, 23].</p>
             </div>
             <div class="pillar-card">
                 <h3>BORROW</h3>
-                <p>Bring the future to the present. Smarter, fairer tools for credit transparency and efficiency. [cite: 18, 24]</p>
+                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability and transparency[cite: 18, 24].</p>
             </div>
             <div class="pillar-card">
                 <h3>TRANSACT</h3>
-                <p>Move in real time. Positioning you at the centre of payments and global money movement. [cite: 19, 25]</p>
+                <p>Move in real time. Positioning you at the centre of payments and global money movement[cite: 19, 25].</p>
             </div>
         </div>
     </section>
@@ -243,8 +244,12 @@
             const pinContainer = document.querySelector('.pin-container');
             const menuToggle = document.querySelector('.menu-toggle');
 
-            menuToggle.addEventListener('click', () => menuToggle.classList.toggle('active'));
+            // Hamburger menu toggle interaction
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+            });
 
+            // Parallax scroll zoom and position logic
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const maxScroll = pinContainer.offsetHeight - window.innerHeight;
@@ -253,13 +258,11 @@
                 if (progress > 1) progress = 1;
                 if (progress < 0) progress = 0;
 
-                // Image Animation: Still scales 4 -> 1 and rises 50% -> 0%
+                // Scale shrinks from 4x to 1x | Y position rises from 50% to 0%
                 const imgScale = 4 - (progress * 3);
                 const imgY = 50 - (progress * 50);
+                
                 heroImage.style.transform = `scale(${imgScale}) translateY(${imgY}%)`;
-
-                // Note: Title opacity and scale logic removed per request
-                // The title now remains stationary and 100% visible at the top
             });
         });
     </script>
