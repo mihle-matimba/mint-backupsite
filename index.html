@@ -38,13 +38,13 @@
             align-items: center;
             padding: 20px 5%;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8); /* Slightly more opaque for elegance */
             backdrop-filter: blur(20px);
-            border-bottom: 0.5px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
         }
 
         .logo img {
-            height: 18px; 
+            height: 20px; /* Slightly larger logo */
             width: auto;
         }
 
@@ -60,7 +60,7 @@
         .bar {
             width: 24px;
             height: 1.5px;
-            background: #000;
+            background: var(--apple-black);
             transition: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
@@ -81,211 +81,143 @@
             width: 100%;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 0;
+            /* Livelier, elegant background with a subtle gradient */
+            background: radial-gradient(circle at 50% 30%, #f8f5ff, #ffffff);
         }
 
-        /* Hero Background: Faint Gradient at z-index -30 */
-        .hero-bg-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #fdfbff 0%, #f7f2ff 100%);
-            z-index: -30;
-        }
-
-        /* Hero Text Layer: Set behind the image at z-index -1 */
         .hero-text-layer {
             position: absolute;
-            top: 22%; 
-            z-index: -1; 
+            /* Adjusted top position for a more compact initial view */
+            top: calc(10vh + 60px); 
+            z-index: 1; 
             text-align: center;
             width: 100%;
-            pointer-events: auto; /* Changed to auto so buttons are clickable */
-            padding: 0 12%; 
+            pointer-events: none;
+            padding: 0 20px;
         }
 
         .hero-text-layer h1 {
-            font-size: clamp(3rem, 10vw, 8.5rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 0.9;
-            margin-bottom: 32px;
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-weight: 800; /* Heavier weight for more impact */
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 20px;
             
+            /* Enhanced gradient for more life */
             background: linear-gradient(
-                270deg, 
-                var(--brand-purple-deep), 
-                var(--brand-purple-light), 
-                var(--brand-purple-mid), 
-                var(--brand-purple-deep)
+                135deg, 
+                var(--brand-purple-deep) 0%, 
+                var(--brand-purple-mid) 50%,
+                var(--brand-purple-light) 100%
             );
-            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: lavaFlow 12s ease-in-out infinite;
-        }
-
-        @keyframes lavaFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .hero-text-layer p {
-            font-size: clamp(1rem, 1.8vw, 1.3rem);
-            font-weight: 400;
-            color: #ffffff; /* Body text white per request */
-            max-width: 600px;
-            margin: 0 auto 40px auto;
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            font-weight: 500; /* Slightly heavier for better readability */
+            /* Subtext color changed to black as requested */
+            color: var(--apple-black);
+            max-width: 700px;
+            margin: 0 auto;
             text-transform: none; 
             letter-spacing: -0.01em;
-            line-height: 1.6;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.15); /* Soft shadow for contrast */
+            line-height: 1.5;
+            opacity: 0.9; /* Subtle transparency for elegance */
         }
 
-        /* Call to Action Button */
-        .cta-button {
-            display: inline-block;
-            padding: 18px 40px;
-            background: var(--brand-purple-deep);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(76, 29, 149, 0.2);
-        }
-
-        .cta-button:hover {
-            transform: scale(1.02);
-            background: var(--brand-purple-mid);
-            box-shadow: 0 15px 40px rgba(76, 29, 149, 0.3);
-        }
-
-        /* Image Layer: Always on Top at z-index 10 */
+        /* Image Layer: Sits BEHIND the text layer - UNTOUCHED */
         .hero-image-wrapper {
             position: absolute;
             bottom: 0;
-            z-index: 10; 
+            z-index: 2; 
             width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: flex-end; 
-            pointer-events: none;
-        }
-
-        /* Ambient Purple Glow behind image */
-        .hero-image-wrapper::before {
-            content: "";
-            position: absolute;
-            bottom: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 50vw;
-            background: radial-gradient(
-                circle, 
-                rgba(139, 92, 246, 0.2) 0%, 
-                rgba(139, 92, 246, 0) 65%
-            );
-            filter: blur(120px);
-            z-index: -1;
         }
 
         .hero-image {
             width: 100%;
             max-width: 1100px;
             height: auto;
+            /* Initial transform state - UNTOUCHED */
             transform: scale(4) translateY(50%);
             transform-origin: bottom center;
             will-change: transform;
         }
 
-        /* Scroll Indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 15;
-            color: var(--apple-gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-weight: 500;
-        }
-
-        /* Content Sections */
+        /* Content Sections for Invest, Borrow, and Transact pillars */
         .next-section {
-            padding: 140px 10%;
-            background: #000;
-            color: #fff;
+            padding: 120px 5%;
+            background: #ffffff; /* Changed to white for a clean, elegant look */
+            color: var(--apple-black);
             position: relative;
-            z-index: 20;
+            z-index: 10;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 100px;
+            margin-bottom: 80px;
         }
 
         .section-header h2 { 
-            font-size: clamp(2.5rem, 5vw, 3.5rem); 
-            font-weight: 600; 
-            letter-spacing: -0.04em; 
+            font-size: 3.5rem; 
+            font-weight: 700; 
+            letter-spacing: -0.03em;
+            color: var(--apple-black);
         }
         
         .section-header p { 
-            color: #a1a1a6; 
-            font-size: 1.25rem; 
-            margin-top: 20px; 
+            color: var(--apple-gray); 
+            font-size: 1.3rem; 
+            margin-top: 15px; 
             font-weight: 400;
-            max-width: 650px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.6;
         }
 
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            max-width: 1300px;
+            gap: 30px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .pillar-card {
-            padding: 70px 50px;
-            background: #0a0a0a;
-            border-radius: 40px;
-            border: 1px solid #1a1a1a;
-            transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+            padding: 50px;
+            background: #f9f9f9; /* Light gray background for cards */
+            border-radius: 30px;
+            border: 1px solid #eaeaea; /* Subtle border */
+            transition: all 0.3s ease;
         }
-
+        
         .pillar-card:hover {
-            border-color: #333;
-            background: #111;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            background: #fff;
+            border-color: transparent;
         }
 
         .pillar-card h3 {
-            color: var(--brand-purple-light);
-            font-size: 2rem;
-            margin-bottom: 24px;
-            font-weight: 600;
-            letter-spacing: -0.03em;
+            color: var(--brand-purple-mid);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .pillar-card p {
-            color: #a1a1a6;
-            line-height: 1.7;
-            font-size: 1.15rem;
+            color: var(--apple-gray);
+            line-height: 1.6;
+            font-size: 1.1rem;
             font-weight: 400;
         }
     </style>
@@ -305,40 +237,35 @@
 
     <div class="pin-container">
         <section id="hero">
-            <div class="hero-bg-gradient"></div>
-            
             <div class="hero-text-layer">
                 <h1>MONEY IN<br>TRANSIT</h1>
-                <p>An integrated financial ecosystem built to Invest, Borrow, and Transact. Democratising wealth through a platform built for the perpetual movement of money.</p>
-                <a href="#invest" class="cta-button">Join the Ecosystem</a>
+                <p>MINT is an integrated financial ecosystem built to Invest, Borrow, and Transact. It democratises wealth through a partnership-driven platform that manages the perpetual movement and growth of money.</p>
             </div>
 
             <div class="hero-image-wrapper">
                 <img src="images/HERO MAIN IMG.png" alt="MINT Platform Mockup" class="hero-image">
             </div>
-
-            <div class="scroll-hint">Scroll to discover</div>
         </section>
     </div>
 
-    <section id="invest" class="next-section">
+    <section class="next-section">
         <div class="section-header">
             <h2>The Movement of Money</h2>
-            <p>Designed for modern wealth flows, MINT unifies your financial life into a single, intuitive experience.</p>
+            <p>A unified financial ecosystem designed for modern wealth flows.</p>
         </div>
 
         <div class="pillars-grid">
             <div class="pillar-card">
                 <h3>INVEST</h3>
-                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment built for long-term growth.</p>
+                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment.</p>
             </div>
             <div class="pillar-card">
                 <h3>BORROW</h3>
-                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability, transparency, and speed.</p>
+                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability and transparency.</p>
             </div>
             <div class="pillar-card">
                 <h3>TRANSACT</h3>
-                <p>Move in real time. Positioning you at the centre of payments and global money movement with seamless precision.</p>
+                <p>Move in real time. Positioning you at the centre of payments and global money movement.</p>
             </div>
         </div>
     </section>
@@ -349,11 +276,12 @@
             const pinContainer = document.querySelector('.pin-container');
             const menuToggle = document.querySelector('.menu-toggle');
 
+            // Hamburger menu toggle interaction
             menuToggle.addEventListener('click', () => {
                 menuToggle.classList.toggle('active');
             });
 
-            // Keep the user's specific image animations untouched
+            // Parallax scroll zoom and position logic - UNTOUCHED
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const maxScroll = pinContainer.offsetHeight - window.innerHeight;
@@ -362,6 +290,7 @@
                 if (progress > 1) progress = 1;
                 if (progress < 0) progress = 0;
 
+                // Scale shrinks from 4x to 1x | Y position rises from 50% to 0%
                 const imgScale = 4 - (progress * 3);
                 const imgY = 50 - (progress * 50);
                 
