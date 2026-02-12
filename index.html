@@ -349,6 +349,20 @@
             color: #111827;
         }
 
+        /* PULSE LINE STYLES */
+        .connecting-line {
+            fill: none;
+            stroke: #5c3bcf;
+            stroke-width: 1.5;
+            stroke-dasharray: 6;
+            opacity: 0.2;
+            animation: linePulse 3s ease-in-out infinite;
+        }
+        @keyframes linePulse {
+            0%, 100% { opacity: 0.1; stroke-dashoffset: 24; }
+            50% { opacity: 0.4; stroke-dashoffset: 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -697,14 +711,16 @@
         </div>
     </section>
 
-    <section class="py-24 relative overflow-hidden">
-        <div class="text-center mb-16">
+    <section class="py-24 relative overflow-hidden" id="stepsSection">
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;" id="lineCanvas"></svg>
+
+        <div class="text-center mb-16 relative z-10">
             <h2 class="text-3xl font-medium text-gray-900">Follow 5 simple steps to take control of your financial future.</h2>
         </div>
 
-        <div class="max-w-5xl mx-auto px-6 mb-32">
-            <div class="flex flex-wrap justify-center gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
+        <div class="max-w-5xl mx-auto px-6 mb-32 relative z-10">
+            <div class="flex flex-wrap justify-center gap-6" id="cardContainer">
+                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
                     <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
                     </div>
@@ -714,7 +730,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
+                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
                      <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                     </div>
@@ -724,7 +740,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
+                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
                      <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                     </div>
@@ -734,7 +750,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
+                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
                      <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     </div>
@@ -744,7 +760,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
+                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
                      <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 shrink-0">
                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     </div>
@@ -761,7 +777,7 @@
                 <span class="text-[120px] md:text-[180px] font-bold text-gray-50 opacity-[0.03] whitespace-nowrap select-none">VARIED FEATURES</span>
             </div>
 
-            <div class="relative z-10 mb-16">
+            <div class="relative z-10 mb-16" id="heroTarget">
                 <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[280px] drop-shadow-2xl rounded-[3rem]">
             </div>
 
@@ -822,6 +838,37 @@
 
         const transactContainer = document.querySelector('.transact-stack-container');
         if(transactContainer) observer.observe(transactContainer);
+
+        /* LOGIC FOR PULSING CONNECTING LINES */
+        function drawConnectingLines() {
+            const canvas = document.getElementById('lineCanvas');
+            const section = document.getElementById('stepsSection');
+            const cards = document.querySelectorAll('.step-card');
+            const target = document.getElementById('heroTarget');
+            
+            if (!canvas || !section || !target) return;
+            
+            const sectionRect = section.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            
+            const targetX = (targetRect.left + targetRect.width / 2) - sectionRect.left;
+            const targetY = (targetRect.top + targetRect.height / 2) - sectionRect.top;
+            
+            let svgContent = '';
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const startX = (cardRect.left + cardRect.width / 2) - sectionRect.left;
+                const startY = cardRect.bottom - sectionRect.top;
+                
+                // Create curved path from bottom center of card to center of image
+                svgContent += `<path class="connecting-line" d="M ${startX} ${startY} C ${startX} ${startY + 100}, ${targetX} ${targetY - 100}, ${targetX} ${targetY}" />`;
+            });
+            
+            canvas.innerHTML = svgContent;
+        }
+
+        window.addEventListener('load', drawConnectingLines);
+        window.addEventListener('resize', drawConnectingLines);
     
     </script>
 </body>
