@@ -297,30 +297,53 @@
             transform: scale(1.05);
         }
 
-        /* TRANSACT CARD STACK ANIMATION */
+        /* TRANSACT CARD STACK ANIMATION (UPDATED FOR SCROLL TRIGGER & NEW DESIGN) */
         .transact-stack-card {
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: fanOut 6s ease-in-out infinite;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: bottom center;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15);
+            /* Initial stacked state */
+            transform: translateY(20px) scale(0.9);
+            opacity: 0;
         }
 
-        @keyframes fanOut {
-            0%, 100% {
-                transform: translateY(0) scale(0.95);
-            }
-            50% {
-                transform: translateY(var(--y-offset, -60px)) scale(1);
-            }
+        /* Active state triggered by scroll */
+        .transact-stack-container.active .transact-card-1 {
+            transform: translateY(-160px) translateX(-20px) scale(0.9);
+            opacity: 1;
+            z-index: 10;
+            transition-delay: 0s;
         }
-
-        /* Specific delays and offsets for each card */
-        .transact-card-1 { --y-offset: -180px; animation-delay: 0s; }
-        .transact-card-2 { --y-offset: -90px; animation-delay: 0.1s; }
-        .transact-card-3 { --y-offset: 0px; animation-delay: 0.2s; }
         
-        /* Pause on hover for easier viewing */
-        .transact-stack-container:hover .transact-stack-card {
-            animation-play-state: paused;
-            transform: translateY(var(--y-offset)) scale(1);
+        .transact-stack-container.active .transact-card-2 {
+            transform: translateY(-80px) translateX(-10px) scale(0.95);
+            opacity: 1;
+            z-index: 20;
+            transition-delay: 0.15s;
+        }
+        
+        .transact-stack-container.active .transact-card-3 {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            z-index: 30;
+            transition-delay: 0.3s;
+        }
+
+        /* High Fidelity Chart Styles */
+        .chart-pill {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 99px;
+            color: #9ca3af;
+            cursor: pointer;
+        }
+        .chart-pill.active {
+            background-color: #f3f4f6;
+            color: #111827;
         }
 
     </style>
@@ -556,50 +579,97 @@
                     </div>
                 </div>
                 
-                <div class="absolute right-4 bottom-4 w-[300px] h-[300px] pointer-events-none">
+                <div class="absolute right-4 bottom-4 w-[280px] h-[340px] pointer-events-none">
                     
-                    <div class="transact-stack-card transact-card-1 bg-white/90 backdrop-blur p-4 rounded-2xl shadow-lg absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-10">
-                         <div class="flex items-center gap-3">
-                             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                             </div>
-                             <div>
-                                 <div class="text-sm font-bold text-gray-800">S&P 500</div>
-                                 <div class="text-xs text-green-500">+1.2%</div>
-                             </div>
+                    <div class="transact-stack-card transact-card-1 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 flex flex-col justify-between z-10">
+                         <div class="flex justify-between items-start">
+                            <div>
+                                <div class="text-xs text-gray-400 font-medium">Report Expense</div>
+                                <div class="text-2xl font-bold text-gray-900 mt-1">$4,820</div>
+                            </div>
+                            <div class="p-1.5 bg-blue-50 rounded-full text-blue-600"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div>
                          </div>
-                         <div class="h-10 w-20">
-                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-blue-500 fill-none stroke-2"><path d="M0 15 Q 10 5, 20 10 T 40 5 L 50 0"/></svg>
-                         </div>
-                    </div>
-
-                    <div class="transact-stack-card transact-card-2 bg-white/95 backdrop-blur p-4 rounded-2xl shadow-lg absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-20">
-                         <div class="flex items-center gap-3">
-                             <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-500">
-                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                             </div>
-                             <div>
-                                 <div class="text-sm font-bold text-gray-800">Bitcoin</div>
-                                 <div class="text-xs text-green-500">+5.4%</div>
-                             </div>
-                         </div>
-                         <div class="h-10 w-20">
-                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-orange-500 fill-none stroke-2"><path d="M0 18 Q 10 15, 20 8 T 40 12 L 50 2"/></svg>
+                         <div class="relative h-20 w-full">
+                            <svg viewBox="0 0 100 40" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
+                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5 V 40 H 0 Z" fill="url(#blueGradient)" />
+                                <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="60" cy="25" r="3" fill="#3b82f6" stroke="white" stroke-width="2"/>
+                            </svg>
                          </div>
                     </div>
 
-                    <div class="transact-stack-card transact-card-3 bg-white p-4 rounded-2xl shadow-xl absolute bottom-0 right-0 w-64 h-24 flex items-center justify-between border border-white/50 z-30">
-                         <div class="flex items-center gap-3">
-                             <div class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-white">
-                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                             </div>
+                    <div class="transact-stack-card transact-card-2 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 flex flex-col justify-between z-20">
+                         <div class="flex justify-between items-start">
+                            <div class="flex gap-3 items-center">
+                                <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs font-bold">B</div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900">Bitcoin</div>
+                                    <div class="text-xs text-gray-400">BTC Wallet</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-green-500">+8.4%</div>
+                         </div>
+                         <div class="mt-2">
+                             <div class="text-2xl font-bold text-gray-900">$42,350.20</div>
+                             <div class="text-xs text-gray-400 mt-1">Total Current Value</div>
+                         </div>
+                         <div class="h-10 w-full mt-2">
+                             <svg viewBox="0 0 100 30" class="w-full h-full" preserveAspectRatio="none">
+                                <path d="M0 25 Q 20 28, 40 10 T 80 15 T 100 5" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+                             </svg>
+                         </div>
+                    </div>
+
+                    <div class="transact-stack-card transact-card-3 bg-white p-5 rounded-3xl shadow-2xl w-64 h-[260px] flex flex-col z-30 border border-gray-100">
+                         <div class="flex justify-between items-start mb-4">
                              <div>
-                                 <div class="text-sm font-bold text-gray-800">Apple Inc.</div>
-                                 <div class="text-xs text-green-500">+2.8%</div>
+                                 <div class="flex items-center gap-1">
+                                     <span class="text-xs text-gray-500 font-medium">Retirement Portfolio</span>
+                                     <svg width="12" height="12" class="text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                 </div>
+                                 <div class="text-3xl font-bold text-gray-900 mt-1">$115k</div>
+                                 <div class="flex items-center gap-1 mt-1">
+                                     <svg width="12" height="12" class="text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"/></svg>
+                                     <span class="text-xs font-bold text-green-600">12.8%</span>
+                                     <span class="text-[10px] text-gray-400">All Time</span>
+                                 </div>
+                             </div>
+                             <div class="p-2 border border-gray-100 rounded-full text-gray-400">
+                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                              </div>
                          </div>
-                         <div class="h-10 w-20">
-                             <svg viewBox="0 0 50 20" class="w-full h-full stroke-gray-900 fill-none stroke-2"><path d="M0 10 Q 15 20, 30 5 T 50 0"/></svg>
+                         
+                         <div class="flex-grow w-full relative">
+                             <svg viewBox="0 0 100 50" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#84cc16" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="#84cc16" stop-opacity="0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5 V 50 H 0 Z" fill="url(#greenGradient)" />
+                                <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5" fill="none" stroke="#65a30d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                
+                                <circle cx="50" cy="15" r="3" fill="#65a30d" stroke="white" stroke-width="2"/>
+                                <g transform="translate(35, -5)">
+                                    <rect x="0" y="0" width="30" height="14" rx="4" fill="white" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"/>
+                                    <text x="15" y="10" font-size="6" text-anchor="middle" fill="#111827" font-weight="bold">$204k</text>
+                                </g>
+                             </svg>
+                         </div>
+
+                         <div class="flex justify-between mt-2 pt-2 border-t border-gray-50">
+                             <div class="chart-pill">1m</div>
+                             <div class="chart-pill">3m</div>
+                             <div class="chart-pill">6m</div>
+                             <div class="chart-pill">1y</div>
+                             <div class="chart-pill active">All</div>
                          </div>
                     </div>
 
@@ -746,6 +816,9 @@
 
         const investCard = document.querySelector('.invest-card');
         if(investCard) observer.observe(investCard);
+
+        const transactContainer = document.querySelector('.transact-stack-container');
+        if(transactContainer) observer.observe(transactContainer);
     
     </script>
 </body>
