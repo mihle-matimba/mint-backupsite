@@ -43,14 +43,13 @@
             opacity: 1;
         }
 
-        /* Refined Float Animation (20% less intensity) */
+        /* Reactive Phone Animation */
         @keyframes float {
             0% { transform: rotate(-5deg) scale(1.6) translateY(32px); }
             50% { transform: rotate(-5deg) scale(1.6) translateY(20px); }
             100% { transform: rotate(-5deg) scale(1.6) translateY(32px); }
         }
 
-        /* Glow effect */
         .light-glow {
             width: 180px;
             height: 30px;
@@ -77,17 +76,21 @@
             will-change: transform;
         }
 
+        /* Enhanced Hero Rectangle */
         .hero-rectangle {
             position: relative;
             width: 95%;
             max-width: 1400px;
             margin: -40px auto 0; 
-            height: 520px;
+            min-height: 600px; /* Increased to accommodate new content */
             background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
             border-radius: 60px;
             opacity: 0.75; 
             overflow: hidden;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         @keyframes scroll {
@@ -98,7 +101,7 @@
             display: flex;
             width: max-content;
             animation: scroll 60s linear infinite;
-            padding-top: 80px;
+            padding: 80px 0 60px;
         }
         .carousel-item {
             color: white;
@@ -112,6 +115,46 @@
             opacity: 0.1;
         }
         .dot { color: var(--mint-gold); margin: 0 40px; opacity: 0.3; }
+
+        /* Stock Content Styling */
+        .internal-divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            margin: 0 auto;
+        }
+
+        .stock-section {
+            padding: 60px 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .stock-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stock-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .stock-placeholder:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: var(--mint-gold);
+        }
     </style>
 </head>
 <body>
@@ -172,9 +215,9 @@
 
                 <div class="flex items-center gap-5">
                     <div class="flex -space-x-3">
-                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
-                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
-                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white shadow-sm object-cover">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white shadow-sm">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white shadow-sm">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white shadow-sm">
                     </div>
                     <div class="text-left">
                         <div class="text-4xl font-light text-[var(--mint-black)] leading-none">200+</div>
@@ -193,8 +236,28 @@
             <div class="carousel-item">Invest <span class="dot">•</span> Borrow <span class="dot">•</span> Transact</div>
         </div>
         
+        <div class="internal-divider"></div>
+
+        <div class="stock-section">
+            <h2 class="text-white text-3xl font-light mb-4 tracking-tight">Institutional-Grade Equity Access</h2>
+            <p class="text-white/60 text-sm max-w-2xl mx-auto font-light leading-relaxed">
+                MINT enables individuals to manage their investments in one intuitive digital platform. 
+                Execute with precision and access a curated portfolio of top-performing Johannesburg Stock Exchange (JSE) equities 
+                through our seamless market interface.
+            </p>
+
+            <div class="stock-grid">
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">NPN</span></div>
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">FSR</span></div>
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">SBK</span></div>
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">MTN</span></div>
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">SOL</span></div>
+                <div class="stock-placeholder"><span class="text-white/20 text-[10px] uppercase font-bold">AGL</span></div>
+            </div>
+        </div>
+        
         <div class="absolute bottom-10 left-10 opacity-30">
-            <p class="text-white text-[10px] uppercase tracking-[0.8em] font-extralight">Money in Transit Philosophy [cite: 20]</p>
+            <p class="text-white text-[10px] uppercase tracking-[0.8em] font-extralight">Money in Transit Philosophy</p>
         </div>
     </div>
 
@@ -205,7 +268,6 @@
         let mouseX = 0, mouseY = 0;
         let currentX = 0, currentY = 0;
 
-        // Smooth Lerp Reactivity
         container.addEventListener('mousemove', (e) => {
             const rect = container.getBoundingClientRect();
             mouseX = (e.clientX - rect.left - rect.width / 2) / 25;
@@ -213,7 +275,6 @@
         });
 
         function animate() {
-            // Linear interpolation for "Always Smooth" feeling
             currentX += (mouseX - currentX) * 0.1;
             currentY += (mouseY - currentY) * 0.1;
 
@@ -227,10 +288,7 @@
         }
         animate();
 
-        container.addEventListener('mouseleave', () => {
-            mouseX = 0;
-            mouseY = 0;
-        });
+        container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
 
         function checkDevice() {
             if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
