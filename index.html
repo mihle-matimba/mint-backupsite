@@ -55,10 +55,10 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Phone Mockup Container - Updated Z-Index */
+        /* Phone Mockup Container */
         .phone-mockup-container {
             position: relative;
-            z-index: 1000 !important; /* Raised Z-Index as requested */
+            z-index: 1000 !important;
             perspective: 1200px;
         }
 
@@ -86,35 +86,37 @@
             align-items: center;
         }
 
-        /* Carousel */
+        /* PERFECT SEAMLESS CAROUSEL LOGIC */
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-50%); } /* Moves exactly half the width */
         }
+        
         .carousel-track {
             display: flex;
-            width: max-content;
-            animation: scroll 40s linear infinite; /* Adjusted speed slightly for smoothness */
+            width: max-content; /* Allows track to be as wide as content */
+            animation: scroll 40s linear infinite;
             padding: 80px 0 60px;
         }
+        
         .carousel-item {
             color: white;
             font-size: 8rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.02em;
-            padding: 0 20px; /* Reduced padding for seamlessness */
+            padding: 0 40px; /* Equal padding on both sides ensures seamless gap */
             display: flex;
             align-items: center;
             opacity: 0.1;
-            white-space: nowrap; /* Ensures text doesn't wrap */
+            white-space: nowrap;
         }
         
         .dot {
-            padding: 0 40px;
+            padding: 0 40px; /* Consistent spacing for dots within items */
         }
 
-        /* New CTA Button Styles (Sliding Animation) */
+        /* New CTA Button Styles */
         .mint-cta-btn {
             display: flex;
             align-items: center;
@@ -173,13 +175,12 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            /* Transition for the scale effect */
-            transition: transform 0.3s ease; 
+            transition: transform 0.3s ease; /* Smooth zoom transition */
         }
-        
-        /* Hover effect for blobs */
+
+        /* Image Zoom on Hover for Blobs */
         .asset-blob:hover {
-            transform: scale(1.15) !important; /* Force scale on hover */
+            transform: scale(1.15) !important;
             z-index: 50;
         }
 
@@ -197,33 +198,31 @@
             transform: translateY(-8px);
         }
 
-        /* Shimmer/Reflection Text Effect */
+        /* REFLECTION / SHIMMER EFFECT FOR HEADER */
         .shimmer-text {
             background: linear-gradient(
                 110deg, 
                 #111827 30%, 
-                #5c3bcf 45%, 
-                #d1d5db 50%, 
-                #5c3bcf 55%, 
+                #8b5cf6 45%, 
+                #e5e7eb 50%, 
+                #8b5cf6 55%, 
                 #111827 70%
             );
             background-size: 250% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 4s linear infinite;
+            animation: shimmer 5s linear infinite;
         }
         
         @keyframes shimmer {
-            to {
-                background-position: -250% center;
-            }
+            to { background-position: -250% center; }
         }
-        
-        /* Hover Zoom Class */
-        .hover-zoom {
+
+        /* HOVER ZOOM FOR LOGOS */
+        .logo-zoom {
             transition: transform 0.3s ease;
         }
-        .hover-zoom:hover {
+        .logo-zoom:hover {
             transform: scale(1.2);
         }
 
@@ -266,7 +265,6 @@
             
             <div class="lg:col-span-4 flex flex-col items-end text-right">
                 <div class="max-w-[300px] mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
-                
                 <div class="flex items-center justify-end gap-6 w-full">
                     <div class="flex -space-x-3 shrink-0">
                         <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white">
@@ -284,43 +282,42 @@
 
     <div class="hero-rectangle">
         <div class="carousel-track">
-            <div class="carousel-item"> 
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-            </div>
-            <div class="carousel-item"> 
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-                Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span>
-            </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
+            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact </div>
         </div>
         <div class="w-[80%] h-[1px] bg-white/20"></div>
         <div class="py-20 text-center px-10">
             <h2 class="text-white text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
             <div class="flex justify-center gap-8 flex-wrap">
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
                     
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/british-american-tobacco--big.svg" alt="FSR" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/british-american-tobacco--big.svg" alt="FSR" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
                 
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/anheuser-busch-inbev--big.svg" alt="SBK" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/anheuser-busch-inbev--big.svg" alt="SBK" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
                 
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/prosus--big.svg" alt="MTN" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/prosus--big.svg" alt="MTN" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
                 
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/richemont-n--big.svg" alt="VOD" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/richemont-n--big.svg" alt="VOD" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
                 
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/glencore--big.svg" alt="ABS" class="w-full h-full object-contain p-2 hover-zoom">
+                    <img src="https://s3-symbol-logo.tradingview.com/glencore--big.svg" alt="ABS" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
             </div>
         </div>
