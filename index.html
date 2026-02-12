@@ -40,6 +40,7 @@
             z-index: 1000;
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
+            border-bottom: 0.5px solid rgba(0,0,0,0.05);
         }
 
         .logo img {
@@ -80,30 +81,40 @@
             width: 100%;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Background Gradient at z-index -30 */
-            background: radial-gradient(circle at 50% 50%, #fdfbff 0%, #f5f0ff 100%);
             z-index: 0;
         }
 
-        /* Hero Text Layer: Set behind the image */
+        /* Hero Background: Faint Gradient at z-index -30 */
+        .hero-bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #fdfbff 0%, #f7f2ff 100%);
+            z-index: -30;
+        }
+
+        /* Hero Text Layer: Set behind the image at z-index -1 */
         .hero-text-layer {
             position: absolute;
-            top: calc(15vh + 80px); 
+            top: 22%; 
             z-index: -1; 
             text-align: center;
             width: 100%;
-            pointer-events: none;
-            padding: 0 10%; /* Ensures text doesn't touch edges on mobile */
+            pointer-events: auto; /* Changed to auto so buttons are clickable */
+            padding: 0 12%; 
         }
 
         .hero-text-layer h1 {
-            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-size: clamp(3rem, 10vw, 8.5rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 0.95;
-            margin-bottom: 24px;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            margin-bottom: 32px;
             
             background: linear-gradient(
                 270deg, 
@@ -126,20 +137,38 @@
         }
 
         .hero-text-layer p {
-            font-size: clamp(1rem, 2.2vw, 1.5rem);
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
             font-weight: 400;
-            /* Body text color to White per request */
-            color: #ffffff;
-            max-width: 650px;
-            margin: 0 auto;
+            color: #ffffff; /* Body text white per request */
+            max-width: 600px;
+            margin: 0 auto 40px auto;
             text-transform: none; 
             letter-spacing: -0.01em;
-            line-height: 1.5;
-            /* Added text shadow for legibility against dynamic backgrounds */
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            line-height: 1.6;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.15); /* Soft shadow for contrast */
         }
 
-        /* Image Layer: Always on Top */
+        /* Call to Action Button */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--brand-purple-deep);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(76, 29, 149, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.02);
+            background: var(--brand-purple-mid);
+            box-shadow: 0 15px 40px rgba(76, 29, 149, 0.3);
+        }
+
+        /* Image Layer: Always on Top at z-index 10 */
         .hero-image-wrapper {
             position: absolute;
             bottom: 0;
@@ -156,17 +185,17 @@
         .hero-image-wrapper::before {
             content: "";
             position: absolute;
-            bottom: 10%;
+            bottom: 5%;
             left: 50%;
             transform: translateX(-50%);
-            width: 70vw;
+            width: 80vw;
             height: 50vw;
             background: radial-gradient(
                 circle, 
-                rgba(139, 92, 246, 0.15) 0%, 
-                rgba(139, 92, 246, 0) 70%
+                rgba(139, 92, 246, 0.2) 0%, 
+                rgba(139, 92, 246, 0) 65%
             );
-            filter: blur(100px);
+            filter: blur(120px);
             z-index: -1;
         }
 
@@ -179,9 +208,23 @@
             will-change: transform;
         }
 
+        /* Scroll Indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            color: var(--apple-gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 500;
+        }
+
         /* Content Sections */
         .next-section {
-            padding: 120px 8%;
+            padding: 140px 10%;
             background: #000;
             color: #fff;
             position: relative;
@@ -190,57 +233,59 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
         .section-header h2 { 
-            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-size: clamp(2.5rem, 5vw, 3.5rem); 
             font-weight: 600; 
-            letter-spacing: -0.03em; 
+            letter-spacing: -0.04em; 
         }
         
         .section-header p { 
             color: #a1a1a6; 
-            font-size: 1.2rem; 
-            margin-top: 15px; 
+            font-size: 1.25rem; 
+            margin-top: 20px; 
             font-weight: 400;
-            max-width: 600px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
         .pillars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
         .pillar-card {
-            padding: 60px 40px;
-            background: #111;
-            border-radius: 34px;
-            border: 1px solid #222;
-            transition: transform 0.3s ease;
+            padding: 70px 50px;
+            background: #0a0a0a;
+            border-radius: 40px;
+            border: 1px solid #1a1a1a;
+            transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .pillar-card:hover {
-            transform: translateY(-5px);
+            border-color: #333;
+            background: #111;
         }
 
         .pillar-card h3 {
             color: var(--brand-purple-light);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 24px;
             font-weight: 600;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         .pillar-card p {
-            color: #d1d1d6;
-            line-height: 1.6;
-            font-size: 1.1rem;
+            color: #a1a1a6;
+            line-height: 1.7;
+            font-size: 1.15rem;
             font-weight: 400;
         }
     </style>
@@ -260,35 +305,40 @@
 
     <div class="pin-container">
         <section id="hero">
+            <div class="hero-bg-gradient"></div>
+            
             <div class="hero-text-layer">
                 <h1>MONEY IN<br>TRANSIT</h1>
-                <p>MINT is an integrated financial ecosystem built to Invest, Borrow, and Transact. It democratises wealth through a partnership-driven platform that manages the perpetual movement and growth of money.</p>
+                <p>An integrated financial ecosystem built to Invest, Borrow, and Transact. Democratising wealth through a platform built for the perpetual movement of money.</p>
+                <a href="#invest" class="cta-button">Join the Ecosystem</a>
             </div>
 
             <div class="hero-image-wrapper">
                 <img src="images/HERO MAIN IMG.png" alt="MINT Platform Mockup" class="hero-image">
             </div>
+
+            <div class="scroll-hint">Scroll to discover</div>
         </section>
     </div>
 
-    <section class="next-section">
+    <section id="invest" class="next-section">
         <div class="section-header">
             <h2>The Movement of Money</h2>
-            <p>A unified financial ecosystem designed for modern wealth flows.</p>
+            <p>Designed for modern wealth flows, MINT unifies your financial life into a single, intuitive experience.</p>
         </div>
 
         <div class="pillars-grid">
             <div class="pillar-card">
                 <h3>INVEST</h3>
-                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment.</p>
+                <p>Move toward the future. Manage investments in a rich, digitised, and intuitive environment built for long-term growth.</p>
             </div>
             <div class="pillar-card">
                 <h3>BORROW</h3>
-                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability and transparency.</p>
+                <p>Bring the future to the present. Access smarter, fairer credit tools built around suitability, transparency, and speed.</p>
             </div>
             <div class="pillar-card">
                 <h3>TRANSACT</h3>
-                <p>Move in real time. Positioning you at the centre of payments and global money movement.</p>
+                <p>Move in real time. Positioning you at the centre of payments and global money movement with seamless precision.</p>
             </div>
         </div>
     </section>
@@ -303,6 +353,7 @@
                 menuToggle.classList.toggle('active');
             });
 
+            // Keep the user's specific image animations untouched
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 const maxScroll = pinContainer.offsetHeight - window.innerHeight;
