@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mint | Interactive Experience</title>
+    <title>Mint | Apple Style UI</title>
     <style>
         /* --- CSS STYLES --- */
         * {
@@ -13,10 +13,11 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
             background-color: #ffffff;
             overflow-x: hidden;
             color: #000;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Navbar */
@@ -27,20 +28,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 5%;
+            padding: 20px 5%;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px); /* Apple-style frosted glass */
         }
 
+        /* Logo: Half size (18px) for a subtle, premium look */
         .logo img {
-            height: 35px;
+            height: 18px; 
             width: auto;
-            transition: transform 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
-        .logo:hover img {
-            transform: scale(1.05);
+        .logo:hover {
+            opacity: 0.7;
         }
 
         /* Hamburger Animation */
@@ -50,33 +52,23 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            gap: 7px;
-            padding: 10px;
+            gap: 6px;
         }
 
         .bar {
-            width: 30px;
-            height: 2px;
+            width: 24px;
+            height: 1.5px;
             background: #000;
-            transition: 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-            border-radius: 2px;
+            transition: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
-        /* Morphing into X */
-        .menu-toggle.active .bar:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-        }
-        .menu-toggle.active .bar:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-10px);
-        }
-        .menu-toggle.active .bar:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-        }
+        .menu-toggle.active .bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.active .bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
         /* The Pinning Mechanism */
         .pin-container {
-            height: 300vh; /* Scroll length for the animation */
+            height: 300vh; 
             position: relative;
         }
 
@@ -88,22 +80,50 @@
             overflow: hidden;
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* Keeps image bottom-aligned */
+            align-items: center;
             background: #fff;
         }
 
+        /* Text Layer BEHIND the image */
+        .hero-text-layer {
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            opacity: 0; /* Starts hidden */
+            transform: scale(0.9); /* Starts slightly smaller for a zoom-in reveal */
+            will-change: transform, opacity;
+        }
+
+        .hero-text-layer h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+            color: #1d1d1f;
+        }
+
+        .hero-text-layer p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            color: #86868b; /* Apple's secondary text color */
+        }
+
+        /* Image Layer on TOP */
         .hero-image-wrapper {
+            position: relative;
+            z-index: 2; /* Sits above the text */
             width: 100%;
-            max-width: 1400px;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: flex-end;
+            pointer-events: none; /* Allows text selection if needed */
         }
 
         .hero-image {
             width: 100%;
+            max-width: 1200px;
             height: auto;
-            /* Initial state: 4x zoomed and pushed down 50% */
             transform: scale(4) translateY(50%);
             transform-origin: bottom center;
             will-change: transform;
@@ -117,20 +137,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             position: relative;
             z-index: 10;
-        }
-
-        .content-box h2 {
-            font-size: clamp(2rem, 8vw, 4rem);
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .content-box p {
-            font-size: 1.2rem;
-            opacity: 0.7;
         }
     </style>
 </head>
@@ -140,15 +148,20 @@
         <a href="#hero" class="logo">
             <img src="images/ICON MINT.png" alt="Mint Logo">
         </a>
-        <button class="menu-toggle" aria-label="Toggle Menu">
+        <button class="menu-toggle">
             <div class="bar"></div>
             <div class="bar"></div>
-            <div class="bar :"></div>
+            <div class="bar"></div>
         </button>
     </header>
 
     <div class="pin-container">
         <section id="hero">
+            <div class="hero-text-layer">
+                <h1>MINT</h1>
+                <p>Generative wealth, elegantly designed.</p>
+            </div>
+
             <div class="hero-image-wrapper">
                 <img src="images/HERO MAIN IMG.png" alt="Hero Image" class="hero-image">
             </div>
@@ -156,47 +169,38 @@
     </div>
 
     <section class="next-section">
-        <div class="content-box">
-            <h2>The Mint Standard</h2>
-            <p>Wealth generation meets interaction design.</p>
-        </div>
+        <h2>Refined UI. Unmatched Speed.</h2>
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const heroImage = document.querySelector('.hero-image');
+            const heroText = document.querySelector('.hero-text-layer');
             const pinContainer = document.querySelector('.pin-container');
             const menuToggle = document.querySelector('.menu-toggle');
 
-            // 1. Hamburger Menu Toggle
-            menuToggle.addEventListener('click', () => {
-                menuToggle.classList.toggle('active');
-            });
+            menuToggle.addEventListener('click', () => menuToggle.classList.toggle('active'));
 
-            // 2. Scroll Animation Logic
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
-                
-                // Total distance we can scroll within the pinned container
                 const maxScroll = pinContainer.offsetHeight - window.innerHeight;
-                
-                // Calculate progress (0 to 1)
                 let progress = scrollY / maxScroll;
 
-                // Keep progress within 0 and 1
                 if (progress > 1) progress = 1;
                 if (progress < 0) progress = 0;
 
-                /**
-                 * Transformation Math:
-                 * Scale: Drops from 4 down to 1 (4 - 3 * progress)
-                 * translateY: Moves from 50% up to 0% (50 - 50 * progress)
-                 */
-                const currentScale = 4 - (progress * 3);
-                const currentY = 50 - (progress * 50);
+                // Image Animation: Scale 4 -> 1, Y 50% -> 0%
+                const imgScale = 4 - (progress * 3);
+                const imgY = 50 - (progress * 50);
+                heroImage.style.transform = `scale(${imgScale}) translateY(${imgY}%)`;
 
-                // Applying the transform with GPU acceleration
-                heroImage.style.transform = `scale(${currentScale}) translateY(${currentY}%)`;
+                // Text Animation: Opacity 0 -> 1, Scale 0.9 -> 1
+                // We multiply progress to make it fade in later in the scroll
+                const textOpacity = progress > 0.3 ? (progress - 0.3) / 0.7 : 0;
+                const textScale = 0.9 + (progress * 0.1);
+                
+                heroText.style.opacity = textOpacity;
+                heroText.style.transform = `scale(${textScale})`;
             });
         });
     </script>
