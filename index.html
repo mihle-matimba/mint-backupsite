@@ -880,18 +880,26 @@
             const rect = section.getBoundingClientRect();
             const viewHeight = window.innerHeight;
             
-            // Calculate progress (0 when section bottom enters, 1 when middle is reached)
-            let progress = (viewHeight - rect.top) / (viewHeight * 0.8);
-            progress = Math.min(Math.max(progress, 0), 1);
+            // Wait until section top is at or above viewport top
+            if (rect.top <= 0) {
+                // Calculate progress based on how much further we scroll (up to 500px)
+                let progress = Math.abs(rect.top) / 500;
+                progress = Math.min(Math.max(progress, 0), 1);
 
-            // Scale from 2.5 down to 1
-            const currentScale = 2.5 - (progress * 1.5);
-            img.style.transform = `scale(${currentScale})`;
+                // Scale from 2.5 down to 1
+                const currentScale = 2.5 - (progress * 1.5);
+                img.style.transform = `scale(${currentScale})`;
 
-            // Slide text out (Start together, move apart)
-            const textOffset = progress * 200; // Distance of slide
-            leftText.style.transform = `translateX(-${textOffset}px)`;
-            rightText.style.transform = `translateX(${textOffset}px)`;
+                // Slide text out (Start together, move apart)
+                const textOffset = progress * 200; 
+                leftText.style.transform = `translateX(-${textOffset}px)`;
+                rightText.style.transform = `translateX(${textOffset}px)`;
+            } else {
+                // Keep at start state if not reached yet
+                img.style.transform = `scale(2.5)`;
+                leftText.style.transform = `translateX(0px)`;
+                rightText.style.transform = `translateX(0px)`;
+            }
         });
 
         window.addEventListener('load', drawConnectingLines);
