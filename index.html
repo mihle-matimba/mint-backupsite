@@ -1025,7 +1025,10 @@
         }
         animate();
         container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
-        function checkDevice() { if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) alert("MINT is currently available only on mobile devices."); }
+        function checkDevice() { if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                window.location.href = "https://www.mymint.co.za/";
+            } else {
+                alert("MINT is currently available only on mobile devices."); }
 
         const observerOptions = {
             threshold: 0.5 
