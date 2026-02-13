@@ -1,10 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINT - Money In Transit</title>
+    
+    <title>MINT | Invest, Borrow & Transact - All-in-One Financial Platform</title>
+    <meta name="title" content="MINT | Invest, Borrow & Transact - All-in-One Financial Platform">
+    <meta name="description" content="Take control of your financial future with MINT. The all-in-one solution for investing, borrowing, and transacting in South Africa. Access institutional-grade equity and portfolio-backed credit.">
+    <meta name="keywords" content="MINT, Money In Transit, Fintech South Africa, Investment App, Portfolio Backed Lending, Home Loans, Car Finance, Share Trading JSE">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="MINT">
+
+    <link rel="canonical" href="https://www.mymint.co.za/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mymint.co.za/">
+    <meta property="og:title" content="MINT - The Future of Finance">
+    <meta property="og:description" content="Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.">
+    <meta property="og:image" content="https://www.mymint.co.za/images/OG-SHARE-IMAGE.png"> 
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.mymint.co.za/">
+    <meta property="twitter:title" content="MINT - Invest, Borrow, Transact">
+    <meta property="twitter:description" content="The all-in-one financial platform for South Africans. Manage your wealth, access credit, and transact seamlessly.">
+    <meta property="twitter:image" content="https://www.mymint.co.za/images/OG-SHARE-IMAGE.png">
+
+    <meta name="geo.region" content="ZA-GT">
+    <meta name="geo.placename" content="Sandton">
+    <meta name="geo.position" content="-26.107567;28.056702">
+    <meta name="ICBM" content="-26.107567, 28.056702">
+
     <link rel="icon" href="images/ICON MINT.png" type="image/png">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "MINT",
+      "alternateName": "Money In Transit",
+      "url": "https://www.mymint.co.za/",
+      "logo": "https://www.mymint.co.za/images/LOGO%202%20MINT.png",
+      "description": "MINT is a fully integrated financial platform allowing users to invest, borrow, and transact in one ecosystem.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "3 Gwen Ln, Sandown",
+        "addressLocality": "Sandton",
+        "addressRegion": "Gauteng",
+        "postalCode": "2031",
+        "addressCountry": "ZA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+27-10-276-0531",
+        "contactType": "customer service",
+        "email": "info@mymint.co.za"
+      },
+      "sameAs": [
+        "https://www.instagram.com/mymint_africa/",
+        "https://www.linkedin.com/company/mint-platforms/"
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
@@ -44,10 +103,10 @@
             opacity: 1;
         }
 
-        /* Floating Animation */
+        /* Floating Animation - UPDATED to 102px base */
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-5deg) scale(1.6); }
-            50% { transform: translateY(-12px) rotate(-5deg) scale(1.6); }
+            0%, 100% { transform: translateY(102px) rotate(-5deg) scale(1.6); }
+            50% { transform: translateY(90px) rotate(-5deg) scale(1.6); }
         }
 
         /* Small Floats for 3D assets */
@@ -64,7 +123,8 @@
         }
 
         .phone-mockup {
-            transform: rotate(-5deg) scale(1.6) translateY(32px);
+            /* UPDATED: Base position 102px (Original 32 + 70) */
+            transform: rotate(-5deg) scale(1.6) translateY(102px);
             animation: float 6s ease-in-out infinite;
             transition: transform 0.2s cubic-bezier(0.1, 0, 0.3, 1);
             will-change: transform;
@@ -365,32 +425,86 @@
             50% { opacity: 0.4; stroke-dashoffset: 0; }
         }
 
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .carousel-item { font-size: 4rem; padding: 0 20px; }
+            .hero-rectangle { min-height: 350px; border-radius: 40px; }
+            .phone-mockup { transform: scale(1.1) translateY(0); }
+            @keyframes float {
+                0%, 100% { transform: translateY(0) rotate(-2deg) scale(1.1); }
+                50% { transform: translateY(-8px) rotate(-2deg) scale(1.1); }
+            }
+            .solution-section { padding: 80px 20px; }
+            
+            /* CHANGED: Removed max-width to keep original desktop ratio, but scaled down aggressively */
+            .transact-stack-card { right: 5%; } 
+            
+            /* Adjusted transforms with smaller scale (0.55/0.6/0.65) to be "half size" but keep ratio */
+            .transact-stack-container.active .transact-card-1 { 
+                transform: translateY(-50px) translateX(0) scale(0.55); 
+                transform-origin: bottom right;
+            }
+            .transact-stack-container.active .transact-card-2 { 
+                transform: translateY(-25px) translateX(0) scale(0.60); 
+                transform-origin: bottom right;
+            }
+            .transact-stack-container.active .transact-card-3 { 
+                transform: translateY(0) translateX(0) scale(0.65); 
+                transform-origin: bottom right;
+            }
+        }
+        
+        /* Mobile Menu Styles */
+        #mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
 
-    <nav class="flex items-center justify-between px-10 py-8 max-w-7xl mx-auto">
-        <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4"> 
-        <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
-            <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Features</a>
-            <a href="#" class="hover:text-purple-600 transition-all">About</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Pricing</a>
-            <a href="#" class="hover:text-purple-600 transition-all">Blog</a>
-        </div>
-        <div class="tooltip-container">
-            <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                Switch to institution
+    <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <nav class="flex items-center justify-between px-6 md:px-10 py-8 max-w-7xl mx-auto">
+            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4 w-auto object-contain"> 
+            
+            <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-800 focus:outline-none z-50">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
-            <span class="tooltip-text">Coming soon</span>
-        </div>
-    </nav>
 
-    <section class="relative pt-[100px] pb-24">
-        <div class="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <div class="lg:col-span-4">
-                <h1 class="text-5xl font-light leading-tight mb-12 shimmer-text">Elevate your<br>Investment Portfolio<br> <span>With MINT</span></h1>
-                <button onclick="checkDevice()" class="mint-cta-btn group">
+            <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
+                <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
+                <a href="#features" class="hover:text-purple-600 transition-all">Features</a>
+                <a href="about.html" class="hover:text-purple-600 transition-all">About</a>
+            </div>
+            
+            <div class="hidden lg:block tooltip-container">
+                <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                    Switch to institution
+                </button>
+                <span class="tooltip-text">Coming soon</span>
+            </div>
+
+            <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl rounded-b-2xl p-6 flex-col gap-6 lg:hidden z-40 border-t border-gray-100">
+                <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-800 uppercase tracking-widest">
+                    <a href="#" class="text-[var(--mint-primary-purple)]">• Home</a>
+                    <a href="#features" class="hover:text-purple-600 py-2 border-b border-gray-50">Features</a>
+                    <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
+                    
+                </div>
+                <button class="w-full bg-gray-50 text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                    Switch to institution
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="relative pt-[120px] lg:pt-[150px] pb-24">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-4 items-center">
+            <div class="lg:col-span-4 text-center lg:text-left">
+                <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text">Elevate your<br>Investment Portfolio<br> <span>With MINT</span></h1>
+                <button onclick="checkDevice()" class="mint-cta-btn group mx-auto lg:mx-0">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
                     <div class="mint-cta-icon">
                         <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
@@ -398,13 +512,14 @@
                     </div>
                 </button>
             </div>
-            <div class="lg:col-span-4 flex justify-center phone-mockup-container" id="phoneContainer">
-                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[280px]" id="phoneImg">
+            
+            <div class="lg:col-span-4 flex justify-center phone-mockup-container h-[400px] lg:h-auto" id="phoneContainer">
+                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[240px] lg:max-w-[280px]" id="phoneImg">
             </div>
             
-            <div class="lg:col-span-4 flex flex-col items-end text-right">
-                <div class="max-w-[300px] mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
-                <div class="flex items-center justify-end gap-6 w-full">
+            <div class="lg:col-span-4 flex flex-col items-center lg:items-end text-center lg:text-right">
+                <div class="max-w-[300px] mb-12 lg:mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
+                <div class="flex items-center justify-center lg:justify-end gap-6 w-full">
                     <div class="flex -space-x-3 shrink-0">
                         <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white">
                         <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white">
@@ -437,9 +552,9 @@
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
         </div>
         <div class="w-[80%] h-[1px] bg-white/20"></div>
-        <div class="py-20 text-center px-10">
-            <h2 class="text-white text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
-            <div class="flex justify-center gap-8 flex-wrap">
+        <div class="py-20 text-center px-6 md:px-10">
+            <h2 class="text-white text-3xl md:text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
+            <div class="flex justify-center gap-4 md:gap-8 flex-wrap">
                 <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
                     <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-2 logo-zoom">
                 </div>
@@ -469,33 +584,33 @@
 
     <section class="solution-section">
         
-        <div class="floating-asset top-20 left-[10%] asset-blob w-32 h-20 flex items-center justify-center">
+        <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset top-32 right-[15%] asset-blob w-28 h-28 flex items-center justify-center">
+        <div class="hidden md:flex floating-asset top-32 right-[15%] asset-blob w-28 h-28 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 flex items-center justify-center">
+        <div class="hidden md:flex floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" />
         </div>
         
-        <div class="floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 flex items-center justify-center">
+        <div class="hidden md:flex floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" />
         </div>
         
         <div class="max-w-4xl mx-auto relative z-10">
-            <h2 class="text-[var(--mint-primary-purple)] text-6xl font-normal leading-tight mb-8">
+            <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">
                 Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.
             </h2>
             
             <div class="flex items-center justify-center gap-4 mb-12">
-                <div class="w-12 h-[1px] bg-purple-200"></div>
-                <p class="text-gray-600 font-light text-lg">
+                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
+                <p class="text-gray-600 font-light text-base md:text-lg">
                    Designed for modern wealth builders, MINT simplifies how money moves.
                 </p>
-                <div class="w-12 h-[1px] bg-purple-200"></div>
+                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
             </div>
 
             <button onclick="checkDevice()" class="mint-cta-btn group mx-auto">
@@ -508,15 +623,15 @@
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-10 py-24">
+    <section id="features" class="max-w-7xl mx-auto px-6 md:px-10 py-24">
         <div class="text-center mb-16">
             <span class="text-[10px] uppercase tracking-widest text-purple-400 border border-purple-100 px-4 py-1.5 rounded-full">Key Features</span>
-            <h2 class="text-5xl font-light mt-6">Explore Our <span class="text-[var(--mint-primary-purple)]">Standout Features</span></h2>
+            <h2 class="text-4xl md:text-5xl font-light mt-6">Explore Our <span class="text-[var(--mint-primary-purple)]">Standout Features</span></h2>
         </div>
     
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[400px]">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-auto lg:auto-rows-[400px]">
             
-            <div class="lg:col-span-7 feature-card invest-card flex flex-col justify-between" style="background-color: #f5f3ff;">
+            <div class="lg:col-span-7 feature-card invest-card flex flex-col justify-between h-[400px]" style="background-color: #f5f3ff;">
                 <div class="invest-visual">
                     <img src="images/Asset 12.png" alt="MINT Card" class="main-card-img object-contain">
                     
@@ -540,7 +655,7 @@
                 </div>
             </div>
     
-            <div class="lg:col-span-5 feature-card" style="background-color: #ede9fe;">
+            <div class="lg:col-span-5 feature-card h-[400px]" style="background-color: #ede9fe;">
                 <h3 class="text-2xl font-semibold mb-2">Borrow</h3>
                 <p class="text-gray-500 font-light">Users can access structured credit solutions, including the ability to unlock value against their investments.</p>
                 
@@ -595,7 +710,7 @@
                 </div>
             </div>
     
-            <div class="lg:col-span-8 feature-card transact-stack-container" style="background-color: #ddd6fe;">
+            <div class="lg:col-span-8 feature-card transact-stack-container h-[400px]" style="background-color: #ddd6fe;">
                 <div class="relative h-full z-10">
                     <div>
                         <h3 class="text-2xl font-semibold mb-2">Invest</h3>
@@ -722,7 +837,7 @@
         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;" id="lineCanvas"></svg>
 
         <div class="text-center mb-16 relative z-10">
-            <h2 class="text-3xl font-medium text-gray-900">Follow 5 simple steps to take control of your financial future.</h2>
+            <h2 class="text-3xl font-medium text-gray-900 px-4">Follow 5 simple steps to take control of your financial future.</h2>
         </div>
 
         <div class="max-w-5xl mx-auto px-6 mb-32 relative z-10">
@@ -781,20 +896,20 @@
 
         <div class="relative flex flex-col items-center w-full">
             <div class="absolute top-1/2 left-0 w-full -translate-y-1/2 flex flex-col justify-center items-center pointer-events-none z-0 px-4 md:px-10 overflow-hidden gap-0">
-                <span id="leftBgText" class="text-[100px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
-                <span id="rightBgText" class="text-[100px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
+                <span id="leftBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
+                <span id="rightBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
             </div>
 
             <div class="relative z-10 mb-16" id="heroTarget">
-                <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[280px] drop-shadow-2xl rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);">
+                <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);">
             </div>
 
-            <div class="text-center relative z-10">
+            <div class="text-center relative z-10 px-6">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-6">
                     <svg class="text-yellow-400 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">Benefit</span>
                 </div>
-                <h2 class="text-5xl md:text-6xl font-normal text-gray-900 tracking-tight">
+                <h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">
                     Experience The <br>
                     <span class="text-[var(--mint-primary-purple)]">Future of Finance</span>
                 </h2>
@@ -803,7 +918,7 @@
     </section>
 
     <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                 
@@ -816,20 +931,16 @@
                         <a href="https://www.instagram.com/mymint_africa/" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         </a>
-                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
                     </div>
                 </div>
     
                 <div>
                     <h4 class="text-white font-semibold mb-6">Quick Links</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)] transition-colors">Home</a></li>
-                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)] transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)] transition-colors">About Us</a></li>
-                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)] transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)] transition-colors">Blog</a></li>
+                        <li><a href="index.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Home</a></li>
+                        <li><a href="index.html#features" class="hover:text-[var(--mint-primary-purple)] transition-colors">Features</a></li>
+                        <li><a href="about.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">About Us</a></li>
+                        
                     </ul>
                 </div>
     
@@ -880,6 +991,16 @@
     </footer>
 
     <script>
+        // MOBILE MENU LOGIC
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex'); // Add flex when visible
+        });
+
+        // EXISTING LOGIC
         const container = document.getElementById('phoneContainer');
         const phone = document.getElementById('phoneImg');
         let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
@@ -895,7 +1016,8 @@
             currentY += (mouseY - currentY) * 0.1;
             if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
                 phone.style.animation = 'none';
-                phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${32 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+                // UPDATED JS to match the 102px base position
+                phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${102 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
             } else {
                 phone.style.animation = 'float 6s ease-in-out infinite';
             }
