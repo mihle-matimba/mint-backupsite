@@ -64,8 +64,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --mint-dark-purple: #31005e;
@@ -103,7 +101,7 @@
             opacity: 1;
         }
 
-        /* Floating Animation - UPDATED to 102px base */
+        /* Floating Animation */
         @keyframes float {
             0%, 100% { transform: translateY(102px) rotate(-5deg) scale(1.6); }
             50% { transform: translateY(90px) rotate(-5deg) scale(1.6); }
@@ -123,11 +121,11 @@
         }
 
         .phone-mockup {
-            /* UPDATED: Base position 102px (Original 32 + 70) */
             transform: rotate(-5deg) scale(1.6) translateY(102px);
             animation: float 6s ease-in-out infinite;
             transition: transform 0.2s cubic-bezier(0.1, 0, 0.3, 1);
             will-change: transform;
+            object-fit: contain;
         }
 
         /* Hero Rectangle */
@@ -136,7 +134,7 @@
             width: 95%;
             max-width: 1400px;
             margin: -40px auto 0; 
-            min-height: 550px;
+            min-height: 400px; /* Reduced since logos are gone */
             background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
             border-radius: 60px;
             opacity: 0.75; 
@@ -145,20 +143,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
         /* PERFECT SEAMLESS CAROUSEL LOGIC */
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Moves exactly half the width */
+            100% { transform: translateX(-50%); } 
         }
         
         .carousel-track {
             display: flex;
-            width: max-content; /* Allows track to be as wide as content */
-            animation: scroll 80s linear infinite; /* SLOWED BY HALF */
-            padding: 80px 0 60px;
-            will-change: transform; /* Ensures smooth rendering */
+            width: max-content;
+            animation: scroll 80s linear infinite;
+            padding: 20px 0;
+            will-change: transform;
         }
         
         .carousel-item {
@@ -167,7 +166,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: -0.02em;
-            padding: 0 40px; /* Equal padding on both sides ensures seamless gap */
+            padding: 0 40px;
             display: flex;
             align-items: center;
             opacity: 0.1;
@@ -175,10 +174,9 @@
         }
         
         .dot {
-            padding: 0 40px; /* Consistent spacing for dots within items */
+            padding: 0 40px;
         }
 
-        /* New CTA Button Styles */
         .mint-cta-btn {
             display: flex;
             align-items: center;
@@ -216,7 +214,6 @@
             transform: translate(0, 0);
         }
 
-        /* New Section Styles */
         .solution-section {
             padding: 160px 20px;
             text-align: center;
@@ -237,16 +234,14 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease; /* Smooth zoom transition */
+            transition: transform 0.3s ease;
         }
 
-        /* Image Zoom on Hover for Blobs */
         .asset-blob:hover {
             transform: scale(1.15) !important;
             z-index: 50;
         }
 
-        /* Feature Card Styles */
         .feature-card {
             background: #f9f9fb;
             border-radius: 24px;
@@ -260,7 +255,6 @@
             transform: translateY(-8px);
         }
 
-        /* REFLECTION / SHIMMER EFFECT FOR HEADER */
         .shimmer-text {
             background: linear-gradient(
                 110deg, 
@@ -280,27 +274,19 @@
             to { background-position: -250% center; }
         }
 
-        /* HOVER ZOOM FOR LOGOS */
-        .logo-zoom {
-            transition: transform 0.3s ease;
-        }
-        .logo-zoom:hover {
-            transform: scale(1.2);
-        }
-
-        /* NEW STYLES FOR INVEST CARD ANIMATION */
+        /* INVEST CARD ANIMATION */
         .invest-visual {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 240px; /* Adjust height as needed */
+            height: 240px;
         }
         
         .main-card-img {
             z-index: 20;
             position: relative;
-            width: 80%; /* Adjust size */
+            width: 80%;
             max-width: 250px;
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -318,48 +304,37 @@
             z-index: 10;
             opacity: 0;
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            /* Start position: center behind card */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.5);
         }
 
-        /* Active state for animation triggered by JS */
         .invest-card.active .floating-icon:nth-child(2) {
-            top: 15%;
-            left: 10%;
-            opacity: 1;
+            top: 15%; left: 10%; opacity: 1;
             transform: translate(0, 0) scale(1);
             transition-delay: 0.1s;
         }
         .invest-card.active .floating-icon:nth-child(3) {
-            top: 10%;
-            left: 80%;
-            opacity: 1;
+            top: 10%; left: 80%; opacity: 1;
             transform: translate(0, 0) scale(1);
              transition-delay: 0.2s;
         }
         .invest-card.active .floating-icon:nth-child(4) {
-            top: 80%;
-            left: 15%;
-            opacity: 1;
+            top: 80%; left: 15%; opacity: 1;
             transform: translate(0, 0) scale(1);
              transition-delay: 0.3s;
         }
         .invest-card.active .floating-icon:nth-child(5) {
-            top: 75%;
-            left: 85%;
-            opacity: 1;
+            top: 75%; left: 85%; opacity: 1;
             transform: translate(0, 0) scale(1);
              transition-delay: 0.4s;
         }
         
-        /* Slight hover effect for main card */
         .invest-card:hover .main-card-img {
             transform: scale(1.05);
         }
 
-        /* TRANSACT CARD STACK ANIMATION (UPDATED FOR SCROLL TRIGGER & NEW DESIGN) */
+        /* TRANSACT CARD STACK ANIMATION */
         .transact-stack-card {
             transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             transform-origin: bottom center;
@@ -367,37 +342,25 @@
             bottom: 0;
             right: 0;
             box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15);
-            /* Initial stacked state */
             transform: translateY(20px) scale(0.9);
             opacity: 0;
         }
 
-        /* Active state triggered by scroll - UPDATED POSITIONS */
         .transact-stack-container.active .transact-card-1 {
-            /* Back card: Kept as is (-20px) */
             transform: translateY(-160px) translateX(-20px) scale(0.9);
-            opacity: 1;
-            z-index: 10;
-            transition-delay: 0s;
+            opacity: 1; z-index: 10; transition-delay: 0s;
         }
         
         .transact-stack-container.active .transact-card-2 {
-            /* Middle card: Shifted left by 100px */
             transform: translateY(-80px) translateX(-100px) scale(0.95);
-            opacity: 1;
-            z-index: 20;
-            transition-delay: 0.15s;
+            opacity: 1; z-index: 20; transition-delay: 0.15s;
         }
         
         .transact-stack-container.active .transact-card-3 {
-            /* Front card: Shifted left by 200px */
             transform: translateY(0) translateX(-200px) scale(1);
-            opacity: 1;
-            z-index: 30;
-            transition-delay: 0.3s;
+            opacity: 1; z-index: 30; transition-delay: 0.3s;
         }
 
-        /* High Fidelity Chart Styles */
         .chart-pill {
             font-size: 10px;
             font-weight: 600;
@@ -411,7 +374,6 @@
             color: #111827;
         }
 
-        /* PULSE LINE STYLES */
         .connecting-line {
             fill: none;
             stroke: #5c3bcf;
@@ -425,21 +387,17 @@
             50% { opacity: 0.4; stroke-dashoffset: 0; }
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 1024px) {
             .carousel-item { font-size: 4rem; padding: 0 20px; }
-            .hero-rectangle { min-height: 350px; border-radius: 40px; }
-            .phone-mockup { transform: scale(1.1) translateY(0); }
-            @keyframes float {
-                0%, 100% { transform: translateY(0) rotate(-2deg) scale(1.1); }
-                50% { transform: translateY(-8px) rotate(-2deg) scale(1.1); }
+            .hero-rectangle { min-height: 250px; border-radius: 40px; }
+            .phone-mockup { 
+                transform: scale(1.1) translateY(0) rotate(-2deg) !important; 
+                animation: none !important; 
             }
             .solution-section { padding: 80px 20px; }
             
-            /* CHANGED: Removed max-width to keep original desktop ratio, but scaled down aggressively */
             .transact-stack-card { right: 5%; } 
             
-            /* Adjusted transforms with smaller scale (0.55/0.6/0.65) to be "half size" but keep ratio */
             .transact-stack-container.active .transact-card-1 { 
                 transform: translateY(-50px) translateX(0) scale(0.55); 
                 transform-origin: bottom right;
@@ -454,11 +412,9 @@
             }
         }
         
-        /* Mobile Menu Styles */
         #mobile-menu {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-
     </style>
 </head>
 <body>
@@ -491,7 +447,6 @@
                     <a href="#" class="text-[var(--mint-primary-purple)]">• Home</a>
                     <a href="#features" class="hover:text-purple-600 py-2 border-b border-gray-50">Features</a>
                     <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
-                    
                 </div>
                 <button class="w-full bg-gray-50 text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
                     Switch to institution
@@ -513,8 +468,8 @@
                 </button>
             </div>
             
-            <div class="lg:col-span-4 flex justify-center phone-mockup-container h-[400px] lg:h-auto" id="phoneContainer">
-                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[240px] lg:max-w-[280px]" id="phoneImg">
+            <div class="lg:col-span-4 flex justify-center phone-mockup-container h-[350px] md:h-[400px] lg:h-auto" id="phoneContainer">
+                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[220px] md:max-w-[240px] lg:max-w-[280px]" id="phoneImg">
             </div>
             
             <div class="lg:col-span-4 flex flex-col items-center lg:items-end text-center lg:text-right">
@@ -540,62 +495,23 @@
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-        </div>
-        <div class="w-[80%] h-[1px] bg-white/20"></div>
-        <div class="py-20 text-center px-6 md:px-10">
-            <h2 class="text-white text-3xl md:text-5xl font-light mb-12 tracking-tight">Institutional-Grade Equity Access</h2>
-            <div class="flex justify-center gap-4 md:gap-8 flex-wrap">
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/bhp--big.svg" alt="NPN" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-                    
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/british-american-tobacco--big.svg" alt="FSR" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-                
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/anheuser-busch-inbev--big.svg" alt="SBK" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-                
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/prosus--big.svg" alt="MTN" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-                
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/richemont-n--big.svg" alt="VOD" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-                
-                <div class="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src="https://s3-symbol-logo.tradingview.com/glencore--big.svg" alt="ABS" class="w-full h-full object-contain p-2 logo-zoom">
-                </div>
-            </div>
         </div>
     </div>
 
     <section class="solution-section">
-        
         <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" />
         </div>
-        
         <div class="hidden md:flex floating-asset top-32 right-[15%] asset-blob w-28 h-28 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" />
         </div>
-        
         <div class="hidden md:flex floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" />
         </div>
-        
         <div class="hidden md:flex floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 items-center justify-center">
           <img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" />
         </div>
@@ -604,7 +520,6 @@
             <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">
                 Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.
             </h2>
-            
             <div class="flex items-center justify-center gap-4 mb-12">
                 <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
                 <p class="text-gray-600 font-light text-base md:text-lg">
@@ -612,7 +527,6 @@
                 </p>
                 <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
             </div>
-
             <button onclick="checkDevice()" class="mint-cta-btn group mx-auto">
                 <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
                 <div class="mint-cta-icon">
@@ -631,114 +545,32 @@
     
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-auto lg:auto-rows-[400px]">
             
-            <div class="lg:col-span-7 feature-card invest-card flex flex-col justify-between h-[400px]" style="background-color: #f5f3ff;">
-                <div class="invest-visual">
-                    <img src="images/Asset 12.png" alt="MINT Card" class="main-card-img object-contain">
-                    
-                    <div class="floating-icon text-purple-600">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                    </div>
-                    <div class="floating-icon text-blue-500">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <div class="floating-icon text-pink-500">
-                         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
-                    </div>
-                    <div class="floating-icon text-emerald-500">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-semibold mb-2">Transact</h3>
-                    <p class="text-gray-500 font-light max-w-sm">The future of money movement. MINT is building innovative payment and transaction capabilities designed for real-time financial flow.</p>
-                </div>
-            </div>
-    
-            <div class="lg:col-span-5 feature-card h-[400px]" style="background-color: #ede9fe;">
-                <h3 class="text-2xl font-semibold mb-2">Borrow</h3>
-                <p class="text-gray-500 font-light">Users can access structured credit solutions, including the ability to unlock value against their investments.</p>
-                
-                <div class="mt-8 space-y-3">
-                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-[var(--mint-primary-purple)]">
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Home Loan</h4>
-                                <p class="text-xs text-gray-400">Due Feb 28</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-bold text-gray-900">R 8,500</div>
-                            <div class="text-xs text-purple-500 font-medium bg-purple-50 px-2 py-0.5 rounded-full">Paid</div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Car Finance</h4>
-                                <p class="text-xs text-gray-400">Due Mar 01</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-bold text-gray-900">R 4,200</div>
-                            <div class="text-xs text-orange-500 font-medium bg-orange-50 px-2 py-0.5 rounded-full">Pending</div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600">
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900">Personal</h4>
-                                <p class="text-xs text-gray-400">Due Mar 15</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="font-bold text-gray-900">R 1,500</div>
-                            <div class="text-xs text-gray-400 font-medium">Auto-pay</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
             <div class="lg:col-span-8 feature-card transact-stack-container h-[400px]" style="background-color: #ddd6fe;">
-                <div class="relative h-full z-10">
+                <div class="relative h-full z-10 flex flex-col justify-between">
                     <div>
                         <h3 class="text-2xl font-semibold mb-2">Invest</h3>
-                        <p class="text-gray-500 font-light max-w-xs">Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.</p>
+                        <p class="text-gray-500 font-light max-w-xs mb-6">Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Market News</span>
+                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Self-Directed Trading</span>
+                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Financial Goals</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="absolute right-4 bottom-4 w-[280px] h-[340px] pointer-events-none">
-                    
                     <div class="transact-stack-card transact-card-1 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 flex flex-col justify-between z-10">
                          <div class="flex justify-between items-start">
                             <div>
                                 <div class="text-xs text-gray-400 font-medium">Report Expense</div>
                                 <div class="text-2xl font-bold text-gray-900 mt-1">R 4,820</div>
                             </div>
-                            <div class="p-1.5 bg-blue-50 rounded-full text-blue-600"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></div>
                          </div>
                          <div class="relative h-20 w-full">
                             <svg viewBox="0 0 100 40" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/>
-                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
-                                    </linearGradient>
-                                </defs>
+                                <defs><linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
                                 <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5 V 40 H 0 Z" fill="url(#blueGradient)" />
                                 <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="60" cy="25" r="3" fill="#3b82f6" stroke="white" stroke-width="2"/>
                             </svg>
                          </div>
                     </div>
@@ -747,337 +579,227 @@
                          <div class="flex justify-between items-start">
                             <div class="flex gap-3 items-center">
                                 <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs font-bold">B</div>
-                                <div>
-                                    <div class="text-sm font-bold text-gray-900">Bitcoin</div>
-                                    <div class="text-xs text-gray-400">BTC Wallet</div>
-                                </div>
+                                <div><div class="text-sm font-bold text-gray-900">Bitcoin</div></div>
                             </div>
                             <div class="text-sm font-bold text-green-500">+8.4%</div>
                          </div>
-                         <div class="mt-2">
-                             <div class="text-2xl font-bold text-gray-900">R 42,350.20</div>
-                             <div class="text-xs text-gray-400 mt-1">Total Current Value</div>
-                         </div>
+                         <div class="mt-2"><div class="text-2xl font-bold text-gray-900">R 42,350</div></div>
                          <div class="h-10 w-full mt-2">
-                             <svg viewBox="0 0 100 30" class="w-full h-full" preserveAspectRatio="none">
-                                <path d="M0 25 Q 20 28, 40 10 T 80 15 T 100 5" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
-                             </svg>
+                             <svg viewBox="0 0 100 30" class="w-full h-full" preserveAspectRatio="none"><path d="M0 25 Q 20 28, 40 10 T 80 15 T 100 5" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"/></svg>
                          </div>
                     </div>
 
                     <div class="transact-stack-card transact-card-3 bg-white p-5 rounded-3xl shadow-2xl w-64 h-[260px] flex flex-col z-30 border border-gray-100">
                          <div class="flex justify-between items-start mb-4">
                              <div>
-                                 <div class="flex items-center gap-1">
-                                     <span class="text-xs text-gray-500 font-medium">Retirement Portfolio</span>
-                                     <svg width="12" height="12" class="text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                                 </div>
+                                 <div class="text-xs text-gray-500 font-medium">Retirement Portfolio</div>
                                  <div class="text-3xl font-bold text-gray-900 mt-1">R 115k</div>
-                                 <div class="flex items-center gap-1 mt-1">
-                                     <svg width="12" height="12" class="text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"/></svg>
-                                     <span class="text-xs font-bold text-green-600">12.8%</span>
-                                     <span class="text-[10px] text-gray-400">All Time</span>
-                                 </div>
-                             </div>
-                             <div class="p-2 border border-gray-100 rounded-full text-gray-400">
-                                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                              </div>
                          </div>
-                         
                          <div class="flex-grow w-full relative">
                              <svg viewBox="0 0 100 50" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#84cc16" stop-opacity="0.4"/>
-                                        <stop offset="100%" stop-color="#84cc16" stop-opacity="0"/>
-                                    </linearGradient>
-                                </defs>
+                                <defs><linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#84cc16" stop-opacity="0.4"/><stop offset="100%" stop-color="#84cc16" stop-opacity="0"/></linearGradient></defs>
                                 <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5 V 50 H 0 Z" fill="url(#greenGradient)" />
                                 <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5" fill="none" stroke="#65a30d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                
-                                <circle cx="50" cy="15" r="3" fill="#65a30d" stroke="white" stroke-width="2"/>
-                                <g transform="translate(35, -5)">
-                                    <rect x="0" y="0" width="30" height="14" rx="4" fill="white" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"/>
-                                    <text x="15" y="10" font-size="6" text-anchor="middle" fill="#111827" font-weight="bold">$204k</text>
-                                </g>
                              </svg>
                          </div>
-
-                         <div class="flex justify-between mt-2 pt-2 border-t border-gray-50">
-                             <div class="chart-pill">1m</div>
-                             <div class="chart-pill">3m</div>
-                             <div class="chart-pill">6m</div>
-                             <div class="chart-pill">1y</div>
-                             <div class="chart-pill active">All</div>
-                         </div>
                     </div>
+                </div>
+            </div>
 
+            <div class="lg:col-span-4 feature-card h-[400px]" style="background-color: #ede9fe;">
+                <h3 class="text-2xl font-semibold mb-2">Borrow</h3>
+                <p class="text-gray-500 font-light">Users can access structured credit solutions, including the ability to unlock value against their investments.</p>
+                
+                <div class="mt-8 space-y-3">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-[var(--mint-primary-purple)]">
+                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-sm">Home Loan</h4>
+                        </div>
+                        <div class="font-bold text-gray-900 text-sm">R 8,500</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-sm">Car Finance</h4>
+                        </div>
+                        <div class="font-bold text-gray-900 text-sm">R 4,200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 feature-card invest-card flex flex-col justify-between h-[400px]" style="background-color: #f5f3ff;">
+                <div class="invest-visual">
+                    <img src="images/Asset 12.png" alt="MINT Card" class="main-card-img object-contain">
+                    <div class="floating-icon text-purple-600"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                    <div class="floating-icon text-blue-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                    <div class="floating-icon text-pink-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg></div>
+                    <div class="floating-icon text-emerald-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg></div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">Transact</h3>
+                    <p class="text-gray-500 font-light max-w-sm">The future of money movement. MINT is building innovative payment and transaction capabilities designed for real-time financial flow.</p>
                 </div>
             </div>
     
-            <div class="lg:col-span-4 bg-[var(--mint-primary-purple)] rounded-[24px] p-10 flex flex-col justify-between text-white relative overflow-hidden group">
+            <div class="lg:col-span-5 bg-[var(--mint-primary-purple)] rounded-[24px] p-10 flex flex-col justify-between text-white relative overflow-hidden group">
                 <div class="relative z-10">
                     <h3 class="text-4xl font-light leading-tight">Take Control of <br> Your Future</h3>
                     <img src="images/ICON WHITE MINT.png" alt="MINT Logo White" class="mt-4 w-12 h-12 object-contain">
                 </div>
-                
                 <button onclick="checkDevice()" class="flex items-center gap-4 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-full transition-all relative z-10 w-max">
                     <span class="font-semibold uppercase text-xs tracking-widest">Go to Mint</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                 </button>
-
                 <img src="images/ICON Mock-Up.png" alt="Mockup" class="absolute bottom-0 right-0 w-64 h-64 object-contain translate-x-12 translate-y-10 z-0 opacity-90">
-    
-                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform"></div>
             </div>
         </div>
     </section>
 
     <section class="py-24 relative overflow-hidden" id="stepsSection">
         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;" id="lineCanvas"></svg>
-
         <div class="text-center mb-16 relative z-10">
             <h2 class="text-3xl font-medium text-gray-900 px-4">Follow 5 simple steps to take control of your financial future.</h2>
         </div>
-
         <div class="max-w-5xl mx-auto px-6 mb-32 relative z-10">
             <div class="flex flex-wrap justify-center gap-6" id="cardContainer">
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-sm mb-1">1. Discover Strategies & Wealth Solutions</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Explore curated strategies across asset classes.</p>
-                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg></div>
+                    <div><h4 class="font-semibold text-sm mb-1">1. Discover Strategies</h4><p class="text-xs text-gray-500 leading-relaxed">Explore curated strategies across asset classes.</p></div>
                 </div>
-
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-sm mb-1">2. Allocate, Transact & Build</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Allocate capital seamlessly to selected strategies or products, fund your wallet, move money efficiently.</p>
-                    </div>
+                     <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div>
+                    <div><h4 class="font-semibold text-sm mb-1">2. Allocate & Build</h4><p class="text-xs text-gray-500 leading-relaxed">Allocate capital seamlessly to selected products.</p></div>
                 </div>
-
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-sm mb-1">3. Track, Analyse & Optimise</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Monitor portfolios and wealth products in real time with advanced insights, performance analytics, and consolidated reporting across all accounts.</p>
-                    </div>
+                     <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                    <div><h4 class="font-semibold text-sm mb-1">3. Track & Optimise</h4><p class="text-xs text-gray-500 leading-relaxed">Monitor portfolios with advanced insights.</p></div>
                 </div>
-
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-sm mb-1">4. Leverage Your Assets</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Access portfolio-backed credit without liquidating investments. Unlock liquidity while maintaining exposure to long-term growth.</p>
-                    </div>
+                     <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
+                    <div><h4 class="font-semibold text-sm mb-1">4. Leverage Assets</h4><p class="text-xs text-gray-500 leading-relaxed">Access credit without liquidating investments.</p></div>
                 </div>
-
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 shrink-0">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-sm mb-1">5. Build Generational Wealth</h4>
-                        <p class="text-xs text-gray-500 leading-relaxed">Invest on behalf of your children through dedicated sub-accounts.</p>
-                    </div>
+                     <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+                    <div><h4 class="font-semibold text-sm mb-1">5. Build Wealth</h4><p class="text-xs text-gray-500 leading-relaxed">Invest on behalf of your children via sub-accounts.</p></div>
                 </div>
             </div>
         </div>
-
         <div class="relative flex flex-col items-center w-full">
             <div class="absolute top-1/2 left-0 w-full -translate-y-1/2 flex flex-col justify-center items-center pointer-events-none z-0 px-4 md:px-10 overflow-hidden gap-0">
                 <span id="leftBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
                 <span id="rightBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
             </div>
-
             <div class="relative z-10 mb-16" id="heroTarget">
                 <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);">
             </div>
-
             <div class="text-center relative z-10 px-6">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-6">
-                    <svg class="text-yellow-400 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">Benefit</span>
-                </div>
-                <h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">
-                    Experience The <br>
-                    <span class="text-[var(--mint-primary-purple)]">Future of Finance</span>
-                </h2>
+                <h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">Experience The <br><span class="text-[var(--mint-primary-purple)]">Future of Finance</span></h2>
             </div>
         </div>
     </section>
 
     <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-                
                 <div class="space-y-6">
                     <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        The all-in-one solution for moving your money through investing, borrowing, and transacting.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="https://www.instagram.com/mymint_africa/" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        </a>
-                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
                 </div>
-    
                 <div>
                     <h4 class="text-white font-semibold mb-6">Quick Links</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="index.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Home</a></li>
-                        <li><a href="#features" class="hover:text-[var(--mint-primary-purple)] transition-colors">Features</a></li>
-                        <li><a href="about.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-[var(--mint-primary-purple)]">Home</a></li>
+                        <li><a href="#features" class="hover:text-[var(--mint-primary-purple)]">Features</a></li>
                     </ul>
                 </div>
-    
                 <div>
                     <h4 class="text-white font-semibold mb-6">Contact</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[var(--mint-primary-purple)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>3 Gwen Ln, Sandown,<br>Sandton, 2031</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-[var(--mint-primary-purple)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <a href="mailto:info@mymint.co.za" class="hover:text-white">info@mymint.co.za</a>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-[var(--mint-primary-purple)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            <a href="tel:+27102760531" class="hover:text-white">+27 10 276 0531</a>
-                        </li>
+                        <li class="flex items-center gap-3"><a href="mailto:info@mymint.co.za" class="hover:text-white">info@mymint.co.za</a></li>
+                        <li class="flex items-center gap-3"><a href="tel:+27102760531" class="hover:text-white">+27 10 276 0531</a></li>
                     </ul>
                 </div>
-    
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                    <h4 class="text-white font-semibold mb-2">Ready to start?</h4>
-                    <p class="text-gray-400 text-xs mb-6">Join thousands of South Africans building wealth with MINT.</p>
-                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] hover:bg-[#4a2fb3] text-white py-3 px-6 rounded-full text-sm font-semibold transition-all flex items-center justify-center gap-2 group">
-                        Go to MINT
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
+                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 px-6 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a>
                 </div>
-    
             </div>
-    
             <div class="border-t border-gray-800 pt-10">
                 <div class="text-[10px] text-gray-500 text-justify leading-relaxed mb-8 opacity-60">
-                    <p>MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) regulated by the Financial Sector Conduct Authority and a registered Credit Provider (NCRCP22892) under the National Credit Act. All investment activity carries risk, including the possible loss of capital and liquidity constraints. Any information provided here is educational in nature, does not constitute personalised financial advice, and should not be relied on as a recommendation to buy or sell securities. Please consider whether investing is appropriate for your circumstances and consult an independent adviser where necessary.</p>
+                    <p>MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). All investment activity carries risk.</p>
                 </div>
-                
-                <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
-                    <p>&copy; 2026 MINT. All rights reserved.</p>
-                    <div class="flex gap-6">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
-                    </div>
-                </div>
+                <p class="text-xs text-gray-500">&copy; 2026 MINT. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // MOBILE MENU LOGIC
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex'); // Add flex when visible
-        });
-
-        // EXISTING LOGIC
         const container = document.getElementById('phoneContainer');
         const phone = document.getElementById('phoneImg');
         let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left - rect.width / 2) / 25;
-            mouseY = (e.clientY - rect.top - rect.height / 2) / 25;
-        });
+        if (!isMobile) {
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                mouseX = (e.clientX - rect.left - rect.width / 2) / 25;
+                mouseY = (e.clientY - rect.top - rect.height / 2) / 25;
+            });
+            container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
+        }
 
         function animate() {
-            currentX += (mouseX - currentX) * 0.1;
-            currentY += (mouseY - currentY) * 0.1;
-            if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
-                phone.style.animation = 'none';
-                // UPDATED JS to match the 102px base position
-                phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${102 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-            } else {
-                phone.style.animation = 'float 6s ease-in-out infinite';
+            if (!isMobile) {
+                currentX += (mouseX - currentX) * 0.1;
+                currentY += (mouseY - currentY) * 0.1;
+                if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
+                    phone.style.animation = 'none';
+                    phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${102 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+                } else {
+                    phone.style.animation = 'float 6s ease-in-out infinite';
+                }
             }
             requestAnimationFrame(animate);
         }
         animate();
-        container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
+
         function checkDevice() { 
-            // Redirects to the website if on mobile
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                window.location.href = "https://www.mymint.co.za/";
-            } else {
-                alert("MINT is currently available only on mobile devices."); 
-            }
+            if (isMobile) { window.location.href = "https://www.mymint.co.za/"; } 
+            else { alert("MINT is currently available only on mobile devices."); }
         }
 
-        const observerOptions = {
-            threshold: 0.5 
-        };
-
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.5 });
 
-        const investCard = document.querySelector('.invest-card');
-        if(investCard) observer.observe(investCard);
-
-        const transactContainer = document.querySelector('.transact-stack-container');
-        if(transactContainer) observer.observe(transactContainer);
-
+        document.querySelectorAll('.invest-card, .transact-stack-container').forEach(el => observer.observe(el));
 
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
             const section = document.getElementById('stepsSection');
             const cards = document.querySelectorAll('.step-card');
             const target = document.getElementById('heroTarget');
-            
             if (!canvas || !section || !target) return;
-            
             const sectionRect = section.getBoundingClientRect();
             const targetRect = target.getBoundingClientRect();
-            
             const targetX = (targetRect.left + targetRect.width / 2) - sectionRect.left;
             const targetY = (targetRect.top + targetRect.height / 2) - sectionRect.top;
-            
             let svgContent = '';
             cards.forEach(card => {
                 const cardRect = card.getBoundingClientRect();
                 const startX = (cardRect.left + cardRect.width / 2) - sectionRect.left;
                 const startY = cardRect.bottom - sectionRect.top;
-
                 svgContent += `<path class="connecting-line" d="M ${startX} ${startY} C ${startX} ${startY + 100}, ${targetX} ${targetY - 100}, ${targetX} ${targetY}" />`;
             });
-            
             canvas.innerHTML = svgContent;
         }
 
@@ -1086,41 +808,17 @@
             const img = document.querySelector('#heroTarget img');
             const leftText = document.getElementById('leftBgText');
             const rightText = document.getElementById('rightBgText');
-            
             if (!section || !img) return;
-
             const rect = section.getBoundingClientRect();
-            const viewHeight = window.innerHeight;
-    
             if (rect.top <= 0) {
-              
-                let progress = Math.abs(rect.top) / 500;
-                progress = Math.min(Math.max(progress, 0), 1);
-
-                const currentScale = 2.5 - (progress * 1.5);
-                img.style.transform = `scale(${currentScale})`;
-
-                const start = 20;
-                const end = -20;
-                const currentOpen = start + (progress * (end - start));
-                leftText.style.transform = `translateX(${currentOpen}%)`;
-
-                
-                const currentStrat = -start + (progress * (-end - -start)); 
-                // Simplified: -20 + (progress * 40)
-                rightText.style.transform = `translateX(${currentStrat}%)`;
-
-            } else {
-              
-                img.style.transform = `scale(2.5)`;
-                leftText.style.transform = `translateX(20%)`;
-                rightText.style.transform = `translateX(-20%)`;
+                let progress = Math.min(Math.max(Math.abs(rect.top) / 500, 0), 1);
+                img.style.transform = `scale(${2.5 - (progress * 1.5)})`;
+                leftText.style.transform = `translateX(${20 + (progress * -40)}%)`;
+                rightText.style.transform = `translateX(${-20 + (progress * 40)}%)`;
             }
         });
-
         window.addEventListener('load', drawConnectingLines);
         window.addEventListener('resize', drawConnectingLines);
-    
     </script>
 </body>
 </html>
