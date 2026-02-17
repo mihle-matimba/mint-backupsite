@@ -79,7 +79,6 @@
             overflow-x: hidden;
         }
 
-        /* Tooltip logic */
         .tooltip-container { position: relative; }
         .tooltip-text {
             visibility: hidden;
@@ -101,19 +100,16 @@
             opacity: 1;
         }
 
-        /* Floating Animation */
         @keyframes float {
             0%, 100% { transform: translateY(102px) rotate(-5deg) scale(1.6); }
             50% { transform: translateY(90px) rotate(-5deg) scale(1.6); }
         }
 
-        /* Small Floats for 3D assets */
         @keyframes miniFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        /* Phone Mockup Container */
         .phone-mockup-container {
             position: relative;
             z-index: 1000 !important;
@@ -128,13 +124,12 @@
             object-fit: contain;
         }
 
-        /* Hero Rectangle */
         .hero-rectangle {
             position: relative;
             width: 95%;
             max-width: 1400px;
             margin: -40px auto 0; 
-            min-height: 400px; /* Reduced since logos are gone */
+            min-height: 400px;
             background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
             border-radius: 60px;
             opacity: 0.75; 
@@ -146,7 +141,6 @@
             justify-content: center;
         }
 
-        /* PERFECT SEAMLESS CAROUSEL LOGIC */
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
@@ -173,9 +167,7 @@
             white-space: nowrap;
         }
         
-        .dot {
-            padding: 0 40px;
-        }
+        .dot { padding: 0 40px; }
 
         .mint-cta-btn {
             display: flex;
@@ -251,9 +243,7 @@
             overflow: hidden;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-        }
+        .feature-card:hover { transform: translateY(-8px); }
 
         .shimmer-text {
             background: linear-gradient(
@@ -330,9 +320,7 @@
              transition-delay: 0.4s;
         }
         
-        .invest-card:hover .main-card-img {
-            transform: scale(1.05);
-        }
+        .invest-card:hover .main-card-img { transform: scale(1.05); }
 
         /* TRANSACT CARD STACK ANIMATION */
         .transact-stack-card {
@@ -360,6 +348,28 @@
             transform: translateY(0) translateX(-200px) scale(1);
             opacity: 1; z-index: 30; transition-delay: 0.3s;
         }
+
+        /* NEW FEATURE REFINED ANIMATIONS */
+        .news-item {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease-out;
+        }
+        .news-card.active .news-item:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.2s; }
+        .news-card.active .news-item:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
+
+        .trading-btns {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .trading-card.active .trading-btns { opacity: 1; transform: translateY(0); }
+
+        .goal-progress {
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .goals-card.active .goal-progress { width: 65%; }
 
         .chart-pill {
             font-size: 10px;
@@ -395,26 +405,13 @@
                 animation: none !important; 
             }
             .solution-section { padding: 80px 20px; }
-            
             .transact-stack-card { right: 5%; } 
-            
-            .transact-stack-container.active .transact-card-1 { 
-                transform: translateY(-50px) translateX(0) scale(0.55); 
-                transform-origin: bottom right;
-            }
-            .transact-stack-container.active .transact-card-2 { 
-                transform: translateY(-25px) translateX(0) scale(0.60); 
-                transform-origin: bottom right;
-            }
-            .transact-stack-container.active .transact-card-3 { 
-                transform: translateY(0) translateX(0) scale(0.65); 
-                transform-origin: bottom right;
-            }
+            .transact-stack-container.active .transact-card-1 { transform: translateY(-50px) translateX(0) scale(0.55); transform-origin: bottom right; }
+            .transact-stack-container.active .transact-card-2 { transform: translateY(-25px) translateX(0) scale(0.60); transform-origin: bottom right; }
+            .transact-stack-container.active .transact-card-3 { transform: translateY(0) translateX(0) scale(0.65); transform-origin: bottom right; }
         }
         
-        #mobile-menu {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+        #mobile-menu { transition: opacity 0.3s ease, transform 0.3s ease; }
     </style>
 </head>
 <body>
@@ -422,35 +419,25 @@
     <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm">
         <nav class="flex items-center justify-between px-6 md:px-10 py-8 max-w-7xl mx-auto">
             <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4 w-auto object-contain"> 
-            
             <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-800 focus:outline-none z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
-
             <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
                 <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
                 <a href="#features" class="hover:text-purple-600 transition-all">Features</a>
                 <a href="about.html" class="hover:text-purple-600 transition-all">About</a>
             </div>
-            
             <div class="hidden lg:block tooltip-container">
-                <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                    Switch to institution
-                </button>
+                <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">Switch to institution</button>
                 <span class="tooltip-text">Coming soon</span>
             </div>
-
             <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl rounded-b-2xl p-6 flex-col gap-6 lg:hidden z-40 border-t border-gray-100">
                 <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-800 uppercase tracking-widest">
                     <a href="#" class="text-[var(--mint-primary-purple)]">• Home</a>
                     <a href="#features" class="hover:text-purple-600 py-2 border-b border-gray-50">Features</a>
                     <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
                 </div>
-                <button class="w-full bg-gray-50 text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                    Switch to institution
-                </button>
+                <button class="w-full bg-gray-50 text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">Switch to institution</button>
             </div>
         </nav>
     </header>
@@ -467,11 +454,9 @@
                     </div>
                 </button>
             </div>
-            
             <div class="lg:col-span-4 flex justify-center phone-mockup-container h-[350px] md:h-[400px] lg:h-auto" id="phoneContainer">
                 <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[220px] md:max-w-[240px] lg:max-w-[280px]" id="phoneImg">
             </div>
-            
             <div class="lg:col-span-4 flex flex-col items-center lg:items-end text-center lg:text-right">
                 <div class="max-w-[300px] mb-12 lg:mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
                 <div class="flex items-center justify-center lg:justify-end gap-6 w-full">
@@ -496,140 +481,59 @@
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
             <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
         </div>
     </div>
 
     <section class="solution-section">
-        <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" />
-        </div>
-        <div class="hidden md:flex floating-asset top-32 right-[15%] asset-blob w-28 h-28 items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" />
-        </div>
-        <div class="hidden md:flex floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" />
-        </div>
-        <div class="hidden md:flex floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 items-center justify-center">
-          <img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" />
-        </div>
-        
+        <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center"><img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" /></div>
+        <div class="hidden md:flex floating-asset top-32 right-[15%] asset-blob w-28 h-28 items-center justify-center"><img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" /></div>
+        <div class="hidden md:flex floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 items-center justify-center"><img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" /></div>
+        <div class="hidden md:flex floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 items-center justify-center"><img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" /></div>
         <div class="max-w-4xl mx-auto relative z-10">
-            <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">
-                Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.
-            </h2>
-            <div class="flex items-center justify-center gap-4 mb-12">
-                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
-                <p class="text-gray-600 font-light text-base md:text-lg">
-                   Designed for modern wealth builders, MINT simplifies how money moves.
-                </p>
-                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
-            </div>
-            <button onclick="checkDevice()" class="mint-cta-btn group mx-auto">
-                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
-                <div class="mint-cta-icon">
-                    <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                    <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                </div>
-            </button>
+            <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.</h2>
+            <div class="flex items-center justify-center gap-4 mb-12"><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div><p class="text-gray-600 font-light text-base md:text-lg">Designed for modern wealth builders, MINT simplifies how money moves.</p><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div></div>
+            <button onclick="checkDevice()" class="mint-cta-btn group mx-auto"><span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span><div class="mint-cta-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg></div></button>
         </div>
     </section>
 
     <section id="features" class="max-w-7xl mx-auto px-6 md:px-10 py-24">
         <div class="text-center mb-16">
-            <span class="text-[10px] uppercase tracking-widest text-purple-400 border border-purple-100 px-4 py-1.5 rounded-full">Key Features</span>
-            <h2 class="text-4xl md:text-5xl font-light mt-6">Explore Our <span class="text-[var(--mint-primary-purple)]">Standout Features</span></h2>
+            <span class="text-[10px] uppercase tracking-widest text-purple-400 border border-purple-100 px-4 py-1.5 rounded-full">Explore Ecosystem</span>
+            <h2 class="text-4xl md:text-5xl font-light mt-6">Financial Tools <span class="text-[var(--mint-primary-purple)]">Redefined</span></h2>
         </div>
     
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-auto lg:auto-rows-[400px]">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
             
             <div class="lg:col-span-8 feature-card transact-stack-container h-[400px]" style="background-color: #ddd6fe;">
                 <div class="relative h-full z-10 flex flex-col justify-between">
                     <div>
-                        <h3 class="text-2xl font-semibold mb-2">Invest</h3>
-                        <p class="text-gray-500 font-light max-w-xs mb-6">Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Market News</span>
-                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Self-Directed Trading</span>
-                            <span class="text-[10px] bg-white/50 px-3 py-1 rounded-full text-purple-700 font-medium">Financial Goals</span>
-                        </div>
+                        <h3 class="text-3xl font-semibold mb-4">Invest</h3>
+                        <p class="text-gray-500 font-light max-w-sm">Access institutional-grade strategies. Monitor portfolios in real-time and execute decisions with clarity.</p>
                     </div>
                 </div>
-                
                 <div class="absolute right-4 bottom-4 w-[280px] h-[340px] pointer-events-none">
-                    <div class="transact-stack-card transact-card-1 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 flex flex-col justify-between z-10">
-                         <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs text-gray-400 font-medium">Report Expense</div>
-                                <div class="text-2xl font-bold text-gray-900 mt-1">R 4,820</div>
-                            </div>
-                         </div>
-                         <div class="relative h-20 w-full">
-                            <svg viewBox="0 0 100 40" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                                <defs><linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
-                                <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5 V 40 H 0 Z" fill="url(#blueGradient)" />
-                                <path d="M0 30 Q 15 35, 30 20 T 60 25 T 100 5" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                         </div>
+                    <div class="transact-stack-card transact-card-1 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 z-10">
+                        <div class="text-xs text-gray-400 font-medium">Portfolio Growth</div>
+                        <div class="text-2xl font-bold text-gray-900 mt-1">+14.2%</div>
                     </div>
-
-                    <div class="transact-stack-card transact-card-2 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 flex flex-col justify-between z-20">
-                         <div class="flex justify-between items-start">
-                            <div class="flex gap-3 items-center">
-                                <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs font-bold">B</div>
-                                <div><div class="text-sm font-bold text-gray-900">Bitcoin</div></div>
-                            </div>
-                            <div class="text-sm font-bold text-green-500">+8.4%</div>
-                         </div>
-                         <div class="mt-2"><div class="text-2xl font-bold text-gray-900">R 42,350</div></div>
-                         <div class="h-10 w-full mt-2">
-                             <svg viewBox="0 0 100 30" class="w-full h-full" preserveAspectRatio="none"><path d="M0 25 Q 20 28, 40 10 T 80 15 T 100 5" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"/></svg>
-                         </div>
+                    <div class="transact-stack-card transact-card-2 bg-white p-5 rounded-3xl shadow-xl w-64 h-44 z-20">
+                         <div class="text-sm font-bold text-gray-900">JSE Equity</div>
+                         <div class="text-2xl font-bold text-green-500">R 82k</div>
                     </div>
-
-                    <div class="transact-stack-card transact-card-3 bg-white p-5 rounded-3xl shadow-2xl w-64 h-[260px] flex flex-col z-30 border border-gray-100">
-                         <div class="flex justify-between items-start mb-4">
-                             <div>
-                                 <div class="text-xs text-gray-500 font-medium">Retirement Portfolio</div>
-                                 <div class="text-3xl font-bold text-gray-900 mt-1">R 115k</div>
-                             </div>
-                         </div>
-                         <div class="flex-grow w-full relative">
-                             <svg viewBox="0 0 100 50" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                                <defs><linearGradient id="greenGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#84cc16" stop-opacity="0.4"/><stop offset="100%" stop-color="#84cc16" stop-opacity="0"/></linearGradient></defs>
-                                <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5 V 50 H 0 Z" fill="url(#greenGradient)" />
-                                <path d="M0 40 L 15 25 L 30 35 L 50 15 L 70 25 L 100 5" fill="none" stroke="#65a30d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                             </svg>
-                         </div>
+                    <div class="transact-stack-card transact-card-3 bg-white p-5 rounded-3xl shadow-2xl w-64 h-[260px] z-30 border border-gray-100">
+                         <div class="text-xs text-gray-500 font-medium">Total Balance</div>
+                         <div class="text-3xl font-bold text-gray-900 mt-1">R 245,000</div>
+                         <div class="h-32 w-full mt-4 bg-gray-50 rounded-xl flex items-center justify-center"><svg width="100" height="40" viewBox="0 0 100 40" fill="none" stroke="#65a30d" stroke-width="2"><path d="M0 35 L 20 25 L 40 30 L 60 10 L 100 5"/></svg></div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-4 feature-card h-[400px]" style="background-color: #ede9fe;">
                 <h3 class="text-2xl font-semibold mb-2">Borrow</h3>
-                <p class="text-gray-500 font-light">Users can access structured credit solutions, including the ability to unlock value against their investments.</p>
-                
-                <div class="mt-8 space-y-3">
-                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-[var(--mint-primary-purple)]">
-                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                            </div>
-                            <h4 class="font-bold text-gray-900 text-sm">Home Loan</h4>
-                        </div>
-                        <div class="font-bold text-gray-900 text-sm">R 8,500</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between hover:scale-[1.02] transition-transform duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <h4 class="font-bold text-gray-900 text-sm">Car Finance</h4>
-                        </div>
-                        <div class="font-bold text-gray-900 text-sm">R 4,200</div>
-                    </div>
+                <p class="text-gray-500 font-light mb-8">Access credit backed by your investments without selling assets.</p>
+                <div class="space-y-3">
+                    <div class="bg-white/80 p-4 rounded-2xl flex justify-between items-center"><span class="font-bold text-sm">Portfolio Credit</span><span class="text-purple-600 font-bold">4.5% p.a.</span></div>
+                    <div class="bg-white/80 p-4 rounded-2xl flex justify-between items-center"><span class="font-bold text-sm">Asset Leverage</span><span class="text-blue-600 font-bold">Enabled</span></div>
                 </div>
             </div>
 
@@ -637,35 +541,59 @@
                 <div class="invest-visual">
                     <img src="images/Asset 12.png" alt="MINT Card" class="main-card-img object-contain">
                     <div class="floating-icon text-purple-600"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
-                    <div class="floating-icon text-blue-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                    <div class="floating-icon text-pink-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg></div>
-                    <div class="floating-icon text-emerald-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg></div>
+                    <div class="floating-icon text-blue-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
                 </div>
                 <div>
                     <h3 class="text-2xl font-semibold mb-2">Transact</h3>
-                    <p class="text-gray-500 font-light max-w-sm">The future of money movement. MINT is building innovative payment and transaction capabilities designed for real-time financial flow.</p>
+                    <p class="text-gray-500 font-light max-w-sm">The heartbeat of your wealth. Move money instantly between wallets, investments, and external accounts.</p>
                 </div>
             </div>
-    
-            <div class="lg:col-span-5 bg-[var(--mint-primary-purple)] rounded-[24px] p-10 flex flex-col justify-between text-white relative overflow-hidden group">
-                <div class="relative z-10">
-                    <h3 class="text-4xl font-light leading-tight">Take Control of <br> Your Future</h3>
-                    <img src="images/ICON WHITE MINT.png" alt="MINT Logo White" class="mt-4 w-12 h-12 object-contain">
+
+            <div class="lg:col-span-5 feature-card news-card h-[400px] flex flex-col justify-between" style="background-color: #fffbeb;">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">Market News</h3>
+                    <p class="text-gray-500 font-light">Curated insights and live updates from global markets and the JSE.</p>
                 </div>
-                <button onclick="checkDevice()" class="flex items-center gap-4 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-full transition-all relative z-10 w-max">
-                    <span class="font-semibold uppercase text-xs tracking-widest">Go to Mint</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                </button>
-                <img src="images/ICON Mock-Up.png" alt="Mockup" class="absolute bottom-0 right-0 w-64 h-64 object-contain translate-x-12 translate-y-10 z-0 opacity-90">
+                <div class="space-y-4">
+                    <div class="news-item border-l-2 border-yellow-400 pl-4 py-1">
+                        <div class="text-[10px] text-yellow-600 font-bold uppercase">Breaking</div>
+                        <div class="text-sm font-medium">JSE Top 40 surges as inflation cools...</div>
+                    </div>
+                    <div class="news-item border-l-2 border-gray-200 pl-4 py-1">
+                        <div class="text-[10px] text-gray-400 font-bold uppercase">Analysis</div>
+                        <div class="text-sm font-medium">Tech stock outlook for Q3 2026.</div>
+                    </div>
+                </div>
             </div>
+
+            <div class="lg:col-span-6 feature-card trading-card h-[320px] bg-slate-50 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">Self-Directed Trading</h3>
+                    <p class="text-gray-500 font-light">Take full control. Buy and sell shares, ETFs, and more with a single tap.</p>
+                </div>
+                <div class="trading-btns flex gap-4">
+                    <div class="flex-1 bg-emerald-500 text-white py-3 rounded-xl text-center font-bold text-sm">BUY</div>
+                    <div class="flex-1 bg-red-500 text-white py-3 rounded-xl text-center font-bold text-sm">SELL</div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 feature-card goals-card h-[320px] bg-indigo-50 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-2">Financial Goals</h3>
+                    <p class="text-gray-500 font-light">Set, track, and achieve. Build personalized saving milestones.</p>
+                </div>
+                <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
+                    <div class="goal-progress bg-indigo-600 h-full"></div>
+                </div>
+                <div class="flex justify-between text-xs font-bold text-indigo-900"><span>R 65,000 saved</span><span>Goal: R 100,000</span></div>
+            </div>
+
         </div>
     </section>
 
     <section class="py-24 relative overflow-hidden" id="stepsSection">
         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;" id="lineCanvas"></svg>
-        <div class="text-center mb-16 relative z-10">
-            <h2 class="text-3xl font-medium text-gray-900 px-4">Follow 5 simple steps to take control of your financial future.</h2>
-        </div>
+        <div class="text-center mb-16 relative z-10"><h2 class="text-3xl font-medium text-gray-900 px-4">Follow 5 simple steps to take control of your financial future.</h2></div>
         <div class="max-w-5xl mx-auto px-6 mb-32 relative z-10">
             <div class="flex flex-wrap justify-center gap-6" id="cardContainer">
                 <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
@@ -695,12 +623,8 @@
                 <span id="leftBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
                 <span id="rightBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
             </div>
-            <div class="relative z-10 mb-16" id="heroTarget">
-                <img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);">
-            </div>
-            <div class="text-center relative z-10 px-6">
-                <h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">Experience The <br><span class="text-[var(--mint-primary-purple)]">Future of Finance</span></h2>
-            </div>
+            <div class="relative z-10 mb-16" id="heroTarget"><img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);"></div>
+            <div class="text-center relative z-10 px-6"><h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">Experience The <br><span class="text-[var(--mint-primary-purple)]">Future of Finance</span></h2></div>
         </div>
     </section>
 
@@ -730,9 +654,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-10">
-                <div class="text-[10px] text-gray-500 text-justify leading-relaxed mb-8 opacity-60">
-                    <p>MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). All investment activity carries risk.</p>
-                </div>
+                <p class="text-[10px] text-gray-500 mb-8 opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). All investment activity carries risk.</p>
                 <p class="text-xs text-gray-500">&copy; 2026 MINT. All rights reserved.</p>
             </div>
         </div>
@@ -764,9 +686,7 @@
                 if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
                     phone.style.animation = 'none';
                     phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${102 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-                } else {
-                    phone.style.animation = 'float 6s ease-in-out infinite';
-                }
+                } else { phone.style.animation = 'float 6s ease-in-out infinite'; }
             }
             requestAnimationFrame(animate);
         }
@@ -780,8 +700,9 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.5 });
-
-        document.querySelectorAll('.invest-card, .transact-stack-container').forEach(el => observer.observe(el));
+        
+        // ADDED NEW CARDS TO OBSERVER
+        document.querySelectorAll('.invest-card, .transact-stack-container, .news-card, .trading-card, .goals-card').forEach(el => observer.observe(el));
 
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
