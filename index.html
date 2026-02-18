@@ -131,12 +131,14 @@
         /* 4th State (Side Images) */
         .side-image {
             position: absolute;
-            top: 50%; /* Top edge aligns with vertical center */
-            width: 25vw; /* Responsive width */
+            top: 50%; /* Vertical Center Anchor */
+            width: 25vw; 
             max-width: 300px;
-            z-index: 15; /* Behind center image (20) but above text */
+            z-index: 15; 
             opacity: 0;
             will-change: transform, opacity;
+            /* Initial State: Pushed down off screen */
+            transform: translateY(100vh); 
         }
         
         .hero-final .final-left, 
@@ -339,11 +341,11 @@
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[5%] -translate-x-[200%]">
+        <div id="investLeft" class="side-image left-[18%]">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[5%] translate-x-[200%]">
+        <div id="investRight" class="side-image right-[18%]">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
@@ -553,16 +555,18 @@
             ease: "power2.inOut"
         }, "<");
 
-        // Slide in the side images
+        // Slide in the side images from the BOTTOM
+        // Current state in CSS is translate-y-[100vh]
+        // Animate to center: translate-y-[-50%] to align with top-50% anchor
         tl.to("#investLeft", {
-            x: "0%",
+            y: "-50%",
             opacity: 1,
             duration: 3,
             ease: "power3.out"
         }, "<");
 
         tl.to("#investRight", {
-            x: "0%",
+            y: "-50%",
             opacity: 1,
             duration: 3,
             ease: "power3.out"
