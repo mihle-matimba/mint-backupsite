@@ -139,6 +139,18 @@
             will-change: transform, opacity;
         }
         
+        /* UPDATED: Changed from translateX to translateY(100vh) to start from bottom */
+        #investLeft {
+            left: 5%;
+            transform: translateY(100vh); 
+        }
+
+        /* UPDATED: Changed from translateX to translateY(100vh) to start from bottom */
+        #investRight {
+            right: 5%;
+            transform: translateY(100vh);
+        }
+        
         .hero-final .final-left, 
         .hero-final .final-right {
             pointer-events: auto;
@@ -339,11 +351,11 @@
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[5%] -translate-x-[200%]">
+        <div id="investLeft" class="side-image">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[5%] translate-x-[200%]">
+        <div id="investRight" class="side-image">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
@@ -554,15 +566,17 @@
         }, "<");
 
         // Slide in the side images
+        // UPDATED: Changed x to y to slide in from bottom
         tl.to("#investLeft", {
-            x: "0%",
+            y: "0%", 
             opacity: 1,
             duration: 3,
             ease: "power3.out"
         }, "<");
 
+        // UPDATED: Changed x to y to slide in from bottom
         tl.to("#investRight", {
-            x: "0%",
+            y: "0%",
             opacity: 1,
             duration: 3,
             ease: "power3.out"
