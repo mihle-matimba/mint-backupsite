@@ -4,64 +4,9 @@
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>MINT | Invest, Borrow & Transact - All-in-One Financial Platform</title>
-    <meta name="title" content="MINT | Invest, Borrow & Transact - All-in-One Financial Platform">
-    <meta name="description" content="Take control of your financial future with MINT. The all-in-one solution for investing, borrowing, and transacting in South Africa. Access institutional-grade equity and portfolio-backed credit.">
-    <meta name="keywords" content="MINT, Money In Transit, Fintech South Africa, Investment App, Portfolio Backed Lending, Home Loans, Car Finance, Share Trading JSE">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
-    <meta name="author" content="MINT">
-
-    <link rel="canonical" href="https://www.mymint.co.za/">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.mymint.co.za/">
-    <meta property="og:title" content="MINT - The Future of Finance">
-    <meta property="og:description" content="Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.">
-    <meta property="og:image" content="https://www.mymint.co.za/images/OG-SHARE-IMAGE.png"> 
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.mymint.co.za/">
-    <meta property="twitter:title" content="MINT - Invest, Borrow, Transact">
-    <meta property="twitter:description" content="The all-in-one financial platform for South Africans. Manage your wealth, access credit, and transact seamlessly.">
-    <meta property="twitter:image" content="https://www.mymint.co.za/images/OG-SHARE-IMAGE.png">
-
-    <meta name="geo.region" content="ZA-GT">
-    <meta name="geo.placename" content="Sandton">
-    <meta name="geo.position" content="-26.107567;28.056702">
-    <meta name="ICBM" content="-26.107567, 28.056702">
-
-    <link rel="icon" href="images/ICON MINT.png" type="image/png">
+    <title>MINT | Invest, Borrow & Transact</title>
+    <meta name="description" content="Take control of your financial future with MINT. The all-in-one solution for investing, borrowing, and transacting.">
     
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FinancialService",
-      "name": "MINT",
-      "alternateName": "Money In Transit",
-      "url": "https://www.mymint.co.za/",
-      "logo": "https://www.mymint.co.za/images/LOGO%202%20MINT.png",
-      "description": "MINT is a fully integrated financial platform allowing users to invest, borrow, and transact in one ecosystem.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "3 Gwen Ln, Sandown",
-        "addressLocality": "Sandton",
-        "addressRegion": "Gauteng",
-        "postalCode": "2031",
-        "addressCountry": "ZA"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+27-10-276-0531",
-        "contactType": "customer service",
-        "email": "info@mymint.co.za"
-      },
-      "sameAs": [
-        "https://www.instagram.com/mymint_africa/",
-        "https://www.linkedin.com/company/mint-platforms/"
-      ]
-    }
-    </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
     <style>
@@ -79,117 +24,68 @@
             overflow-x: hidden;
         }
 
-        .tooltip-container { position: relative; }
-        .tooltip-text {
-            visibility: hidden;
-            background-color: var(--mint-black);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
+        /* HERO VIDEO STYLES */
+        .video-bg-container {
             position: absolute;
-            bottom: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            font-size: 0.7rem;
-            white-space: nowrap;
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(102px) rotate(-5deg) scale(1.6); }
-            50% { transform: translateY(90px) rotate(-5deg) scale(1.6); }
+        .video-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ANIMATIONS */
         @keyframes miniFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        .phone-mockup-container {
-            position: relative;
-            z-index: 1000 !important;
-            perspective: 1200px;
-        }
-
-        .phone-mockup {
-            transform: rotate(-5deg) scale(1.6) translateY(102px);
-            animation: float 6s ease-in-out infinite;
-            transition: transform 0.2s cubic-bezier(0.1, 0, 0.3, 1);
-            will-change: transform;
-            object-fit: contain;
-        }
-
-        .hero-rectangle {
-            position: relative;
-            width: 95%;
-            max-width: 1400px;
-            margin: -40px auto 0; 
-            min-height: 400px;
-            background: linear-gradient(135deg, var(--mint-dark-purple) 0%, var(--mint-primary-purple) 100%);
-            border-radius: 60px;
-            opacity: 0.75; 
-            overflow: hidden;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } 
-        }
-        
-        .carousel-track {
-            display: flex;
-            width: max-content;
-            animation: scroll 80s linear infinite;
-            padding: 20px 0;
-            will-change: transform;
-        }
-        
-        .carousel-item {
-            color: white;
-            font-size: 8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            opacity: 0.1;
-            white-space: nowrap;
-        }
-        
-        .dot { padding: 0 40px; }
-
+        /* CTA BUTTON STYLES (Used in Header & Hero) */
         .mint-cta-btn {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem; /* Reduced slightly for header */
             background-color: #f5f2ff;
-            padding: 0.5rem 0.5rem 0.5rem 2rem;
+            padding: 0.35rem 0.35rem 0.35rem 1.5rem;
             border-radius: 9999px;
             border: 1px solid rgba(92, 59, 207, 0.15);
             transition: all 0.3s ease;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .mint-cta-btn:hover {
             box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2);
+            transform: scale(1.02);
         }
 
         .mint-cta-icon {
             background-color: var(--mint-primary-purple);
             color: white;
-            width: 3rem;
-            height: 3rem;
+            width: 2.5rem;
+            height: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -206,6 +102,7 @@
             transform: translate(0, 0);
         }
 
+        /* FEATURE SECTION STYLES */
         .solution-section {
             padding: 160px 20px;
             text-align: center;
@@ -248,11 +145,11 @@
         .shimmer-text {
             background: linear-gradient(
                 110deg, 
-                #111827 30%, 
-                #8b5cf6 45%, 
-                #e5e7eb 50%, 
-                #8b5cf6 55%, 
-                #111827 70%
+                #ffffff 30%, 
+                #a78bfa 45%, 
+                #ffffff 50%, 
+                #a78bfa 55%, 
+                #ffffff 70%
             );
             background-size: 250% auto;
             -webkit-background-clip: text;
@@ -264,7 +161,7 @@
             to { background-position: -250% center; }
         }
 
-        /* INVEST CARD ANIMATION */
+        /* CARD ANIMATIONS */
         .invest-visual {
             position: relative;
             display: flex;
@@ -309,20 +206,9 @@
             transform: translate(0, 0) scale(1);
              transition-delay: 0.2s;
         }
-        .invest-card.active .floating-icon:nth-child(4) {
-            top: 80%; left: 15%; opacity: 1;
-            transform: translate(0, 0) scale(1);
-             transition-delay: 0.3s;
-        }
-        .invest-card.active .floating-icon:nth-child(5) {
-            top: 75%; left: 85%; opacity: 1;
-            transform: translate(0, 0) scale(1);
-             transition-delay: 0.4s;
-        }
-        
+
         .invest-card:hover .main-card-img { transform: scale(1.05); }
 
-        /* TRANSACT CARD STACK ANIMATION (NOW INVEST COLUMNS) */
         .invest-col-img {
             transform: translateY(100%);
             opacity: 0;
@@ -338,7 +224,6 @@
         .transact-stack-container.active .invest-img-2 { transition-delay: 0.2s; }
         .transact-stack-container.active .invest-img-3 { transition-delay: 0.3s; }
 
-        /* NEW FEATURE REFINED ANIMATIONS */
         .news-item {
             opacity: 0;
             transform: translateX(-20px);
@@ -360,19 +245,6 @@
         }
         .goals-card.active .goal-progress { width: 65%; }
 
-        .chart-pill {
-            font-size: 10px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 99px;
-            color: #9ca3af;
-            cursor: pointer;
-        }
-        .chart-pill.active {
-            background-color: #f3f4f6;
-            color: #111827;
-        }
-
         .connecting-line {
             fill: none;
             stroke: #5c3bcf;
@@ -387,17 +259,7 @@
         }
 
         @media (max-width: 1024px) {
-            .carousel-item { font-size: 4rem; padding: 0 20px; }
-            .hero-rectangle { min-height: 250px; border-radius: 40px; }
-            .phone-mockup { 
-                transform: scale(1.1) translateY(0) rotate(-2deg) !important; 
-                animation: none !important; 
-            }
             .solution-section { padding: 80px 20px; }
-            .transact-stack-card { right: 5%; } 
-            .transact-stack-container.active .transact-card-1 { transform: translateY(-50px) translateX(0) scale(0.55); transform-origin: bottom right; }
-            .transact-stack-container.active .transact-card-2 { transform: translateY(-25px) translateX(0) scale(0.60); transform-origin: bottom right; }
-            .transact-stack-container.active .transact-card-3 { transform: translateY(0) translateX(0) scale(0.65); transform-origin: bottom right; }
         }
         
         #mobile-menu { transition: opacity 0.3s ease, transform 0.3s ease; }
@@ -405,73 +267,88 @@
 </head>
 <body>
 
-    <header class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm">
-        <nav class="flex items-center justify-between px-6 md:px-10 py-8 max-w-7xl mx-auto">
-            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4 w-auto object-contain"> 
-            <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-800 focus:outline-none z-50">
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
+        <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
+            
+            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-5 w-auto object-contain brightness-0 invert"> 
+            
+            <button id="mobile-menu-btn" class="lg:hidden p-2 text-white focus:outline-none z-50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
-            <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-400 uppercase">
-                <a href="#" class="text-black font-semibold tracking-normal">• Home</a>
-                <a href="#features" class="hover:text-purple-600 transition-all">Features</a>
-                <a href="about.html" class="hover:text-purple-600 transition-all">About</a>
+
+            <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-300 uppercase">
+                <a href="personal.html" class="hover:text-white transition-all">Personal</a>
+                <a href="institution.html" class="hover:text-white transition-all">Institution</a>
+                <a href="about.html" class="hover:text-white transition-all">About</a>
+                <a href="contact.html" class="hover:text-white transition-all">Contact</a>
             </div>
-            <div class="hidden lg:block tooltip-container">
-                <button class="bg-white text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">Switch to institution</button>
-                <span class="tooltip-text">Coming soon</span>
+
+            <div class="hidden lg:block">
+                <a href="mint.html" class="mint-cta-btn group">
+                    <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Mint</span>
+                    <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
+                        <svg class="transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                    </div>
+                </a>
             </div>
+
             <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl rounded-b-2xl p-6 flex-col gap-6 lg:hidden z-40 border-t border-gray-100">
                 <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-800 uppercase tracking-widest">
-                    <a href="#" class="text-[var(--mint-primary-purple)]">• Home</a>
-                    <a href="#features" class="hover:text-purple-600 py-2 border-b border-gray-50">Features</a>
+                    <a href="personal.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Personal</a>
+                    <a href="institution.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Institution</a>
                     <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
+                    <a href="contact.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Contact</a>
                 </div>
-                <button class="w-full bg-gray-50 text-gray-800 border border-gray-200 px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">Switch to institution</button>
+                <a href="mint.html" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                    Mint
+                </a>
             </div>
         </nav>
     </header>
 
-    <section class="relative pt-[120px] lg:pt-[150px] pb-24">
-        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-4 items-center">
-            <div class="lg:col-span-4 text-center lg:text-left">
-                <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text">Elevate your<br>Investment Portfolio<br> <span>With MINT</span></h1>
-                <button onclick="checkDevice()" class="mint-cta-btn group mx-auto lg:mx-0">
-                    <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
-                    <div class="mint-cta-icon">
-                        <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                    </div>
-                </button>
-            </div>
-            <div class="lg:col-span-4 flex justify-center phone-mockup-container h-[350px] md:h-[400px] lg:h-auto" id="phoneContainer">
-                <img src="images/MINT WEBSITE PHONE.png" alt="MINT App" class="phone-mockup w-full max-w-[220px] md:max-w-[240px] lg:max-w-[280px]" id="phoneImg">
-            </div>
-            <div class="lg:col-span-4 flex flex-col items-center lg:items-end text-center lg:text-right">
-                <div class="max-w-[300px] mb-12 lg:mb-24"><p class="text-[#000000] text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p></div>
-                <div class="flex items-center justify-center lg:justify-end gap-6 w-full">
-                    <div class="flex -space-x-3 shrink-0">
-                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white">
-                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white">
-                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white">
-                    </div>
-                    <div class="text-left shrink-0">
-                        <div class="text-4xl font-light">200+</div>
-                        <p class="text-[10px] text-gray-400 leading-tight mt-1">Trusted by 200+<br>early users.</p>
-                    </div>
+    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        
+        <div class="video-bg-container">
+            <video autoplay loop muted playsinline class="video-bg">
+                <source src="videos/HeroBG.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <div class="hero-content max-w-4xl mx-auto px-6 text-center text-white mt-10">
+            <h1 class="text-5xl lg:text-7xl font-light leading-tight mb-8 shimmer-text">
+                Elevate your<br>
+                Investment Portfolio<br> 
+                <span class="font-normal text-white">With MINT</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-2xl mx-auto">
+                Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.
+            </p>
+
+            <a href="mint.html" class="mint-cta-btn group mx-auto inline-flex" style="width: fit-content;">
+                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Mint Now</span>
+                <div class="mint-cta-icon">
+                    <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                    <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                </div>
+            </a>
+
+            <div class="flex items-center justify-center gap-4 mt-12 opacity-90">
+                <div class="flex -space-x-3">
+                    <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white/20">
+                    <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white/20">
+                    <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white/20">
+                </div>
+                <div class="text-left">
+                    <div class="text-xl font-medium text-white">200+</div>
+                    <p class="text-[10px] text-gray-300 uppercase tracking-wider">Early Users</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <div class="hero-rectangle">
-        <div class="carousel-track">
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-            <div class="carousel-item"> Invest <span class="dot"> • </span> Borrow <span class="dot"> • </span> Transact <span class="dot"> • </span> </div>
-        </div>
-    </div>
 
     <section class="solution-section">
         <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center"><img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" /></div>
@@ -481,7 +358,7 @@
         <div class="max-w-4xl mx-auto relative z-10">
             <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.</h2>
             <div class="flex items-center justify-center gap-4 mb-12"><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div><p class="text-gray-600 font-light text-base md:text-lg">Designed for modern wealth builders, MINT simplifies how money moves.</p><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div></div>
-            <button onclick="checkDevice()" class="mint-cta-btn group mx-auto"><span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span><div class="mint-cta-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg></div></button>
+            <a href="mint.html" class="mint-cta-btn group mx-auto" style="width: fit-content;"><span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span><div class="mint-cta-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg></div></a>
         </div>
     </section>
 
@@ -644,43 +521,10 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
 
-        const container = document.getElementById('phoneContainer');
-        const phone = document.getElementById('phoneImg');
-        let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        if (!isMobile) {
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                mouseX = (e.clientX - rect.left - rect.width / 2) / 25;
-                mouseY = (e.clientY - rect.top - rect.height / 2) / 25;
-            });
-            container.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
-        }
-
-        function animate() {
-            if (!isMobile) {
-                currentX += (mouseX - currentX) * 0.1;
-                currentY += (mouseY - currentY) * 0.1;
-                if (Math.abs(mouseX) > 0.1 || Math.abs(mouseY) > 0.1) {
-                    phone.style.animation = 'none';
-                    phone.style.transform = `rotate(${-5 + currentX}deg) scale(1.6) translateY(${102 + currentY}px) rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-                } else { phone.style.animation = 'float 6s ease-in-out infinite'; }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        function checkDevice() { 
-            if (isMobile) { window.location.href = "https://www.mymint.co.za/"; } 
-            else { alert("MINT is currently available only on mobile devices."); }
-        }
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.5 });
         
-        // ADDED NEW CARDS TO OBSERVER
         document.querySelectorAll('.invest-card, .transact-stack-container, .news-card, .trading-card, .goals-card').forEach(el => observer.observe(el));
 
         function drawConnectingLines() {
