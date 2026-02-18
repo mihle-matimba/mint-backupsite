@@ -115,27 +115,32 @@
             will-change: transform, opacity;
         }
         
-        /* 3rd State (Image Slide) */
-        .hero-image-slide {
+        /* ALL IMAGES ARE NOW ANCHORED TO TOP: 50% 
+           This ensures they share the exact same vertical centerline.
+           We use GSAP to move them 'from' offscreen 'to' this center point.
+        */
+
+        .center-image-wrapper {
             position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 20; /* Center image is highest */
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%); /* Perfectly centered */
+            z-index: 20; 
             display: flex;
-            align-items: flex-end; 
+            align-items: center;
             justify-content: center;
-            pointer-events: none;
-            transform: translateY(100%); 
+            will-change: transform;
         }
 
-        /* 4th State (Side Images) */
         .side-image {
             position: absolute;
-            top: 50%; /* Vertical Center Anchor */
+            top: 50%; 
+            /* Vertical center anchor */
+            transform: translateY(-50%); 
             width: 17vw; 
             max-width: 200px;
-            z-index: 19; /* Slightly behind center image to prevent flickering */
-            opacity: 0; /* Hidden initially to prevent flash */
+            z-index: 19; 
+            opacity: 0; 
             will-change: transform, opacity;
         }
         
@@ -299,7 +304,6 @@
 
         <div class="hero-final opacity-0 pointer-events-none">
             <div class="max-w-7xl mx-auto w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center h-full">
-                
                 <div class="lg:col-span-5 text-center lg:text-left final-left flex flex-col justify-center h-full">
                     <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text">
                         Elevate your<br>Investment Portfolio<br> <span>With MINT</span>
@@ -312,9 +316,7 @@
                         </div>
                     </a>
                 </div>
-
                 <div class="lg:col-span-2"></div>
-
                 <div class="lg:col-span-5 flex flex-col items-center lg:items-end text-center lg:text-right final-right justify-center h-full">
                     <div class="max-w-[300px] mb-12 lg:mb-24">
                         <p class="text-white text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p>
@@ -331,19 +333,18 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div class="hero-image-slide">
+        <div id="centerWrapper" class="center-image-wrapper opacity-0">
             <img src="images/Invest3.png" alt="App Interface" class="h-[45vh] md:h-[50vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[18%]">
+        <div id="investLeft" class="side-image left-[50%] -translate-x-[110%]">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[18%]">
+        <div id="investRight" class="side-image right-[50%] translate-x-[110%]">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
@@ -524,13 +525,17 @@
             ease: "power2.out"
         }, "start+=0.5");
 
-        // STEP 3: Slide Center Image Up
-        tl.to(".hero-image-slide", {
-            y: "0%",       
-            opacity: 1,
-            duration: 2.5,
-            ease: "power3.out"
-        }, "+=0.5"); 
+        // STEP 3: Slide Center Image Up (Enter screen)
+        // We use fromTo for absolute certainty of start/end points
+        tl.fromTo("#centerWrapper", 
+            { y: "100vh", opacity: 0 },
+            { 
+                y: "0%",       
+                opacity: 1,
+                duration: 2.5,
+                ease: "power3.out"
+            }, 
+        "+=0.5");
 
         tl.to(".hero-final", {
             opacity: 0.3, 
@@ -551,14 +556,11 @@
             ease: "power2.inOut"
         }, "<");
 
-        // KEY FIX: Use yPercent and simpler start values
-        // We start from y: "60vh" (just enough to be off screen) 
-        // and animate to yPercent: -50 (which re-centers vertically based on top: 50% CSS)
+        // Slide in side images from bottom
         tl.fromTo("#investLeft", 
-            { y: "60vh", opacity: 0 }, 
+            { y: "100vh", opacity: 0 }, 
             {
-                y: "0%",
-                yPercent: -50, /* This restores vertical centering */
+                y: "-50%", /* Re-center vertically */
                 opacity: 1,
                 duration: 3,
                 ease: "power3.out"
@@ -566,10 +568,9 @@
         "<");
 
         tl.fromTo("#investRight", 
-            { y: "60vh", opacity: 0 }, 
+            { y: "100vh", opacity: 0 }, 
             {
-                y: "0%",
-                yPercent: -50, /* This restores vertical centering */
+                y: "-50%", /* Re-center vertically */
                 opacity: 1,
                 duration: 3,
                 ease: "power3.out"
