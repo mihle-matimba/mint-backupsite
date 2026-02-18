@@ -137,7 +137,7 @@
             transform: translate(-50%, -50%); 
             font-size: 15vw;
             font-weight: 900;
-            /* Changed color to be visible on WHITE background (faint purple) */
+            /* Faint purple to be visible on WHITE background */
             color: rgba(92, 59, 207, 0.08); 
             z-index: 5; /* Above background, behind images (20) */
             pointer-events: none;
@@ -149,10 +149,11 @@
         /* 4th State (Side Images) */
         .side-image {
             position: absolute;
-            /* Lowered by adding calc to top */
+            /* Lowered by 50px */
             top: calc(50% + 50px); 
-            width: 17vw; /* Reduced from 25vw (approx 1/3 smaller) */
-            max-width: 200px; /* Reduced max-width */
+            /* Restored Original Sizes */
+            width: 25vw; 
+            max-width: 300px;
             z-index: 15;
             opacity: 0;
             will-change: transform, opacity;
@@ -357,7 +358,7 @@
         <div id="investTitle">INVEST</div>
 
         <div class="hero-image-slide">
-            <img src="images/Invest3.png" alt="App Interface" class="h-[45vh] md:h-[50vh] w-auto object-contain drop-shadow-2xl">
+            <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
         <div id="investLeft" class="side-image left-[15%] -translate-x-[200%]">
