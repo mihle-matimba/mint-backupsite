@@ -120,7 +120,7 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 20; /* Keep consistent with side images */
+            z-index: 20; 
             display: flex;
             align-items: flex-end; 
             justify-content: center;
@@ -132,13 +132,11 @@
         .side-image {
             position: absolute;
             top: 50%; /* Vertical Center Anchor */
-            width: 17vw; /* ~1/3 smaller size */
+            width: 17vw; 
             max-width: 200px;
-            z-index: 20; /* UPDATED: Matches center image z-index */
-            opacity: 0;
+            z-index: 20; /* Same Z as center image */
             will-change: transform, opacity;
-            /* Initial State: Pushed down off screen */
-            transform: translateY(100vh); 
+            /* REMOVED initial transform/opacity here to let GSAP handle it completely */
         }
         
         .hero-final .final-left, 
@@ -553,20 +551,28 @@
             ease: "power2.inOut"
         }, "<");
 
-        // Slide in side images from bottom
-        tl.to("#investLeft", {
-            y: "-50%",
-            opacity: 1,
-            duration: 3,
-            ease: "power3.out"
-        }, "<");
+        // FIX: Use fromTo for absolute control over the animation state
+        // This ensures the images start from exactly where we want (offscreen bottom)
+        // and end exactly where we want (centered vertically)
+        tl.fromTo("#investLeft", 
+            { y: "100vh", opacity: 0 }, 
+            {
+                y: "-50%",
+                opacity: 1,
+                duration: 3,
+                ease: "power3.out"
+            }, 
+        "<");
 
-        tl.to("#investRight", {
-            y: "-50%",
-            opacity: 1,
-            duration: 3,
-            ease: "power3.out"
-        }, "<");
+        tl.fromTo("#investRight", 
+            { y: "100vh", opacity: 0 }, 
+            {
+                y: "-50%",
+                opacity: 1,
+                duration: 3,
+                ease: "power3.out"
+            }, 
+        "<");
 
 
         // --- OBSERVER & LINES ---
