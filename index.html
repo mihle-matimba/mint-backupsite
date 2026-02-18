@@ -115,32 +115,27 @@
             will-change: transform, opacity;
         }
         
-        /* ALL IMAGES ARE NOW ANCHORED TO TOP: 50% 
-           This ensures they share the exact same vertical centerline.
-           We use GSAP to move them 'from' offscreen 'to' this center point.
-        */
-
-        .center-image-wrapper {
+        /* 3rd State (Image Slide) */
+        .hero-image-slide {
             position: absolute;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -50%); /* Perfectly centered */
-            z-index: 20; 
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 20;
             display: flex;
-            align-items: center;
+            align-items: flex-end; 
             justify-content: center;
-            will-change: transform;
+            pointer-events: none;
+            transform: translateY(100%); 
         }
 
+        /* 4th State (Side Images) */
         .side-image {
             position: absolute;
-            top: 50%; 
-            /* Vertical center anchor */
-            transform: translateY(-50%); 
-            width: 17vw; 
-            max-width: 200px;
-            z-index: 19; 
-            opacity: 0; 
+            top: 50%; /* Top edge aligns with vertical center */
+            width: 25vw; /* Responsive width */
+            max-width: 300px;
+            z-index: 15; /* Behind center image (20) but above text */
+            opacity: 0;
             will-change: transform, opacity;
         }
         
@@ -304,6 +299,7 @@
 
         <div class="hero-final opacity-0 pointer-events-none">
             <div class="max-w-7xl mx-auto w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center h-full">
+                
                 <div class="lg:col-span-5 text-center lg:text-left final-left flex flex-col justify-center h-full">
                     <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text">
                         Elevate your<br>Investment Portfolio<br> <span>With MINT</span>
@@ -316,7 +312,9 @@
                         </div>
                     </a>
                 </div>
+
                 <div class="lg:col-span-2"></div>
+
                 <div class="lg:col-span-5 flex flex-col items-center lg:items-end text-center lg:text-right final-right justify-center h-full">
                     <div class="max-w-[300px] mb-12 lg:mb-24">
                         <p class="text-white text-lg leading-relaxed font-normal">MINT is a fully integrated financial platform built around three core pillars:</p>
@@ -333,18 +331,19 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
-        <div id="centerWrapper" class="center-image-wrapper opacity-0">
-            <img src="images/Invest3.png" alt="App Interface" class="h-[45vh] md:h-[50vh] w-auto object-contain drop-shadow-2xl">
+        <div class="hero-image-slide">
+            <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[50%] -translate-x-[110%]">
+        <div id="investLeft" class="side-image left-[5%] -translate-x-[200%]">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[50%] translate-x-[110%]">
+        <div id="investRight" class="side-image right-[5%] translate-x-[200%]">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
@@ -490,7 +489,7 @@
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=4000", 
+                end: "+=4000", // Increased to accommodate 4 steps
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1
@@ -525,17 +524,13 @@
             ease: "power2.out"
         }, "start+=0.5");
 
-        // STEP 3: Slide Center Image Up (Enter screen)
-        // We use fromTo for absolute certainty of start/end points
-        tl.fromTo("#centerWrapper", 
-            { y: "100vh", opacity: 0 },
-            { 
-                y: "0%",       
-                opacity: 1,
-                duration: 2.5,
-                ease: "power3.out"
-            }, 
-        "+=0.5");
+        // STEP 3: Slide Center Image Up (Text fades a bit)
+        tl.to(".hero-image-slide", {
+            y: "0%",       
+            opacity: 1,
+            duration: 2.5,
+            ease: "power3.out"
+        }, "+=0.5"); 
 
         tl.to(".hero-final", {
             opacity: 0.3, 
@@ -543,12 +538,14 @@
         }, "<+=0.5");
 
         // STEP 4: Video Swipes Up & Side Images Slide In
+        // The center image stays put. The video BG and text move up.
         tl.to(".video-bg-container", {
             y: "-100%",
             duration: 3,
             ease: "power2.inOut"
         }, "+=0.5");
 
+        // Move the text up with the video
         tl.to(".hero-final", {
             y: "-100%",
             opacity: 0,
@@ -556,26 +553,20 @@
             ease: "power2.inOut"
         }, "<");
 
-        // Slide in side images from bottom
-        tl.fromTo("#investLeft", 
-            { y: "100vh", opacity: 0 }, 
-            {
-                y: "-50%", /* Re-center vertically */
-                opacity: 1,
-                duration: 3,
-                ease: "power3.out"
-            }, 
-        "<");
+        // Slide in the side images
+        tl.to("#investLeft", {
+            x: "0%",
+            opacity: 1,
+            duration: 3,
+            ease: "power3.out"
+        }, "<");
 
-        tl.fromTo("#investRight", 
-            { y: "100vh", opacity: 0 }, 
-            {
-                y: "-50%", /* Re-center vertically */
-                opacity: 1,
-                duration: 3,
-                ease: "power3.out"
-            }, 
-        "<");
+        tl.to("#investRight", {
+            x: "0%",
+            opacity: 1,
+            duration: 3,
+            ease: "power3.out"
+        }, "<");
 
 
         // --- OBSERVER & LINES ---
