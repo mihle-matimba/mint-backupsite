@@ -120,7 +120,7 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 20; 
+            z-index: 20; /* Center image is highest */
             display: flex;
             align-items: flex-end; 
             justify-content: center;
@@ -134,9 +134,9 @@
             top: 50%; /* Vertical Center Anchor */
             width: 17vw; 
             max-width: 200px;
-            z-index: 20; /* Same Z as center image */
+            z-index: 19; /* Slightly behind center image to prevent flickering */
+            opacity: 0; /* Hidden initially to prevent flash */
             will-change: transform, opacity;
-            /* REMOVED initial transform/opacity here to let GSAP handle it completely */
         }
         
         .hero-final .final-left, 
@@ -551,13 +551,14 @@
             ease: "power2.inOut"
         }, "<");
 
-        // FIX: Use fromTo for absolute control over the animation state
-        // This ensures the images start from exactly where we want (offscreen bottom)
-        // and end exactly where we want (centered vertically)
+        // KEY FIX: Use yPercent and simpler start values
+        // We start from y: "60vh" (just enough to be off screen) 
+        // and animate to yPercent: -50 (which re-centers vertically based on top: 50% CSS)
         tl.fromTo("#investLeft", 
-            { y: "100vh", opacity: 0 }, 
+            { y: "60vh", opacity: 0 }, 
             {
-                y: "-50%",
+                y: "0%",
+                yPercent: -50, /* This restores vertical centering */
                 opacity: 1,
                 duration: 3,
                 ease: "power3.out"
@@ -565,9 +566,10 @@
         "<");
 
         tl.fromTo("#investRight", 
-            { y: "100vh", opacity: 0 }, 
+            { y: "60vh", opacity: 0 }, 
             {
-                y: "-50%",
+                y: "0%",
+                yPercent: -50, /* This restores vertical centering */
                 opacity: 1,
                 duration: 3,
                 ease: "power3.out"
