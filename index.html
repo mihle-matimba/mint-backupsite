@@ -120,7 +120,7 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 20;
+            z-index: 20; /* Keep consistent with side images */
             display: flex;
             align-items: flex-end; 
             justify-content: center;
@@ -132,10 +132,9 @@
         .side-image {
             position: absolute;
             top: 50%; /* Vertical Center Anchor */
-            /* Reduced size by ~1/3 */
-            width: 17vw; 
+            width: 17vw; /* ~1/3 smaller size */
             max-width: 200px;
-            z-index: 15; 
+            z-index: 20; /* UPDATED: Matches center image z-index */
             opacity: 0;
             will-change: transform, opacity;
             /* Initial State: Pushed down off screen */
@@ -492,7 +491,7 @@
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=4000", // Increased to accommodate 4 steps
+                end: "+=4000", 
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1
@@ -527,7 +526,7 @@
             ease: "power2.out"
         }, "start+=0.5");
 
-        // STEP 3: Slide Center Image Up (Text fades a bit)
+        // STEP 3: Slide Center Image Up
         tl.to(".hero-image-slide", {
             y: "0%",       
             opacity: 1,
@@ -541,14 +540,12 @@
         }, "<+=0.5");
 
         // STEP 4: Video Swipes Up & Side Images Slide In
-        // The center image stays put. The video BG and text move up.
         tl.to(".video-bg-container", {
             y: "-100%",
             duration: 3,
             ease: "power2.inOut"
         }, "+=0.5");
 
-        // Move the text up with the video
         tl.to(".hero-final", {
             y: "-100%",
             opacity: 0,
@@ -556,9 +553,7 @@
             ease: "power2.inOut"
         }, "<");
 
-        // Slide in the side images from the BOTTOM
-        // Current state in CSS is translate-y-[100vh]
-        // Animate to center: translate-y-[-50%] to align with top-50% anchor
+        // Slide in side images from bottom
         tl.to("#investLeft", {
             y: "-50%",
             opacity: 1,
