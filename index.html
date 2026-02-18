@@ -128,27 +128,27 @@
             transform: translateY(100%); 
         }
 
-        /* 4th State (Side Images) */
+        /* NEW APPROACH FOR SIDE IMAGES 
+           Instead of top:50%, we anchor them to the bottom 
+           and push them down with transform.
+        */
         .side-image {
             position: absolute;
-            top: 50%; /* Top edge aligns with vertical center */
+            bottom: 25%; /* Sets the final resting height (approx middle of screen) */
             width: 25vw; /* Responsive width */
             max-width: 300px;
-            z-index: 15; /* Behind center image (20) but above text */
-            opacity: 0;
-            will-change: transform, opacity;
+            z-index: 15; /* Behind center image (20) */
+            will-change: transform;
+            /* Start State: Pushed way down off screen (using vh to ensure it's hidden) */
+            transform: translateY(150vh); 
         }
         
-        /* UPDATED: Changed from translateX to translateY(100vh) to start from bottom */
         #investLeft {
             left: 5%;
-            transform: translateY(100vh); 
         }
 
-        /* UPDATED: Changed from translateX to translateY(100vh) to start from bottom */
         #investRight {
             right: 5%;
-            transform: translateY(100vh);
         }
         
         .hero-final .final-left, 
@@ -565,19 +565,17 @@
             ease: "power2.inOut"
         }, "<");
 
-        // Slide in the side images
-        // UPDATED: Changed x to y to slide in from bottom
+        // Slide in the side images (UPDATED LOGIC)
+        // Since we set them to `transform: translateY(150vh)` in CSS,
+        // animating to `y: "0%"` brings them up to their defined `bottom: 25%` position.
         tl.to("#investLeft", {
             y: "0%", 
-            opacity: 1,
             duration: 3,
             ease: "power3.out"
         }, "<");
 
-        // UPDATED: Changed x to y to slide in from bottom
         tl.to("#investRight", {
             y: "0%",
-            opacity: 1,
             duration: 3,
             ease: "power3.out"
         }, "<");
