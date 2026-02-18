@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>MINT | Invest, Borrow & Transact</title>
-    <meta name="description" content="Take control of your financial future with MINT. The all-in-one solution for investing, borrowing, and transacting.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         :root {
-            --mint-dark-purple: #31005e;
             --mint-primary-purple: #5c3bcf;
-            --mint-gold: #ddc357;
             --mint-black: #000000;
         }
 
@@ -22,43 +22,13 @@
             background-color: #ffffff;
             color: var(--mint-black);
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        /* HERO VIDEO STYLES */
-        .video-bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .video-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
-
-        /* CTA BUTTON STYLES */
+        /* --- CTA BUTTON STYLE (Shared) --- */
         .mint-cta-btn {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 1.5rem;
             background-color: #f5f2ff;
@@ -68,13 +38,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
             text-decoration: none;
+            white-space: nowrap;
         }
-
         .mint-cta-btn:hover {
             box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2);
             transform: scale(1.02);
         }
-
         .mint-cta-icon {
             background-color: var(--mint-primary-purple);
             color: white;
@@ -87,137 +56,129 @@
             position: relative;
             overflow: hidden;
         }
+        /* Icon Hover Animation */
+        .mint-cta-btn:hover .mint-cta-icon svg:first-child { transform: translate(2rem, -2rem); }
+        .mint-cta-btn:hover .mint-cta-icon svg:last-child { transform: translate(0, 0); }
 
-        .mint-cta-btn:hover .mint-cta-icon svg:first-child {
-            transform: translate(2rem, -2rem);
-        }
-
-        .mint-cta-btn:hover .mint-cta-icon svg:last-child {
-            transform: translate(0, 0);
-        }
-
-        /* FEATURE SECTION STYLES */
-        .solution-section {
-            padding: 160px 20px;
-            text-align: center;
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 40px 40px; 
+        /* --- SCROLL ANIMATION STYLES --- */
+        
+        /* The container that gets pinned (holds video + both text states) */
+        #pinContainer {
+            width: 100%;
+            height: 100vh;
             position: relative;
-        }
-
-        .floating-asset {
-            position: absolute;
-            animation: miniFloat 4s ease-in-out infinite;
-        }
-
-        .asset-blob {
-            border-radius: 50px;
+            overflow: hidden;
             display: flex;
+            justify-content: center; /* Starts centered */
+        }
+
+        /* Fixed Video Background */
+        .video-bg-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+        .video-bg {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        /* GROUP 1: INITIAL HERO STATE 
+           Centered content ("Redefining the future")
+        */
+        .hero-initial {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-col: column;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
         }
 
-        .asset-blob:hover {
-            transform: scale(1.15) !important;
-            z-index: 50;
+        /* GROUP 2: FINAL STATE (Layout from index 53)
+           Grid layout with Left/Right columns.
+           Initially invisible, we animate TO this state.
+        */
+        .hero-final {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* Left, Middle (Empty), Right */
+            align-items: center;
+            padding: 0 5%;
+            opacity: 0; /* Starts hidden */
+            pointer-events: none; /* Let clicks pass through until active */
+        }
+        
+        .final-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+        
+        .final-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            transform: translateX(100px); /* Start slightly off-screen right */
         }
 
-        .feature-card {
-            background: #f9f9fb;
-            border-radius: 24px;
-            padding: 40px;
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
+        /* Styling text for visibility on video */
+        .text-white-shadow {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .feature-card:hover { transform: translateY(-8px); }
-
+        /* Shimmer effect for final text */
         .shimmer-text {
-            background: linear-gradient(
-                110deg, 
-                #ffffff 30%, 
-                #a78bfa 45%, 
-                #ffffff 50%, 
-                #a78bfa 55%, 
-                #ffffff 70%
-            );
+            background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%);
             background-size: 250% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             animation: shimmer 5s linear infinite;
         }
-        
-        @keyframes shimmer {
-            to { background-position: -250% center; }
+        @keyframes shimmer { to { background-position: -250% center; } }
+
+        /* General Sections */
+        .solution-section {
+            padding: 160px 20px;
+            background-color: white;
+            position: relative;
+            z-index: 20; /* Sits on top of pinned container after scroll */
         }
-
-        /* ANIMATIONS */
-        @keyframes miniFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* CARD ANIMATIONS */
-        .invest-visual { position: relative; display: flex; justify-content: center; align-items: center; height: 240px; }
-        .main-card-img { z-index: 20; position: relative; width: 80%; max-width: 250px; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .invest-card:hover .main-card-img { transform: scale(1.05); }
-
-        .floating-icon {
-            position: absolute; width: 40px; height: 40px; background: white; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            z-index: 10; opacity: 0; transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
-        }
-        .invest-card.active .floating-icon:nth-child(2) { top: 15%; left: 10%; opacity: 1; transform: translate(0, 0) scale(1); transition-delay: 0.1s; }
-        .invest-card.active .floating-icon:nth-child(3) { top: 10%; left: 80%; opacity: 1; transform: translate(0, 0) scale(1); transition-delay: 0.2s; }
-
-        .invest-col-img { transform: translateY(100%); opacity: 0; transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-        .transact-stack-container.active .invest-col-img { transform: translateY(0); opacity: 1; }
-        .transact-stack-container.active .invest-img-1 { transition-delay: 0.1s; }
-        .transact-stack-container.active .invest-img-2 { transition-delay: 0.2s; }
-        .transact-stack-container.active .invest-img-3 { transition-delay: 0.3s; }
-
-        .news-item { opacity: 0; transform: translateX(-20px); transition: all 0.6s ease-out; }
-        .news-card.active .news-item:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.2s; }
-        .news-card.active .news-item:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
-
-        .trading-btns { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .trading-card.active .trading-btns { opacity: 1; transform: translateY(0); }
-
-        .goal-progress { width: 0%; transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
-        .goals-card.active .goal-progress { width: 65%; }
-
-        .connecting-line { fill: none; stroke: #5c3bcf; stroke-width: 1.5; stroke-dasharray: 6; opacity: 0.2; animation: linePulse 3s ease-in-out infinite; }
-        @keyframes linePulse { 0%, 100% { opacity: 0.1; stroke-dashoffset: 24; } 50% { opacity: 0.4; stroke-dashoffset: 0; } }
-
-        @media (max-width: 1024px) { .solution-section { padding: 80px 20px; } }
-        #mobile-menu { transition: opacity 0.3s ease, transform 0.3s ease; }
     </style>
 </head>
 <body>
 
-    <header class="fixed top-0 left-0 w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10">
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10 transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
+            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-3.5 w-auto object-contain brightness-0 invert"> 
             
-            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-5 w-auto object-contain brightness-0 invert"> 
-            
-            <button id="mobile-menu-btn" class="lg:hidden p-2 text-white focus:outline-none z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-
             <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-300 uppercase">
-                <a href="personal.html" class="hover:text-white transition-all">Personal</a>
-                <a href="institution.html" class="hover:text-white transition-all">Institution</a>
-                <a href="about.html" class="hover:text-white transition-all">About</a>
-                <a href="contact.html" class="hover:text-white transition-all">Contact</a>
+                <a href="#" class="hover:text-white transition-all">Personal</a>
+                <a href="#" class="hover:text-white transition-all">Institution</a>
+                <a href="#" class="hover:text-white transition-all">About</a>
+                <a href="#" class="hover:text-white transition-all">Contact</a>
             </div>
 
             <div class="hidden lg:block">
-                <a href="mint.html" class="mint-cta-btn group">
+                <a href="#" class="mint-cta-btn group">
                     <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Mint</span>
                     <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
                         <svg class="transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
@@ -225,250 +186,157 @@
                     </div>
                 </a>
             </div>
-
-            <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl rounded-b-2xl p-6 flex-col gap-6 lg:hidden z-40 border-t border-gray-100">
-                <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-800 uppercase tracking-widest">
-                    <a href="personal.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Personal</a>
-                    <a href="institution.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Institution</a>
-                    <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
-                    <a href="contact.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Contact</a>
-                </div>
-                <a href="mint.html" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                    Mint
-                </a>
-            </div>
         </nav>
     </header>
 
-    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <div id="pinContainer">
         
         <div class="video-bg-container">
             <video id="heroVideo" autoplay muted playsinline class="video-bg">
                 <source src="videos/HeroBG.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
             <div class="hero-overlay"></div>
         </div>
 
-        <div class="hero-content max-w-4xl mx-auto px-6 text-center text-white mt-10">
-            <h1 class="text-5xl lg:text-7xl font-light leading-tight mb-8 shimmer-text">
-                Elevate your<br>
-                Investment Portfolio<br> 
-                <span class="font-normal text-white">With MINT</span>
+        <div class="hero-initial">
+            <h1 class="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter text-white-shadow" id="initial-title">
+                REDEFINING <br /> THE FUTURE
             </h1>
-            
-            <p class="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-2xl mx-auto">
-                Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.
+            <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl font-light text-white-shadow" id="initial-subtitle">
+                Experience the next generation of digital interaction.
             </p>
-
-            <a href="mint.html" class="mint-cta-btn group mx-auto inline-flex" style="width: fit-content;">
+            <a href="#" class="mint-cta-btn group" id="initial-btn">
                 <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Mint Now</span>
                 <div class="mint-cta-icon">
                     <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                 </div>
             </a>
+        </div>
 
-            <div class="flex items-center justify-center gap-4 mt-12 opacity-90">
-                <div class="flex -space-x-3">
-                    <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white/20">
-                    <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white/20">
-                    <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white/20">
+        <div class="hero-final max-w-7xl mx-auto">
+            
+            <div class="final-left col-span-1">
+                <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text text-left">
+                    Elevate your<br>Investment Portfolio<br> <span class="text-white font-normal">With MINT</span>
+                </h1>
+                <div id="final-btn-placeholder" style="width: 180px; height: 60px;"></div> 
+            </div>
+
+            <div class="col-span-1"></div>
+
+            <div class="final-right col-span-1 text-right items-end">
+                <div class="max-w-[300px] mb-12 lg:mb-24">
+                    <p class="text-white text-lg leading-relaxed font-normal text-right text-white-shadow">
+                        MINT is a fully integrated financial platform built around three core pillars:
+                    </p>
                 </div>
-                <div class="text-left">
-                    <div class="text-xl font-medium text-white">200+</div>
-                    <p class="text-[10px] text-gray-300 uppercase tracking-wider">Early Users</p>
+                <div class="flex items-center justify-end gap-6 w-full">
+                    <div class="flex -space-x-3 shrink-0">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-11 h-11 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-11 h-11 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-11 h-11 rounded-full border-2 border-white">
+                    </div>
+                    <div class="text-left shrink-0">
+                        <div class="text-4xl font-light text-white">200+</div>
+                        <p class="text-[10px] text-gray-300 leading-tight mt-1">Trusted by 200+<br>early users.</p>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </section>
+    </div>
 
     <section class="solution-section">
-        <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center"><img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" /></div>
-        <div class="hidden md:flex floating-asset top-32 right-[15%] asset-blob w-28 h-28 items-center justify-center"><img src="https://img.freepik.com/free-photo/joyful-business-woman-with-coffee-cup_23-2148095746.jpg" alt="Time" class="w-full h-full object-cover" /></div>
-        <div class="hidden md:flex floating-asset bottom-20 left-[15%] asset-blob w-36 h-24 items-center justify-center"><img src="https://img.freepik.com/free-photo/portrait-happy-asian-man-sitting-restaurant_1262-1558.jpg" alt="Coin" class="w-full h-full object-cover" /></div>
-        <div class="hidden md:flex floating-asset bottom-10 right-[10%] asset-blob w-32 h-32 items-center justify-center"><img src="https://img.freepik.com/free-photo/low-angle-business-man-talking-phone_23-2148479503.jpg" alt="Wealth" class="w-full h-full object-cover" /></div>
         <div class="max-w-4xl mx-auto relative z-10">
-            <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">Our app is an <br> all-in-one solution for <br> moving your money <br> through investing, borrowing and transacting.</h2>
-            <div class="flex items-center justify-center gap-4 mb-12"><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div><p class="text-gray-600 font-light text-base md:text-lg">Designed for modern wealth builders, MINT simplifies how money moves.</p><div class="w-8 md:w-12 h-[1px] bg-purple-200"></div></div>
-            <a href="mint.html" class="mint-cta-btn group mx-auto" style="width: fit-content;"><span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span><div class="mint-cta-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg></div></a>
-        </div>
-    </section>
-
-    <section id="features" class="max-w-7xl mx-auto px-6 md:px-10 py-24">
-        <div class="text-center mb-16">
-            <span class="text-[10px] uppercase tracking-widest text-purple-400 border border-purple-100 px-4 py-1.5 rounded-full">Explore Ecosystem</span>
-            <h2 class="text-4xl md:text-5xl font-light mt-6">Financial Tools <span class="text-[var(--mint-primary-purple)]">Redefined</span></h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-8 feature-card transact-stack-container h-[400px]" style="background-color: #ddd6fe;">
-                <div class="relative h-full z-10 flex flex-col justify-between">
-                    <div><h3 class="text-3xl font-semibold mb-4">Invest</h3><p class="text-gray-500 font-light max-w-sm">Access institutional-grade strategies. Monitor portfolios in real-time and execute decisions with clarity.</p></div>
-                </div>
-                <div class="absolute bottom-0 left-0 w-full px-8 pb-0 flex items-end justify-center gap-4 z-10 pointer-events-none">
-                    <img src="images/Invest1.png" class="invest-col-img invest-img-1 w-1/3 rounded-t-2xl shadow-lg object-cover h-[220px]" alt="Invest 1">
-                    <img src="images/Invest2.png" class="invest-col-img invest-img-2 w-1/3 rounded-t-2xl shadow-xl object-cover h-[220px] mb-8" alt="Invest 2">
-                    <img src="images/Invest3.png" class="invest-col-img invest-img-3 w-1/3 rounded-t-2xl shadow-lg object-cover h-[220px]" alt="Invest 3">
-                </div>
-            </div>
-            <div class="lg:col-span-4 feature-card h-[400px]" style="background-color: #ede9fe;">
-                <h3 class="text-2xl font-semibold mb-2">Borrow</h3><p class="text-gray-500 font-light mb-8">Access credit backed by your investments without selling assets.</p>
-                <div class="space-y-3">
-                    <div class="bg-white/80 p-4 rounded-2xl flex justify-between items-center"><span class="font-bold text-sm">Portfolio Credit</span><span class="text-purple-600 font-bold">4.5% p.a.</span></div>
-                    <div class="bg-white/80 p-4 rounded-2xl flex justify-between items-center"><span class="font-bold text-sm">Asset Leverage</span><span class="text-blue-600 font-bold">Enabled</span></div>
-                </div>
-            </div>
-            <div class="lg:col-span-7 feature-card invest-card flex flex-col justify-between h-[400px]" style="background-color: #f5f3ff;">
-                <div class="invest-visual">
-                    <img src="images/Asset 12.png" alt="MINT Card" class="main-card-img object-contain">
-                    <div class="floating-icon text-purple-600"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
-                    <div class="floating-icon text-blue-500"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                </div>
-                <div><h3 class="text-2xl font-semibold mb-2">Transact</h3><p class="text-gray-500 font-light max-w-sm">The heartbeat of your wealth. Move money instantly between wallets, investments, and external accounts.</p></div>
-            </div>
-            <div class="lg:col-span-5 feature-card news-card h-[400px] flex flex-col justify-between" style="background-color: #fffbeb;">
-                <div><h3 class="text-2xl font-semibold mb-2">Market News</h3><p class="text-gray-500 font-light">Curated insights and live updates from global markets and the JSE.</p></div>
-                <div class="space-y-4">
-                    <div class="news-item border-l-2 border-yellow-400 pl-4 py-1"><div class="text-[10px] text-yellow-600 font-bold uppercase">Breaking</div><div class="text-sm font-medium">JSE Top 40 surges as inflation cools...</div></div>
-                    <div class="news-item border-l-2 border-gray-200 pl-4 py-1"><div class="text-[10px] text-gray-400 font-bold uppercase">Analysis</div><div class="text-sm font-medium">Tech stock outlook for Q3 2026.</div></div>
-                </div>
-            </div>
-            <div class="lg:col-span-6 feature-card trading-card h-[320px] bg-slate-50 flex flex-col justify-between">
-                <div><h3 class="text-2xl font-semibold mb-2">Self-Directed Trading</h3><p class="text-gray-500 font-light">Take full control. Buy and sell shares, ETFs, and more with a single tap.</p></div>
-                <div class="trading-btns flex gap-4"><div class="flex-1 bg-emerald-500 text-white py-3 rounded-xl text-center font-bold text-sm">BUY</div><div class="flex-1 bg-red-500 text-white py-3 rounded-xl text-center font-bold text-sm">SELL</div></div>
-            </div>
-            <div class="lg:col-span-6 feature-card goals-card h-[320px] bg-indigo-50 flex flex-col justify-between">
-                <div><h3 class="text-2xl font-semibold mb-2">Financial Goals</h3><p class="text-gray-500 font-light">Set, track, and achieve. Build personalized saving milestones.</p></div>
-                <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden"><div class="goal-progress bg-indigo-600 h-full"></div></div>
-                <div class="flex justify-between text-xs font-bold text-indigo-900"><span>R 65,000 saved</span><span>Goal: R 100,000</span></div>
+            <h2 class="text-[var(--mint-primary-purple)] text-4xl md:text-6xl font-normal leading-tight mb-8">
+                Our app is an <br> all-in-one solution for <br> moving your money.
+            </h2>
+            <div class="flex items-center justify-center gap-4 mb-12">
+                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
+                <p class="text-gray-600 font-light text-base md:text-lg">Designed for modern wealth builders.</p>
+                <div class="w-8 md:w-12 h-[1px] bg-purple-200"></div>
             </div>
         </div>
     </section>
 
-    <section class="py-24 relative overflow-hidden" id="stepsSection">
-        <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;" id="lineCanvas"></svg>
-        <div class="text-center mb-16 relative z-10"><h2 class="text-3xl font-medium text-gray-900 px-4">Follow 5 simple steps to take control of your financial future.</h2></div>
-        <div class="max-w-5xl mx-auto px-6 mb-32 relative z-10">
-            <div class="flex flex-wrap justify-center gap-6" id="cardContainer">
-                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg></div><div><h4 class="font-semibold text-sm mb-1">1. Discover Strategies</h4><p class="text-xs text-gray-500 leading-relaxed">Explore curated strategies across asset classes.</p></div>
-                </div>
-                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div><div><h4 class="font-semibold text-sm mb-1">2. Allocate & Build</h4><p class="text-xs text-gray-500 leading-relaxed">Allocate capital seamlessly to selected products.</p></div>
-                </div>
-                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div><div><h4 class="font-semibold text-sm mb-1">3. Track & Optimise</h4><p class="text-xs text-gray-500 leading-relaxed">Monitor portfolios with advanced insights.</p></div>
-                </div>
-                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center text-pink-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div><div><h4 class="font-semibold text-sm mb-1">4. Leverage Assets</h4><p class="text-xs text-gray-500 leading-relaxed">Access credit without liquidating investments.</p></div>
-                </div>
-                <div class="step-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 w-full md:w-[300px] hover:-translate-y-1 transition-transform">
-                     <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 shrink-0"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div><div><h4 class="font-semibold text-sm mb-1">5. Build Wealth</h4><p class="text-xs text-gray-500 leading-relaxed">Invest on behalf of your children via sub-accounts.</p></div>
-                </div>
-            </div>
-        </div>
-        <div class="relative flex flex-col items-center w-full">
-            <div class="absolute top-1/2 left-0 w-full -translate-y-1/2 flex flex-col justify-center items-center pointer-events-none z-0 px-4 md:px-10 overflow-hidden gap-0">
-                <span id="leftBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
-                <span id="rightBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
-            </div>
-            <div class="relative z-10 mb-16" id="heroTarget"><img src="images/HERO MAIN IMG.png" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);"></div>
-            <div class="text-center relative z-10 px-6"><h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">Experience The <br><span class="text-[var(--mint-primary-purple)]">Future of Finance</span></h2></div>
-        </div>
-    </section>
-
-    <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 md:px-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-                <div class="space-y-6">
-                    <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
-                    <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
-                </div>
-                <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li><a href="#" class="hover:text-[var(--mint-primary-purple)]">Home</a></li><li><a href="#features" class="hover:text-[var(--mint-primary-purple)]">Features</a></li></ul></div>
-                <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li class="flex items-center gap-3"><a href="mailto:info@mymint.co.za" class="hover:text-white">info@mymint.co.za</a></li><li class="flex items-center gap-3"><a href="tel:+27102760531" class="hover:text-white">+27 10 276 0531</a></li></ul></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 px-6 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a></div>
-            </div>
-            <div class="border-t border-gray-800 pt-10"><p class="text-[10px] text-gray-500 mb-8 opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). All investment activity carries risk.</p><p class="text-xs text-gray-500">&copy; 2026 MINT. All rights reserved.</p></div>
-        </div>
+    <footer class="bg-[#111827] text-white py-12 text-center">
+        <p class="text-sm opacity-50">&copy; 2026 MINT.</p>
     </footer>
 
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
 
-        // INTERSECTION OBSERVER
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.invest-card, .transact-stack-container, .news-card, .trading-card, .goals-card').forEach(el => observer.observe(el));
-
-        // SVG CONNECTING LINES
-        function drawConnectingLines() {
-            const canvas = document.getElementById('lineCanvas');
-            const section = document.getElementById('stepsSection');
-            const cards = document.querySelectorAll('.step-card');
-            const target = document.getElementById('heroTarget');
-            if (!canvas || !section || !target) return;
-            const sectionRect = section.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-            const targetX = (targetRect.left + targetRect.width / 2) - sectionRect.left;
-            const targetY = (targetRect.top + targetRect.height / 2) - sectionRect.top;
-            let svgContent = '';
-            cards.forEach(card => {
-                const cardRect = card.getBoundingClientRect();
-                const startX = (cardRect.left + cardRect.width / 2) - sectionRect.left;
-                const startY = cardRect.bottom - sectionRect.top;
-                svgContent += `<path class="connecting-line" d="M ${startX} ${startY} C ${startX} ${startY + 100}, ${targetX} ${targetY - 100}, ${targetX} ${targetY}" />`;
-            });
-            canvas.innerHTML = svgContent;
-        }
-
-        // SCROLL TRANSFORM
-        window.addEventListener('scroll', () => {
-            const section = document.getElementById('stepsSection');
-            const img = document.querySelector('#heroTarget img');
-            const leftText = document.getElementById('leftBgText');
-            const rightText = document.getElementById('rightBgText');
-            if (!section || !img) return;
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 0) {
-                let progress = Math.min(Math.max(Math.abs(rect.top) / 500, 0), 1);
-                img.style.transform = `scale(${2.5 - (progress * 1.5)})`;
-                leftText.style.transform = `translateX(${20 + (progress * -40)}%)`;
-                rightText.style.transform = `translateX(${-20 + (progress * 40)}%)`;
-            }
-        });
-        window.addEventListener('load', drawConnectingLines);
-        window.addEventListener('resize', drawConnectingLines);
-
-        // --- NEW VIDEO PING-PONG LOGIC ---
+        // Video Ping-Pong Logic (From previous request)
         const video = document.getElementById('heroVideo');
         let rewindInterval;
-
         if (video) {
-            // Ensure standard looping is disabled so we can control it manually
-            video.loop = false;
-
+            video.loop = false; 
             video.addEventListener('ended', function() {
-                // Clear any existing interval to be safe
                 clearInterval(rewindInterval);
-
-                // Start Rewind
                 rewindInterval = setInterval(function() {
-                    // Rewind speed: Decrement current time
-                    // 0.04s per 30ms tick is roughly ~1.3x speed reverse (smooth enough for background)
                     video.currentTime -= 0.04; 
-
-                    // If we reached the start (or close to it)
                     if (video.currentTime <= 0.1) {
                         clearInterval(rewindInterval);
                         video.currentTime = 0;
-                        video.play(); // Play forward again
+                        video.play();
                     }
-                }, 30); // 30ms update rate (~33fps)
+                }, 30);
             });
         }
+
+        // --- SCROLL ANIMATION LOGIC ---
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#pinContainer",
+                start: "top top",      // Start when top of container hits top of viewport
+                end: "+=1500",         // Scroll distance of 1500px to complete animation
+                scrub: 1,              // Smooth scrubbing (1 second catchup)
+                pin: true,             // Pin the container
+                anticipatePin: 1
+            }
+        });
+
+        // 1. Initial Title Moves Left & Fades Out
+        tl.to("#initial-title", {
+            x: "-40vw", // Move left
+            opacity: 0,
+            scale: 0.8,
+            duration: 2
+        }, "start");
+
+        // 2. Initial Subtitle Simply Fades Out
+        tl.to("#initial-subtitle", {
+            opacity: 0,
+            y: 20,
+            duration: 1
+        }, "start");
+
+        // 3. Move the Button from Center to Left (approximate position of final placeholder)
+        // We use x/y translation to move it visually to the left column
+        tl.to("#initial-btn", {
+            x: window.innerWidth < 1024 ? "-30vw" : "-28vw", // Adjust based on screen layout
+            y: window.innerWidth < 1024 ? "10vh" : "0",
+            duration: 2,
+            ease: "power2.inOut"
+        }, "start");
+
+        // 4. Reveal the "Final" Layout
+        // The container becomes interactable
+        tl.to(".hero-final", {
+            opacity: 1,
+            pointerEvents: "all",
+            duration: 2
+        }, "start+=0.5");
+
+        // 5. Slide in Right Content
+        tl.fromTo(".final-right", 
+            { x: 100, opacity: 0 },
+            { x: 0, opacity: 1, duration: 2 },
+            "start+=0.5"
+        );
+
     </script>
 </body>
 </html>
