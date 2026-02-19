@@ -104,7 +104,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 10;
+            z-index: 0;
             will-change: transform;
         }
         .video-bg { width: 100%; height: 100%; object-fit: cover; }
@@ -113,14 +113,14 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 11;
+            z-index: 1;
         }
 
         .hero-initial {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 20;
+            z-index: 10;
             width: 100%;
             max-width: 1000px;
             text-align: center;
@@ -130,7 +130,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 20;
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -142,7 +142,7 @@
             position: absolute;
             bottom: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 30;
+            z-index: 20;
             display: flex;
             align-items: flex-end; 
             justify-content: center;
@@ -150,51 +150,37 @@
             transform: translateY(100%); 
         }
 
-        /* --- SLOT MACHINE SECTION --- */
-        #investTitleWrapper {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 14; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            background: #ffffff; 
-            will-change: transform;
-        }
-
         #investTitleContainer {
-            position: relative;
+            position: absolute;
+            top: calc(18% + 30px); 
+            left: 0;
             width: 100%;
             height: 40vh; 
+            transform: translateY(-50%);
+            z-index: 14; 
+            pointer-events: none;
             overflow: hidden; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: translateY(-30vh); 
+            will-change: transform;
         }
         
         .bg-text-layer {
             position: absolute;
-            font-size: 11vw; 
+            top: 50%;
+            left: 50%;
+            font-size: 13vw; 
             color: #000000;
             font-weight: 500;
             white-space: nowrap;
             line-height: 1;
             margin: 0;
-            text-align: center;
-            will-change: transform, filter;
-            filter: blur(0px); 
         }
 
         .side-image {
             position: absolute;
-            top: 50%; 
-            transform: translateY(-50%); 
+            top: calc(50% + 50px); 
             width: 25vw; 
             max-width: 300px;
-            z-index: 15; 
+            z-index: 15;
             opacity: 0;
             will-change: transform, opacity;
         }
@@ -241,11 +227,20 @@
                 linear-gradient(110deg, transparent 20%, rgba(216, 180, 254, 0.1) 25%, transparent 35%, rgba(216, 180, 254, 0.05) 70%, transparent 80%),
                 radial-gradient(circle at 50% 50%, #2e1065 0%, #170535 50%, #000000 100%);
         }
+
+        /* --- TAB FADE ANIMATION --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
     </style>
 </head>
 <body>
 
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-transparent border-b border-transparent transition-all duration-300">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-black/10 backdrop-blur-md border-b border-white/10 transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain brightness-0 invert transition-all duration-300"> 
             
@@ -253,11 +248,11 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
 
-            <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-white uppercase">
-                <a href="personal.html" class="nav-link hover:text-gray-300 transition-all">Personal</a>
-                <a href="institution.html" class="nav-link hover:text-gray-300 transition-all">Institution</a>
-                <a href="about.html" class="nav-link hover:text-gray-300 transition-all">About</a>
-                <a href="contact.html" class="nav-link hover:text-gray-300 transition-all">Contact</a>
+            <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-gray-300 uppercase">
+                <a href="personal.html" class="nav-link hover:text-white transition-all">Personal</a>
+                <a href="institution.html" class="nav-link hover:text-white transition-all">Institution</a>
+                <a href="about.html" class="nav-link hover:text-white transition-all">About</a>
+                <a href="contact.html" class="nav-link hover:text-white transition-all">Contact</a>
             </div>
 
             <div class="hidden lg:block">
@@ -528,7 +523,7 @@
         </div>
     </section>
 
-    <section id="assetDeploymentSection" class="relative py-24 md:py-32 overflow-hidden bg-[url('images/Mint Background.jpg')] bg-cover bg-center">
+    <section id="assetDeploymentSection" class="relative py-24 md:py-32 overflow-hidden bg-cover bg-center" style="background-image: url('images/Mint%20Background.jpg');">
         <div class="absolute inset-0 bg-white/90 backdrop-blur-sm z-0"></div>
         
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -537,20 +532,20 @@
                 <div id="logoSphere" class="w-full h-full flex items-center justify-center"></div>
             </div>
 
-            <div class="flex flex-col justify-center h-full">
+            <div class="flex flex-col justify-center">
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-tight leading-tight mb-8">Precision Asset Deployment</h2>
                 
-                <div class="bg-white/60 backdrop-blur-md border border-white/40 p-8 md:p-10 rounded-3xl shadow-sm relative min-h-[350px] flex flex-col justify-between">
+                <div class="bg-white/60 backdrop-blur-md border border-white/40 p-8 md:p-10 rounded-3xl shadow-sm relative flex flex-col">
                     
-                    <div class="relative w-full flex-grow">
+                    <div class="w-full mb-8">
                         
-                        <div id="content-invest" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-100 pointer-events-auto">
+                        <div id="content-invest" class="tab-content block animate-fade-in">
                             <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
                                 Mint’s proprietary Open strategies allow for the seamless execution of sophisticated financial moves. By bundling high-performance assets into a singular, liquid format, we remove the friction of traditional trading. This is Wealth-as-a-Service—engineered to provide the essential nutrients your net worth needs to scale in any market condition.
                             </p>
                         </div>
 
-                        <div id="content-news" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-0 pointer-events-none">
+                        <div id="content-news" class="tab-content hidden">
                             <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed mb-4">
                                 Stay ahead of market volatility with Daily Intelligence Briefings. We distill complex global events—from shifting interest rates to geopolitical movements—into actionable insights. Understand exactly how the world’s headlines influence your portfolio’s performance, empowering you to make informed decisions with professional-grade clarity.
                             </p>
@@ -559,14 +554,14 @@
                             </p>
                         </div>
 
-                        <div id="content-goals" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-0 pointer-events-none">
+                        <div id="content-goals" class="tab-content hidden">
                             <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
                                 Wealth creation is more than just numbers—it’s about the milestones that matter. With Mint, you can deploy Objective-Based Portfolios tailored to your unique timeline. Whether you're targeting a specific asset today or mapping out a long-term legacy, our flexible goal-setting tools allow you to track progress in real-time, adjust your strategy at any phase, and align every investment with your personal vision.
                             </p>
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-3 mt-12 pt-6 border-t border-gray-200/60">
+                    <div class="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-200/60 mt-auto">
                         <button onclick="switchTab('invest')" id="tab-invest" class="tab-btn px-6 py-2.5 rounded-full border border-black bg-black text-white text-sm font-medium transition-all duration-300 shadow-md">Invest</button>
                         <button onclick="switchTab('news')" id="tab-news" class="tab-btn px-6 py-2.5 rounded-full border border-gray-400 bg-white/50 backdrop-blur-sm text-gray-700 hover:border-black text-sm font-medium transition-all duration-300">News</button>
                         <button onclick="switchTab('goals')" id="tab-goals" class="tab-btn px-6 py-2.5 rounded-full border border-gray-400 bg-white/50 backdrop-blur-sm text-gray-700 hover:border-black text-sm font-medium transition-all duration-300">Goals</button>
@@ -595,17 +590,19 @@
 
     <script>
         function switchTab(tabId) {
-            // Hide all tab contents
+            // Hide all tab contents and remove animation class
             document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.remove('opacity-100', 'pointer-events-auto');
-                el.classList.add('opacity-0', 'pointer-events-none');
+                el.classList.add('hidden');
+                el.classList.remove('block', 'animate-fade-in');
             });
             
-            // Show the active tab content
+            // Show the active tab content and add the fade-in animation
             const activeContent = document.getElementById('content-' + tabId);
             if(activeContent) {
-                activeContent.classList.remove('opacity-0', 'pointer-events-none');
-                activeContent.classList.add('opacity-100', 'pointer-events-auto');
+                activeContent.classList.remove('hidden');
+                // Trigger reflow to restart animation
+                void activeContent.offsetWidth; 
+                activeContent.classList.add('block', 'animate-fade-in');
             }
 
             // Reset all pill buttons to inactive state (glass outline)
