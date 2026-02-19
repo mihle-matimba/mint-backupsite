@@ -128,21 +128,17 @@
             transform: translateY(100%); 
         }
 
-        /* New Invest Title */
+        /* Invest Icon Image */
         #investTitle {
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Centered but offset slightly up so text center aligns with visual center */
             transform: translate(-50%, -50%); 
-            font-size: 15vw;
-            font-weight: 900;
-            /* Faint purple to be visible on WHITE background */
-            color: rgba(92, 59, 207, 0.08); 
+            width: 40vw;
+            max-width: 500px;
+            opacity: 0.08; /* Faint to be visible on WHITE background without overwhelming */
             z-index: 5; /* Above background, behind images (20) */
             pointer-events: none;
-            letter-spacing: -0.05em;
-            white-space: nowrap;
             will-change: transform;
         }
 
@@ -196,6 +192,14 @@
         }
         .feature-card:hover { transform: translateY(-8px); }
         @keyframes miniFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* Floating Rocks Animation */
+        .floating-rock-1 { animation: floatRock 4s ease-in-out infinite; }
+        .floating-rock-2 { animation: floatRock 5s ease-in-out infinite reverse; }
+        @keyframes floatRock {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
 
         /* Card Internals */
         .invest-visual { position: relative; display: flex; justify-content: center; align-items: center; height: 240px; }
@@ -355,7 +359,7 @@
             </div>
         </div>
 
-        <div id="investTitle">INVEST</div>
+        <img id="investTitle" src="images/ICON MINT.png" alt="MINT">
 
         <div class="hero-image-slide">
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
@@ -370,6 +374,19 @@
         </div>
 
     </div>
+
+    <section class="bg-black py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="hidden lg:block"></div>
+            <div class="flex justify-center lg:justify-end">
+                <div class="relative w-full max-w-md">
+                    <img src="images/Section rocks phone.png" alt="Phone on Rocks" class="relative z-10 w-full object-contain">
+                    <img src="images/rock.png" alt="Rock" class="absolute -top-10 -right-10 w-24 md:w-32 z-20 floating-rock-1">
+                    <img src="images/rock.png" alt="Rock" class="absolute -bottom-10 -left-10 w-24 md:w-32 z-20 floating-rock-2">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="solution-section">
         <div class="hidden md:flex floating-asset top-20 left-[10%] asset-blob w-32 h-20 items-center justify-center"><img src="https://img.freepik.com/free-photo/medium-shot-woman-working-as-lawyer_23-2151202451.jpg" alt="Savings" class="w-full h-full object-cover" /></div>
@@ -576,7 +593,7 @@
             ease: "power2.inOut"
         }, "<");
         
-        // "INVEST" SLIDES IN WITH WHITE SCREEN
+        // ICON SLIDES IN WITH WHITE SCREEN
         // Start from below screen (y: 100vh) and slide to center (y: -50% is visual center)
         // This mirrors the movement of the video swiping up
         tl.fromTo("#investTitle", 
