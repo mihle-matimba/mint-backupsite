@@ -152,7 +152,7 @@
         /* Background Text Container behind Phones */
         #investTitleContainer {
             position: absolute;
-            top: 18%; /* Raised higher so mostly visible, only ~15% at bottom hits behind center phone */
+            top: calc(18% + 30px); /* Lowered by 30px as requested */
             left: 0;
             width: 100%;
             height: 35vh; /* Bounding box for reel effect */
@@ -178,7 +178,9 @@
         /* 4th State (Side Images) */
         .side-image {
             position: absolute;
+            /* Lowered by 50px */
             top: calc(50% + 50px); 
+            /* Restored Original Sizes */
             width: 25vw; 
             max-width: 300px;
             z-index: 15;
@@ -201,6 +203,7 @@
         @keyframes shimmer { to { background-position: -250% center; } }
 
 
+        /* --- SECTIONS BELOW --- */
         /* Floating Rocks Animation */
         .floating-rock-1 { animation: floatRock 4s ease-in-out infinite; }
         .floating-rock-2 { animation: floatRock 5s ease-in-out infinite reverse; }
@@ -208,10 +211,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
-
-        /* Hide scrollbar */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .connecting-line { fill: none; stroke: #5c3bcf; stroke-width: 1.5; stroke-dasharray: 6; opacity: 0.2; animation: linePulse 3s ease-in-out infinite; }
         @keyframes linePulse { 0%, 100% { opacity: 0.1; stroke-dashoffset: 24; } 50% { opacity: 0.4; stroke-dashoffset: 0; } }
@@ -341,10 +340,10 @@
         </div>
 
         <div id="investTitleContainer">
-            <div class="bg-text-layer txt-feat tracking-tight">Features</div>
-            <div class="bg-text-layer txt-inv tracking-tight">Invest</div>
-            <div class="bg-text-layer txt-bor tracking-tight">Borrow</div>
-            <div class="bg-text-layer txt-trans tracking-tight">Transact</div>
+            <div class="bg-text-layer txt-feat tracking-tight opacity-100">Features</div>
+            <div class="bg-text-layer txt-inv tracking-tight opacity-0">Invest</div>
+            <div class="bg-text-layer txt-bor tracking-tight opacity-0">Borrow</div>
+            <div class="bg-text-layer txt-trans tracking-tight opacity-0">Transact</div>
         </div>
 
         <div class="hero-image-slide">
@@ -413,45 +412,45 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-[#899c92] text-white shadow-sm hover:-translate-y-2 transition-transform duration-300">
+                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-[var(--mint-dark-purple)] text-white shadow-sm hover:-translate-y-2 transition-transform duration-300">
                     <div>
                         <h3 class="text-3xl font-medium mb-4 leading-tight">Institutional-grade<br>strategies</h3>
-                        <p class="text-white/90 font-light text-sm">Access diverse portfolios designed for sustained growth and risk management.</p>
+                        <p class="text-white/80 font-light text-sm">Access diverse portfolios designed for sustained growth and risk management.</p>
                     </div>
                     <div class="mt-8 flex items-center gap-4">
                         <div class="flex -space-x-3">
-                            <img src="https://i.pravatar.cc/100?u=4" class="w-10 h-10 rounded-full border-2 border-[#899c92]">
-                            <img src="https://i.pravatar.cc/100?u=5" class="w-10 h-10 rounded-full border-2 border-[#899c92]">
-                            <img src="https://i.pravatar.cc/100?u=6" class="w-10 h-10 rounded-full border-2 border-[#899c92]">
+                            <img src="https://i.pravatar.cc/100?u=4" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
+                            <img src="https://i.pravatar.cc/100?u=5" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
+                            <img src="https://i.pravatar.cc/100?u=6" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
                         </div>
                         <div>
                             <div class="font-bold text-sm">2.4k+</div>
-                            <div class="text-xs text-white/80">Active Investors</div>
+                            <div class="text-xs text-white/70">Active Investors</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-[#f1ebd9] text-black shadow-sm hover:-translate-y-2 transition-transform duration-300">
+                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-[#f5f2ff] text-black shadow-sm hover:-translate-y-2 transition-transform duration-300">
                     <div>
                         <div class="flex items-center justify-between mb-4">
-                            <div class="bg-white/60 p-2.5 rounded-xl">
-                                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            <div class="bg-white p-2.5 rounded-xl shadow-sm">
+                                <svg class="w-5 h-5 text-[var(--mint-primary-purple)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                             </div>
                             <div class="text-3xl font-medium tracking-tight">R 1.25M</div>
                         </div>
                         <p class="text-sm font-medium text-gray-500 mb-8">Portfolio Value</p>
                     </div>
                     <div class="mt-auto h-32 flex items-end gap-[6px]">
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[30%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[40%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[35%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[60%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[50%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[75%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[65%]"></div>
-                        <div class="w-full bg-[#d6ccb5] rounded-t-sm h-[90%]"></div>
-                        <div class="w-full bg-white rounded-t-sm h-[80%]"></div>
-                        <div class="w-full bg-white rounded-t-sm h-[85%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[30%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[40%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[35%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[60%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[50%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[75%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[65%]"></div>
+                        <div class="w-full bg-purple-200 rounded-t-sm h-[90%]"></div>
+                        <div class="w-full bg-[var(--mint-primary-purple)] rounded-t-sm h-[80%]"></div>
+                        <div class="w-full bg-[var(--mint-primary-purple)] rounded-t-sm h-[85%]"></div>
                     </div>
                 </div>
 
