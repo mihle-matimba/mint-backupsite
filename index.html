@@ -289,6 +289,7 @@
         <div class="video-bg-container">
             <video id="heroVideo" autoplay muted playsinline class="video-bg">
                 <source src="videos/HeroBG.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
             <div class="hero-overlay"></div>
         </div>
@@ -376,17 +377,17 @@
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[10%]">
+        <div id="investLeft" class="side-image left-[15%] -translate-x-[200%]">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[10%]">
+        <div id="investRight" class="side-image right-[15%] translate-x-[200%]">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
     </div>
 
-    <section id="blackSection" class="bg-black py-24 md:py-32 relative overflow-hidden z-20">
+    <section id="blackSection" class="bg-black py-24 md:py-32 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             
             <div class="flex flex-col justify-center h-full relative z-30">
@@ -536,39 +537,41 @@
                 <div id="logoSphere" class="w-full h-full flex items-center justify-center"></div>
             </div>
 
-            <div class="flex flex-col justify-center">
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-tight leading-tight mb-6">Precision Asset Deployment</h2>
-                <p class="text-gray-600 text-lg font-light leading-relaxed mb-10">
-                    Mint’s proprietary Open strategies allow for the seamless execution of sophisticated financial moves. By bundling high-performance assets into a singular, liquid format, we remove the friction of traditional trading. This is Wealth-as-a-Service—engineered to provide the essential nutrients your net worth needs to scale in any market condition.
-                </p>
+            <div class="flex flex-col justify-center h-full">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-tight leading-tight mb-8">Precision Asset Deployment</h2>
                 
-                <div class="space-y-6">
-                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
-                            Invest
-                        </h4>
-                        <p class="text-sm text-gray-600 leading-relaxed font-light">
-                            Stay ahead of market volatility with Daily Intelligence Briefings. We distill complex global events—from shifting interest rates to geopolitical movements—into actionable insights. Understand exactly how the world’s headlines influence your portfolio’s performance, empowering you to make informed decisions with professional-grade clarity.
-                        </p>
+                <div class="bg-white/60 backdrop-blur-md border border-white/40 p-8 md:p-10 rounded-3xl shadow-sm relative min-h-[350px] flex flex-col justify-between">
+                    
+                    <div class="relative w-full flex-grow">
+                        
+                        <div id="content-invest" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-100 pointer-events-auto">
+                            <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
+                                Mint’s proprietary Open strategies allow for the seamless execution of sophisticated financial moves. By bundling high-performance assets into a singular, liquid format, we remove the friction of traditional trading. This is Wealth-as-a-Service—engineered to provide the essential nutrients your net worth needs to scale in any market condition.
+                            </p>
+                        </div>
+
+                        <div id="content-news" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-0 pointer-events-none">
+                            <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed mb-4">
+                                Stay ahead of market volatility with Daily Intelligence Briefings. We distill complex global events—from shifting interest rates to geopolitical movements—into actionable insights. Understand exactly how the world’s headlines influence your portfolio’s performance, empowering you to make informed decisions with professional-grade clarity.
+                            </p>
+                            <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
+                                Receive real-time updates and deep dives into the sectors that matter most to your bottom line. We filter out the noise, delivering highly relevant financial news straight to your dashboard.
+                            </p>
+                        </div>
+
+                        <div id="content-goals" class="tab-content absolute top-0 left-0 w-full transition-opacity duration-500 opacity-0 pointer-events-none">
+                            <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
+                                Wealth creation is more than just numbers—it’s about the milestones that matter. With Mint, you can deploy Objective-Based Portfolios tailored to your unique timeline. Whether you're targeting a specific asset today or mapping out a long-term legacy, our flexible goal-setting tools allow you to track progress in real-time, adjust your strategy at any phase, and align every investment with your personal vision.
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
-                            News
-                        </h4>
-                        <p class="text-sm text-gray-600 leading-relaxed font-light">
-                            Receive real-time updates and deep dives into the sectors that matter most to your bottom line. We filter out the noise, delivering highly relevant financial news straight to your dashboard.
-                        </p>
+                    <div class="flex flex-wrap items-center gap-3 mt-12 pt-6 border-t border-gray-200/60">
+                        <button onclick="switchTab('invest')" id="tab-invest" class="tab-btn px-6 py-2.5 rounded-full border border-black bg-black text-white text-sm font-medium transition-all duration-300 shadow-md">Invest</button>
+                        <button onclick="switchTab('news')" id="tab-news" class="tab-btn px-6 py-2.5 rounded-full border border-gray-400 bg-white/50 backdrop-blur-sm text-gray-700 hover:border-black text-sm font-medium transition-all duration-300">News</button>
+                        <button onclick="switchTab('goals')" id="tab-goals" class="tab-btn px-6 py-2.5 rounded-full border border-gray-400 bg-white/50 backdrop-blur-sm text-gray-700 hover:border-black text-sm font-medium transition-all duration-300">Goals</button>
                     </div>
 
-                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
-                            Goals
-                        </h4>
-                        <p class="text-sm text-gray-600 leading-relaxed font-light">
-                            Wealth creation is more than just numbers—it’s about the milestones that matter. With Mint, you can deploy Objective-Based Portfolios tailored to your unique timeline. Whether you're targeting a specific asset today or mapping out a long-term legacy, our flexible goal-setting tools allow you to track progress in real-time, adjust your strategy at any phase, and align every investment with your personal vision.
-                        </p>
-                    </div>
                 </div>
             </div>
 
@@ -589,6 +592,36 @@
             <div class="border-t border-gray-800 pt-10"><p class="text-[10px] text-gray-500 mb-8 opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). All investment activity carries risk.</p><p class="text-xs text-gray-500">&copy; 2026 MINT. All rights reserved.</p></div>
         </div>
     </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('opacity-100', 'pointer-events-auto');
+                el.classList.add('opacity-0', 'pointer-events-none');
+            });
+            
+            // Show the active tab content
+            const activeContent = document.getElementById('content-' + tabId);
+            if(activeContent) {
+                activeContent.classList.remove('opacity-0', 'pointer-events-none');
+                activeContent.classList.add('opacity-100', 'pointer-events-auto');
+            }
+
+            // Reset all pill buttons to inactive state (glass outline)
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-black', 'bg-black', 'text-white', 'shadow-md');
+                btn.classList.add('border-gray-400', 'bg-white/50', 'text-gray-700');
+            });
+
+            // Set active pill button to filled state
+            const activeBtn = document.getElementById('tab-' + tabId);
+            if(activeBtn) {
+                activeBtn.classList.remove('border-gray-400', 'bg-white/50', 'text-gray-700');
+                activeBtn.classList.add('border-black', 'bg-black', 'text-white', 'shadow-md');
+            }
+        }
+    </script>
 
     <script>
         // --- HEADER SCROLL HIDE LOGIC ---
@@ -631,13 +664,8 @@
         // --- GSAP ANIMATION LOGIC ---
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
-        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
-
-        gsap.set("#investTitleWrapper", { y: window.innerHeight });
-
-        gsap.set("#investLeft", { xPercent: -150 });
-        gsap.set("#investRight", { xPercent: 150 });
+        gsap.set(".bg-text-layer", { xPercent: -50, yPercent: -50 });
+        gsap.set(".txt-inv, .txt-bor, .txt-trans", { yPercent: 150 });
 
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -650,6 +678,8 @@
             }
         });
 
+        gsap.set("#investTitleWrapper", { yPercent: -50 });
+
         tl.to(".hero-initial", { y: -100, opacity: 0, duration: 1 }, "start");
 
         tl.to(".hero-final", { opacity: 1, pointerEvents: "all", duration: 0.1 }, "start+=0.5");
@@ -659,29 +689,30 @@
         tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "+=0.5"); 
         tl.to(".hero-final", { opacity: 0.3, duration: 2 }, "<+=0.5");
 
-        tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
-        tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
+        tl.to(".video-bg-container", {
+            y: "-100%",
+            duration: 3,
+            ease: "power2.inOut",
+            onUpdate: function() {
+                const header = document.getElementById('main-header');
+                if (this.progress() > 0.5) {
+                    header.classList.add('header-dark');
+                } else {
+                    header.classList.remove('header-dark');
+                }
+            }
+        }, "+=0.5");
+
+        tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "<");
         
-        tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
-        
-        tl.to("#main-header", {
-            onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
-            onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
-            duration: 0.1
-        }, "reveal+=1.5");
+        tl.fromTo("#investTitleWrapper", { y: window.innerHeight }, { y: 0, duration: 3, ease: "power2.inOut" }, "<");
 
-        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
-        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
+        tl.to("#investLeft", { x: "0%", opacity: 1, duration: 3, ease: "power3.out" }, "<");
+        tl.to("#investRight", { x: "0%", opacity: 1, duration: 3, ease: "power3.out" }, "<");
 
-        tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
-        tl.to(".txt-inv", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
-
-        tl.to(".txt-inv", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
-        tl.to(".txt-bor", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
-
-        tl.to(".txt-bor", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
-        tl.to(".txt-trans", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
-
+        tl.to(".txt-feat", { yPercent: -100, duration: 1 }, "+=0.5").to(".txt-inv", { yPercent: 0, duration: 1 }, "<");
+        tl.to(".txt-inv", { yPercent: -100, duration: 1 }, "+=1").to(".txt-bor", { yPercent: 0, duration: 1 }, "<");
+        tl.to(".txt-bor", { yPercent: -100, duration: 1 }, "+=1").to(".txt-trans", { yPercent: 0, duration: 1 }, "<");
         tl.to({}, { duration: 1.5 });
 
         const mainHeader = document.getElementById('main-header');
@@ -690,25 +721,16 @@
             trigger: "#blackSection",
             start: "top 80",
             end: "bottom 80",
-            onEnter: () => {
-                mainHeader.classList.remove('header-dark');
-                mainHeader.classList.remove('header-hero-dark-text');
-            },
+            onEnter: () => mainHeader.classList.remove('header-dark'),
             onLeave: () => mainHeader.classList.add('header-dark'),
-            onEnterBack: () => {
-                mainHeader.classList.remove('header-dark');
-                mainHeader.classList.remove('header-hero-dark-text');
-            },
-            onLeaveBack: () => mainHeader.classList.add('header-hero-dark-text')
+            onEnterBack: () => mainHeader.classList.remove('header-dark'),
+            onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
 
         ScrollTrigger.create({
             trigger: "#main-footer",
             start: "top 80",
-            onEnter: () => {
-                mainHeader.classList.remove('header-dark');
-                mainHeader.classList.remove('header-hero-dark-text');
-            },
+            onEnter: () => mainHeader.classList.remove('header-dark'),
             onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
 
@@ -753,13 +775,11 @@
     <script type="text/babel">
         const { useEffect, useRef, useState } = React;
 
-        // --- Supabase Setup ---
         const SUPABASE_URL = "https://aazofjsssobejhkyyiqv.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhem9manNzc29iZWpoa3l5aXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxMTI1NDUsImV4cCI6MjA3MzY4ODU0NX0.guYlxaV5RwTlTVFoUhpER0KWEIGPay8svLsxMwyRUyM";
         const supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const TRADING_LOGOS_KEY = "ah_trading_universe_logos";
 
-        // --- Fallback Data ---
         const defaultSphereImages = [
             { id: "apple", src: "https://logo.clearbit.com/apple.com" },
             { id: "microsoft", src: "https://logo.clearbit.com/microsoft.com" },
@@ -791,7 +811,6 @@
             { id: "mastercard", src: "https://logo.clearbit.com/mastercard.com" },
         ];
 
-        // --- Data Fetching Logic ---
         const normalizeLogos = (rows) => {
             const seen = new Set();
             return rows
@@ -845,7 +864,6 @@
             return logos.length ? logos : defaultSphereImages;
         }
 
-        // --- Core Sphere Component ---
         const Sphere = ({ images, size = 760 }) => {
             const [rot, setRot] = useState({ x: 15, y: 0 });
             const [vel, setVel] = useState({ x: 0, y: 0 });
@@ -856,7 +874,6 @@
             const radius = size * 0.45;
             const baseSize = size * 0.14;
 
-            // Generate points on a sphere using Fibonacci lattice
             useEffect(() => {
                 const pts = [];
                 const count = images.length;
@@ -875,7 +892,6 @@
                 setPoints(pts);
             }, [images.length, radius]);
 
-            // Handle continuous rotation & momentum
             useEffect(() => {
                 let id;
                 const loop = () => {
@@ -892,7 +908,6 @@
                 return () => cancelAnimationFrame(id);
             }, [dragging, vel.x, vel.y]);
 
-            // Interaction handlers
             const start = (e) => {
                 setDragging(true);
                 setVel({ x: 0, y: 0 });
@@ -918,18 +933,15 @@
 
             const end = () => setDragging(false);
 
-            // 3D to 2D Projection
             const project = (p) => {
                 let { x, y, z } = p;
                 const rx = (rot.x * Math.PI) / 180;
                 const ry = (rot.y * Math.PI) / 180;
 
-                // Rotate Y
                 const tx = x * Math.cos(ry) + z * Math.sin(ry);
                 z = -x * Math.sin(ry) + z * Math.cos(ry);
                 x = tx;
 
-                // Rotate X
                 const ty = y * Math.cos(rx) - z * Math.sin(rx);
                 z = y * Math.sin(rx) + z * Math.cos(rx);
                 y = ty;
@@ -958,7 +970,6 @@
                     onTouchMove={move}
                     onTouchEnd={end}
                 >
-                    {/* Dark Metallic Purple Ominous Globe */}
                     <div
                         className="metallic-base absolute top-1/2 left-1/2 rounded-full pointer-events-none overflow-hidden shadow-2xl"
                         style={{
@@ -968,7 +979,6 @@
                             zIndex: 1000,
                         }}
                     >
-                        {/* Embedded SVG Longitude & Latitude Wireframe */}
                         <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-60">
                             <defs>
                                 <clipPath id="globe-clip">
@@ -976,15 +986,12 @@
                                 </clipPath>
                             </defs>
                             <g clipPath="url(#globe-clip)" stroke="rgba(168, 85, 247, 0.4)" strokeWidth="0.5" fill="none">
-                                {/* Tilted orthographic projection */}
                                 <g transform="rotate(15 50 50)">
-                                    {/* Longitudes (Orthographic sine distribution) */}
                                     <line x1="50" y1="0" x2="50" y2="100" />
                                     <ellipse cx="50" cy="50" rx="17" ry="50" />
                                     <ellipse cx="50" cy="50" rx="32" ry="50" />
                                     <ellipse cx="50" cy="50" rx="43" ry="50" />
                                     
-                                    {/* Latitudes (Orthographic sine offsets from center) */}
                                     <line x1="0" y1="50" x2="100" y2="50" />
                                     <line x1="0" y1="33" x2="100" y2="33" />
                                     <line x1="0" y1="67" x2="100" y2="67" />
@@ -997,7 +1004,6 @@
                             <circle cx="50" cy="50" r="49.5" fill="none" stroke="rgba(168, 85, 247, 0.4)" strokeWidth="0.8"/>
                         </svg>
 
-                        {/* Top-layer pulse and shading to push the wireframe into the shadows */}
                         <div className="planet-overlay absolute inset-0 rounded-full" />
                     </div>
 
@@ -1017,11 +1023,9 @@
                                     top: size / 2 + proj.y,
                                     transform: "translate(-50%, -50%)",
                                     opacity: proj.opacity,
-                                    // +1000 layers seamlessly with the globe
                                     zIndex: 1000 + proj.zIndex, 
                                 }}
                             >
-                                {/* Rounded Clipping Mask Container */}
                                 <div className="w-full h-full rounded-full overflow-hidden shadow-2xl bg-white border border-slate-200 flex items-center justify-center">
                                     <img
                                         src={images[i].src}
@@ -1038,7 +1042,6 @@
             );
         };
 
-        // --- Responsive Wrapper ---
         const getSphereSize = () => {
             const width = window.innerWidth;
             if (width >= 1280) return 600; 
@@ -1070,7 +1073,6 @@
             return <Sphere images={images} size={size} />;
         };
 
-        // --- Render App ---
         const mountNode = document.getElementById('logoSphere');
         if (mountNode) {
             ReactDOM.createRoot(mountNode).render(<SphereWrapper />);
