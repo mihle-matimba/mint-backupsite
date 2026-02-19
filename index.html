@@ -134,8 +134,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%); 
-            width: 40vw;
-            max-width: 500px;
+            width: 80vw; /* Increased size */
+            max-width: 1000px; /* Increased max size */
             opacity: 0.08; /* Faint to be visible on WHITE background without overwhelming */
             z-index: 5; /* Above background, behind images (20) */
             pointer-events: none;
@@ -200,6 +200,10 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
+
+        /* Hide scrollbar for the carousel */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Card Internals */
         .invest-visual { position: relative; display: flex; justify-content: center; align-items: center; height: 240px; }
@@ -376,15 +380,51 @@
     </div>
 
     <section class="bg-black py-24 md:py-32 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div class="hidden lg:block"></div>
-            <div class="flex justify-center lg:justify-end">
-                <div class="relative w-full max-w-md">
-                    <img src="images/Section rocks phone.png" alt="Phone on Rocks" class="relative z-10 w-full object-contain">
-                    <img src="images/rock.png" alt="Rock" class="absolute -top-10 -right-10 w-24 md:w-32 z-20 floating-rock-1">
-                    <img src="images/rock.png" alt="Rock" class="absolute -bottom-10 -left-10 w-24 md:w-32 z-20 floating-rock-2">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            
+            <div class="flex flex-col justify-center h-full">
+                <div class="w-full relative">
+                    <div id="blackSectionCarousel" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-10 scroll-smooth">
+                        
+                        <div class="min-w-full snap-start flex flex-col justify-center shrink-0">
+                            <h3 class="text-white text-5xl md:text-6xl font-semibold mb-6 tracking-tight">Invest</h3>
+                            <p class="text-[#a1a1a6] text-xl md:text-2xl font-medium leading-relaxed max-w-lg">
+                                Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.
+                            </p>
+                        </div>
+                        
+                        <div class="min-w-full snap-start flex flex-col justify-center shrink-0">
+                            <h3 class="text-white text-5xl md:text-6xl font-semibold mb-6 tracking-tight">Borrow</h3>
+                            <p class="text-[#a1a1a6] text-xl md:text-2xl font-medium leading-relaxed max-w-lg">
+                                Users can access structured credit solutions, including the ability to unlock value against their investments.
+                            </p>
+                        </div>
+                        
+                        <div class="min-w-full snap-start flex flex-col justify-center shrink-0">
+                            <h3 class="text-white text-5xl md:text-6xl font-semibold mb-6 tracking-tight">Transact</h3>
+                            <p class="text-[#a1a1a6] text-xl md:text-2xl font-medium leading-relaxed max-w-lg">
+                                The future of money movement. MINT is building innovative payment and transaction capabilities designed for real-time financial flow.
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    <div class="flex gap-3 mt-12">
+                        <div class="carousel-dot w-2.5 h-2.5 rounded-full bg-white opacity-100 transition-opacity duration-300"></div>
+                        <div class="carousel-dot w-2.5 h-2.5 rounded-full bg-white opacity-30 transition-opacity duration-300"></div>
+                        <div class="carousel-dot w-2.5 h-2.5 rounded-full bg-white opacity-30 transition-opacity duration-300"></div>
+                    </div>
                 </div>
             </div>
+
+            <div class="flex justify-center lg:justify-end mt-12 lg:mt-0">
+                <div class="relative w-full max-w-md">
+                    <img src="images/Section rocks phone.png" alt="Phone on Rocks" class="relative z-10 w-full object-contain">
+                    <img src="images/rock.png" alt="Rock" class="absolute top-0 -right-2 w-24 md:w-32 z-20 floating-rock-1">
+                    <img src="images/rock.png" alt="Rock" class="absolute bottom-0 -left-2 w-24 md:w-32 z-20 floating-rock-2">
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -663,6 +703,19 @@
         });
         window.addEventListener('load', drawConnectingLines);
         window.addEventListener('resize', drawConnectingLines);
+
+        // --- BLACK SECTION CAROUSEL LOGIC ---
+        const blackCarousel = document.getElementById('blackSectionCarousel');
+        const blackDots = document.querySelectorAll('.carousel-dot');
+        if (blackCarousel && blackDots.length > 0) {
+            blackCarousel.addEventListener('scroll', () => {
+                // Calculate which item is currently centered
+                const index = Math.round(blackCarousel.scrollLeft / blackCarousel.offsetWidth);
+                blackDots.forEach((dot, i) => {
+                    dot.style.opacity = i === index ? '1' : '0.3';
+                });
+            });
+        }
     </script>
 </body>
 </html>
