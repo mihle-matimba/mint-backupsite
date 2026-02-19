@@ -31,7 +31,7 @@
         /* --- HEADER AUTO-HIDE & THEME --- */
         #main-header.header-hidden { transform: translateY(-100%); }
         
-        /* Dark theme (used when over white backgrounds) */
+        /* Dark theme (used for non-hero sections) */
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.9);
             border-bottom-color: rgba(0, 0, 0, 0.05);
@@ -41,6 +41,17 @@
         #main-header.header-dark .nav-link:hover { color: #000000; }
         #main-header.header-dark #mobile-menu-btn { color: #000000; }
         #main-header.header-dark .logo-img { filter: brightness(0) !important; }
+
+        /* --- HERO SPECIFIC: Transparent background, Dark text --- */
+        #main-header.header-hero-dark-text {
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            border-color: transparent !important;
+        }
+        #main-header.header-hero-dark-text .nav-link { color: #4b5563; }
+        #main-header.header-hero-dark-text .nav-link:hover { color: #000000; }
+        #main-header.header-hero-dark-text #mobile-menu-btn { color: #000000; }
+        #main-header.header-hero-dark-text .logo-img { filter: brightness(0) !important; }
 
         /* --- CTA BUTTON STYLE --- */
         .mint-cta-btn {
@@ -133,7 +144,7 @@
             align-items: flex-end; 
             justify-content: center;
             pointer-events: none;
-            transform: translateY(10%); 
+            transform: translateY(100%); 
         }
 
         /* --- SLOT MACHINE SECTION --- */
@@ -141,24 +152,25 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 14; /* Stays behind images (15) */
+            z-index: 14; 
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: none;
-            background: #ffffff; /* White screen reveal */
+            background: #ffffff; 
             will-change: transform;
         }
 
         #investTitleContainer {
             position: relative;
             width: 100%;
-            height: 40vh; /* Limits viewable area */
+            height: 40vh; 
             overflow: hidden; 
             display: flex;
             align-items: center;
             justify-content: center;
-            transform: translateY(-50px); /* Raised position by 50px */
+            /* Pushes the active slot text up above the 75vh phone image */
+            transform: translateY(-30vh); 
         }
         
         .bg-text-layer {
@@ -171,16 +183,16 @@
             margin: 0;
             text-align: center;
             will-change: transform, filter;
-            filter: blur(0px); /* Hardware acceleration prep for blur */
+            filter: blur(0px); 
         }
 
         .side-image {
             position: absolute;
             top: 50%; 
-            transform: translateY(-50%); /* Locks exactly to center vertically */
+            transform: translateY(-50%); 
             width: 25vw; 
             max-width: 300px;
-            z-index: 15; /* Sits over the text */
+            z-index: 15; 
             opacity: 0;
             will-change: transform, opacity;
         }
@@ -551,14 +563,11 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // INITIAL POSITIONS FOR THE SLIDE REEL & IMAGES
-        // Hide upcoming words below and blur them
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
-        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); // "Features" starts visible and clear
+        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
 
-        // Setup the white container beneath the viewport initially
         gsap.set("#investTitleWrapper", { y: window.innerHeight });
 
-        // Move side images way off-screen
         gsap.set("#investLeft", { xPercent: -150 });
         gsap.set("#investRight", { xPercent: 150 });
 
@@ -589,27 +598,27 @@
         tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // WHITE SCREEN REVEAL - Slides up right behind the video
+        // WHITE SCREEN REVEAL
         tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // Turn Header Dark when the white screen covers the background
-        tl.add(() => { document.getElementById('main-header').classList.add('header-dark'); }, "reveal+=1.5");
+        // Change text to dark but KEEP transparent background when white screen reveals
+        tl.to("#main-header", {
+            onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
+            onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
+            duration: 0.1
+        }, "reveal+=1.5");
 
-        // Side images slide in exactly onto the white screen
         tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
         tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
 
 
         // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
-        // Swap 1: Features -> Invest
         tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
         tl.to(".txt-inv", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        // Swap 2: Invest -> Borrow
         tl.to(".txt-inv", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
         tl.to(".txt-bor", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        // Swap 3: Borrow -> Transact
         tl.to(".txt-bor", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
         tl.to(".txt-trans", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
@@ -623,16 +632,25 @@
             trigger: "#blackSection",
             start: "top 80",
             end: "bottom 80",
-            onEnter: () => mainHeader.classList.remove('header-dark'),
+            onEnter: () => {
+                mainHeader.classList.remove('header-dark');
+                mainHeader.classList.remove('header-hero-dark-text');
+            },
             onLeave: () => mainHeader.classList.add('header-dark'),
-            onEnterBack: () => mainHeader.classList.remove('header-dark'),
-            onLeaveBack: () => mainHeader.classList.add('header-dark')
+            onEnterBack: () => {
+                mainHeader.classList.remove('header-dark');
+                mainHeader.classList.remove('header-hero-dark-text');
+            },
+            onLeaveBack: () => mainHeader.classList.add('header-hero-dark-text')
         });
 
         ScrollTrigger.create({
             trigger: "#main-footer",
             start: "top 80",
-            onEnter: () => mainHeader.classList.remove('header-dark'),
+            onEnter: () => {
+                mainHeader.classList.remove('header-dark');
+                mainHeader.classList.remove('header-hero-dark-text');
+            },
             onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
 
