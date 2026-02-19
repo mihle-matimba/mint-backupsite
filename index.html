@@ -29,25 +29,15 @@
         }
 
         /* --- HEADER AUTO-HIDE & THEME --- */
-        #main-header.header-hidden {
-            transform: translateY(-100%);
-        }
+        #main-header.header-hidden { transform: translateY(-100%); }
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.9);
             border-bottom-color: rgba(0, 0, 0, 0.05);
         }
-        #main-header.header-dark .nav-link {
-            color: #4b5563; /* Tailwind gray-600 */
-        }
-        #main-header.header-dark .nav-link:hover {
-            color: #000000;
-        }
-        #main-header.header-dark #mobile-menu-btn {
-            color: #000000;
-        }
-        #main-header.header-dark .logo-img {
-            filter: brightness(0) !important;
-        }
+        #main-header.header-dark .nav-link { color: #4b5563; }
+        #main-header.header-dark .nav-link:hover { color: #000000; }
+        #main-header.header-dark #mobile-menu-btn { color: #000000; }
+        #main-header.header-dark .logo-img { filter: brightness(0) !important; }
 
         /* --- CTA BUTTON STYLE --- */
         .mint-cta-btn {
@@ -97,51 +87,45 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 0;
+            z-index: 10;
             will-change: transform;
         }
-        .video-bg {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
+        .video-bg { width: 100%; height: 100%; object-fit: cover; }
         .hero-overlay {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            z-index: 11;
         }
 
-        /* Initial Hero State (Centered) */
         .hero-initial {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10;
+            z-index: 20;
             width: 100%;
             max-width: 1000px;
             text-align: center;
         }
 
-        /* Final Hero State (Split Layout) */
         .hero-final {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 10;
+            z-index: 20;
             display: flex;
-            align-items: center; /* Vertical Center */
+            align-items: center;
             justify-content: center;
             pointer-events: none;
             will-change: transform, opacity;
         }
         
-        /* 3rd State (Image Slide) */
         .hero-image-slide {
             position: absolute;
             bottom: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 20;
+            z-index: 30;
             display: flex;
             align-items: flex-end; 
             justify-content: center;
@@ -149,47 +133,56 @@
             transform: translateY(100%); 
         }
 
-        /* Background Text Container behind Phones */
-        #investTitleContainer {
+        /* --- SLOT MACHINE SECTION --- */
+        #investTitleWrapper {
             position: absolute;
-            top: calc(18% + 30px); 
-            left: 0;
-            width: 100%;
-            height: 40vh; 
-            transform: translateY(-50%);
-            z-index: 14; 
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 14; /* Stays behind images (15) */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             pointer-events: none;
-            overflow: hidden; 
+            background: #ffffff; /* White screen reveal */
             will-change: transform;
+        }
+
+        #investTitleContainer {
+            position: relative;
+            width: 100%;
+            height: 40vh; /* Limits viewable area */
+            overflow: hidden; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .bg-text-layer {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            font-size: 13vw; 
+            font-size: 11vw; 
             color: #000000;
             font-weight: 500;
             white-space: nowrap;
             line-height: 1;
             margin: 0;
+            text-align: center;
+            will-change: transform, filter;
+            filter: blur(0px); /* Hardware acceleration prep for blur */
         }
 
-        /* 4th State (Side Images) */
         .side-image {
             position: absolute;
-            top: calc(50% + 50px); 
+            top: 50%; 
+            transform: translateY(-50%); /* Locks exactly to center vertically */
             width: 25vw; 
             max-width: 300px;
-            z-index: 15;
+            z-index: 15; /* Sits over the text */
             opacity: 0;
             will-change: transform, opacity;
         }
         
         .hero-final .final-left, 
-        .hero-final .final-right {
-            pointer-events: auto;
-        }
+        .hero-final .final-right { pointer-events: auto; }
 
         .shimmer-text {
             background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%);
@@ -200,7 +193,6 @@
         }
         @keyframes shimmer { to { background-position: -250% center; } }
 
-        /* Floating Rocks Animation */
         .floating-rock-1 { animation: floatRock 4s ease-in-out infinite; }
         .floating-rock-2 { animation: floatRock 5s ease-in-out infinite reverse; }
         @keyframes floatRock {
@@ -260,7 +252,6 @@
         <div class="video-bg-container">
             <video id="heroVideo" autoplay muted playsinline class="video-bg">
                 <source src="videos/HeroBG.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
             <div class="hero-overlay"></div>
         </div>
@@ -348,17 +339,17 @@
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[15%] -translate-x-[200%]">
+        <div id="investLeft" class="side-image left-[10%]">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
-        <div id="investRight" class="side-image right-[15%] translate-x-[200%]">
+        <div id="investRight" class="side-image right-[10%]">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
     </div>
 
-    <section id="blackSection" class="bg-black py-24 md:py-32 relative overflow-hidden">
+    <section id="blackSection" class="bg-black py-24 md:py-32 relative overflow-hidden z-20">
         <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             
             <div class="flex flex-col justify-center h-full relative z-30">
@@ -555,121 +546,68 @@
         // --- GSAP ANIMATION LOGIC ---
         gsap.registerPlugin(ScrollTrigger);
 
-        // INITIAL TEXT POSITIONS FOR THE SLIDE REEL
-        gsap.set(".bg-text-layer", { xPercent: -50, yPercent: -50 });
-        gsap.set(".txt-inv, .txt-bor, .txt-trans", { yPercent: 150 });
+        // INITIAL POSITIONS FOR THE SLIDE REEL & IMAGES
+        // Hide upcoming words below and blur them
+        gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
+        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); // "Features" starts visible and clear
+
+        // Setup the white container beneath the viewport initially
+        gsap.set("#investTitleWrapper", { y: window.innerHeight });
+
+        // Move side images way off-screen
+        gsap.set("#investLeft", { xPercent: -150 });
+        gsap.set("#investRight", { xPercent: 150 });
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=6000", // Accommodates the extra slot machine text swaps
+                end: "+=6000", 
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1
             }
         });
 
-        // Setup the sliding text wrapper height for the animation
-        gsap.set("#investTitleWrapper", { yPercent: -50 });
-
         // STEP 1: Fade Out Initial Center Text
-        tl.to(".hero-initial", {
-            y: -100,
-            opacity: 0,
-            duration: 1
-        }, "start");
+        tl.to(".hero-initial", { y: -100, opacity: 0, duration: 1 }, "start");
 
         // STEP 2: Fade In Split Text (Left/Right)
-        tl.to(".hero-final", {
-            opacity: 1,
-            pointerEvents: "all",
-            duration: 0.1
-        }, "start+=0.5");
-
-        tl.from(".final-left", {
-            x: -100,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power2.out"
-        }, "start+=0.5");
-
-        tl.from(".final-right", {
-            x: 100,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power2.out"
-        }, "start+=0.5");
+        tl.to(".hero-final", { opacity: 1, pointerEvents: "all", duration: 0.1 }, "start+=0.5");
+        tl.from(".final-left", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
+        tl.from(".final-right", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
 
         // STEP 3: Slide Center Image Up 
-        tl.to(".hero-image-slide", {
-            y: "75px",       
-            opacity: 1,
-            duration: 2.5,
-            ease: "power3.out"
-        }, "+=0.5"); 
-        
-        tl.to(".hero-final", {
-            opacity: 0.3, 
-            duration: 2
-        }, "<+=0.5");
+        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "+=0.5"); 
+        tl.to(".hero-final", { opacity: 0.3, duration: 2 }, "<+=0.5");
 
         // STEP 4: Video Swipes Up & Side Images Slide In
-        tl.to(".video-bg-container", {
-            y: "-100%",
-            duration: 3,
-            ease: "power2.inOut",
-            onUpdate: function() {
-                const header = document.getElementById('main-header');
-                if (this.progress() > 0.5) {
-                    header.classList.add('header-dark');
-                } else {
-                    header.classList.remove('header-dark');
-                }
-            }
-        }, "+=0.5");
-
-        tl.to(".hero-final", {
-            y: "-100%",
-            opacity: 0,
-            duration: 3,
-            ease: "power2.inOut"
-        }, "<");
+        tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
+        tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // TITLE CONTAINER SLIDES IN WITH WHITE SCREEN
-        tl.fromTo("#investTitleWrapper", 
-            { y: window.innerHeight }, 
-            {
-                y: 0, 
-                duration: 3,
-                ease: "power2.inOut"
-            }, 
-        "<");
+        // WHITE SCREEN REVEAL - Slides up right behind the video
+        tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
+        
+        // Turn Header Dark
+        tl.add(() => { document.getElementById('main-header').classList.add('header-dark'); }, "reveal+=1.5");
 
-        // Slide in the side images
-        tl.to("#investLeft", {
-            x: "0%",
-            opacity: 1,
-            duration: 3,
-            ease: "power3.out"
-        }, "<");
+        // Side images slide in exactly onto the white screen
+        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
+        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
 
-        tl.to("#investRight", {
-            x: "0%",
-            opacity: 1,
-            duration: 3,
-            ease: "power3.out"
-        }, "<");
 
-        // STEP 5: PURE SLIDE UP SWAP FOR TEXT REEL (Slot Machine)
-        tl.to(".txt-feat", { yPercent: -100, duration: 1 }, "+=0.5")
-          .to(".txt-inv", { yPercent: 0, duration: 1 }, "<");
+        // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
+        // Swap 1: Features -> Invest
+        tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
+        tl.to(".txt-inv", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        tl.to(".txt-inv", { yPercent: -100, duration: 1 }, "+=1")
-          .to(".txt-bor", { yPercent: 0, duration: 1 }, "<");
+        // Swap 2: Invest -> Borrow
+        tl.to(".txt-inv", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
+        tl.to(".txt-bor", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        tl.to(".txt-bor", { yPercent: -100, duration: 1 }, "+=1")
-          .to(".txt-trans", { yPercent: 0, duration: 1 }, "<");
+        // Swap 3: Borrow -> Transact
+        tl.to(".txt-bor", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
+        tl.to(".txt-trans", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
         tl.to({}, { duration: 1.5 });
 
