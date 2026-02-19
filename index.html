@@ -11,6 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --mint-dark-purple: #31005e;
@@ -31,7 +36,6 @@
         /* --- HEADER AUTO-HIDE & THEME --- */
         #main-header.header-hidden { transform: translateY(-100%); }
         
-        /* Dark theme (used for non-hero sections) */
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.9);
             border-bottom-color: rgba(0, 0, 0, 0.05);
@@ -42,7 +46,6 @@
         #main-header.header-dark #mobile-menu-btn { color: #000000; }
         #main-header.header-dark .logo-img { filter: brightness(0) !important; }
 
-        /* --- HERO SPECIFIC: Transparent background, Dark text --- */
         #main-header.header-hero-dark-text {
             background-color: transparent !important;
             backdrop-filter: none !important;
@@ -169,7 +172,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Pushes the active slot text up above the 75vh phone image */
             transform: translateY(-30vh); 
         }
         
@@ -220,6 +222,25 @@
         @keyframes linePulse { 0%, 100% { opacity: 0.1; stroke-dashoffset: 24; } 50% { opacity: 0.4; stroke-dashoffset: 0; } }
 
         #mobile-menu { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+        /* --- GLOBE CSS --- */
+        @keyframes aura-pulse {
+            0% { box-shadow: inset -40px -40px 60px rgba(0,0,0,0.98), inset 10px 10px 30px rgba(192, 132, 252, 0.15), 0 0 40px rgba(59, 7, 100, 0.6); }
+            50% { box-shadow: inset -40px -40px 60px rgba(0,0,0,0.98), inset 10px 10px 40px rgba(192, 132, 252, 0.3), 0 0 70px rgba(88, 28, 135, 0.8); }
+            100% { box-shadow: inset -40px -40px 60px rgba(0,0,0,0.98), inset 10px 10px 30px rgba(192, 132, 252, 0.15), 0 0 40px rgba(59, 7, 100, 0.6); }
+        }
+        
+        .planet-overlay {
+            animation: aura-pulse 4s ease-in-out infinite;
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,1) 100%);
+        }
+
+        .metallic-base {
+            background: 
+                radial-gradient(circle at 28% 28%, #ffffff 0%, #e9d5ff 2%, rgba(147, 51, 234, 0.5) 12%, transparent 35%),
+                linear-gradient(110deg, transparent 20%, rgba(216, 180, 254, 0.1) 25%, transparent 35%, rgba(216, 180, 254, 0.05) 70%, transparent 80%),
+                radial-gradient(circle at 50% 50%, #2e1065 0%, #170535 50%, #000000 100%);
+        }
     </style>
 </head>
 <body>
@@ -506,6 +527,54 @@
         </div>
     </section>
 
+    <section id="assetDeploymentSection" class="relative py-24 md:py-32 overflow-hidden bg-[url('images/Mint Background.jpg')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-white/90 backdrop-blur-sm z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative w-full h-[500px] lg:h-[700px] flex items-center justify-center">
+                <div id="logoSphere" class="w-full h-full flex items-center justify-center"></div>
+            </div>
+
+            <div class="flex flex-col justify-center">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-light text-black tracking-tight leading-tight mb-6">Precision Asset Deployment</h2>
+                <p class="text-gray-600 text-lg font-light leading-relaxed mb-10">
+                    Mint’s proprietary Open strategies allow for the seamless execution of sophisticated financial moves. By bundling high-performance assets into a singular, liquid format, we remove the friction of traditional trading. This is Wealth-as-a-Service—engineered to provide the essential nutrients your net worth needs to scale in any market condition.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
+                            Invest
+                        </h4>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">
+                            Stay ahead of market volatility with Daily Intelligence Briefings. We distill complex global events—from shifting interest rates to geopolitical movements—into actionable insights. Understand exactly how the world’s headlines influence your portfolio’s performance, empowering you to make informed decisions with professional-grade clarity.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
+                            News
+                        </h4>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">
+                            Receive real-time updates and deep dives into the sectors that matter most to your bottom line. We filter out the noise, delivering highly relevant financial news straight to your dashboard.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/60 backdrop-blur-md border border-white/40 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="text-xl font-medium text-[var(--mint-dark-purple)] mb-3 flex items-center gap-2">
+                            Goals
+                        </h4>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">
+                            Wealth creation is more than just numbers—it’s about the milestones that matter. With Mint, you can deploy Objective-Based Portfolios tailored to your unique timeline. Whether you're targeting a specific asset today or mapping out a long-term legacy, our flexible goal-setting tools allow you to track progress in real-time, adjust your strategy at any phase, and align every investment with your personal vision.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <footer id="main-footer" class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
@@ -562,7 +631,6 @@
         // --- GSAP ANIMATION LOGIC ---
         gsap.registerPlugin(ScrollTrigger);
 
-        // INITIAL POSITIONS FOR THE SLIDE REEL & IMAGES
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
         gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
 
@@ -582,26 +650,20 @@
             }
         });
 
-        // STEP 1: Fade Out Initial Center Text
         tl.to(".hero-initial", { y: -100, opacity: 0, duration: 1 }, "start");
 
-        // STEP 2: Fade In Split Text (Left/Right)
         tl.to(".hero-final", { opacity: 1, pointerEvents: "all", duration: 0.1 }, "start+=0.5");
         tl.from(".final-left", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
         tl.from(".final-right", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
 
-        // STEP 3: Slide Center Image Up 
         tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "+=0.5"); 
         tl.to(".hero-final", { opacity: 0.3, duration: 2 }, "<+=0.5");
 
-        // STEP 4: Video Swipes Up & Side Images Slide In
         tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // WHITE SCREEN REVEAL
         tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // Change text to dark but KEEP transparent background when white screen reveals
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
@@ -611,8 +673,6 @@
         tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
         tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
 
-
-        // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
         tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
         tl.to(".txt-inv", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
@@ -624,8 +684,6 @@
 
         tl.to({}, { duration: 1.5 });
 
-
-        // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
         const mainHeader = document.getElementById('main-header');
         
         ScrollTrigger.create({
@@ -654,8 +712,6 @@
             onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
 
-
-        // --- LINES ANIMATION ---
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
             const section = document.getElementById('stepsSection');
@@ -692,6 +748,333 @@
         });
         window.addEventListener('load', drawConnectingLines);
         window.addEventListener('resize', drawConnectingLines);
+    </script>
+
+    <script type="text/babel">
+        const { useEffect, useRef, useState } = React;
+
+        // --- Supabase Setup ---
+        const SUPABASE_URL = "https://aazofjsssobejhkyyiqv.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhem9manNzc29iZWpoa3l5aXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxMTI1NDUsImV4cCI6MjA3MzY4ODU0NX0.guYlxaV5RwTlTVFoUhpER0KWEIGPay8svLsxMwyRUyM";
+        const supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const TRADING_LOGOS_KEY = "ah_trading_universe_logos";
+
+        // --- Fallback Data ---
+        const defaultSphereImages = [
+            { id: "apple", src: "https://logo.clearbit.com/apple.com" },
+            { id: "microsoft", src: "https://logo.clearbit.com/microsoft.com" },
+            { id: "google", src: "https://logo.clearbit.com/google.com" },
+            { id: "amazon", src: "https://logo.clearbit.com/amazon.com" },
+            { id: "nvidia", src: "https://logo.clearbit.com/nvidia.com" },
+            { id: "meta", src: "https://logo.clearbit.com/meta.com" },
+            { id: "visa", src: "https://logo.clearbit.com/visa.com" },
+            { id: "netflix", src: "https://logo.clearbit.com/netflix.com" },
+            { id: "jpmorgan", src: "https://logo.clearbit.com/jpmorganchase.com" },
+            { id: "coca-cola", src: "https://logo.clearbit.com/coca-cola.com" },
+            { id: "nike", src: "https://logo.clearbit.com/nike.com" },
+            { id: "disney", src: "https://logo.clearbit.com/disney.com" },
+            { id: "naspers", src: "https://s3-symbol-logo.tradingview.com/naspers--big.svg" },
+            { id: "capitec", src: "https://s3-symbol-logo.tradingview.com/capitec-bank-hldgs-ltd--big.svg" },
+            { id: "mtn", src: "https://logo.clearbit.com/mtn.com" },
+            { id: "vodacom", src: "https://s3-symbol-logo.tradingview.com/vodafone--big.svg" },
+            { id: "discovery", src: "https://logo.clearbit.com/discovery.co.za" },
+            { id: "bitcoin", src: "https://cryptologos.cc/logos/bitcoin-btc-logo.png" },
+            { id: "ethereum", src: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },
+            { id: "solana", src: "https://cryptologos.cc/logos/solana-sol-logo.png" },
+            { id: "shoprite", src: "https://logo.clearbit.com/shoprite.co.za" },
+            { id: "picknpay", src: "https://logo.clearbit.com/picknpay.co.za" },
+            { id: "woolworths", src: "https://logo.clearbit.com/woolworths.co.za" },
+            { id: "sasol", src: "https://logo.clearbit.com/sasol.com" },
+            { id: "anglo-american", src: "https://logo.clearbit.com/angloamerican.com" },
+            { id: "sanlam", src: "https://logo.clearbit.com/sanlam.co.za" },
+            { id: "bidvest", src: "https://logo.clearbit.com/bidvest.com" },
+            { id: "mastercard", src: "https://logo.clearbit.com/mastercard.com" },
+        ];
+
+        // --- Data Fetching Logic ---
+        const normalizeLogos = (rows) => {
+            const seen = new Set();
+            return rows
+                .map((row) => ({
+                    id: (row.symbol || `logo-${row.id}`).toLowerCase(),
+                    src: row.logo,
+                }))
+                .filter((row) => typeof row.src === 'string' && row.src.trim().startsWith('http'))
+                .filter(({ src }) => {
+                    if (seen.has(src)) return false;
+                    seen.add(src);
+                    return true;
+                });
+        };
+
+        const fetchCachedLogos = () => {
+            try {
+                const cached = sessionStorage.getItem(TRADING_LOGOS_KEY);
+                if (!cached) return null;
+                const parsed = JSON.parse(cached);
+                const cachedLogos = normalizeLogos(
+                    parsed?.source === 'trading_universe' && Array.isArray(parsed.logos) ? parsed.logos : []
+                );
+                return cachedLogos.length ? cachedLogos : null;
+            } catch (err) {
+                return null;
+            }
+        };
+
+        async function fetchTradingLogos() {
+            const cached = fetchCachedLogos();
+            if (cached) return cached;
+            if (!supabase) return defaultSphereImages;
+
+            const { data, error } = await supabase
+                .from('trading_universe')
+                .select('id, symbol, logo')
+                .not('logo', 'is', null)
+                .neq('logo', '')
+                .order('symbol', { ascending: true })
+                .limit(120);
+
+            if (error || !data?.length) return defaultSphereImages;
+
+            const logos = normalizeLogos(data);
+            if (logos.length) {
+                try {
+                    sessionStorage.setItem(TRADING_LOGOS_KEY, JSON.stringify({ source: 'trading_universe', logos }));
+                } catch (err) {}
+            }
+            return logos.length ? logos : defaultSphereImages;
+        }
+
+        // --- Core Sphere Component ---
+        const Sphere = ({ images, size = 760 }) => {
+            const [rot, setRot] = useState({ x: 15, y: 0 });
+            const [vel, setVel] = useState({ x: 0, y: 0 });
+            const [dragging, setDragging] = useState(false);
+            const [points, setPoints] = useState([]);
+            const last = useRef({ x: 0, y: 0 });
+
+            const radius = size * 0.45;
+            const baseSize = size * 0.14;
+
+            // Generate points on a sphere using Fibonacci lattice
+            useEffect(() => {
+                const pts = [];
+                const count = images.length;
+                const phi = Math.PI * (3 - Math.sqrt(5));
+
+                for (let i = 0; i < count; i++) {
+                    const y = 1 - (i / (count - 1)) * 2;
+                    const r = Math.sqrt(1 - y * y);
+                    const theta = phi * i;
+                    pts.push({
+                        x: Math.cos(theta) * r * radius,
+                        y: y * radius,
+                        z: Math.sin(theta) * r * radius,
+                    });
+                }
+                setPoints(pts);
+            }, [images.length, radius]);
+
+            // Handle continuous rotation & momentum
+            useEffect(() => {
+                let id;
+                const loop = () => {
+                    if (!dragging) {
+                        setVel((v) => ({ x: v.x * 0.97, y: v.y * 0.97 }));
+                        setRot((r) => ({
+                            x: r.x + vel.x,
+                            y: r.y + vel.y + 0.1,
+                        }));
+                    }
+                    id = requestAnimationFrame(loop);
+                };
+                id = requestAnimationFrame(loop);
+                return () => cancelAnimationFrame(id);
+            }, [dragging, vel.x, vel.y]);
+
+            // Interaction handlers
+            const start = (e) => {
+                setDragging(true);
+                setVel({ x: 0, y: 0 });
+                const x = e.clientX || e.touches?.[0]?.clientX || 0;
+                const y = e.clientY || e.touches?.[0]?.clientY || 0;
+                last.current = { x, y };
+            };
+
+            const move = (e) => {
+                if (!dragging) return;
+                const x = e.clientX || e.touches?.[0]?.clientX || 0;
+                const y = e.clientY || e.touches?.[0]?.clientY || 0;
+                const dx = x - last.current.x;
+                const dy = y - last.current.y;
+
+                setRot((r) => ({
+                    x: r.x - dy * 0.45,
+                    y: r.y + dx * 0.45,
+                }));
+                setVel({ x: -dy * 0.35, y: dx * 0.35 });
+                last.current = { x, y };
+            };
+
+            const end = () => setDragging(false);
+
+            // 3D to 2D Projection
+            const project = (p) => {
+                let { x, y, z } = p;
+                const rx = (rot.x * Math.PI) / 180;
+                const ry = (rot.y * Math.PI) / 180;
+
+                // Rotate Y
+                const tx = x * Math.cos(ry) + z * Math.sin(ry);
+                z = -x * Math.sin(ry) + z * Math.cos(ry);
+                x = tx;
+
+                // Rotate X
+                const ty = y * Math.cos(rx) - z * Math.sin(rx);
+                z = y * Math.sin(rx) + z * Math.cos(rx);
+                y = ty;
+
+                const scale = 1 + z / (radius * 3);
+                
+                return {
+                    x,
+                    y,
+                    scale: Math.max(0.45, scale),
+                    visible: true, 
+                    opacity: Math.max(0.3, (z + radius) / (radius * 1.5)), 
+                    zIndex: Math.round(z),
+                };
+            };
+
+            return (
+                <div
+                    className={`relative ${dragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
+                    style={{ width: size, height: size }}
+                    onMouseDown={start}
+                    onMouseMove={move}
+                    onMouseUp={end}
+                    onMouseLeave={end}
+                    onTouchStart={start}
+                    onTouchMove={move}
+                    onTouchEnd={end}
+                >
+                    {/* Dark Metallic Purple Ominous Globe */}
+                    <div
+                        className="metallic-base absolute top-1/2 left-1/2 rounded-full pointer-events-none overflow-hidden shadow-2xl"
+                        style={{
+                            width: size * 0.68,
+                            height: size * 0.68,
+                            transform: "translate(-50%, -50%)",
+                            zIndex: 1000,
+                        }}
+                    >
+                        {/* Embedded SVG Longitude & Latitude Wireframe */}
+                        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-60">
+                            <defs>
+                                <clipPath id="globe-clip">
+                                    <circle cx="50" cy="50" r="49.5" />
+                                </clipPath>
+                            </defs>
+                            <g clipPath="url(#globe-clip)" stroke="rgba(168, 85, 247, 0.4)" strokeWidth="0.5" fill="none">
+                                {/* Tilted orthographic projection */}
+                                <g transform="rotate(15 50 50)">
+                                    {/* Longitudes (Orthographic sine distribution) */}
+                                    <line x1="50" y1="0" x2="50" y2="100" />
+                                    <ellipse cx="50" cy="50" rx="17" ry="50" />
+                                    <ellipse cx="50" cy="50" rx="32" ry="50" />
+                                    <ellipse cx="50" cy="50" rx="43" ry="50" />
+                                    
+                                    {/* Latitudes (Orthographic sine offsets from center) */}
+                                    <line x1="0" y1="50" x2="100" y2="50" />
+                                    <line x1="0" y1="33" x2="100" y2="33" />
+                                    <line x1="0" y1="67" x2="100" y2="67" />
+                                    <line x1="0" y1="18" x2="100" y2="18" />
+                                    <line x1="0" y1="82" x2="100" y2="82" />
+                                    <line x1="0" y1="7" x2="100" y2="7" />
+                                    <line x1="0" y1="93" x2="100" y2="93" />
+                                </g>
+                            </g>
+                            <circle cx="50" cy="50" r="49.5" fill="none" stroke="rgba(168, 85, 247, 0.4)" strokeWidth="0.8"/>
+                        </svg>
+
+                        {/* Top-layer pulse and shading to push the wireframe into the shadows */}
+                        <div className="planet-overlay absolute inset-0 rounded-full" />
+                    </div>
+
+                    {points.map((p, i) => {
+                        const proj = project(p);
+                        if (!proj.visible) return null;
+                        const s = baseSize * proj.scale;
+
+                        return (
+                            <div
+                                key={images[i].id}
+                                className="absolute"
+                                style={{
+                                    width: s,
+                                    height: s,
+                                    left: size / 2 + proj.x,
+                                    top: size / 2 + proj.y,
+                                    transform: "translate(-50%, -50%)",
+                                    opacity: proj.opacity,
+                                    // +1000 layers seamlessly with the globe
+                                    zIndex: 1000 + proj.zIndex, 
+                                }}
+                            >
+                                {/* Rounded Clipping Mask Container */}
+                                <div className="w-full h-full rounded-full overflow-hidden shadow-2xl bg-white border border-slate-200 flex items-center justify-center">
+                                    <img
+                                        src={images[i].src}
+                                        className="w-full h-full object-cover"
+                                        draggable={false}
+                                        loading="lazy"
+                                        alt={images[i].id}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        };
+
+        // --- Responsive Wrapper ---
+        const getSphereSize = () => {
+            const width = window.innerWidth;
+            if (width >= 1280) return 600; 
+            if (width >= 1024) return 500;
+            if (width >= 768) return 520;
+            return Math.min(width - 40, 380);
+        };
+
+        const SphereWrapper = () => {
+            const [size, setSize] = useState(getSphereSize());
+            const [images, setImages] = useState(defaultSphereImages);
+
+            useEffect(() => {
+                const handleResize = () => setSize(getSphereSize());
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            useEffect(() => {
+                let isMounted = true;
+                fetchTradingLogos().then((logos) => {
+                    if (isMounted && logos?.length) {
+                        setImages(logos);
+                    }
+                }).catch(() => {});
+                return () => { isMounted = false; };
+            }, []);
+
+            return <Sphere images={images} size={size} />;
+        };
+
+        // --- Render App ---
+        const mountNode = document.getElementById('logoSphere');
+        if (mountNode) {
+            ReactDOM.createRoot(mountNode).render(<SphereWrapper />);
+        }
     </script>
 </body>
 </html>
