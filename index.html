@@ -270,9 +270,9 @@
                     <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
                     <a href="contact.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Contact</a>
                 </div>
-                <a href="mint.html" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                    Mint
-                </a>
+                <button onclick="checkDevice()" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                    Go to Mint
+                </button>
             </div>
         </nav>
     </header>
@@ -297,13 +297,13 @@
                 Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.
             </p>
 
-            <a href="mint.html" class="mint-cta-btn group mx-auto inline-flex" style="width: fit-content;">
-                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Mint Now</span>
+            <button onclick="checkDevice()" class="mint-cta-btn group mx-auto inline-flex" style="width: fit-content;">
+                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
                 <div class="mint-cta-icon">
                     <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                 </div>
-            </a>
+            </button>
 
             <div class="flex items-center justify-center gap-4 mt-12 opacity-90">
                 <div class="flex -space-x-3">
@@ -325,13 +325,13 @@
                     <h1 class="text-4xl lg:text-5xl font-light leading-tight mb-8 lg:mb-12 shimmer-text">
                         Elevate your<br>Investment Portfolio<br> <span>With MINT</span>
                     </h1>
-                    <a href="mint.html" class="mint-cta-btn group mx-auto lg:mx-0 inline-flex pointer-events-auto" style="width: fit-content;">
+                    <button onclick="checkDevice()" class="mint-cta-btn group mx-auto lg:mx-0 inline-flex pointer-events-auto" style="width: fit-content;">
                         <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to MINT</span>
                         <div class="mint-cta-icon">
                             <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                             <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                         </div>
-                    </a>
+                    </button>
                 </div>
 
                 <div class="lg:col-span-2"></div>
@@ -1115,6 +1115,10 @@
         const mountNode = document.getElementById('logoSphere');
         if (mountNode) {
             ReactDOM.createRoot(mountNode).render(<SphereWrapper />);
+        }
+
+        function checkDevice() {
+            window.location.href = "https://www.mymint.co.za/";
         }
     </script>
 </body>
