@@ -149,18 +149,24 @@
             transform: translateY(100%); 
         }
 
-        /* Background Text behind Phones */
-        #investTitle {
+        /* Background Text Container behind Phones */
+        #investTitleContainer {
             position: absolute;
-            top: 30%; /* Moved up from 50% to sit nicely behind the top of the images */
+            top: 22%; /* Positioned high so mostly visible, but bottom 15% sits behind images */
             left: 50%;
-            transform: translate(-50%, -50%); 
-            font-size: 18vw; /* Massive size */
-            color: #000000;
             z-index: 5; /* Above background, behind images (20) */
             pointer-events: none;
-            white-space: nowrap;
             will-change: transform;
+        }
+        
+        .bg-text-layer {
+            font-size: 18vw; 
+            color: #000000;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
         }
 
         /* 4th State (Side Images) */
@@ -192,16 +198,6 @@
 
 
         /* --- SECTIONS BELOW --- */
-        .floating-asset { position: absolute; animation: miniFloat 4s ease-in-out infinite; }
-        .asset-blob {
-            border-radius: 50px;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease;
-        }
-        .asset-blob:hover { transform: scale(1.15) !important; z-index: 50; }
-
-        @keyframes miniFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
         /* Floating Rocks Animation */
         .floating-rock-1 { animation: floatRock 4s ease-in-out infinite; }
         .floating-rock-2 { animation: floatRock 5s ease-in-out infinite reverse; }
@@ -209,10 +205,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
-
-        /* Hide scrollbar */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .connecting-line { fill: none; stroke: #5c3bcf; stroke-width: 1.5; stroke-dasharray: 6; opacity: 0.2; animation: linePulse 3s ease-in-out infinite; }
         @keyframes linePulse { 0%, 100% { opacity: 0.1; stroke-dashoffset: 24; } 50% { opacity: 0.4; stroke-dashoffset: 0; } }
@@ -341,7 +333,12 @@
             </div>
         </div>
 
-        <div id="investTitle" class="font-light tracking-tight text-center">Features</div>
+        <div id="investTitleContainer">
+            <div class="bg-text-layer txt-feat font-light tracking-tight opacity-100">Features</div>
+            <div class="bg-text-layer txt-inv font-light tracking-tight opacity-0">Invest</div>
+            <div class="bg-text-layer txt-bor font-light tracking-tight opacity-0">Borrow</div>
+            <div class="bg-text-layer txt-trans font-light tracking-tight opacity-0">Transact</div>
+        </div>
 
         <div class="hero-image-slide">
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
@@ -362,13 +359,13 @@
             
             <div class="flex flex-col justify-center h-full relative z-30">
                 <div class="w-full max-w-xl">
-                    <h3 class="shimmer-text text-4xl md:text-5xl lg:text-6xl font-light mb-12 tracking-tight leading-tight">
+                    <h3 class="shimmer-text text-4xl md:text-5xl lg:text-6xl font-light mb-12 tracking-tight leading-snug pb-4">
                         Our app is an<br>
                         all-in-one solution for<br>
                         moving your money<br>
                         through investing, borrowing and transacting.
                     </h3>
-                    <a href="#stepsSection" class="inline-flex items-center gap-2 text-white hover:text-[var(--mint-primary-purple)] transition-colors text-lg font-light group">
+                    <a href="#investSection" class="inline-flex items-center gap-2 text-white hover:text-[var(--mint-primary-purple)] transition-colors text-lg font-light group">
                         Discover how 
                         <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </a>
@@ -380,6 +377,32 @@
                     <img src="images/Section rocks phone.png" alt="Phone on Rocks" class="relative z-10 w-full object-contain">
                     <img src="images/rock.png" alt="Rock" class="absolute top-0 -right-2 w-24 md:w-32 z-20 floating-rock-1">
                     <img src="images/rock.png" alt="Rock" class="absolute bottom-0 -left-2 w-24 md:w-32 z-20 floating-rock-2">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="investSection" class="py-24 md:py-32 relative overflow-hidden bg-white z-20">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="flex flex-col justify-center lg:pr-10 relative z-30">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 tracking-tight text-black">Invest</h2>
+                <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed mb-10">
+                    Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.
+                </p>
+                <a href="https://mymint.co.za" class="mint-cta-btn group" style="width: fit-content;">
+                    <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Grow your future today</span>
+                    <div class="mint-cta-icon">
+                        <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex justify-center lg:justify-end mt-12 lg:mt-0 relative z-30">
+                <div class="w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl relative">
+                    <img src="images/Invest.png" alt="Invest" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
                 </div>
             </div>
 
@@ -425,7 +448,7 @@
                     <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
                 </div>
-                <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li><a href="#" class="hover:text-[var(--mint-primary-purple)]">Home</a></li><li><a href="#features" class="hover:text-[var(--mint-primary-purple)]">Features</a></li></ul></div>
+                <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li><a href="#" class="hover:text-[var(--mint-primary-purple)]">Home</a></li><li><a href="#stepsSection" class="hover:text-[var(--mint-primary-purple)]">Features</a></li></ul></div>
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li class="flex items-center gap-3"><a href="mailto:info@mymint.co.za" class="hover:text-white">info@mymint.co.za</a></li><li class="flex items-center gap-3"><a href="tel:+27102760531" class="hover:text-white">+27 10 276 0531</a></li></ul></div>
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 px-6 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a></div>
             </div>
@@ -479,7 +502,7 @@
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=4000", // Increased to accommodate 4 steps
+                end: "+=6000", // Increased to accommodate the extra text swaps
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1
@@ -515,7 +538,6 @@
         }, "start+=0.5");
 
         // STEP 3: Slide Center Image Up (Text fades a bit)
-        // Lowered position to 75px (original 25px + 50px drop)
         tl.to(".hero-image-slide", {
             y: "75px",       
             opacity: 1,
@@ -529,7 +551,6 @@
         }, "<+=0.5");
 
         // STEP 4: Video Swipes Up & Side Images Slide In
-        // The center image stays put. The video BG and text move up.
         tl.to(".video-bg-container", {
             y: "-100%",
             duration: 3,
@@ -553,11 +574,12 @@
             ease: "power2.inOut"
         }, "<");
         
-        // TITLE SLIDES IN WITH WHITE SCREEN
-        tl.fromTo("#investTitle", 
-            { y: "100vh" }, 
+        // TITLE CONTAINER SLIDES IN WITH WHITE SCREEN
+        tl.fromTo("#investTitleContainer", 
+            { y: "100vh", xPercent: -50 }, 
             {
                 y: "-50%", 
+                xPercent: -50,
                 duration: 3,
                 ease: "power2.inOut"
             }, 
@@ -577,6 +599,22 @@
             duration: 3,
             ease: "power3.out"
         }, "<");
+
+        // STEP 5: SWAP TEXT WHILE PINNED
+        // Swap Features -> Invest
+        tl.to(".txt-feat", { opacity: 0, duration: 1 }, "+=0.5")
+          .to(".txt-inv", { opacity: 1, duration: 1 }, "<");
+
+        // Swap Invest -> Borrow
+        tl.to(".txt-inv", { opacity: 0, duration: 1 }, "+=1")
+          .to(".txt-bor", { opacity: 1, duration: 1 }, "<");
+
+        // Swap Borrow -> Transact
+        tl.to(".txt-bor", { opacity: 0, duration: 1 }, "+=1")
+          .to(".txt-trans", { opacity: 1, duration: 1 }, "<");
+
+        // Hold ending state briefly before the section unpins and scrolls normally
+        tl.to({}, { duration: 1.5 });
 
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
@@ -602,12 +640,7 @@
         });
 
 
-        // --- OBSERVER & LINES ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.invest-card, .transact-stack-container, .news-card, .trading-card, .goals-card').forEach(el => observer.observe(el));
-
+        // --- LINES ANIMATION ---
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
             const section = document.getElementById('stepsSection');
