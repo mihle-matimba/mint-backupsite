@@ -152,20 +152,23 @@
         /* Background Text Container behind Phones */
         #investTitleContainer {
             position: absolute;
-            top: 22%; /* Positioned high so mostly visible, but bottom 15% sits behind images */
-            left: 50%;
-            z-index: 5; /* Above background, behind images (20) */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; /* Above background, behind images (15 & 20) */
             pointer-events: none;
             will-change: transform;
         }
         
         .bg-text-layer {
-            font-size: 18vw; 
-            color: #000000;
             position: absolute;
+            top: 38%; /* Adjusted so majority is visible but bottom ~15% sits behind the phones for depth */
             left: 50%;
-            top: 50%;
             transform: translate(-50%, -50%);
+            font-size: 18vw; 
+            font-weight: 300;
+            color: #000000;
             white-space: nowrap;
         }
 
@@ -334,10 +337,10 @@
         </div>
 
         <div id="investTitleContainer">
-            <div class="bg-text-layer txt-feat font-light tracking-tight opacity-100">Features</div>
-            <div class="bg-text-layer txt-inv font-light tracking-tight opacity-0">Invest</div>
-            <div class="bg-text-layer txt-bor font-light tracking-tight opacity-0">Borrow</div>
-            <div class="bg-text-layer txt-trans font-light tracking-tight opacity-0">Transact</div>
+            <div class="bg-text-layer txt-feat opacity-100">Features</div>
+            <div class="bg-text-layer txt-inv opacity-0">Invest</div>
+            <div class="bg-text-layer txt-bor opacity-0">Borrow</div>
+            <div class="bg-text-layer txt-trans opacity-0">Transact</div>
         </div>
 
         <div class="hero-image-slide">
@@ -386,7 +389,14 @@
     <section id="investSection" class="py-24 md:py-32 relative overflow-hidden bg-white z-20">
         <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            <div class="flex flex-col justify-center lg:pr-10 relative z-30">
+            <div class="flex justify-center lg:justify-start relative z-30 order-2 lg:order-1 mt-12 lg:mt-0">
+                <div class="w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl relative aspect-[3/4]">
+                    <div class="absolute inset-0 z-10 pointer-events-none" style="background-color: rgba(0,0,0,0.17);"></div>
+                    <img src="images/Invest.png" alt="Invest" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 relative z-0">
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-center lg:pl-10 relative z-30 order-1 lg:order-2">
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 tracking-tight text-black">Invest</h2>
                 <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed mb-10">
                     Invest better. In one place. MINT provides a rich, digitised, and intuitive investment environment for individuals who want clarity and control.
@@ -398,12 +408,6 @@
                         <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     </div>
                 </a>
-            </div>
-
-            <div class="flex justify-center lg:justify-end mt-12 lg:mt-0 relative z-30">
-                <div class="w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-                    <img src="images/Invest.png" alt="Invest" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
-                </div>
             </div>
 
         </div>
@@ -576,10 +580,9 @@
         
         // TITLE CONTAINER SLIDES IN WITH WHITE SCREEN
         tl.fromTo("#investTitleContainer", 
-            { y: "100vh", xPercent: -50 }, 
+            { y: "100vh" }, 
             {
-                y: "-50%", 
-                xPercent: -50,
+                y: "0%", 
                 duration: 3,
                 ease: "power2.inOut"
             }, 
