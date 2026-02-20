@@ -39,6 +39,7 @@
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
 
+        /* Dark items for light sections (Carousel/Synergy/Bento) */
         #main-header.header-dark-items .nav-link { color: #000000; }
         #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
@@ -87,7 +88,7 @@
         .pillar-sub-block { background: rgba(92, 59, 207, 0.05); border: 1px solid rgba(92, 59, 207, 0.1); border-radius: 1.5rem; padding: 2rem; }
         .pillar-sub-block h4 { color: var(--mint-primary-purple); }
 
-        /* --- WHITE METAL CAROUSEL (ONE VIEWPORT FIT) --- */
+        /* --- WHITE METAL CAROUSEL (LIGHT MODE VIEWPORT) --- */
         #carouselSection { perspective: 1500px; height: 100vh; min-height: 850px; display: flex; flex-direction: column; justify-content: space-between; padding: 100px 0 60px; }
         .carousel-item { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease; transform-style: preserve-3d; position: absolute; width: 340px; opacity: 0; pointer-events: none; }
         .carousel-item.active { opacity: 1; transform: translateX(0) rotateY(0) scale(1); pointer-events: auto; z-index: 30; }
@@ -95,15 +96,15 @@
         .carousel-item.next { opacity: 0.3; transform: translateX(120%) rotateY(-45deg) scale(0.8); z-index: 20; }
         
         .carousel-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 50%, #e6e9ef 100%);
-            border: 1px solid #fff;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f7 50%, #e9ecf1 100%);
+            border: 1px solid rgba(0,0,0,0.05);
             border-radius: 2.5rem;
             padding: 2.5rem;
-            height: 380px; /* Decreased height for better section fit */
+            height: 380px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.1);
             color: #000;
             position: relative;
             overflow: hidden;
@@ -160,7 +161,7 @@
                 <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">
                     Commercial Overview: Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions.
                 </p>
-                <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex" style="width: fit-content;">
+                <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Architecture Consultation</span>
                     <div class="mint-cta-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
@@ -180,7 +181,7 @@
                     <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Investment Mandates</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure. Ongoing reporting, governance alignment, mandate oversight.</p>
                     <div class="pillar-sub-block">
-                         <span class="text-[10px] font-bold uppercase mb-2 block">Revenue Model</span>
+                         <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
                          <p class="text-sm font-medium text-gray-400">Advisory retainers, management fees, performance-based structures.</p>
                     </div>
                 </div>
@@ -195,7 +196,7 @@
                     <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Fund Structuring</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight.</p>
                     <div class="pillar-sub-block">
-                         <span class="text-[10px] font-bold uppercase mb-2 block">Revenue Model</span>
+                         <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
                          <p class="text-sm font-medium text-gray-400">Structuring fees, management fees, performance share structures.</p>
                     </div>
                 </div>
@@ -210,7 +211,7 @@
                     <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Execution Policy</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics.</p>
                     <div class="pillar-sub-block">
-                         <span class="text-[10px] font-bold uppercase mb-2 block">Revenue Model</span>
+                         <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
                          <p class="text-sm font-medium text-gray-400">Advisory mandates, optimisation retainers, performance-linked fees.</p>
                     </div>
                 </div>
@@ -218,10 +219,10 @@
         </div>
     </section>
 
-    <section id="carouselSection" class="bg-[#050505] relative overflow-hidden">
+    <section id="carouselSection" class="bg-[#ffffff] relative overflow-hidden">
         <div class="text-center w-full px-6 carousel-header">
             <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4 block">Digital Capital Infrastructure & Tech Solutions</span>
-            <h2 class="text-4xl md:text-6xl font-light text-white tracking-tighter uppercase">Why businesses work with MINT:</h2>
+            <h2 class="text-4xl md:text-6xl font-light text-black tracking-tighter uppercase">Why businesses work with MINT:</h2>
         </div>
         
         <div class="relative w-full h-[450px] flex justify-center items-center carousel-main">
@@ -237,10 +238,10 @@
 
         <div class="flex flex-col items-center gap-12 w-full px-6 carousel-footer">
             <div class="flex gap-4">
-                <button onclick="prevCarousel()" class="p-3 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button onclick="nextCarousel()" class="p-3 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 5l6 6-6 6"/></svg></button>
+                <button onclick="prevCarousel()" class="p-3 rounded-full border border-black/10 hover:bg-black/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <button onclick="nextCarousel()" class="p-3 rounded-full border border-black/10 hover:bg-black/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M9 5l6 6-6 6"/></svg></button>
             </div>
-            <p class="text-white text-base md:text-lg font-light italic leading-relaxed text-center max-w-5xl">
+            <p class="text-black text-base md:text-lg font-light italic leading-relaxed text-center max-w-5xl">
                 "Traditional asset managers are product-driven with limited flexibility; consultants are strategy-heavy and execution-light; tech vendors are software-only with no capital expertise. MINT delivers strategy, structure, execution, technology, and regulatory alignment in one integrated solution."
             </p>
         </div>
@@ -321,8 +322,9 @@
                 lastScroll = currentScroll;
             });
 
-            // --- ADAPTIVE HEADER ITEM COLOR ---
-            const whiteSections = ["#synergySection", "#opportunitySection"];
+            // --- ADAPTIVE HEADER COLOR ---
+            // Now includes carouselSection for light mode
+            const whiteSections = ["#carouselSection", "#synergySection", "#opportunitySection"];
             whiteSections.forEach(selector => {
                 ScrollTrigger.create({
                     trigger: selector, start: "top 80", end: "bottom 80",
@@ -333,54 +335,18 @@
                 });
             });
 
-            // --- PAGE SCROLL ANIMATIONS ---
-            
-            // Hero Animation
-            gsap.from(".hero-content", {
-                y: 50, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.2
-            });
-
-            // Pillars Reveal
-            gsap.from(".pillar", {
-                scrollTrigger: { trigger: ".pillar-container", start: "top 80%" },
-                x: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out"
-            });
-
-            // Carousel Section Reveal
-            gsap.from(".carousel-header, .carousel-main, .carousel-footer", {
-                scrollTrigger: { trigger: "#carouselSection", start: "top 70%" },
-                y: 40, opacity: 0, duration: 1, stagger: 0.3, ease: "power2.out"
-            });
-
-            // Synergy Reveal
-            gsap.from(".synergy-text", {
-                scrollTrigger: { trigger: "#synergySection", start: "top 70%" },
-                x: -50, opacity: 0, duration: 1.2, ease: "power3.out"
-            });
-
-            // Buildings Animation (Synced with text)
-            gsap.to("#cornerBuildings", {
-                opacity: 1, scale: 1.1, y: 0, duration: 1.5,
-                scrollTrigger: { trigger: "#synergySection", start: "top 60%", toggleActions: "play none none reverse" }
-            });
-
-            // Opportunity Pills Reveal
-            gsap.from(".bento-pill", {
-                scrollTrigger: { trigger: ".opportunity-grid", start: "top 75%" },
-                y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power2.out"
-            });
-
-            // Footer Reveal
-            gsap.from(".footer-section", {
-                scrollTrigger: { trigger: ".footer-section", start: "top 90%" },
-                y: 20, opacity: 0, duration: 1, ease: "power2.out"
-            });
+            // --- PAGE ANIMATIONS ---
+            gsap.from(".hero-content", { y: 50, opacity: 0, duration: 1.5, ease: "power4.out" });
+            gsap.from(".pillar", { scrollTrigger: { trigger: ".pillar-container", start: "top 80%" }, x: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" });
+            gsap.from(".carousel-header, .carousel-main, .carousel-footer", { scrollTrigger: { trigger: "#carouselSection", start: "top 70%" }, y: 40, opacity: 0, duration: 1, stagger: 0.3, ease: "power2.out" });
+            gsap.from(".synergy-text", { scrollTrigger: { trigger: "#synergySection", start: "top 70%" }, x: -50, opacity: 0, duration: 1.2, ease: "power3.out" });
+            gsap.to("#cornerBuildings", { opacity: 1, scale: 1.1, y: 0, duration: 1.5, scrollTrigger: { trigger: "#synergySection", start: "top 60%", toggleActions: "play none none reverse" } });
+            gsap.from(".bento-pill", { scrollTrigger: { trigger: ".opportunity-grid", start: "top 75%" }, y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power2.out" });
 
             // --- PILLAR INTERACTION ---
+            const container = document.getElementById('pillarContainer');
             const pillars = document.querySelectorAll('.pillar');
-            document.getElementById('pillarContainer').addEventListener('mouseleave', () => {
-                pillars.forEach(p => p.classList.remove('active'));
-            });
+            container.addEventListener('mouseleave', () => pillars.forEach(p => p.classList.remove('active')));
             pillars.forEach(pillar => {
                 pillar.addEventListener('mouseenter', () => {
                     pillars.forEach(p => p.classList.remove('active'));
