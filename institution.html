@@ -15,7 +15,7 @@
         :root {
             --mint-dark-purple: #31005e;
             --mint-primary-purple: #5c3bcf;
-            --mint-muted-purple: #f5f2ff; /* Bright muted purple for cards */
+            --mint-glass-purple: rgba(92, 59, 207, 0.15);
             --mint-black: #000000;
         }
 
@@ -28,7 +28,7 @@
             padding: 0;
         }
 
-        /* --- NAVBAR LOGIC (Carbon Copy index (65).html) --- */
+        /* --- NAVBAR LOGIC (Synced with index (65).html) --- */
         #main-header.header-hidden { transform: translateY(-100%); }
         #main-header {
             background-color: transparent !important;
@@ -39,7 +39,6 @@
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
 
-        /* Dark state for light sections */
         #main-header.header-dark-items .nav-link { color: #000000; }
         #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
@@ -69,17 +68,10 @@
         .mint-cta-btn:hover .mint-cta-icon svg:last-child { transform: translate(0, 0); }
 
         /* --- PILLAR SYSTEM --- */
-        .pillar-container { display: flex; width: 100%; height: 100vh; overflow: hidden; background-color: var(--mint-black); }
+        .pillar-container { display: flex; width: 100%; height: 100vh; overflow: hidden; background-color: var(--mint-black); border-top: 1px solid rgba(255,255,255,0.05); }
         .pillar { flex: 1; height: 100%; position: relative; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; overflow: hidden; background-color: var(--mint-black); border-right: 1px solid rgba(255,255,255,0.1); }
-        
-        /* Purple Overlay on Pillars */
-        .pillar::before {
-            content: ''; position: absolute; inset: 0;
-            background: rgba(92, 59, 207, 0.15); z-index: 6;
-            transition: opacity 0.5s ease;
-        }
-        .pillar:hover::before, .pillar.active::before { opacity: 0; }
-
+        .pillar::before { content: ''; position: absolute; inset: 0; background: rgba(92, 59, 207, 0.12); z-index: 6; transition: opacity 0.5s ease; }
+        .pillar:hover::after, .pillar.active::after { opacity: 0; }
         .pillar:hover, .pillar.active { flex: 6; background-color: #ffffff; }
         .pillar-bg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; transition: opacity 0.4s ease; filter: grayscale(100%); z-index: 5; }
         .pillar:hover .pillar-bg, .pillar.active .pillar-bg { opacity: 0; }
@@ -88,35 +80,34 @@
         .pillar-content-open { opacity: 0; padding: 8rem 4rem; height: 100%; display: flex; flex-direction: column; transition: opacity 0.2s ease-in; pointer-events: none; position: relative; z-index: 20; color: #000000; }
         .pillar:hover .pillar-content-open, .pillar.active .pillar-content-open { opacity: 1; transition: opacity 0.5s ease-out 0.4s; pointer-events: auto; }
 
-        /* --- CAROUSEL (MARIGOROUND) --- */
-        #carouselSection { perspective: 1200px; }
+        /* --- PURPLE GLASS CAROUSEL --- */
+        #carouselSection { perspective: 1500px; }
         .carousel-item {
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
             transform-style: preserve-3d;
-            position: absolute;
-            width: 340px;
-            opacity: 0;
-            pointer-events: none;
+            position: absolute; width: 360px; opacity: 0; pointer-events: none;
         }
         .carousel-item.active { opacity: 1; transform: translateX(0) rotateY(0) scale(1); pointer-events: auto; z-index: 30; }
-        .carousel-item.prev { opacity: 0.4; transform: translateX(-120%) rotateY(45deg) scale(0.85); z-index: 20; }
-        .carousel-item.next { opacity: 0.4; transform: translateX(120%) rotateY(-45deg) scale(0.85); z-index: 20; }
+        .carousel-item.prev { opacity: 0.3; transform: translateX(-130%) rotateY(45deg) scale(0.8); z-index: 20; }
+        .carousel-item.next { opacity: 0.3; transform: translateX(130%) rotateY(-45deg) scale(0.8); z-index: 20; }
         
         .carousel-card {
-            background: var(--mint-muted-purple); /* Bright muted purple */
-            border: 1px solid rgba(92, 59, 207, 0.1);
-            border-radius: 2.5rem;
-            padding: 3rem;
-            height: 480px;
-            color: var(--mint-black);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            background: rgba(92, 59, 207, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 3rem;
+            padding: 3.5rem;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- BENTO STATS (Screenshot 19.11.54) --- */
-        .bento-pill { background: #ffffff; border: 1px solid #f1f1f1; border-radius: 80px; padding: 3rem 4rem; display: flex; flex-direction: column; transition: transform 0.3s ease; }
-        .bento-pill-blue { background: linear-gradient(135deg, #3246d3 0%, #7e98f0 100%); color: white; border: none; }
+        /* --- BENTO ACCENTS --- */
+        .bento-pill { background: #ffffff; border: 1px solid #f1f1f1; border-radius: 100px; padding: 3.5rem 5rem; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+        .bento-purple-text { color: var(--mint-primary-purple) !important; font-weight: 700; }
+        .bento-pill-blue { background: linear-gradient(135deg, #5c3bcf 0%, #31005e 100%); color: white; border: none; }
 
         .shimmer-text { background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 5s linear infinite; }
         @keyframes shimmer { to { background-position: -250% center; } }
@@ -148,7 +139,11 @@
         <div class="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/70 to-transparent z-10"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-20 w-full">
             <div class="lg:col-span-8 flex flex-col justify-center">
-                <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8 uppercase">Commercial<br>Capital<br><span class="shimmer-text">Architecture</span></h1>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-[1px] w-12 bg-white/40"></div>
+                    <span class="text-[11px] text-white/70 uppercase tracking-[0.5em] font-bold">Capital Architecture</span>
+                </div>
+                <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8 uppercase">Mandate-led.<br><span class="shimmer-text">Customised.</span><br>Strategic.</h1>
                 <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">
                     Commercial Overview: Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.
                 </p>
@@ -169,7 +164,7 @@
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
                     <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Custom Investment Mandates</span>
-                    <h2 class="text-5xl md:text-6xl font-light mb-8">Investment Mandates</h2>
+                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Investment Mandates</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure. Ongoing reporting, governance alignment, mandate oversight.</p>
                     <div class="p-8 bg-gray-50 rounded-2xl">
                          <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
@@ -184,7 +179,7 @@
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
                     <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Fund Structuring & Management</span>
-                    <h2 class="text-5xl md:text-6xl font-light mb-8">Fund Structuring</h2>
+                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Fund Structuring</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight, reporting frameworks, capital allocation design. Institutional-grade infrastructure.</p>
                     <div class="p-8 bg-gray-50 rounded-2xl">
                          <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
@@ -199,7 +194,7 @@
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
                     <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Institutional Execution & Optimisation</span>
-                    <h2 class="text-5xl md:text-6xl font-light mb-8">Execution Policy</h2>
+                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Execution Policy</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-10">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics, execution policy design.</p>
                     <div class="p-8 bg-gray-50 rounded-2xl">
                          <span class="text-[10px] font-bold uppercase text-[var(--mint-primary-purple)] mb-2 block">Revenue Model</span>
@@ -212,26 +207,19 @@
 
     <section id="carouselSection" class="py-48 bg-[#050505] relative overflow-hidden flex flex-col items-center">
         <div class="text-center mb-24 max-w-4xl px-6">
-            <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4 block">Section II — Technology & Advisory</span>
+            <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4 block">Digital Capital Infrastructure & Tech Solutions</span>
             <h2 class="text-5xl md:text-7xl font-light text-white tracking-tighter">Why businesses<br>work with MINT:</h2>
         </div>
         
         <div class="relative w-full h-[550px] flex justify-center items-center">
-            <div class="carousel-item active"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Overview</h4><h3 class="text-2xl font-semibold mb-4">Digital Capital Infrastructure</h3><p class="text-gray-500 text-sm leading-relaxed">MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.</p></div></div>
-            
-            <div class="carousel-item next"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 01</h4><h3 class="text-2xl font-semibold mb-4">Investment & Execution</h3><p class="text-gray-500 text-sm leading-relaxed">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
-            
-            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 02</h4><h3 class="text-2xl font-semibold mb-4">CRM & Workflow</h3><p class="text-gray-500 text-sm leading-relaxed">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
-            
-            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 03</h4><h3 class="text-2xl font-semibold mb-4">Treasury & Capital</h3><p class="text-gray-500 text-sm leading-relaxed">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
-            
-            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Advisory</h4><h3 class="text-2xl font-semibold mb-4">Strategic Capital Advisory</h3><p class="text-gray-500 text-sm leading-relaxed">For enterprises and family offices: capital allocation optimisation, balance sheet strategy, investment committee advisory.</p></div></div>
-            
-            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Planning</h4><h3 class="text-2xl font-semibold mb-4">Risk Architecture</h3><p class="text-gray-500 text-sm leading-relaxed">Portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.</p></div></div>
-            
-            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Platforms</h4><h3 class="text-2xl font-semibold mb-4">Implementation</h3><p class="text-gray-500 text-sm leading-relaxed">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
-            
-            <div class="carousel-item prev"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Economics</h4><h3 class="text-2xl font-semibold mb-4">Revenue & Support</h3><p class="text-gray-500 text-sm leading-relaxed">Revenue: implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
+            <div class="carousel-item active"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 01</h4><h3 class="text-2xl font-light mb-4 text-white">Investment & Execution</h3><p class="text-white/40 text-sm leading-loose">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
+            <div class="carousel-item next"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 02</h4><h3 class="text-2xl font-light mb-4 text-white">CRM & Workflow</h3><p class="text-white/40 text-sm leading-loose">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 03</h4><h3 class="text-2xl font-light mb-4 text-white">Treasury & Capital</h3><p class="text-white/40 text-sm leading-loose">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Advisory 01</h4><h3 class="text-2xl font-light mb-4 text-white">Capital Allocation</h3><p class="text-white/40 text-sm leading-loose">For enterprises and family offices: balance sheet strategy, investment committee advisory, portfolio restructuring.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Advisory 02</h4><h3 class="text-2xl font-light mb-4 text-white">Risk Architecture</h3><p class="text-white/40 text-sm leading-loose">Governance framework design, risk architecture. Long-term capital partners.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Platforms</h4><h3 class="text-2xl font-light mb-4 text-white">Custom Implementation</h3><p class="text-white/40 text-sm leading-loose">White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Economics</h4><h3 class="text-2xl font-light mb-4 text-white">Licensing & Revenue</h3><p class="text-white/40 text-sm leading-loose">Implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
+            <div class="carousel-item prev"><div class="carousel-card"><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Strategy</h4><h3 class="text-2xl font-light mb-4 text-white">MINT Value Prop</h3><p class="text-white/40 text-sm leading-loose">Traditional managers are product-driven; consultants are strategy-heavy; MINT delivers integrated strategy and tech.</p></div></div>
         </div>
 
         <div class="mt-20 flex gap-4">
@@ -266,15 +254,16 @@
 
     <section class="py-40 bg-[#fbfbfb] text-black" id="opportunitySection">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <h2 class="text-4xl md:text-6xl font-light mb-20 tracking-tighter text-center uppercase">Platform Synergies</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bento-pill">
-                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-widest mb-8 block">Retail and Commercial Synergy</span>
-                    <span class="text-5xl font-light text-black mb-6">Retail</span>
+                    <span class="bento-purple-text text-[10px] uppercase tracking-widest mb-8 block">Retail and Commercial Synergy</span>
+                    <span class="text-5xl font-light bento-purple-text mb-6">Retail</span>
                     <p class="text-gray-500 text-sm leading-relaxed">Underpenetrated wealth access, emerging affluent growth, digital-first behaviour.</p>
                 </div>
                 <div class="bento-pill">
-                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-widest mb-8 block">Market Opportunity</span>
-                    <span class="text-5xl font-light text-black mb-6">Commercial</span>
+                    <span class="bento-purple-text text-[10px] uppercase tracking-widest mb-8 block">Market Opportunity</span>
+                    <span class="text-5xl font-light bento-purple-text mb-6">Commercial</span>
                     <p class="text-gray-500 text-sm leading-relaxed">Idle corporate cash, fragmented treasury systems, poor execution optimisation, growing family office presence, demand for digitised capital management.</p>
                 </div>
                 <div class="bento-pill md:col-span-2 bento-pill-blue">
@@ -317,7 +306,7 @@
             const header = document.getElementById('main-header');
             gsap.registerPlugin(ScrollTrigger);
 
-            // Adaptive Header Logic
+            // Adaptive Header Logic: Dark Items on Light Backgrounds
             ScrollTrigger.create({
                 trigger: "#synergySection", start: "top 80", end: "bottom 80",
                 onEnter: () => header.classList.add('header-dark-items'),
@@ -326,7 +315,15 @@
                 onLeaveBack: () => header.classList.remove('header-dark-items')
             });
 
-            // Buildings Animation (Bottom aligned with text)
+            ScrollTrigger.create({
+                trigger: "#opportunitySection", start: "top 80", end: "bottom 80",
+                onEnter: () => header.classList.add('header-dark-items'),
+                onLeave: () => header.classList.remove('header-dark-items'),
+                onEnterBack: () => header.classList.add('header-dark-items'),
+                onLeaveBack: () => header.classList.remove('header-dark-items')
+            });
+
+            // Buildings Animation
             gsap.to("#cornerBuildings", {
                 opacity: 1, scale: 1.1, y: 0, duration: 1.5,
                 scrollTrigger: { trigger: "#synergySection", start: "top 60%", toggleActions: "play none none reverse" }
