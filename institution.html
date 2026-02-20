@@ -23,17 +23,21 @@
             background-color: #050505;
             color: #ffffff;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        /* --- NAVIGATION STYLES (Synced with index.html) --- */
+        /* --- NAVIGATION STYLES --- */
         #main-header.header-hidden { transform: translateY(-100%); }
+        
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.98);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(20px);
         }
         #main-header.header-dark .nav-link, 
-        #main-header.header-dark .logo-img { filter: brightness(0); }
+        #main-header.header-dark #mobile-menu-btn { color: #000000; }
+        #main-header.header-dark .logo-img { filter: brightness(0) !important; }
 
         .nav-dropdown {
             opacity: 0;
@@ -43,7 +47,12 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
         }
-        .group:hover .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .group:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
 
         /* --- UI COMPONENTS --- */
         .glass-card {
@@ -67,10 +76,16 @@
         }
         @keyframes shimmer { to { background-position: -250% center; } }
 
-        .mobile-accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .mobile-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         .mobile-accordion-content.active { max-height: 500px; }
         .accordion-chevron { transition: transform 0.3s ease; }
         .accordion-chevron.active { transform: rotate(180deg); }
+
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -88,7 +103,7 @@
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest text-white uppercase">
                 <div class="relative group py-4">
                     <a href="index.html" class="nav-link personal-trigger hover:text-gray-300 transition-all text-sm">Personal</a>
-                    <div class="nav-dropdown absolute top-full left-0 w-72 rounded-3xl shadow-2xl p-8 flex flex-col gap-8 mt-4 border border-white/20">
+                    <div class="nav-dropdown absolute top-full left-0 w-72 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-8 flex flex-col gap-8 mt-4 border border-white/20">
                         <a href="index.html#blackSection" class="text-xs text-gray-400 hover:text-black transition-colors tracking-[0.3em] font-medium">Features</a>
                         <div class="flex flex-col gap-4">
                             <a href="index.html#investSection" class="text-base font-semibold text-black hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight">Invest</a>
@@ -103,6 +118,7 @@
                         </div>
                     </div>
                 </div>
+
                 <a href="institution.html" class="nav-link text-[var(--mint-primary-purple)] font-bold transition-all text-sm">Institution</a>
                 <a href="about.html" class="nav-link hover:text-gray-300 transition-all text-sm">About</a>
                 <a href="contact.html" class="nav-link hover:text-gray-300 transition-all text-sm">Contact</a>
@@ -114,21 +130,19 @@
         </nav>
     </header>
 
-    <section class="min-h-screen relative bg-cover bg-center bg-no-repeat flex items-center overflow-hidden z-20" style="background-image: url('images/TransactBG.png');">
-        
+    <section id="heroSection" class="min-h-screen relative bg-cover bg-center bg-no-repeat flex items-center overflow-hidden z-20" style="background-image: url('images/TransactBG.png');">
         <div class="absolute inset-0 bg-black/45"></div>
 
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 gap-16">
-            
             <div class="flex flex-col justify-center">
                 <div class="flex items-center gap-4 mb-8">
                     <div class="h-[1px] w-12 bg-white/40"></div>
                     <span class="text-[11px] text-white/70 uppercase tracking-[0.5em] font-bold">Institutional Capital</span>
                 </div>
-                <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-none mb-8">
+                <h1 class="text-6xl md:text-9xl font-light text-white tracking-tight leading-none mb-8">
                     Capital<br><span class="shimmer-text">Architecture</span>
                 </h1>
-                <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-xl">
+                <p class="text-white/70 text-lg md:text-2xl font-light leading-relaxed mb-12 max-w-xl">
                     Tailored capital solutions across investment, execution, and infrastructure for family offices, SMEs, and private capital pools.
                 </p>
                 
@@ -141,68 +155,209 @@
 
             <div class="relative h-[400px] lg:h-[600px] flex items-center justify-center">
                 <div class="absolute w-[400px] h-[400px] bg-[#5c3bcf]/10 blur-[150px] rounded-full pointer-events-none opacity-60 mix-blend-screen"></div>
-                <div class="grid grid-cols-2 gap-6 w-full max-w-md perspective-1000">
-                    <div class="glass-card h-56 rounded-[2.5rem] flex items-center justify-center border-white/20"><span class="text-white/20 font-light tracking-widest">STRUCTURE</span></div>
-                    <div class="glass-card h-72 rounded-[2.5rem] translate-y-8 flex items-center justify-center border-white/40 shadow-2xl"><span class="shimmer-text font-light tracking-widest">OPTIMISE</span></div>
-                    <div class="glass-card h-64 rounded-[2.5rem] -translate-y-8 flex items-center justify-center border-white/20"><span class="text-white/20 font-light tracking-widest">BUILD</span></div>
-                    <div class="glass-card h-56 rounded-[2.5rem] flex items-center justify-center border-[var(--mint-primary-purple)]/30"><span class="text-[var(--mint-primary-purple)] opacity-60 font-bold tracking-widest">MINT</span></div>
+                <div class="grid grid-cols-2 gap-6 w-full max-w-md perspective-1000 transform rotate-y-12">
+                    <div class="glass-card h-56 rounded-[2.5rem] flex items-center justify-center border-white/20">
+                        <span class="text-white/20 font-light tracking-widest text-center px-4">STRUCTURE</span>
+                    </div>
+                    <div class="glass-card h-72 rounded-[2.5rem] translate-y-8 flex items-center justify-center border-white/40 shadow-2xl">
+                        <span class="shimmer-text font-light tracking-widest text-center px-4">OPTIMISE</span>
+                    </div>
+                    <div class="glass-card h-64 rounded-[2.5rem] -translate-y-8 flex items-center justify-center border-white/20">
+                        <span class="text-white/20 font-light tracking-widest text-center px-4">BUILD</span>
+                    </div>
+                    <div class="glass-card h-56 rounded-[2.5rem] flex items-center justify-center border-[var(--mint-primary-purple)]/30">
+                        <span class="text-[var(--mint-primary-purple)] opacity-60 font-bold tracking-widest">MINT</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 relative bg-[#050505] border-t border-white/5">
+    <section id="solutionsSection" class="py-32 relative bg-[#050505] border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <h2 class="text-3xl md:text-5xl font-light text-white mb-20 text-center tracking-tight">Core Capital Solutions</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div class="glass-card p-10 rounded-[3rem]">
                     <h3 class="text-2xl font-medium text-white mb-6">Investment Mandates</h3>
-                    <p class="text-white/50 text-sm leading-relaxed mb-8">Bespoke strategies covering multi-asset construction and treasury allocation frameworks.</p>
+                    <p class="text-white/50 text-sm leading-relaxed mb-8">
+                        Bespoke multi-asset construction, liquidity management, and treasury allocation frameworks designed for institutional oversight.
+                    </p>
                     <div class="h-[1px] w-full bg-white/10 mb-8"></div>
                     <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-4">
-                        <li>Risk-Optimised Frameworks</li>
+                        <li>Risk-Optimised Mandates</li>
                         <li>Alternative Exposure</li>
-                        <li>Mandate Oversight</li>
+                        <li>Governance Alignment</li>
                     </ul>
                 </div>
                 <div class="glass-card p-10 rounded-[3rem] border-white/20 bg-white/5">
                     <h3 class="text-2xl font-medium text-white mb-6">Fund Structuring</h3>
-                    <p class="text-white/50 text-sm leading-relaxed mb-8">White-label vehicles, SPVs, and private pooled structures with full regulatory alignment.</p>
+                    <p class="text-white/50 text-sm leading-relaxed mb-8">
+                        Customised vehicles including SPVs and co-investment structures aligned with regulatory requirements.
+                    </p>
                     <div class="h-[1px] w-full bg-white/10 mb-8"></div>
                     <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-4">
                         <li>SPV Administration</li>
-                        <li>Regulatory Alignment</li>
+                        <li>White-label Funds</li>
                         <li>Capital Allocation Design</li>
                     </ul>
                 </div>
                 <div class="glass-card p-10 rounded-[3rem]">
                     <h3 class="text-2xl font-medium text-white mb-6">Execution Policy</h3>
-                    <p class="text-white/50 text-sm leading-relaxed mb-8">Institutional-grade best execution analysis and liquidity mapping to reduce slippage.</p>
+                    <p class="text-white/50 text-sm leading-relaxed mb-8">
+                        Best execution analysis and liquidity mapping to reduce slippage through trade performance analytics.
+                    </p>
                     <div class="h-[1px] w-full bg-white/10 mb-8"></div>
                     <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-4">
                         <li>Smart Routing Advisory</li>
-                        <li>Liquidity Mapping</li>
-                        <li>Trade Analytics</li>
+                        <li>Cost Analysis Mapping</li>
+                        <li>Slippage Reduction</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#050505] text-white pt-24 pb-12 border-t border-white/5 opacity-80">
-        <div class="max-w-7xl mx-auto px-6 md:px-10 text-center">
-            <p class="text-[10px] text-gray-700 mb-8 uppercase tracking-[0.4em] font-light">Architecting Institutional Efficiency</p>
-            <div class="flex justify-between items-center text-[9px] text-gray-600 border-t border-white/5 pt-10">
+    <section id="infrastructureSection" class="py-32 relative overflow-hidden bg-[#0a0a0a]">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            <div class="lg:col-span-5">
+                <h2 class="text-4xl md:text-6xl font-light mb-8 tracking-tight text-white">Digital Capital <br><span class="text-[var(--mint-primary-purple)]">Infrastructure</span></h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-12">
+                    MINT provides the technical rails for real-time money movement, investment lifecycle automation, and smart routing.
+                </p>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4 p-6 glass-card rounded-2xl">
+                        <div class="text-[var(--mint-primary-purple)] font-bold">01</div>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-1">OMS & PM Integration</h4>
+                            <p class="text-xs text-gray-500">Portfolio management systems with automated trade reporting dashboards.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-6 glass-card rounded-2xl">
+                        <div class="text-[var(--mint-primary-purple)] font-bold">02</div>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-1">Treasury Dashboards</h4>
+                            <p class="text-xs text-gray-500">Cash flow forecasting and multi-account consolidation via API integrations.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-6 glass-card rounded-2xl">
+                        <div class="text-[var(--mint-primary-purple)] font-bold">03</div>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-1">Custom Platforms</h4>
+                            <p class="text-xs text-gray-500">White-label investment portals and internal digital capital tracking.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-7">
+                <div class="w-full h-[500px] glass-card rounded-[3rem] overflow-hidden flex items-center justify-center relative p-12">
+                    <div class="absolute inset-0 bg-gradient-to-br from-[var(--mint-primary-purple)]/10 to-transparent"></div>
+                    <div class="relative z-10 w-full space-y-6">
+                        <div class="h-12 w-1/2 bg-white/5 rounded-xl border border-white/10 flex items-center px-6">
+                            <div class="w-2 h-2 rounded-full bg-emerald-400 mr-4 animate-pulse"></div>
+                            <span class="text-[9px] text-white/40 tracking-widest uppercase">Institutional Rail Active</span>
+                        </div>
+                        <div class="h-40 w-full bg-white/5 rounded-2xl border border-white/10 p-8 flex flex-col justify-center">
+                            <span class="text-5xl font-light text-white tracking-tighter">R 1.42B</span>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">Aggregate Treasury Velocity</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="h-28 bg-white/5 rounded-2xl border border-white/10 flex flex-col justify-center px-8">
+                                <span class="text-2xl text-white">99.9%</span>
+                                <span class="text-[9px] text-gray-500 uppercase tracking-wider">Execution Accuracy</span>
+                            </div>
+                            <div class="h-28 bg-[var(--mint-primary-purple)]/10 rounded-2xl border border-[var(--mint-primary-purple)]/30 flex flex-col justify-center px-8">
+                                <span class="text-2xl text-[var(--mint-primary-purple)]">Direct</span>
+                                <span class="text-[9px] text-gray-500 uppercase tracking-wider">Liquidity Access</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-white text-black text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl md:text-6xl font-light mb-12 tracking-tight">The MINT Advantage</h2>
+            <p class="text-gray-600 text-lg md:text-2xl font-light leading-relaxed mb-16">
+                Consultants are strategy-heavy; tech vendors are software-only. MINT delivers strategy, structure, execution, technology, and regulatory alignment in one integrated solution.
+            </p>
+            <a href="mailto:institution@mymint.co.za" class="inline-flex items-center gap-12 bg-black text-white px-10 py-5 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform duration-300">
+                Architecture Consultation
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-[#050505] text-white pt-24 pb-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20 opacity-60">
+                <div class="space-y-6">
+                    <img src="images/LOGO 2 MINT.png" class="h-6 brightness-0 invert">
+                    <p class="text-xs text-gray-500">Architecting institutional capital efficiency.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest mb-6">Pillars</h4>
+                    <ul class="text-xs space-y-4 text-gray-500">
+                        <li><a href="index.html#investSection">Invest</a></li>
+                        <li><a href="index.html#borrowSection">Borrow</a></li>
+                        <li><a href="index.html#transactSection">Transact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-widest mb-6">Compliance</h4>
+                    <ul class="text-xs space-y-4 text-gray-500">
+                        <li>FSP 55118</li>
+                        <li>NCRCP22892</li>
+                        <li>Privacy Policy</li>
+                    </ul>
+                </div>
+                <div class="bg-white/5 p-8 rounded-3xl">
+                    <h4 class="text-white font-semibold mb-2 text-sm">Institutional Hub</h4>
+                    <p class="text-gray-500 text-[10px] mb-6">Access your digital capital dashboard.</p>
+                    <a href="https://mymint.co.za" class="text-xs font-bold text-[var(--mint-primary-purple)]">Go to MINT →</a>
+                </div>
+            </div>
+            <p class="text-[10px] text-gray-800 text-justify mb-8 leading-relaxed opacity-40">
+                MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892). Institutional mandates are subject to specific risk disclosures and regulatory requirements.
+            </p>
+            <div class="flex justify-between items-center text-[9px] text-gray-600 uppercase tracking-widest border-t border-white/5 pt-10">
                 <p>&copy; 2026 MINT. All rights reserved.</p>
-                <div class="flex gap-8"><span>Privacy</span><span>Terms</span><span>NCRCP22892</span></div>
+                <div class="flex gap-8"><span>Security</span><span>Sustainability</span></div>
             </div>
         </div>
     </footer>
 
     <script>
+        // --- NAVIGATION LOGIC ---
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            }
+        }
+
+        function toggleAccordion(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const chevron = btn.querySelector('.accordion-chevron');
+            const content = btn.closest('div').nextElementSibling;
+            if (chevron && content) {
+                chevron.classList.toggle('active');
+                content.classList.toggle('active');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const header = document.getElementById('main-header');
-            
-            // Header Theme Management (Transparent to Dark)
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            if (mobileBtn) mobileBtn.addEventListener('click', toggleMenu);
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- HEADER THEME TRIGGER ---
             ScrollTrigger.create({
                 trigger: "body",
                 start: "top -100",
@@ -210,18 +365,25 @@
                 onLeaveBack: () => header.classList.remove('header-dark')
             });
 
-            // Smooth reveal animations
-            gsap.from(".glass-card", {
-                scrollTrigger: { trigger: ".glass-card", start: "top 90%" },
-                y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out"
+            // --- REVEAL ANIMATIONS ---
+            gsap.utils.toArray('.glass-card').forEach(card => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 90%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 60,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power3.out"
+                });
             });
-        });
 
-        function toggleAccordion(e) { 
-            e.stopPropagation(); 
-            e.currentTarget.querySelector('.accordion-chevron').classList.toggle('active'); 
-            e.currentTarget.closest('div').nextElementSibling.classList.toggle('active'); 
-        }
+            // Hero Text Animation
+            gsap.from("#heroSection h1", { opacity: 0, y: 30, duration: 1.5, ease: "power4.out", delay: 0.3 });
+            gsap.from("#heroSection p", { opacity: 0, y: 20, duration: 1.5, ease: "power4.out", delay: 0.6 });
+        });
     </script>
 </body>
 </html>
