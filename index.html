@@ -47,17 +47,33 @@
         #main-header.header-dark #mobile-menu-btn { color: #000000; }
         #main-header.header-dark .logo-img { filter: brightness(0) !important; }
 
-        /* --- HERO SPECIFIC: Transparent background, Dark text --- */
+        
         #main-header.header-hero-dark-text {
             background-color: transparent !important;
             backdrop-filter: none !important;
             border-color: transparent !important;
         }
-        #main-header.header-hero-dark-text .nav-link { color: #4b5563; }
-        #main-header.header-hero-dark-text .nav-link:hover { color: #000000; }
-        #main-header.header-hero-dark-text #mobile-menu-btn { color: #000000; }
-        #main-header.header-hero-dark-text .logo-img { filter: brightness(0) !important; }
+        #main-header.header-hero-dark-text {
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            border-color: transparent !important;
+        }
+        
+        #main-header.header-hero-dark-text .nav-link { 
+            color: #ffffff; 
+        }
+        
+        #main-header.header-hero-dark-text .nav-link:hover { 
 
+        }
+        
+        #main-header.header-hero-dark-text #mobile-menu-btn { 
+            color: #ffffff; 
+        }
+
+        #main-header.header-hero-dark-text .logo-img { 
+            filter: brightness(0) invert(1) !important; 
+        }
         /* --- CTA BUTTON STYLE --- */
         .mint-cta-btn {
             display: inline-flex;
@@ -720,7 +736,7 @@
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
         gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
 
-        gsap.set("#investTitleWrapper", { y: window.innerHeight });
+        //gsap.set("#investTitleWrapper", { y: window.innerHeight });
 
         gsap.set("#investLeft", { xPercent: -150, yPercent: 0 });
         gsap.set("#investRight", { xPercent: 150, yPercent: 0 });
