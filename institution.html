@@ -27,7 +27,7 @@
             padding: 0;
         }
 
-        /* --- HEADER STYLES (Carbon Copy index (65).html) --- */
+        /* --- HEADER STYLES (Identical to index (65).html) --- */
         #main-header.header-hidden { transform: translateY(-100%); }
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.9);
@@ -38,7 +38,7 @@
         #main-header.header-dark .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark #mobile-menu-btn { color: #000000; }
 
-        /* --- CTA DESIGN (Carbon Copy index (65).html) --- */
+        /* --- CTA DESIGN (Identical to index (65).html) --- */
         .mint-cta-btn {
             display: inline-flex;
             align-items: center;
@@ -81,17 +81,62 @@
         }
         .group:hover .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
 
-        /* --- UI COMPONENTS --- */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
+        /* --- EXPANDING PILLARS SYSTEM --- */
+        .pillar-container {
+            display: flex;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
+
+        .pillar {
+            flex: 1;
+            height: 100%;
+            position: relative;
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pillar:last-child { border-right: none; }
+
+        .pillar:hover, .pillar.active {
+            flex: 2.5;
+            background-color: rgba(92, 59, 207, 0.05);
+        }
+
+        .pillar-content-closed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            white-space: nowrap;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .pillar:hover .pillar-content-closed, 
+        .pillar.active .pillar-content-closed {
+            opacity: 0;
+        }
+
+        .pillar-content-open {
+            opacity: 0;
+            padding: 4rem;
+            height: 100%;
+            display: flex;
+            flex-col justify-center;
+            transition: opacity 0.5s ease 0.2s;
+            pointer-events: none;
+        }
+
+        .pillar:hover .pillar-content-open, 
+        .pillar.active .pillar-content-open {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .shimmer-text {
@@ -102,8 +147,6 @@
             animation: shimmer 5s linear infinite;
         }
         @keyframes shimmer { to { background-position: -250% center; } }
-        
-        #heroSection { background-size: 110% 110%; }
     </style>
 </head>
 <body>
@@ -121,18 +164,14 @@
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest text-white uppercase">
                 <div class="relative group py-4">
                     <a href="index.html" class="nav-link personal-trigger hover:text-gray-300 transition-all text-sm">Personal</a>
-                    <div class="nav-dropdown absolute top-full left-0 w-72 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-8 flex flex-col gap-8 mt-4 border border-white/20">
+                    <div class="nav-dropdown absolute top-full left-0 w-72 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-8 flex flex-col gap-8 mt-4 border border-white/20 text-black">
                         <a href="index.html#blackSection" class="text-xs text-gray-400 hover:text-black transition-colors tracking-[0.3em] font-medium">Features</a>
                         <div class="flex flex-col gap-4">
-                            <a href="index.html#investSection" class="text-base font-semibold text-black hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight text-black">Invest</a>
-                            <div class="flex flex-col gap-3 pl-4 border-l border-gray-100">
-                                <a href="index.html#stepsSection" class="text-xs text-gray-500 hover:text-black normal-case tracking-tight">Open Strategies (5 Steps)</a>
-                                <a href="index.html#assetDeploymentSection" class="text-xs text-gray-500 hover:text-black normal-case tracking-tight">Assets, News & Goals</a>
-                            </div>
+                            <a href="index.html#investSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight">Invest</a>
                         </div>
                         <div class="flex flex-col gap-6 border-t border-gray-50 pt-6">
-                            <a href="index.html#borrowSection" class="text-base font-semibold text-black hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight text-black">Borrow</a>
-                            <a href="index.html#transactSection" class="text-base font-semibold text-black hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight text-black">Transact</a>
+                            <a href="index.html#borrowSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight">Borrow</a>
+                            <a href="index.html#transactSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case tracking-tight">Transact</a>
                         </div>
                     </div>
                 </div>
@@ -153,7 +192,7 @@
         </nav>
     </header>
 
-    <section id="heroSection" class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center bg-no-repeat" style="background-image: url('images/TransactBG.png');">
+    <section id="heroSection" class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center bg-no-repeat" style="background-image: url('images/Institutionhero.png');">
         <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/70 to-transparent z-10"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div class="lg:col-span-8 flex flex-col justify-center">
@@ -162,12 +201,11 @@
                     <span class="text-[11px] text-white/70 uppercase tracking-[0.5em] font-bold">Commercial Capital Solutions</span>
                 </div>
                 <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8">
-                    Mandate-led.<br><span class="shimmer-text">Customised.</span><br>Strategic.
+                    Capital<br><span class="shimmer-text">Architecture</span>
                 </h1>
                 <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl">
-                    Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.
+                    Commercial capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions.
                 </p>
-                
                 <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex" style="width: fit-content;">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Architecture Consultation</span>
                     <div class="mint-cta-icon">
@@ -179,59 +217,78 @@
         </div>
     </section>
 
-    <section class="py-32 relative bg-[#050505] border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 md:px-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                
-                <div class="glass-card p-10 rounded-[3rem]">
-                    <h3 class="text-2xl font-medium text-white mb-6">Investment Mandates</h3>
-                    <p class="text-white/50 text-xs mb-8">Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure.</p>
-                    <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-3 pt-6 border-t border-white/5">
-                        <li>Ongoing Reporting</li>
-                        <li>Governance Alignment</li>
-                        <li>Mandate Oversight</li>
-                    </ul>
+    <section class="pillar-container">
+        <div class="pillar bg-[#050505]">
+            <div class="pillar-content-closed">
+                <span class="text-xs uppercase tracking-[0.6em] text-white/30 font-bold">01 — Investment Mandates</span>
+            </div>
+            <div class="pillar-content-open flex-col">
+                <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-4">Core Solution 01</span>
+                <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Investment<br>Mandates</h2>
+                <div class="max-w-2xl">
+                    <p class="text-white/60 text-lg leading-relaxed mb-12">
+                        Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Reporting</span>
+                            <p class="text-sm text-white/40">Ongoing reporting and governance alignment.</p>
+                        </div>
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Oversight</span>
+                            <p class="text-sm text-white/40">Dedicated mandate oversight for private pools.</p>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="glass-card p-10 rounded-[3rem] border-white/20">
-                    <h3 class="text-2xl font-medium text-white mb-6">Fund Structuring</h3>
-                    <p class="text-white/50 text-xs mb-8">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds.</p>
-                    <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-3 pt-6 border-t border-white/5">
-                        <li>Regulatory Alignment</li>
-                        <li>Portfolio Oversight</li>
-                        <li>Capital Allocation Design</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card p-10 rounded-[3rem]">
-                    <h3 class="text-2xl font-medium text-white mb-6">Institutional Execution</h3>
-                    <p class="text-white/50 text-xs mb-8">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis, slippage reduction, smart routing advisory, trade performance analytics.</p>
-                    <ul class="text-[10px] text-white/30 uppercase tracking-[0.2em] space-y-3 pt-6 border-t border-white/5">
-                        <li>Execution Policy Design</li>
-                        <li>Liquidity Mapping</li>
-                        <li>Cost Analysis</li>
-                    </ul>
-                </div>
-
             </div>
         </div>
-    </section>
 
-    <section class="py-32 bg-[#0a0a0a] relative overflow-hidden border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-6 md:px-10">
-            <h2 class="text-4xl md:text-6xl font-light text-white mb-20 tracking-tight">Digital Capital Infrastructure</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="glass-card p-10 rounded-3xl">
-                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-xs uppercase tracking-widest mb-6">Investment & Execution</h4>
-                    <p class="text-white/60 text-sm leading-relaxed mb-6">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p>
-                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-xs uppercase tracking-widest mb-6 pt-6 border-t border-white/5">CRM & Workflow</h4>
-                    <p class="text-white/60 text-sm leading-relaxed">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p>
+        <div class="pillar bg-[#080808]">
+            <div class="pillar-content-closed">
+                <span class="text-xs uppercase tracking-[0.6em] text-white/30 font-bold">02 — Fund Structuring</span>
+            </div>
+            <div class="pillar-content-open flex-col">
+                <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-4">Core Solution 02</span>
+                <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Fund<br>Structuring</h2>
+                <div class="max-w-2xl">
+                    <p class="text-white/60 text-lg leading-relaxed mb-12">
+                        Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Compliance</span>
+                            <p class="text-sm text-white/40">Regulatory alignment and vehicle structuring.</p>
+                        </div>
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Portfolio</span>
+                            <p class="text-sm text-white/40">Capital allocation design and portfolio oversight.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="glass-card p-10 rounded-3xl">
-                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-xs uppercase tracking-widest mb-6">Treasury & Capital</h4>
-                    <p class="text-white/60 text-sm leading-relaxed mb-6">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p>
-                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-xs uppercase tracking-widest mb-6 pt-6 border-t border-white/5">Custom Platforms</h4>
-                    <p class="text-white/60 text-sm leading-relaxed">White-label investment platforms, internal digital capital portals, data aggregation.</p>
+            </div>
+        </div>
+
+        <div class="pillar bg-[#0a0a0a]">
+            <div class="pillar-content-closed">
+                <span class="text-xs uppercase tracking-[0.6em] text-white/30 font-bold">03 — Institutional Execution</span>
+            </div>
+            <div class="pillar-content-open flex-col">
+                <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-4">Core Solution 03</span>
+                <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Institutional<br>Execution</h2>
+                <div class="max-w-2xl">
+                    <p class="text-white/60 text-lg leading-relaxed mb-12">
+                        Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis, slippage reduction, smart routing advisory, trade performance analytics.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Policy</span>
+                            <p class="text-sm text-white/40">Execution policy design and benchmarking.</p>
+                        </div>
+                        <div class="flex flex-col gap-4 border-t border-white/10 pt-6">
+                            <span class="text-[10px] text-[var(--mint-primary-purple)] font-bold uppercase tracking-widest">Analytics</span>
+                            <p class="text-sm text-white/40">Cost analysis and liquidity mapping.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -240,23 +297,22 @@
     <section class="py-32 bg-white text-black relative">
         <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div>
-                <h2 class="text-4xl md:text-6xl font-light mb-10 tracking-tight leading-tight">Strategic Synergy</h2>
-                <div class="space-y-8 text-gray-600 text-lg leading-relaxed">
-                    <p>Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions, white-label retail offerings, and leverage retail rails for treasury mobility.</p>
-                    <p class="font-medium text-black">Strategic Positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency.</p>
+                <h2 class="text-4xl md:text-6xl font-light mb-10 tracking-tight leading-tight">MINT Synergy</h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-12">
+                    Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions and leverage retail rails for treasury mobility.
+                </p>
+                <div class="p-8 border-l-4 border-[var(--mint-primary-purple)] bg-gray-50">
+                    <p class="font-medium text-black">"Strategic positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency. MINT is not just an investment platform; it is a capital infrastructure company."</p>
                 </div>
             </div>
-            <div class="p-12 glass-card rounded-[4rem] border-gray-100 bg-gray-50 flex flex-col justify-center">
-                <h3 class="text-2xl font-medium mb-8">Market Opportunity</h3>
-                <div class="space-y-6">
-                    <div>
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Retail Segment</span>
-                        <p class="text-sm">Underpenetrated wealth access, emerging affluent growth, digital-first behaviour.</p>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Commercial Segment</span>
-                        <p class="text-sm">Idle corporate cash, fragmented treasury systems, poor execution optimisation, growing family office presence, demand for digitised capital management.</p>
-                    </div>
+            <div class="flex flex-col justify-center gap-10">
+                <div class="p-10 border border-gray-100 rounded-[3rem] shadow-sm">
+                    <h4 class="text-xl font-medium mb-4">Retail Growth</h4>
+                    <p class="text-sm text-gray-500">Underpenetrated wealth access, emerging affluent growth, digital-first behaviour.</p>
+                </div>
+                <div class="p-10 border border-gray-100 rounded-[3rem] shadow-sm bg-[var(--mint-primary-purple)] text-white">
+                    <h4 class="text-xl font-medium mb-4">Commercial Velocity</h4>
+                    <p class="text-sm text-white/80">Idle corporate cash, fragmented treasury systems, demand for digitised capital management.</p>
                 </div>
             </div>
         </div>
@@ -275,9 +331,14 @@
                 </div>
                 <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li>Home</li><li>Features</li><li>About Us</li></ul></div>
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>3 Gwen Ln, Sandown, 2031</li><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2">Ready to start?</h4><a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a></div>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
+                    <h4 class="text-white font-semibold mb-2">Ready to start?</h4>
+                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a>
+                </div>
             </div>
-            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 leading-relaxed text-justify opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).</div>
+            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 leading-relaxed text-justify opacity-60">
+                MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).
+            </div>
             <div class="flex justify-between items-center text-xs text-gray-500 pt-10"><p>&copy; 2026 MINT. All rights reserved.</p></div>
         </div>
     </footer>
@@ -292,6 +353,7 @@
 
             gsap.registerPlugin(ScrollTrigger);
 
+            // --- HEADER THEME ---
             ScrollTrigger.create({
                 trigger: "body",
                 start: "top -100",
@@ -299,19 +361,20 @@
                 onLeaveBack: () => header.classList.remove('header-dark')
             });
 
+            // --- BACKGROUND PARALLAX ---
             gsap.to("#heroSection", {
                 backgroundPositionY: "40%",
                 ease: "none",
-                scrollTrigger: {
-                    trigger: "#heroSection",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true
-                }
+                scrollTrigger: { trigger: "#heroSection", start: "top top", end: "bottom top", scrub: true }
             });
 
-            gsap.utils.toArray('.glass-card').forEach(card => {
-                gsap.from(card, { scrollTrigger: { trigger: card, start: "top 90%" }, y: 50, opacity: 0, duration: 1.2, ease: "power3.out" });
+            // --- PILLAR INTERACTION ---
+            const pillars = document.querySelectorAll('.pillar');
+            pillars.forEach(pillar => {
+                pillar.addEventListener('mouseenter', () => {
+                    pillars.forEach(p => p.classList.remove('active'));
+                    pillar.classList.add('active');
+                });
             });
         });
     </script>
