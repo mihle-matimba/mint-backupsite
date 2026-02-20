@@ -197,7 +197,7 @@
             transform: translateY(-50%);
             width: 25vw; 
             max-width: 300px;
-            z-index: 15; 
+            z-index: 100; 
             opacity: 0;
             will-change: transform, opacity;
         }
@@ -752,19 +752,22 @@
         tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // WHITE SCREEN REVEAL
         tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // Change text to dark but KEEP transparent background when white screen reveals
-        tl.to("#main-header", {
-            onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
-            onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
-            duration: 0.1
-        }, "reveal+=1.5");
-
-        tl.to("#investLeft", { xPercent: 0, yPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
-        tl.to("#investRight", { xPercent: 0, yPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
-
+        
+        tl.to("#investLeft", { 
+            xPercent: 0, 
+            opacity: 1, 
+            duration: 3, 
+            ease: "power3.out" 
+        }, "reveal");
+        
+        tl.to("#investRight", { 
+            xPercent: 0, 
+            opacity: 1, 
+            duration: 3, 
+            ease: "power3.out" 
+        }, "reveal");
 
         // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
         tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
