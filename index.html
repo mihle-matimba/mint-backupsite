@@ -192,15 +192,16 @@
         }
 
         .side-image {
-            position: absolute;
-            top: 50%; 
-            transform: translateY(-50%); 
-            width: 25vw; 
-            max-width: 300px;
-            z-index: 15; 
-            opacity: 0;
-            will-change: transform, opacity;
-        }
+        position: absolute;
+        bottom: 0; 
+        left: 50%;
+        transform: translate(-50%, 100%); 
+        width: 25vw; 
+        max-width: 300px;
+        z-index: 15; 
+        opacity: 0;
+        will-change: transform, opacity;
+        pointer-events: none;
         
         .hero-final .final-left, 
         .hero-final .final-right { pointer-events: auto; }
@@ -369,11 +370,11 @@
             <img src="images/Invest3.png" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
-        <div id="investLeft" class="side-image left-[10%]">
+        <div id="investLeft" class="side-image">
             <img src="images/Invest1.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
-
-        <div id="investRight" class="side-image right-[10%]">
+        
+        <div id="investRight" class="side-image">
             <img src="images/Invest2.png" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
@@ -744,11 +745,17 @@
         tl.from(".final-left", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
         tl.from(".final-right", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
 
-        // STEP 3: Slide Center Image Up 
-        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "+=0.5"); 
+        // STEP 3: All Images Slide Up Together from the bottom
+        tl.to([".hero-image-slide", "#investLeft", "#investRight"], { 
+            y: "0", // Moves them up from their CSS transform: translateY(100%)
+            opacity: 1, 
+            duration: 2.5, 
+            ease: "power3.out" 
+        }, "+=0.5"); 
+
         tl.to(".hero-final", { opacity: 0.3, duration: 2 }, "<+=0.5");
 
-        // STEP 4: Video Swipes Up & Side Images Slide In
+        // STEP 4: Video Swipes Up
         tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
@@ -761,9 +768,6 @@
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
             duration: 0.1
         }, "reveal+=1.5");
-
-        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
-        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
 
 
         // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
