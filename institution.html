@@ -27,7 +27,7 @@
             padding: 0;
         }
 
-        /* --- NAVBAR LOGIC (Synced with index (65).html) --- */
+        /* --- NAVBAR LOGIC (Carbon Copy index (65).html) --- */
         #main-header.header-hidden { transform: translateY(-100%); }
         #main-header {
             background-color: transparent !important;
@@ -37,8 +37,6 @@
         #main-header .logo-img { filter: brightness(0) invert(1) !important; transition: filter 0.3s ease; }
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
-
-        /* Dark state for light sections */
         #main-header.header-dark-items .nav-link { color: #000000; }
         #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
@@ -57,119 +55,79 @@
             text-decoration: none;
             white-space: nowrap;
         }
-        .mint-cta-btn:hover {
-            box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2);
-            transform: scale(1.02);
-        }
+        .mint-cta-btn:hover { box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2); transform: scale(1.02); }
         .mint-cta-icon {
             background-color: var(--mint-primary-purple);
-            color: white;
-            width: 2.5rem;
-            height: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 9999px;
-            position: relative;
-            overflow: hidden;
+            color: white; width: 2.5rem; height: 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9999px; position: relative; overflow: hidden;
         }
         .mint-cta-btn:hover .mint-cta-icon svg:first-child { transform: translate(2rem, -2rem); }
         .mint-cta-btn:hover .mint-cta-icon svg:last-child { transform: translate(0, 0); }
 
-        /* --- EXPANDING PILLARS SYSTEM --- */
-        .pillar-container {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background-color: var(--mint-black);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+        /* --- PILLAR SYSTEM --- */
+        .pillar-container { display: flex; width: 100%; height: 100vh; overflow: hidden; background-color: var(--mint-black); }
+        .pillar { flex: 1; height: 100%; position: relative; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; overflow: hidden; background-color: var(--mint-black); border-right: 1px solid rgba(255,255,255,0.1); }
+        .pillar:hover, .pillar.active { flex: 5; background-color: #ffffff; }
+        .pillar-bg { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; transition: opacity 0.4s ease; filter: grayscale(100%); z-index: 5; }
+        .pillar:hover .pillar-bg, .pillar.active .pillar-bg { opacity: 0; }
+        .pillar-content-closed { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); white-space: nowrap; transition: opacity 0.3s ease; color: #ffffff; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6em; font-size: 0.9rem; z-index: 10; }
+        .pillar:hover .pillar-content-closed { opacity: 0; }
+        .pillar-content-open { opacity: 0; padding: 8rem 4rem; height: 100%; display: flex; flex-direction: column; transition: opacity 0.2s ease-in; pointer-events: none; position: relative; z-index: 20; color: #000000; }
+        .pillar:hover .pillar-content-open, .pillar.active .pillar-content-open { opacity: 1; transition: opacity 0.5s ease-out 0.4s; pointer-events: auto; }
 
-        .pillar {
-            flex: 1;
-            height: 100%;
+        /* --- CAROUSEL (MARIGOROUND EFFECT) --- */
+        #carouselSection { perspective: 1200px; }
+        .carousel-item {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+            transform-style: preserve-3d;
+            position: absolute;
+            width: 320px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .carousel-item.active { opacity: 1; transform: translateX(0) rotateY(0) scale(1); pointer-events: auto; z-index: 30; }
+        .carousel-item.prev { opacity: 0.4; transform: translateX(-120%) rotateY(45deg) scale(0.85); z-index: 20; }
+        .carousel-item.next { opacity: 0.4; transform: translateX(120%) rotateY(-45deg) scale(0.85); z-index: 20; }
+        
+        .carousel-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            height: 450px;
             position: relative;
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
             overflow: hidden;
-            background-color: var(--mint-black);
-            border-right: 1px solid rgba(255,255,255,0.1);
         }
-
-        .pillar::after {
-            content: '';
+        
+        /* Purple Reflection Animation */
+        .purple-reflection {
             position: absolute;
             inset: 0;
-            background: rgba(92, 59, 207, 0.12);
-            z-index: 6;
-            transition: opacity 0.5s ease;
-        }
-
-        .pillar:hover::after, .pillar.active::after { opacity: 0; }
-
-        .pillar:hover, .pillar.active {
-            flex: 6;
-            background-color: #ffffff;
-        }
-
-        .pillar-bg {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
-            transition: opacity 0.4s ease;
-            filter: grayscale(100%);
-            z-index: 5;
-        }
-
-        .pillar:hover .pillar-bg, .pillar.active .pillar-bg { opacity: 0; }
-
-        .pillar-content-closed {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-90deg);
-            white-space: nowrap;
-            transition: opacity 0.3s ease;
+            background: linear-gradient(135deg, transparent 45%, rgba(92, 59, 207, 0.15) 50%, transparent 55%);
+            background-size: 250% 250%;
+            animation: reflectionSweep 6s infinite;
             pointer-events: none;
-            color: #ffffff; 
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.6em;
-            font-size: 0.9rem;
-            z-index: 10;
         }
+        @keyframes reflectionSweep { 0% { background-position: 200% 200%; } 50% { background-position: -100% -100%; } 100% { background-position: 200% 200%; } }
 
-        .pillar:hover .pillar-content-closed { opacity: 0; }
-
-        .pillar-content-open {
-            opacity: 0;
-            padding: 8rem 4rem;
-            height: 100%;
+        /* --- BENTO STATS (Screenshot design) --- */
+        .bento-pill {
+            background: #ffffff;
+            border: 1px solid #f1f1f1;
+            border-radius: 100px;
+            padding: 3rem 4rem;
             display: flex;
-            flex-direction: column;
-            transition: opacity 0.2s ease-in;
-            pointer-events: none;
-            position: relative;
-            z-index: 20;
-            color: #000000;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            gap: 2rem;
+            transition: transform 0.3s ease;
         }
+        .bento-pill:hover { transform: scale(1.02); }
+        .bento-pill-blue { background: linear-gradient(135deg, #3246d3 0%, #7e98f0 100%); color: white; border: none; }
 
-        .pillar:hover .pillar-content-open, 
-        .pillar.active .pillar-content-open {
-            opacity: 1;
-            transition: opacity 0.5s ease-out 0.4s;
-            pointer-events: auto;
-        }
-
-        .shimmer-text {
-            background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%);
-            background-size: 250% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 5s linear infinite;
-        }
+        .shimmer-text { background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 5s linear infinite; }
         @keyframes shimmer { to { background-position: -250% center; } }
     </style>
 </head>
@@ -180,49 +138,31 @@
             <a href="index.html">
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
             </a>
-            
-            <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50 transition-colors duration-300">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
                 <a href="index.html" class="nav-link hover:text-gray-400 transition-all text-sm">Personal</a>
                 <a href="institution.html" class="nav-link text-[var(--mint-primary-purple)] font-bold transition-all text-sm">Institution</a>
                 <a href="about.html" class="nav-link hover:text-gray-400 transition-all text-sm">About</a>
                 <a href="contact.html" class="nav-link hover:text-gray-400 transition-all text-sm">Contact</a>
             </div>
-
-            <div class="hidden lg:block">
-                <a href="https://mymint.co.za" class="mint-cta-btn group">
-                    <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Go to Mint</span>
-                    <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
-                        <svg class="transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                    </div>
-                </a>
-            </div>
+            <a href="https://mymint.co.za" class="hidden lg:inline-flex mint-cta-btn group">
+                <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Go to Mint</span>
+                <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                </div>
+            </a>
         </nav>
     </header>
 
-    <section id="heroSection" class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center bg-no-repeat" style="background-image: url('images/Institutionhero.png');">
+    <section class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center" style="background-image: url('images/Institutionhero.png');">
         <div class="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/70 to-transparent z-10"></div>
-        <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-20 w-full">
             <div class="lg:col-span-8 flex flex-col justify-center">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="h-[1px] w-12 bg-white/40"></div>
-                    <span class="text-[11px] text-white/70 uppercase tracking-[0.5em] font-bold">Commercial Capital Architecture</span>
-                </div>
-                <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8 uppercase">
-                    Mandate-led.<br><span class="shimmer-text">Customised.</span><br>Strategic.
-                </h1>
-                <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl">
-                    Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.
-                </p>
+                <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8 uppercase">Commercial<br>Capital<br><span class="shimmer-text">Architecture</span></h1>
+                <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions.</p>
                 <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex" style="width: fit-content;">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Architecture Consultation</span>
                     <div class="mint-cta-icon">
-                        <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
                     </div>
                 </a>
             </div>
@@ -231,139 +171,115 @@
 
     <section class="pillar-container">
         <div class="pillar active">
-            <img src="images/INVESTMANDATE.png" class="pillar-bg" alt="Investment Mandate">
-            <div class="pillar-content-closed"><span>01 — Investment Mandates</span></div>
+            <img src="images/INVESTMANDATE.png" class="pillar-bg">
+            <div class="pillar-content-closed"><span>Investment Mandates</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Section II — Custom Investment Mandates</span>
-                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Investment Mandates</h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-10">
-                        Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure. Ongoing reporting, governance alignment, mandate oversight.
-                    </p>
-                    <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50/50">
-                        <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--mint-primary-purple)] mb-4">Revenue Model</h4>
-                        <p class="text-xs text-gray-500 font-medium">Advisory retainers, management fees, performance-based structures.</p>
-                    </div>
+                    <h2 class="text-5xl md:text-6xl font-light mb-8">Investment Mandates</h2>
+                    <p class="text-gray-600 text-xl leading-relaxed mb-10">Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure. Ongoing reporting, governance alignment, mandate oversight.</p>
+                    <p class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest">Revenue: advisory retainers, management fees, performance-based structures.</p>
                 </div>
             </div>
         </div>
         <div class="pillar">
-            <img src="images/FUNDSTRUCTURING.png" class="pillar-bg" alt="Fund Structuring">
-            <div class="pillar-content-closed"><span>02 — Fund Structuring</span></div>
+            <img src="images/FUNDSTRUCTURING.png" class="pillar-bg">
+            <div class="pillar-content-closed"><span>Fund Structuring</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Section II — Fund Structuring & Management</span>
-                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Fund Structuring</h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-10">
-                        Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Institutional-grade infrastructure.
-                    </p>
-                    <div class="grid grid-cols-2 gap-8 mb-10">
-                         <div class="flex flex-col gap-2">
-                             <h4 class="text-[10px] font-bold text-black uppercase">Services</h4>
-                             <p class="text-xs text-gray-500">Vehicle structuring, regulatory alignment, portfolio oversight, reporting frameworks, capital allocation design.</p>
-                         </div>
-                         <div class="flex flex-col gap-2">
-                             <h4 class="text-[10px] font-bold text-black uppercase">Revenue</h4>
-                             <p class="text-xs text-gray-500">Structuring fees, management fees, performance share structures.</p>
-                         </div>
-                    </div>
+                    <h2 class="text-5xl md:text-6xl font-light mb-8">Fund Structuring</h2>
+                    <p class="text-gray-600 text-xl leading-relaxed mb-10">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight.</p>
+                    <p class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest">Revenue: structuring fees, management fees, performance share structures.</p>
                 </div>
             </div>
         </div>
         <div class="pillar">
-            <img src="images/INSTITUTIONALEXECUTION.png" class="pillar-bg" alt="Institutional Execution">
-            <div class="pillar-content-closed"><span>03 — Institutional Execution</span></div>
+            <img src="images/INSTITUTIONALEXECUTION.png" class="pillar-bg">
+            <div class="pillar-content-closed"><span>Institutional Execution</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Section II — Institutional Execution & Optimisation</span>
-                    <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Execution Policy</h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-10">
-                        Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics, execution policy design.
-                    </p>
-                    <div class="p-8 border border-gray-100 rounded-2xl bg-gray-50/50">
-                        <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--mint-primary-purple)] mb-4">Revenue Model</h4>
-                        <p class="text-xs text-gray-500 font-medium">Advisory mandates, optimisation retainers, performance-linked improvement fees.</p>
-                    </div>
+                    <h2 class="text-5xl md:text-6xl font-light mb-8">Execution Policy</h2>
+                    <p class="text-gray-600 text-xl leading-relaxed mb-10">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics.</p>
+                    <p class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest">Revenue: advisory mandates, optimisation retainers, performance-linked fees.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-[#050505] border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-6 md:px-10">
-            <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 block">Section II — Technology & Advisory</span>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32">
-                <div class="flex flex-col gap-10">
-                    <h2 class="text-4xl font-light text-white leading-tight">Digital Capital Infrastructure & Tech Solutions</h2>
-                    <div class="space-y-8">
-                        <div>
-                            <h4 class="text-white text-xs font-bold uppercase mb-2">Investment & Execution</h4>
-                            <p class="text-white/40 text-sm">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p>
-                        </div>
-                        <div>
-                            <h4 class="text-white text-xs font-bold uppercase mb-2">CRM & Workflow</h4>
-                            <p class="text-white/40 text-sm">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p>
-                        </div>
-                        <div>
-                            <h4 class="text-white text-xs font-bold uppercase mb-2">Treasury & Capital</h4>
-                            <p class="text-white/40 text-sm">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-10">
-                    <h2 class="text-4xl font-light text-white leading-tight">Strategic Capital Advisory</h2>
-                    <p class="text-white/40 text-sm italic">For enterprises and family offices:</p>
-                    <p class="text-white/70 text-lg">
-                        Capital allocation optimisation, balance sheet strategy, investment committee advisory, portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.
-                    </p>
-                    <div class="p-8 border border-white/10 rounded-2xl bg-white/5">
-                         <h4 class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase mb-4">Implementation</h4>
-                         <p class="text-xs text-white/40 leading-loose">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation. Revenue: implementation fees, system licensing, support retainers, project-based structuring mandates.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-16 border border-white/10 rounded-[4rem] bg-gradient-to-br from-[#0a0a0a] to-[#050505]">
-                <h3 class="text-2xl font-medium text-white mb-10">Why businesses work with MINT:</h3>
-                <p class="text-white/60 text-xl font-light leading-relaxed max-w-4xl italic">
-                    "Traditional asset managers are product-driven with limited flexibility; consultants are strategy-heavy and execution-light; tech vendors are software-only with no capital expertise. MINT delivers strategy, structure, execution, technology, and regulatory alignment in one integrated solution."
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="synergySection" class="py-40 md:py-64 bg-white text-black relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+    <section id="carouselSection" class="py-48 bg-[#050505] relative overflow-hidden flex flex-col items-center">
+        <h2 class="text-4xl md:text-6xl font-light text-white mb-24 tracking-tighter">Technology & Advisory</h2>
+        
+        <div class="relative w-full h-[550px] flex justify-center items-center">
+            <div class="carousel-item active"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Tech Overview</h4><h3 class="text-2xl font-light mb-6">Digital Capital Infrastructure</h3><p class="text-white/40 text-sm leading-loose">MINT delivers structured, tailored capital solutions across infrastructure and digital technical solutions.</p></div></div>
             
-            <div class="flex flex-col z-20">
-                <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.5em] mb-8">Section III — Platform Synergies</span>
-                <h2 class="text-5xl md:text-8xl font-light tracking-tighter leading-none mb-12 text-black">
-                    Architecting<br>Institutional<br>Efficiency
-                </h2>
-                <p class="text-gray-600 text-lg md:text-2xl font-light leading-relaxed mb-12 max-w-xl">
-                    Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions, white-label retail offerings, and leverage retail rails for treasury mobility.
-                </p>
-                
-                <div class="flex flex-wrap gap-6 mb-16">
-                    <a href="mailto:info@mymint.co.za" class="bg-black text-white px-12 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">Get Started</a>
-                    <a href="mailto:info@mymint.co.za" class="border border-black/10 text-black px-12 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black/5 transition-all">Speak to Sales</a>
-                </div>
+            <div class="carousel-item next"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Modules</h4><h3 class="text-2xl font-light mb-6">Investment & Execution</h3><p class="text-white/40 text-sm leading-loose">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
+            
+            <div class="carousel-item"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Internal Systems</h4><h3 class="text-2xl font-light mb-6">CRM & Workflow</h3><p class="text-white/40 text-sm leading-loose">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
+            
+            <div class="carousel-item"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Liquidity Rails</h4><h3 class="text-2xl font-light mb-6">Treasury & Capital</h3><p class="text-white/40 text-sm leading-loose">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
+            
+            <div class="carousel-item"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Strategy</h4><h3 class="text-2xl font-light mb-6">Strategic Capital Advisory</h3><p class="text-white/40 text-sm leading-loose">For enterprises and family offices: capital allocation optimisation, balance sheet strategy.</p></div></div>
+            
+            <div class="carousel-item"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Oversight</h4><h3 class="text-2xl font-light mb-6">Governance Architecture</h3><p class="text-white/40 text-sm leading-loose">Investment committee advisory, portfolio restructuring, governance framework design, risk architecture.</p></div></div>
+            
+            <div class="carousel-item"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Delivery</h4><h3 class="text-2xl font-light mb-6">Platform Implementation</h3><p class="text-white/40 text-sm leading-loose">White-label investment platforms, internal digital capital portals, data aggregation systems.</p></div></div>
+            
+            <div class="carousel-item prev"><div class="carousel-card"><div class="purple-reflection"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Economics</h4><h3 class="text-2xl font-light mb-6">Licensing & Revenue</h3><p class="text-white/40 text-sm leading-loose">Implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
+        </div>
 
-                <div class="space-y-10 pt-16 border-t border-gray-100">
+        <div class="mt-20 flex gap-4">
+            <button onclick="prevCarousel()" class="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button onclick="nextCarousel()" class="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 5l6 6-6 6"/></svg></button>
+        </div>
+
+        <div class="max-w-4xl text-center mt-24 px-6">
+            <h3 class="text-white text-2xl font-light leading-relaxed">
+                Why businesses work with MINT: "Traditional asset managers are product-driven with limited flexibility; consultants are strategy-heavy and execution-light; tech vendors are software-only with no capital expertise."
+            </h3>
+        </div>
+    </section>
+
+    <section class="py-40 bg-[#fbfbfb] text-black" id="opportunitySection">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <h2 class="text-4xl md:text-6xl font-light mb-20 tracking-tighter text-center">Market Opportunity</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bento-pill">
                     <div>
-                        <h4 class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-4">Market Opportunity</h4>
-                        <p class="text-sm text-gray-500 leading-loose">Retail: underpenetrated wealth access, emerging affluent growth, digital-first behaviour. Commercial: idle corporate cash, fragmented treasury systems, poor execution optimisation, growing family office presence, demand for digitised capital management. Large addressable opportunity across both segments.</p>
+                        <span class="text-5xl font-light text-[var(--mint-primary-purple)] mb-4 block">Retail</span>
+                        <p class="text-gray-500 text-sm leading-relaxed">Underpenetrated wealth access, emerging affluent growth, digital-first behaviour.</p>
                     </div>
-                    <div class="p-8 border-l-4 border-black bg-gray-50">
-                        <p class="font-bold text-black text-sm">Strategic positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency. MINT is not just an investment platform; it is a capital infrastructure company.</p>
+                </div>
+                <div class="bento-pill">
+                    <div>
+                        <span class="text-5xl font-light text-[var(--mint-primary-purple)] mb-4 block">Commercial</span>
+                        <p class="text-gray-500 text-sm leading-relaxed">Idle corporate cash, fragmented treasury systems, poor execution optimisation.</p>
+                    </div>
+                </div>
+                <div class="bento-pill md:col-span-2 bento-pill-blue">
+                    <div class="flex items-center gap-12 w-full">
+                        <span class="text-7xl font-light leading-none">Synergy</span>
+                        <div class="h-16 w-[1px] bg-white/20"></div>
+                        <p class="text-white/90 text-lg max-w-2xl leading-relaxed">Strategic positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency. MINT is not just an investment platform; it is a capital infrastructure company.</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="relative flex items-center justify-center lg:justify-end">
-                <img id="cornerBuildings" src="images/Buildings.png" alt="Institutional Buildings" class="w-full max-w-2xl h-auto object-contain z-20 opacity-0 transform translate-y-12">
+    <section id="synergySection" class="py-40 bg-white text-black relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
+            <div class="flex flex-col z-20 mb-20">
+                <h2 class="text-5xl md:text-8xl font-light tracking-tighter leading-none mb-10">Strategic<br>Synergy</h2>
+                <p id="synergyAnchor" class="text-gray-600 text-xl md:text-2xl font-light leading-relaxed max-w-xl">
+                    Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions, white-label retail offerings, and <strong>leverage retail rails for treasury mobility.</strong>
+                </p>
+                <div class="flex gap-6 mt-12">
+                    <a href="#" class="bg-black text-white px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest">Get Started</a>
+                    <a href="#" class="border border-black/10 px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest">Speak to Sales</a>
+                </div>
             </div>
-
+            <div class="relative flex items-end justify-end">
+                <img id="cornerBuildings" src="images/Buildings.png" alt="Buildings" class="w-full max-w-2xl h-auto object-contain z-20 opacity-0 transform translate-y-12">
+            </div>
         </div>
     </section>
 
@@ -373,24 +289,12 @@
                 <div class="space-y-6">
                     <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
-                    <div class="flex gap-4">
-                        <a href="https://www.instagram.com/mymint_africa/" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                    </div>
                 </div>
                 <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li>Home</li><li>Features</li><li>About Us</li></ul></div>
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                    <h4 class="text-white font-semibold mb-2 text-sm uppercase tracking-widest">Institutional</h4>
-                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">
-                        Go to MINT
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </a>
-                </div>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2">Ready to start?</h4><a href="#" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a></div>
             </div>
-            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 leading-relaxed text-justify opacity-60">
-                MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).
-            </div>
+            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 leading-relaxed text-justify opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).</div>
             <div class="flex justify-between items-center text-xs text-gray-500 pt-10"><p>&copy; 2026 MINT. All rights reserved.</p></div>
         </div>
     </footer>
@@ -400,31 +304,22 @@
             const header = document.getElementById('main-header');
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- NAVBAR ADAPTIVE ITEMS (For Synergy Section) ---
+            // Adaptive Header Logic
             ScrollTrigger.create({
-                trigger: "#synergySection",
-                start: "top 80",
-                end: "bottom 80",
+                trigger: "#opportunitySection", start: "top 80", end: "bottom 80",
                 onEnter: () => header.classList.add('header-dark-items'),
                 onLeave: () => header.classList.remove('header-dark-items'),
                 onEnterBack: () => header.classList.add('header-dark-items'),
                 onLeaveBack: () => header.classList.remove('header-dark-items')
             });
 
-            // --- BUILDINGS CORNER ANIMATION ---
+            // Repositioned Building Animation (Bottom aligned with text)
             gsap.to("#cornerBuildings", {
-                opacity: 1,
-                scale: 1.1,
-                y: 0,
-                duration: 1.5,
-                scrollTrigger: {
-                    trigger: "#synergySection",
-                    start: "top 60%",
-                    toggleActions: "play none none reverse"
-                }
+                opacity: 1, scale: 1.05, y: 0, duration: 1.5,
+                scrollTrigger: { trigger: "#synergySection", start: "top 60%", toggleActions: "play none none reverse" }
             });
 
-            // --- PILLAR INTERACTION ---
+            // Pillar Interaction
             const pillars = document.querySelectorAll('.pillar');
             pillars.forEach(pillar => {
                 pillar.addEventListener('mouseenter', () => {
@@ -433,6 +328,20 @@
                 });
             });
         });
+
+        // Carousel Marigoround Logic
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.carousel-item');
+        function updateCarousel() {
+            items.forEach((item, i) => {
+                item.classList.remove('active', 'prev', 'next');
+                if (i === currentIndex) item.classList.add('active');
+                else if (i === (currentIndex - 1 + items.length) % items.length) item.classList.add('prev');
+                else if (i === (currentIndex + 1) % items.length) item.classList.add('next');
+            });
+        }
+        function nextCarousel() { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); }
+        function prevCarousel() { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); }
     </script>
 </body>
 </html>
