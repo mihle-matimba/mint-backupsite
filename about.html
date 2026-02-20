@@ -16,7 +16,7 @@
         :root {
             --mint-dark-purple: #31005e;
             --mint-primary-purple: #5c3bcf;
-            --mint-light-purple: #a78bfa; /* Lighter purple for readability */
+            --mint-light-purple: #a78bfa;
             --mint-black: #000000;
         }
 
@@ -111,7 +111,7 @@
 
         /* Full Image Vision Section */
         #visionSection {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://img.freepik.com/free-photo/business-people-video-call-meeting_53876-15181.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://img.freepik.com/free-photo/business-people-video-call-meeting_53876-15181.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -198,22 +198,27 @@
 
         <section id="visionSection" class="py-40 md:py-64 relative z-20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10 text-center">
-                <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 block">Our Vision</span>
-                <h2 class="text-5xl md:text-8xl font-light tracking-tighter mb-12 text-white leading-none uppercase">Broadening Access.</h2>
+                <div class="mb-20">
+                    <span class="text-[var(--mint-primary-purple)] font-bold text-[11px] uppercase tracking-[0.45em] mb-8 block">Our Vision</span>
+                    <h2 class="text-5xl md:text-7xl lg:text-8xl font-light tracking-tighter text-white leading-none uppercase">Broadening Access.</h2>
+                </div>
                 
-                <div class="max-w-4xl mx-auto space-y-12">
-                    <p class="text-white/70 text-xl md:text-3xl font-light leading-relaxed">
+                <div class="max-w-3xl mx-auto space-y-16">
+                    <p class="text-white/50 text-base md:text-xl font-light leading-relaxed">
                         As we expand, MINT will continue to broaden access across asset classes, including curated private market and art exposure, within a disciplined and structured ecosystem.
                     </p>
-                    <div class="p-10 border border-white/10 rounded-[4rem] bg-black/40 backdrop-blur-md inline-block">
-                        <p class="text-2xl md:text-4xl font-bold tracking-tight text-white uppercase">
-                            MINT is not just an investment platform.<br>
-                            <span class="text-[var(--mint-light-purple)]">It is a capital infrastructure for modern wealth on the go.</span>
+                    
+                    <div class="space-y-6">
+                        <p class="text-lg md:text-2xl font-light text-white/80 uppercase tracking-wide">
+                            MINT is not just an investment platform.
+                        </p>
+                        <p class="text-2xl md:text-4xl font-bold tracking-tight text-white uppercase leading-tight">
+                            It is a <span class="text-[var(--mint-light-purple)]">capital infrastructure</span> for modern wealth on the go.
                         </p>
                     </div>
                 </div>
 
-                <div class="mt-20">
+                <div class="mt-24">
                     <a href="https://mymint.co.za" class="mint-cta-btn group mx-auto" style="width: fit-content;">
                         <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Join the Ecosystem</span>
                         <div class="mint-cta-icon">
@@ -237,7 +242,7 @@
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2">Ready to start?</h4><a href="#" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">Go to MINT</a></div>
             </div>
-            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 opacity-60 leading-relaxed">
+            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 opacity-60 leading-relaxed text-justify">
                 MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).
             </div>
             <div class="flex justify-between items-center text-xs text-gray-500 pt-10"><p>&copy; 2026 MINT. All rights reserved.</p></div>
@@ -245,7 +250,7 @@
     </footer>
 
     <script>
-        // --- THREE.JS: THE INFRASTRUCTURE LATTICE ---
+        // --- THREE.JS EFFECT ---
         const container = document.getElementById('about-bg-canvas');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -277,7 +282,7 @@
         }
         animate();
 
-        // --- GSAP CINEMATIC SCROLL ---
+        // --- GSAP ANIMATIONS ---
         gsap.registerPlugin(ScrollTrigger);
 
         const tl = gsap.timeline({
@@ -296,7 +301,7 @@
           .to("#phase3", { opacity: 0, scale: 0.8, y: -50, duration: 1 }, "+=1.5")
           .to("#phase4", { opacity: 1, y: 0, duration: 1 }, "-=0.3");
 
-        // Header and vision reveal animations
+        // Header scroll hide
         const header = document.getElementById('main-header');
         let lastScroll = window.scrollY;
         window.addEventListener('scroll', () => {
