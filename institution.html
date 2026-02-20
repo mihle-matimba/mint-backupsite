@@ -35,16 +35,17 @@
             border-bottom: none !important;
             backdrop-filter: none !important;
         }
+        /* Ensure Logo is White initially */
+        #main-header .logo-img { filter: brightness(0) invert(1) !important; transition: filter 0.3s ease; }
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
-        #main-header .logo-img { filter: brightness(1) invert(1) !important; transition: filter 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
 
-        /* Dark Items state: For light backgrounds */
+        /* Transition for light sections */
         #main-header.header-dark-items .nav-link { color: #000000; }
         #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
 
-        /* --- CTA DESIGN (Carbon Copy index (65).html) --- */
+        /* --- CTA DESIGN (Identical to index (65).html) --- */
         .mint-cta-btn {
             display: inline-flex;
             align-items: center;
@@ -99,29 +100,24 @@
             border-right: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Image handling for pillars */
         .pillar-bg {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             object-fit: cover;
-            opacity: 0.2;
-            transition: opacity 0.8s ease, transform 1.2s ease;
+            opacity: 0.15;
+            transition: opacity 0.8s ease, transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
             filter: grayscale(100%);
+            transform-origin: bottom; /* Anchor zoom to bottom */
         }
 
         .pillar:hover .pillar-bg, .pillar.active .pillar-bg {
             opacity: 0.4;
-            transform: scale(1.05);
+            transform: scale(1.15); /* High-end zoom */
             filter: grayscale(0%);
         }
 
-        .pillar:last-child { border-right: none; }
-
-        .pillar:hover, .pillar.active {
-            flex: 3.5;
-            background-color: #000000;
-        }
+        .pillar:hover, .pillar.active { flex: 4; }
 
         .pillar-content-closed {
             position: absolute;
@@ -158,6 +154,17 @@
         .pillar:hover .pillar-content-open, 
         .pillar.active .pillar-content-open { opacity: 1; pointer-events: auto; }
 
+        /* Pure White Solution Labels */
+        .solution-label {
+            color: #ffffff !important;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
         .shimmer-text {
             background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%);
             background-size: 250% auto;
@@ -174,6 +181,7 @@
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
+            z-index: 100;
         }
         .group:hover .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     </style>
@@ -183,7 +191,7 @@
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
-                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain transition-all duration-300"> 
+                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
             </a>
             
             <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50 transition-colors duration-300">
@@ -194,9 +202,9 @@
                 <div class="relative group py-4">
                     <a href="index.html" class="nav-link personal-trigger hover:text-gray-400 transition-all text-sm">Personal</a>
                     <div class="nav-dropdown absolute top-full left-0 w-72 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-8 flex flex-col gap-8 mt-4 border border-white/20 text-black">
-                        <a href="index.html#blackSection" class="text-xs text-gray-400 hover:text-black transition-colors tracking-[0.3em] font-medium">Features</a>
+                        <a href="index.html#blackSection" class="text-xs text-gray-400 hover:text-black transition-colors tracking-[0.3em] font-medium uppercase">Features</a>
                         <a href="index.html#investSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case">Invest</a>
-                        <a href="index.html#borrowSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case">Borrow</a>
+                        <a href="index.html#borrowSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case border-t border-gray-50 pt-4">Borrow</a>
                         <a href="index.html#transactSection" class="text-base font-semibold hover:text-[var(--mint-primary-purple)] transition-colors normal-case">Transact</a>
                     </div>
                 </div>
@@ -228,7 +236,7 @@
                 <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8">
                     Mandate-led.<br><span class="shimmer-text">Customised.</span><br>Strategic.
                 </h1>
-                <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-3xl">
+                <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">
                     Commercial capital architecture for businesses, SMEs, corporates, family offices, and institutions. MINT delivers structured, tailored capital solutions.
                 </p>
                 <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex" style="width: fit-content;">
@@ -245,58 +253,60 @@
     <section class="pillar-container">
         
         <div class="pillar active">
-            <img src="images/INVESTMANDATE.png" class="pillar-bg" alt="Investment Mandate Thumbnail">
+            <img src="images/INVESTMANDATE.png" class="pillar-bg" alt="Investment Mandate">
             <div class="pillar-content-closed">
                 <span>01 — Investment Mandates</span>
             </div>
             <div class="pillar-content-open">
                 <div class="max-w-2xl relative">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] font-bold uppercase tracking-widest mb-6 block">Core solution 01</span>
+                    <span class="solution-label">Core solution 01</span>
                     <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Investment Mandates</h2>
                     <p class="text-white/70 text-lg leading-relaxed mb-12">
-                        Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, and risk-optimised mandates.
+                        Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays.
                     </p>
-                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10">
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Governance</h4><p class="text-white/40 text-xs leading-relaxed">Alignment and oversight frameworks for private pools.</p></div>
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Exposure</h4><p class="text-white/40 text-xs leading-relaxed">Structured overlays and alternative asset access.</p></div>
+                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10 text-[10px] text-white/30 uppercase tracking-[0.2em]">
+                        <div class="flex flex-col gap-2"><span>Ongoing Reporting</span><span>Governance Alignment</span></div>
+                        <div class="flex flex-col gap-2"><span>Alternative Exposure</span><span>Mandate Oversight</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="pillar">
+            <img src="images/FUNDSTRUCTURING.png" class="pillar-bg" alt="Fund Structuring">
             <div class="pillar-content-closed">
                 <span>02 — Fund Structuring</span>
             </div>
             <div class="pillar-content-open">
-                <div class="max-w-2xl">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] font-bold uppercase tracking-widest mb-6 block">Core solution 02</span>
+                <div class="max-w-2xl relative">
+                    <span class="solution-label">Core solution 02</span>
                     <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Fund Structuring</h2>
                     <p class="text-white/70 text-lg leading-relaxed mb-12">
-                        Customised vehicles: SPVs, co-investment structures, white-label funds, and private pooled vehicles.
+                        Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds.
                     </p>
-                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10">
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Regulatory</h4><p class="text-white/40 text-xs leading-relaxed">Aligned portfolio oversight and infrastructure.</p></div>
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Allocation</h4><p class="text-white/40 text-xs leading-relaxed">Sophisticated capital allocation design.</p></div>
+                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10 text-[10px] text-white/30 uppercase tracking-[0.2em]">
+                        <div class="flex flex-col gap-2"><span>Regulatory Alignment</span><span>Vehicle Structuring</span></div>
+                        <div class="flex flex-col gap-2"><span>Portfolio Oversight</span><span>Capital Allocation Design</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="pillar">
+            <img src="images/INSTITUTIONALEXECUTION.png" class="pillar-bg" alt="Institutional Execution">
             <div class="pillar-content-closed">
                 <span>03 — Institutional Execution</span>
             </div>
             <div class="pillar-content-open">
-                <div class="max-w-2xl">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] font-bold uppercase tracking-widest mb-6 block">Core solution 03</span>
+                <div class="max-w-2xl relative">
+                    <span class="solution-label">Core solution 03</span>
                     <h2 class="text-4xl md:text-6xl font-light text-white mb-8 tracking-tight">Institutional Execution</h2>
                     <p class="text-white/70 text-lg leading-relaxed mb-12">
-                        Best execution analysis, liquidity mapping, cost analysis, slippage reduction, and trade performance analytics.
+                        Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis, slippage reduction, smart routing advisory.
                     </p>
-                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10">
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Benchmarking</h4><p class="text-white/40 text-xs leading-relaxed">Broker route benchmarking and smart routing.</p></div>
-                        <div><h4 class="text-white text-xs font-bold uppercase tracking-widest mb-4">Performance</h4><p class="text-white/40 text-xs leading-relaxed">Trade performance analytics and mapping.</p></div>
+                    <div class="grid grid-cols-2 gap-12 pt-10 border-t border-white/10 text-[10px] text-white/30 uppercase tracking-[0.2em]">
+                        <div class="flex flex-col gap-2"><span>Execution Policy Design</span><span>Liquidity Mapping</span></div>
+                        <div class="flex flex-col gap-2"><span>Cost Analysis</span><span>Trade Performance Analytics</span></div>
                     </div>
                 </div>
             </div>
@@ -309,14 +319,14 @@
                 <h2 class="text-4xl md:text-6xl font-light mb-10 tracking-tight leading-tight">MINT Synergy</h2>
                 <p class="text-gray-600 text-lg leading-relaxed mb-8">"MINT is not just an investment platform; it is a capital infrastructure company."</p>
                 <p class="text-black font-bold border-l-4 border-[var(--mint-primary-purple)] pl-6 py-2">
-                    Retail clients evolve into family office structures, while commercial clients leverage retail rails for treasury mobility.
+                    Retail clients evolve into business owners, while commercial clients leverage retail rails for treasury mobility.
                 </p>
             </div>
             <div class="p-12 bg-gray-50 rounded-[4rem] border-gray-100 flex flex-col justify-center">
-                <h3 class="text-2xl font-medium mb-10">Strategic Opportunity</h3>
-                <div class="space-y-8">
-                    <div><span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Democratising Access</span><p class="text-sm">Underpenetrated wealth access and digital-first behavior.</p></div>
-                    <div><span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Institutional Rail</span><p class="text-sm">Fragmented treasury systems and digitised management.</p></div>
+                <h3 class="text-2xl font-medium mb-10">Strategic Positioning</h3>
+                <div class="space-y-8 text-sm">
+                    <div><span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Democratising Access</span><p>Underpenetrated wealth access and digital-first behavior.</p></div>
+                    <div><span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Institutional Rail</span><p>Fragmented treasury systems and digitised management.</p></div>
                 </div>
             </div>
         </div>
@@ -328,11 +338,15 @@
                 <div class="space-y-6">
                     <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/mymint_africa/" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="https://www.linkedin.com/company/mint-platforms/posts/?feedView=all" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                    </div>
                 </div>
                 <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li>Home</li><li>Features</li><li>About Us</li></ul></div>
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                    <h4 class="text-white font-semibold mb-2 text-sm">Institutional Hub</h4>
+                    <h4 class="text-white font-semibold mb-2 text-sm uppercase tracking-widest">Institutional</h4>
                     <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2">Go to MINT</a>
                 </div>
             </div>
@@ -348,7 +362,7 @@
             const header = document.getElementById('main-header');
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- NAVBAR ADAPTIVE COLOR LOGIC ---
+            // --- HEADER ADAPTIVE ITEMS ---
             ScrollTrigger.create({
                 trigger: "#synergySection",
                 start: "top 80",
