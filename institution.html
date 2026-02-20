@@ -27,13 +27,14 @@
             padding: 0;
         }
 
-        /* --- NAVBAR LOGIC (Carbon Copy index (65).html) --- */
-        #main-header.header-hidden { transform: translateY(-100%); }
+        /* --- NAVBAR LOGIC (Synced with index (65).html) --- */
         #main-header {
             background-color: transparent !important;
             border-bottom: none !important;
             backdrop-filter: none !important;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        #main-header.header-hidden { transform: translateY(-100%); }
         #main-header .logo-img { filter: brightness(0) invert(1) !important; transition: filter 0.3s ease; }
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
@@ -71,7 +72,6 @@
         .pillar { flex: 1; height: 100%; position: relative; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; overflow: hidden; background-color: var(--mint-black); border-right: 1px solid rgba(255,255,255,0.1); }
         .pillar::before { content: ''; position: absolute; inset: 0; background: rgba(92, 59, 207, 0.12); z-index: 6; transition: opacity 0.5s ease; }
         
-        /* Expansion state is white */
         .pillar:hover, .pillar.active { flex: 6; background-color: #ffffff; }
         .pillar:hover::before, .pillar.active::before { opacity: 0; }
         
@@ -84,31 +84,27 @@
         .pillar-content-open { opacity: 0; padding: 8rem 4rem; height: 100%; display: flex; flex-direction: column; transition: opacity 0.2s ease-in; pointer-events: none; position: relative; z-index: 20; color: #000000; }
         .pillar:hover .pillar-content-open, .pillar.active .pillar-content-open { opacity: 1; transition: opacity 0.5s ease-out 0.4s; pointer-events: auto; }
 
-        /* Small blocks inside pillars are purple */
         .pillar-sub-block { background: rgba(92, 59, 207, 0.05); border: 1px solid rgba(92, 59, 207, 0.1); border-radius: 1.5rem; padding: 2rem; }
         .pillar-sub-block h4 { color: var(--mint-primary-purple); }
 
-        /* --- WHITE METAL CAROUSEL --- */
-        #carouselSection { perspective: 1500px; }
-        .carousel-item { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease; transform-style: preserve-3d; position: absolute; width: 360px; opacity: 0; pointer-events: none; }
+        /* --- WHITE METAL CAROUSEL (ONE VIEWPORT FIT) --- */
+        #carouselSection { perspective: 1500px; height: 100vh; min-height: 800px; display: flex; flex-direction: column; justify-content: space-between; padding: 80px 0 40px; }
+        .carousel-item { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease; transform-style: preserve-3d; position: absolute; width: 340px; opacity: 0; pointer-events: none; }
         .carousel-item.active { opacity: 1; transform: translateX(0) rotateY(0) scale(1); pointer-events: auto; z-index: 30; }
-        .carousel-item.prev { opacity: 0.4; transform: translateX(-130%) rotateY(45deg) scale(0.8); z-index: 20; }
-        .carousel-item.next { opacity: 0.4; transform: translateX(130%) rotateY(-45deg) scale(0.8); z-index: 20; }
+        .carousel-item.prev { opacity: 0.3; transform: translateX(-120%) rotateY(45deg) scale(0.8); z-index: 20; }
+        .carousel-item.next { opacity: 0.3; transform: translateX(120%) rotateY(-45deg) scale(0.8); z-index: 20; }
         
         .carousel-card {
             background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 50%, #e6e9ef 100%);
-            border: 1px solid rgba(255, 255, 255, 1);
-            border-radius: 3rem;
-            padding: 3.5rem;
-            height: 500px;
+            border: 1px solid #fff;
+            border-radius: 2.5rem;
+            padding: 2.5rem;
+            height: 420px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 
-                0 20px 40px -10px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255,255,255,1),
-                inset 0 -1px 0 rgba(0,0,0,0.05);
-            color: #000000;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+            color: #000;
             position: relative;
             overflow: hidden;
         }
@@ -122,7 +118,7 @@
         @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         /* --- BENTO ACCENTS --- */
-        .bento-pill { background: #ffffff; border: 1px solid #f1f1f1; border-radius: 100px; padding: 3.5rem 5rem; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+        .bento-pill { background: #ffffff; border: 1px solid #f1f1f1; border-radius: 100px; padding: 3rem 4.5rem; display: flex; flex-direction: column; transition: transform 0.3s ease; }
         .bento-purple-text { color: var(--mint-primary-purple) !important; font-weight: 700; }
         .bento-pill-blue { background: linear-gradient(135deg, #5c3bcf 0%, #31005e 100%); color: white; border: none; }
 
@@ -132,7 +128,7 @@
 </head>
 <body>
 
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
@@ -162,7 +158,7 @@
                 </div>
                 <h1 class="text-5xl md:text-8xl font-light text-white tracking-tight leading-[1.1] mb-8 uppercase">Mandate-led.<br><span class="shimmer-text">Customised.</span><br>Strategic.</h1>
                 <p class="text-white/70 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">
-                    Commercial Overview: Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.
+                    Commercial Overview: Capital architecture for businesses, SMEs, corporates, family offices, private capital pools, and institutions. MINT delivers structured, tailored capital solutions.
                 </p>
                 <a href="mailto:institution@mymint.co.za" class="mint-cta-btn group inline-flex" style="width: fit-content;">
                     <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Architecture Consultation</span>
@@ -197,7 +193,7 @@
                 <div class="max-w-3xl">
                     <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Fund Structuring & Management</span>
                     <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Fund Structuring</h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-10">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight, reporting frameworks, capital allocation design. Institutional-grade infrastructure.</p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-10">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight.</p>
                     <div class="pillar-sub-block">
                          <span class="text-[10px] font-bold uppercase mb-2 block">Revenue Model</span>
                          <p class="text-sm font-medium text-gray-400">Structuring fees, management fees, performance share structures.</p>
@@ -212,40 +208,39 @@
                 <div class="max-w-3xl">
                     <span class="text-[var(--mint-primary-purple)] text-xs font-bold uppercase tracking-widest mb-6 block">Institutional Execution & Optimisation</span>
                     <h2 class="text-5xl md:text-6xl font-light text-black mb-8 tracking-tighter">Execution Policy</h2>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-10">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics, execution policy design.</p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-10">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics.</p>
                     <div class="pillar-sub-block">
                          <span class="text-[10px] font-bold uppercase mb-2 block">Revenue Model</span>
-                         <p class="text-sm font-medium text-gray-400">Advisory mandates, optimisation retainers, performance-linked improvement fees.</p>
+                         <p class="text-sm font-medium text-gray-400">Advisory mandates, optimisation retainers, performance-linked fees.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="carouselSection" class="py-48 bg-[#050505] relative overflow-hidden flex flex-col items-center">
-        <div class="text-center mb-24 max-w-4xl px-6">
+    <section id="carouselSection" class="bg-[#050505] relative overflow-hidden">
+        <div class="text-center w-full px-6">
             <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4 block">Digital Capital Infrastructure & Tech Solutions</span>
-            <h2 class="text-5xl md:text-7xl font-light text-white tracking-tighter uppercase">Why businesses<br>work with MINT:</h2>
+            <h2 class="text-4xl md:text-6xl font-light text-white tracking-tighter uppercase">Why businesses work with MINT:</h2>
         </div>
         
-        <div class="relative w-full h-[550px] flex justify-center items-center">
-            <div class="carousel-item active"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Overview</h4><h3 class="text-2xl font-semibold mb-4">Digital Capital Infrastructure</h3><p class="text-gray-500 text-sm leading-loose">MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.</p></div></div>
-            <div class="carousel-item next"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 01</h4><h3 class="text-2xl font-semibold mb-4">Investment & Execution</h3><p class="text-gray-500 text-sm leading-loose">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 02</h4><h3 class="text-2xl font-semibold mb-4">CRM & Workflow</h3><p class="text-gray-500 text-sm leading-loose">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">System 03</h4><h3 class="text-2xl font-semibold mb-4">Treasury & Capital</h3><p class="text-gray-500 text-sm leading-loose">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Advisory 01</h4><h3 class="text-2xl font-semibold mb-4">Strategic Capital Advisory</h3><p class="text-gray-500 text-sm leading-loose">For enterprises and family offices: capital allocation optimisation, balance sheet strategy, investment committee advisory.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Advisory 02</h4><h3 class="text-2xl font-semibold mb-4">Governance Architecture</h3><p class="text-gray-500 text-sm leading-loose">Portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Platforms</h4><h3 class="text-2xl font-semibold mb-4">Implementation</h3><p class="text-gray-500 text-sm leading-loose">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
-            <div class="carousel-item prev"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-6">Economics</h4><h3 class="text-2xl font-semibold mb-4">Revenue & Retainers</h3><p class="text-gray-500 text-sm leading-loose">Revenue: implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
+        <div class="relative w-full h-[450px] flex justify-center items-center">
+            <div class="carousel-item active"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Overview</h4><h3 class="text-xl font-semibold mb-4">Digital Capital Infrastructure</h3><p class="text-gray-500 text-xs leading-relaxed">MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.</p></div></div>
+            <div class="carousel-item next"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 01</h4><h3 class="text-xl font-semibold mb-4">Investment & Execution</h3><p class="text-gray-500 text-xs leading-relaxed">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 02</h4><h3 class="text-xl font-semibold mb-4">CRM & Workflow</h3><p class="text-gray-500 text-xs leading-relaxed">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 03</h4><h3 class="text-xl font-semibold mb-4">Treasury & Capital</h3><p class="text-gray-500 text-xs leading-relaxed">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 01</h4><h3 class="text-xl font-semibold mb-4">Strategic Capital Advisory</h3><p class="text-gray-500 text-xs leading-relaxed">For enterprises and family offices: capital allocation optimisation, balance sheet strategy, investment committee advisory.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 02</h4><h3 class="text-xl font-semibold mb-4">Governance Architecture</h3><p class="text-gray-500 text-xs leading-relaxed">Portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.</p></div></div>
+            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Platforms</h4><h3 class="text-xl font-semibold mb-4">Implementation</h3><p class="text-gray-500 text-xs leading-relaxed">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
+            <div class="carousel-item prev"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Economics</h4><h3 class="text-xl font-semibold mb-4">Revenue & Retainers</h3><p class="text-gray-500 text-xs leading-relaxed">Revenue: implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
         </div>
 
-        <div class="mt-20 flex gap-4">
-            <button onclick="prevCarousel()" class="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <button onclick="nextCarousel()" class="p-4 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 5l6 6-6 6"/></svg></button>
-        </div>
-
-        <div class="max-w-5xl text-center mt-32 px-6">
-            <p class="text-white text-xl md:text-2xl font-light italic leading-relaxed">
+        <div class="flex flex-col items-center gap-12 w-full px-6">
+            <div class="flex gap-4">
+                <button onclick="prevCarousel()" class="p-3 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <button onclick="nextCarousel()" class="p-3 rounded-full border border-white/10 hover:bg-white/5 transition-all"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 5l6 6-6 6"/></svg></button>
+            </div>
+            <p class="text-white text-base md:text-lg font-light italic leading-relaxed text-center max-w-5xl">
                 "Traditional asset managers are product-driven with limited flexibility; consultants are strategy-heavy and execution-light; tech vendors are software-only with no capital expertise. MINT delivers strategy, structure, execution, technology, and regulatory alignment in one integrated solution."
             </p>
         </div>
@@ -256,7 +251,7 @@
             <div class="flex flex-col z-20 mb-10">
                 <h2 class="text-6xl md:text-8xl font-light tracking-tighter leading-none mb-10">Strategic<br>Synergy</h2>
                 <p class="text-gray-600 text-xl md:text-2xl font-light leading-relaxed mb-12 max-w-xl">
-                    Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions, white-label retail offerings, and <strong>leverage retail rails for treasury mobility.</strong>
+                    Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions and <strong>leverage retail rails for treasury mobility.</strong>
                 </p>
                 <div class="flex flex-wrap gap-6">
                     <a href="#" class="bg-black text-white px-12 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">Get Started</a>
@@ -271,25 +266,22 @@
 
     <section class="py-40 bg-[#fbfbfb] text-black" id="opportunitySection">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
-            <h2 class="text-4xl md:text-6xl font-light mb-20 tracking-tighter text-center uppercase">Platform Synergies</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bento-pill">
-                    <span class="bento-purple-text text-[10px] uppercase tracking-widest mb-8 block">Retail and Commercial Synergy</span>
+                    <span class="bento-purple-text text-[10px] uppercase mb-8 block">Retail Synergy</span>
                     <span class="text-5xl font-light bento-purple-text mb-6">Retail</span>
                     <p class="text-gray-500 text-sm leading-relaxed">Underpenetrated wealth access, emerging affluent growth, digital-first behaviour.</p>
                 </div>
                 <div class="bento-pill">
-                    <span class="bento-purple-text text-[10px] uppercase tracking-widest mb-8 block">Market Opportunity</span>
+                    <span class="bento-purple-text text-[10px] uppercase mb-8 block">Market Opportunity</span>
                     <span class="text-5xl font-light bento-purple-text mb-6">Commercial</span>
-                    <p class="text-gray-500 text-sm leading-relaxed">Idle corporate cash, fragmented treasury systems, poor execution optimisation, growing family office presence, demand for digitised capital management.</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Idle corporate cash, fragmented treasury systems, poor execution optimisation.</p>
                 </div>
                 <div class="bento-pill md:col-span-2 bento-pill-blue">
-                    <div class="flex flex-col lg:flex-row items-start lg:items-center gap-12 w-full text-left">
-                        <span class="text-6xl font-light leading-none">Synergy</span>
+                    <div class="flex flex-col lg:flex-row items-center gap-12 w-full text-left">
+                        <span class="text-6xl font-light">Synergy</span>
                         <div class="hidden lg:block h-16 w-[1px] bg-white/20"></div>
-                        <p class="text-white/90 text-lg max-w-4xl leading-relaxed font-light">
-                            Strategic positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency. MINT is not just an investment platform; it is a capital infrastructure company.
-                        </p>
+                        <p class="text-white/90 text-lg max-w-4xl font-light leading-relaxed">Strategic positioning: Retail—democratising capital access. Commercial—architecting institutional capital efficiency. MINT is not just an investment platform; it is a capital infrastructure company.</p>
                     </div>
                 </div>
             </div>
@@ -309,7 +301,7 @@
                 </div>
                 <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li>Home</li><li>Features</li><li>About Us</li></ul></div>
                 <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>3 Gwen Ln, Sandown, 2031</li><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2 text-sm uppercase tracking-widest">Institutional</h4><a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">Go to MINT</a></div>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2 uppercase tracking-widest">Institutional</h4><a href="#" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">Go to MINT</a></div>
             </div>
             <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 leading-relaxed text-justify opacity-60">MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).</div>
             <div class="flex justify-between items-center text-xs text-gray-500 pt-10"><p>&copy; 2026 MINT. All rights reserved.</p></div>
@@ -321,21 +313,25 @@
             const header = document.getElementById('main-header');
             gsap.registerPlugin(ScrollTrigger);
 
-            // Adaptive Header Logic
-            ScrollTrigger.create({
-                trigger: "#synergySection", start: "top 80", end: "bottom 80",
-                onEnter: () => header.classList.add('header-dark-items'),
-                onLeave: () => header.classList.remove('header-dark-items'),
-                onEnterBack: () => header.classList.add('header-dark-items'),
-                onLeaveBack: () => header.classList.remove('header-dark-items')
+            // --- HEADER HIDE ON SCROLL ---
+            let lastScroll = window.scrollY;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.scrollY;
+                if (currentScroll > lastScroll && currentScroll > 100) header.classList.add('header-hidden');
+                else header.classList.remove('header-hidden');
+                lastScroll = currentScroll;
             });
 
-            ScrollTrigger.create({
-                trigger: "#opportunitySection", start: "top 80", end: "bottom 80",
-                onEnter: () => header.classList.add('header-dark-items'),
-                onLeave: () => header.classList.remove('header-dark-items'),
-                onEnterBack: () => header.classList.add('header-dark-items'),
-                onLeaveBack: () => header.classList.remove('header-dark-items')
+            // Adaptive Header Item Color
+            const whiteSections = ["#synergySection", "#opportunitySection"];
+            whiteSections.forEach(selector => {
+                ScrollTrigger.create({
+                    trigger: selector, start: "top 80", end: "bottom 80",
+                    onEnter: () => header.classList.add('header-dark-items'),
+                    onLeave: () => header.classList.remove('header-dark-items'),
+                    onEnterBack: () => header.classList.add('header-dark-items'),
+                    onLeaveBack: () => header.classList.remove('header-dark-items')
+                });
             });
 
             // Buildings Animation
@@ -345,18 +341,15 @@
             });
 
             // Pillar Logic: Close when not hovering
-            const pillarContainer = document.getElementById('pillarContainer');
             const pillars = document.querySelectorAll('.pillar');
-            
+            document.getElementById('pillarContainer').addEventListener('mouseleave', () => {
+                pillars.forEach(p => p.classList.remove('active'));
+            });
             pillars.forEach(pillar => {
                 pillar.addEventListener('mouseenter', () => {
                     pillars.forEach(p => p.classList.remove('active'));
                     pillar.classList.add('active');
                 });
-            });
-
-            pillarContainer.addEventListener('mouseleave', () => {
-                pillars.forEach(p => p.classList.remove('active'));
             });
         });
 
