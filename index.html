@@ -234,6 +234,10 @@
         .animate-fade-in {
             animation: fadeIn 0.4s ease-out forwards;
         }
+        #borrowVideo.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -568,6 +572,43 @@
         </div>
     </section>
 
+    <section id="borrowSection" class="py-24 md:py-32 relative bg-white z-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 h-full flex flex-col justify-center relative">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                <div class="w-full lg:max-w-xl z-30">
+                    <h2 class="text-6xl md:text-8xl font-light text-black tracking-tight leading-none mb-6">Borrow</h2>
+                    <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed mb-8">
+                        MINT introduces smarter, fairer credit tools built around suitability, affordability, and transparency. 
+                        Users are enabled to borrow more efficiently, including the ability to access cheaper credit against 
+                        their investments, supported by digitised, seamless credit assessment processes aligned with regulatory requirements.
+                    </p>
+                    
+                    <a href="https://mymint.co.za" class="mint-cta-btn bg-[var(--mint-primary-purple)] text-white border-none group" style="width: fit-content;">
+                        <span class="text-sm font-semibold text-white">Unlock liquidity</span>
+                        <div class="mint-cta-icon bg-white text-[var(--mint-primary-purple)] shadow-sm">
+                            <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                            <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="absolute bottom-0 right-0 w-full lg:w-1/2 flex justify-end items-end pointer-events-none">
+                <video 
+                    autoplay 
+                    muted 
+                    loop 
+                    playsinline 
+                    class="max-h-[50vh] w-auto object-contain transition-all duration-700 opacity-0 transform translate-y-10"
+                    id="borrowVideo"
+                >
+                    <source src="videos/Comp 1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
             
@@ -797,7 +838,7 @@
             },
             onLeaveBack: () => mainHeader.classList.add('header-hero-dark-text')
         });
-
+        
         ScrollTrigger.create({
             trigger: "#main-footer",
             start: "top 80",
@@ -807,8 +848,24 @@
             },
             onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
+        gsap.to("#borrowVideo", {
+            scrollTrigger: {
+                trigger: "#borrowSection",
+                start: "top 60%", 
+                onEnter: () => document.getElementById('borrowVideo').classList.add('reveal'),
+                onLeaveBack: () => document.getElementById('borrowVideo').classList.remove('reveal')
+            }
+        });
 
-
+        ScrollTrigger.create({
+            trigger: "#borrowSection",
+            start: "top 80",
+            end: "bottom 80",
+            onEnter: () => mainHeader.classList.add('header-dark'),
+            onLeave: () => mainHeader.classList.remove('header-dark'), 
+            onEnterBack: () => mainHeader.classList.add('header-dark'),
+            onLeaveBack: () => mainHeader.classList.remove('header-dark') 
+        });
         // --- LINES ANIMATION ---
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
