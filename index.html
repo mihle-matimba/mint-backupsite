@@ -609,30 +609,39 @@
             <div class="w-full rounded-[2rem] overflow-hidden relative shadow-sm aspect-[12/5] group cursor-pointer hover:-translate-y-2 transition-transform duration-500 z-20">
                 <div class="absolute inset-0 z-10 pointer-events-none transition-colors duration-500 group-hover:bg-black/10" style="background-color: rgba(0,0,0,0.17);"></div>
                 <img src="images/Borrow Image.png" alt="Borrow Portfolio" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 relative z-0">
+                
                 <div class="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-30 pointer-events-none select-none">
                     <div class="bg-white/10 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-xl flex flex-col gap-4 w-[280px] md:w-[320px]">
                         
-                        <div class="flex justify-end items-center gap-2">
-                            <div class="p-2 rounded-full bg-white/20 flex items-center justify-center">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                                </svg>
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                                <span class="text-[10px] text-white/70 uppercase tracking-widest font-bold">Instant Liquidity</span>
                             </div>
-                            <div class="p-2 rounded-full bg-white/20 flex items-center justify-center">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white">
-                                    <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                            <div class="p-1.5 rounded-full bg-white/10">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/80">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                                 </svg>
                             </div>
                         </div>
                 
                         <div class="flex flex-col">
-                            <span class="text-4xl md:text-5xl font-light text-white tracking-tight">R 1.25M</span>
-                            <span class="text-sm md:text-base text-white/80 font-light mt-1">Portfolio Value</span>
+                            <span class="text-4xl md:text-5xl font-light text-white tracking-tight">R 450,000</span>
+                            <span class="text-sm md:text-base text-white/80 font-light mt-1">Available Credit</span>
+                        </div>
+                
+                        <div class="flex flex-col gap-3 pt-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-white/60 uppercase tracking-wider">Suitability Score</span>
+                                <span class="text-[10px] text-white font-medium">High</span>
+                            </div>
+                            <div class="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                                <div class="bg-emerald-400 h-full w-3/4"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-    
         </div>
     </section>
     <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800">
