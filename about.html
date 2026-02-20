@@ -28,7 +28,7 @@
             padding: 0;
         }
 
-        /* --- NAVBAR LOGIC (Synced with rest of site) --- */
+        /* --- NAVBAR LOGIC (Carbon Copy index (65).html) --- */
         #main-header {
             background-color: transparent !important;
             border-bottom: none !important;
@@ -36,11 +36,15 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #main-header.header-hidden { transform: translateY(-100%); }
-        #main-header .logo-img { filter: brightness(0) !important; transition: filter 0.3s ease; }
-        #main-header .nav-link { color: #000000; transition: color 0.3s ease; }
-        #main-header #mobile-menu-btn { color: #000000; transition: color 0.3s ease; }
+        #main-header .logo-img { filter: brightness(0) invert(1) !important; transition: filter 0.3s ease; }
+        #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
+        #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
 
-        /* --- CTA DESIGN (Carbon Copy index.html) --- */
+        #main-header.header-dark-items .nav-link { color: #000000; }
+        #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
+        #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
+
+        /* --- CTA DESIGN (Carbon Copy index (65).html) --- */
         .mint-cta-btn {
             display: inline-flex;
             align-items: center;
@@ -63,42 +67,43 @@
         }
 
         /* --- THREE.JS BACKGROUND --- */
-        #about-lattice {
-            position: fixed;
+        #about-bg-canvas {
+            position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
             pointer-events: none;
-            opacity: 0.3;
+            background: #000;
         }
 
-        .scroll-container { position: relative; z-index: 10; }
+        /* --- WHO WE ARE LAYOUT --- */
+        .sticky-narrative {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .floating-architecture {
+            position: absolute;
+            right: 5%;
+            top: 20%;
+            width: 30%;
+            opacity: 0.2;
+            filter: grayscale(1);
+            transition: all 1s ease;
+        }
 
         .shimmer-text {
-            background: linear-gradient(110deg, #111827 30%, #5c3bcf 45%, #8b5cf6 50%, #5c3bcf 55%, #111827 70%);
+            background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%);
             background-size: 250% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shimmer 5s linear infinite;
         }
         @keyframes shimmer { to { background-position: -250% center; } }
-
-        /* --- BENTO ACCENTS --- */
-        .bento-pill { background: #ffffff; border: 1px solid #f1f1f1; border-radius: 80px; padding: 3rem 5rem; display: flex; flex-direction: column; transition: all 0.5s ease; }
-        .bento-pill:hover { border-color: var(--mint-primary-purple); transform: translateY(-5px); }
-        .bento-pill-blue { background: linear-gradient(135deg, #5c3bcf 0%, #31005e 100%); color: white; border: none; }
-
-        /* Vision Masking */
-        .vision-mask {
-            clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
-            width: 100%;
-            height: 550px;
-            object-fit: cover;
-            transition: clip-path 1.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .vision-mask:hover { clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%); }
-
-        .floating-png { filter: drop-shadow(0 30px 60px rgba(92, 59, 207, 0.15)); }
     </style>
 </head>
 <body>
@@ -109,10 +114,10 @@
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
             </a>
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
-                <a href="index.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">Personal</a>
-                <a href="institution.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">Institution</a>
+                <a href="index.html" class="nav-link hover:text-gray-400 transition-all text-sm">Personal</a>
+                <a href="institution.html" class="nav-link hover:text-gray-400 transition-all text-sm">Institution</a>
                 <a href="about.html" class="nav-link text-[var(--mint-primary-purple)] font-bold transition-all text-sm">About</a>
-                <a href="contact.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">Contact</a>
+                <a href="contact.html" class="nav-link hover:text-gray-400 transition-all text-sm">Contact</a>
             </div>
             <div class="hidden lg:block">
                 <a href="https://mymint.co.za" class="mint-cta-btn group">
@@ -125,93 +130,71 @@
         </nav>
     </header>
 
-    <canvas id="about-lattice"></canvas>
-
-    <main class="scroll-container">
+    <section class="relative h-[400vh]" id="narrativePin">
+        <div id="about-bg-canvas"></div>
         
-        <section class="min-h-screen flex items-center justify-center relative px-6 md:px-10" id="hero-trigger">
-            <div class="max-w-6xl text-center hero-reveal">
-                <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.6em] mb-12 block">Who We Are</span>
-                <h1 class="text-4xl md:text-8xl font-light text-black leading-tight tracking-tighter uppercase mb-8">
-                    MINT exists to redefine how ambitious individuals<br>
-                    <span class="shimmer-text">grow, manage and leverage capital.</span>
-                </h1>
+        <div class="sticky top-0 w-full h-screen z-10 sticky-narrative" id="phase1">
+            <div class="max-w-5xl px-10 text-center">
+                <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.5em] mb-12 block">Who We Are</span>
+                <h2 class="text-4xl md:text-7xl font-light text-white leading-tight tracking-tighter uppercase">
+                    MINT exists to redefine how ambitious individuals <span class="shimmer-text">grow, manage and leverage capital.</span>
+                </h2>
             </div>
-        </section>
+        </div>
 
-        <section class="py-40 bg-white relative px-6 md:px-10">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
-                <div class="lg:col-span-7 reveal-block">
-                    <p class="text-gray-400 text-xl md:text-2xl font-light leading-relaxed mb-12">
-                        We combine disciplined investment strategies, transparent data and intelligent technology to provide structured access across asset classes, including public markets, private opportunities and alternative investments, without the traditional opacity of asset management.
-                    </p>
-                    <div class="p-12 border-l-4 border-[var(--mint-primary-purple)] bg-[#fbfbfb] rounded-r-[3rem]">
-                        <p class="text-2xl md:text-3xl font-light italic text-black leading-tight">
-                            "At our core, we believe wealth management should be performance-driven, not product-driven. That is why we operate on a performance-only fee model."
+        <div class="sticky top-0 w-full h-screen z-10 sticky-narrative" id="phase2">
+            <div class="max-w-5xl px-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div>
+                        <h3 class="text-3xl md:text-5xl font-light text-white leading-tight mb-8">Aligned Strategy.</h3>
+                        <p class="text-white/50 text-xl font-light leading-relaxed">
+                            We combine disciplined investment strategies, transparent data and intelligent technology to provide structured access across asset classes, including public markets, private opportunities and alternative investments.
                         </p>
                     </div>
-                </div>
-                <div class="lg:col-span-5 flex justify-center reveal-block">
-                    <img src="images/AboutStrategies.png" alt="Strategic Framework" class="floating-png w-full max-w-md h-auto">
+                    <img src="images/Buildings.png" class="w-full h-auto opacity-40 grayscale transition-all duration-1000 hover:grayscale-0 hover:opacity-100">
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="py-40 bg-[#fbfbfb] px-6 md:px-10">
-            <div class="max-w-7xl mx-auto text-center mb-24">
-                <h2 class="text-4xl md:text-7xl font-light tracking-tighter uppercase">Financial Architecture</h2>
-            </div>
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bento-pill reveal-block">
-                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-8 block">Sovereignty</span>
-                    <p class="text-gray-500 text-lg leading-relaxed">
-                        Through curated OpenStrategies, real-time tracking tools, and portfolio-backed lending, MINT provides a system designed to help you grow capital, access liquidity when needed, and build long-term financial sovereignty.
+        <div class="sticky top-0 w-full h-screen z-10 sticky-narrative" id="phase3">
+            <div class="max-w-4xl px-10 text-center">
+                <div class="p-16 border border-white/10 rounded-[4rem] bg-white/5 backdrop-blur-3xl">
+                    <p class="text-3xl md:text-5xl font-light text-white leading-tight italic">
+                        "At our core, we believe wealth management should be performance-driven, not product-driven. That is why we operate on a performance-only fee model — we earn when you earn."
                     </p>
                 </div>
-                <div class="bento-pill reveal-block">
-                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-8 block">Expansion</span>
-                    <p class="text-gray-500 text-lg leading-relaxed">
-                        As we expand, MINT will continue to broaden access across asset classes, including curated private market and art exposure, within a disciplined and structured ecosystem.
-                    </p>
-                </div>
-                <div class="bento-pill md:col-span-2 bento-pill-blue reveal-block">
-                    <div class="flex flex-col lg:flex-row items-center gap-12 text-left">
-                        <span class="text-5xl font-light">Infrastructure</span>
-                        <div class="hidden lg:block h-16 w-[1px] bg-white/20"></div>
-                        <p class="text-white/90 text-xl font-light max-w-4xl leading-relaxed">
-                            MINT is not just an investment platform. It is a capital infrastructure for modern wealth on the go.
-                        </p>
-                    </div>
+            </div>
+        </div>
+
+        <div class="sticky top-0 w-full h-screen z-10 sticky-narrative" id="phase4">
+            <div class="max-w-5xl px-10 text-center">
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-[var(--mint-primary-purple)] mb-10">Capital Infrastructure</h3>
+                <p class="text-3xl md:text-5xl font-light text-white leading-relaxed mb-16 tracking-tighter">
+                    Through curated OpenStrategies, real-time tracking tools, and portfolio-backed lending, MINT provides financial architecture designed to help you build long-term financial sovereignty.
+                </p>
+                <div class="inline-block px-10 py-5 border border-white/20 rounded-full text-white/40 text-sm tracking-widest uppercase">
+                    Modern wealth on the go
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="py-40 md:py-64 bg-white relative px-6 md:px-10">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-                <div class="relative reveal-block">
-                    <img src="https://img.freepik.com/free-photo/business-people-video-call-meeting_53876-15181.jpg" class="vision-mask" alt="Modern Collaboration">
-                </div>
-                <div class="reveal-block">
-                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-8 block">The Horizon</span>
-                    <h2 class="text-5xl md:text-7xl font-light tracking-tighter mb-10 text-black">Modern Wealth on the go.</h2>
-                    <p class="text-gray-400 text-xl font-light leading-relaxed">
-                        We earn when you earn. No hidden incentives. No unnecessary complexity. We combined disciplined investment strategies with intelligent technology to redefine the capital landscape.
-                    </p>
-                    <div class="mt-16">
-                        <a href="https://mymint.co.za" class="mint-cta-btn group">
-                            <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Build your architecture</span>
-                            <div class="mint-cta-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+    <section class="py-40 bg-white text-black relative z-20">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <h2 class="text-5xl md:text-7xl font-light tracking-tighter mb-10">Our Vision</h2>
+                <p class="text-gray-500 text-xl font-light leading-relaxed">
+                    As we expand, MINT will continue to broaden access across asset classes, including curated private market and art exposure, within a disciplined and structured ecosystem.
+                </p>
             </div>
-        </section>
+            <div class="p-12 md:p-20 bg-[var(--mint-primary-purple)] rounded-[4rem] text-white">
+                <h3 class="text-2xl font-medium mb-6">MINT is not just an investment platform.</h3>
+                <p class="text-white/80 text-lg leading-relaxed">It is a capital infrastructure for modern wealth on the go.</p>
+            </div>
+        </div>
+    </section>
 
-    </main>
-
-    <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800 relative z-30">
+    <footer class="bg-[#111827] text-white pt-24 pb-12 border-t border-gray-800 relative z-20">
         <div class="max-w-7xl mx-auto px-6 md:px-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                 <div class="space-y-6">
@@ -219,58 +202,82 @@
                     <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
                 </div>
                 <div><h4 class="text-white font-semibold mb-6">Quick Links</h4><ul class="space-y-4 text-sm text-gray-400"><li>Home</li><li>Features</li><li>About Us</li></ul></div>
-                <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>3 Gwen Ln, Sandown, 2031</li><li>info@mymint.co.za</li></ul></div>
-                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2 uppercase tracking-widest">Institutional</h4><a href="https://mymint.co.za" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">Go to MINT</a></div>
+                <div><h4 class="text-white font-semibold mb-6">Contact</h4><ul class="space-y-4 text-sm text-gray-400"><li>info@mymint.co.za</li><li>+27 10 276 0531</li></ul></div>
+                <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800"><h4 class="text-white font-semibold mb-2">Ready to start?</h4><a href="#" class="w-full bg-[var(--mint-primary-purple)] text-white py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group">Go to MINT</a></div>
             </div>
-            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 text-justify leading-relaxed opacity-60">MINT (Pty) Ltd is an authorised FSP (55118) and a registered Credit Provider (NCRCP22892).</div>
+            <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 text-justify leading-relaxed opacity-60">
+                MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).
+            </div>
             <div class="flex justify-between items-center text-xs text-gray-500 pt-10"><p>&copy; 2026 MINT. All rights reserved.</p></div>
         </div>
     </footer>
 
     <script>
-        // --- THREE.JS EFFECT (Light Mode Lattice) ---
-        const canvas = document.getElementById('about-lattice');
+        // --- THREE.JS: FLOATING OBSIDIAN PARTICLES ---
+        const canvasContainer = document.getElementById('about-bg-canvas');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        canvasContainer.appendChild(renderer.domElement);
 
-        const group = new THREE.Group();
-        const points = [];
-        for (let i = 0; i < 60; i++) {
-            points.push(new THREE.Vector3((Math.random()-0.5)*12, (Math.random()-0.5)*12, (Math.random()-0.5)*12));
+        const particlesGeometry = new THREE.IcosahedronGeometry(0.1, 0);
+        const material = new THREE.MeshPhongMaterial({ color: 0x5c3bcf, wireframe: true, transparent: true, opacity: 0.2 });
+        const particleGroup = new THREE.Group();
+
+        for(let i=0; i<40; i++) {
+            const mesh = new THREE.Mesh(particlesGeometry, material);
+            mesh.position.set((Math.random()-0.5)*15, (Math.random()-0.5)*15, (Math.random()-0.5)*15);
+            mesh.rotation.set(Math.random(), Math.random(), Math.random());
+            particleGroup.add(mesh);
         }
+        scene.add(particleGroup);
 
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
-        const material = new THREE.PointsMaterial({ color: 0x5c3bcf, size: 0.06 });
-        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x5c3bcf, transparent: true, opacity: 0.1 });
-
-        const nodePoints = new THREE.Points(geometry, material);
-        group.add(nodePoints);
-
-        for (let i = 0; i < points.length; i++) {
-            for (let j = i + 1; j < points.length; j++) {
-                if (points[i].distanceTo(points[j]) < 2.8) {
-                    const lineGeom = new THREE.BufferGeometry().setFromPoints([points[i], points[j]]);
-                    group.add(new THREE.Line(lineGeom, lineMaterial));
-                }
-            }
-        }
-        scene.add(group);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(1, 1, 1);
+        scene.add(light);
         camera.position.z = 8;
 
         function animate() {
             requestAnimationFrame(animate);
-            group.rotation.y += 0.0006;
-            group.rotation.x += 0.0004;
+            particleGroup.rotation.y += 0.001;
+            particleGroup.children.forEach(p => {
+                p.rotation.x += 0.01;
+                p.position.y += Math.sin(Date.now() * 0.001) * 0.002;
+            });
             renderer.render(scene, camera);
         }
         animate();
 
-        // --- GSAP ANIMATIONS ---
+        // --- GSAP NARRATIVE SCROLL ---
         gsap.registerPlugin(ScrollTrigger);
 
-        // Header Hide Logic
+        const phases = ['#phase1', '#phase2', '#phase3', '#phase4'];
+        phases.forEach((phase, i) => {
+            gsap.to(phase, {
+                opacity: 1, y: 0,
+                scrollTrigger: {
+                    trigger: phase,
+                    start: "top 50%",
+                    end: "top 20%",
+                    scrub: 1,
+                }
+            });
+            // Fade out when next phase starts
+            if(i < phases.length -1) {
+                gsap.to(phase, {
+                    opacity: 0, scale: 0.9,
+                    scrollTrigger: {
+                        trigger: phases[i+1],
+                        start: "top 80%",
+                        end: "top 50%",
+                        scrub: 1
+                    }
+                });
+            }
+        });
+
+        // Header and scroll behavior
         const header = document.getElementById('main-header');
         let lastScroll = window.scrollY;
         window.addEventListener('scroll', () => {
@@ -280,17 +287,10 @@
             lastScroll = currentScroll;
         });
 
-        // Content Reveal Animations
-        gsap.to(".hero-reveal", { opacity: 1, y: -20, duration: 1.5, ease: "power4.out" });
-        
-        gsap.from(".reveal-block", {
-            scrollTrigger: { trigger: ".reveal-block", start: "top 80%" },
-            y: 40, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power2.out"
-        });
-
-        // Interactive Lattice Zoom
-        gsap.to(group.position, {
-            z: 3, scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1 }
+        ScrollTrigger.create({
+            trigger: ".bg-white", start: "top 80",
+            onEnter: () => header.classList.add('header-dark-items'),
+            onLeaveBack: () => header.classList.remove('header-dark-items')
         });
 
         window.addEventListener('resize', () => {
