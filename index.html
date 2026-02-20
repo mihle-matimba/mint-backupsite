@@ -238,6 +238,32 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        .nav-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .group:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .personal-trigger::after {
+            content: '';
+            display: inline-block;
+            margin-left: 6px;
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid currentColor;
+            vertical-align: middle;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -251,7 +277,28 @@
             </button>
 
             <div class="hidden lg:flex items-center gap-10 text-xs font-light tracking-widest text-white uppercase">
-                <a href="personal.html" class="nav-link hover:text-gray-300 transition-all">Personal</a>
+                <div class="relative group py-4">
+                    <a href="personal.html" class="nav-link personal-trigger hover:text-gray-300 transition-all">Personal</a>
+                    
+                    <div class="nav-dropdown absolute top-full left-0 w-64 bg-white rounded-2xl shadow-2xl p-6 border border-gray-100 flex flex-col gap-6 mt-2">
+                        
+                        <a href="#blackSection" class="text-[10px] text-gray-400 hover:text-[var(--mint-primary-purple)] transition-colors tracking-[0.2em]">Features</a>
+                        
+                        <div class="flex flex-col gap-3 border-t border-gray-50 pt-4">
+                            <a href="#investSection" class="text-[11px] font-bold text-black hover:text-[var(--mint-primary-purple)] transition-colors">Invest</a>
+                            <div class="flex flex-col gap-2 pl-3 border-l border-gray-100">
+                                <a href="#stepsSection" class="text-[9px] text-gray-500 hover:text-black normal-case tracking-normal">Open Strategies (5 Steps)</a>
+                                <a href="#assetDeploymentSection" class="text-[9px] text-gray-500 hover:text-black normal-case tracking-normal">Assets, News & Goals</a>
+                            </div>
+                        </div>
+            
+                        <div class="flex flex-col gap-3 border-t border-gray-50 pt-4">
+                            <a href="#borrowSection" class="text-[11px] font-bold text-black hover:text-[var(--mint-primary-purple)] transition-colors">Borrow</a>
+                            <a href="#transactSection" class="text-[11px] font-bold text-black hover:text-[var(--mint-primary-purple)] transition-colors">Transact</a>
+                        </div>
+                    </div>
+                </div>
+            
                 <a href="institution.html" class="nav-link hover:text-gray-300 transition-all">Institution</a>
                 <a href="about.html" class="nav-link hover:text-gray-300 transition-all">About</a>
                 <a href="contact.html" class="nav-link hover:text-gray-300 transition-all">Contact</a>
