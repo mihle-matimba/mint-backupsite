@@ -20,41 +20,41 @@
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background-color: #000;
-            color: #ffffff;
             margin: 0;
-            overflow: hidden; /* Controlled by ScrollTrigger */
+            overflow: hidden; 
         }
 
-        /* --- Cross-Fade Transition System --- */
-        #main-wrapper {
+        /* --- Isolated Section System --- */
+        #main-stage {
             position: relative;
             width: 100%;
             height: 100vh;
+            overflow: hidden;
         }
 
-        .section-panel {
+        .stage-panel {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
             visibility: hidden;
+            opacity: 0;
             pointer-events: none;
-            overflow: hidden;
+            z-index: 1;
         }
 
-        .section-panel.active {
-            opacity: 1;
+        .stage-panel.active {
             visibility: visible;
+            opacity: 1;
             pointer-events: all;
+            z-index: 10;
         }
 
-        /* --- Section Styling --- */
-        .video-bg {
+        /* --- Hero Visuals --- */
+        .hero-video {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -63,22 +63,11 @@
             z-index: -1;
         }
 
-        .hero-overlay {
+        .hero-tint {
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 100%);
             z-index: 0;
-        }
-
-        .mesh-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(92, 59, 207, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, #ffffff 0%, transparent 100%);
-            filter: blur(80px);
-            z-index: -1;
         }
 
         .shimmer-text {
@@ -90,17 +79,29 @@
         }
         @keyframes shimmer { to { background-position: 200% center; } }
 
-        .glass-card {
+        /* --- Board/Team Styling --- */
+        .glass-bento {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 2.5rem;
+            border-radius: 2rem;
+            transition: transform 0.4s ease;
         }
 
-        /* Header Sync with index(66).html */
+        .director-img {
+            filter: grayscale(100%);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+        .glass-bento:hover .director-img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Header logic synced */
         #main-header .logo-img { filter: brightness(0) invert(1); }
-        #main-header.header-light .logo-img { filter: brightness(0); }
-        #main-header.header-light .nav-link { color: #4b5563; }
+        #main-header.light-mode .logo-img { filter: brightness(0); }
+        #main-header.light-mode .nav-link { color: #4b5563; }
+        #main-header.light-mode .nav-link:hover { color: #000; }
     </style>
 </head>
 <body>
@@ -108,126 +109,129 @@
     <header id="main-header" class="fixed top-0 left-0 w-full z-[100] transition-all duration-500">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
-                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4 w-auto logo-img transition-all duration-300"> 
+                <img src="images/LOGO 2 MINT.png" alt="MINT" class="h-4 w-auto logo-img"> 
             </a>
             <div class="hidden lg:flex items-center gap-12 text-[10px] font-bold tracking-[0.3em] uppercase text-white">
-                <a href="index.html" class="nav-link hover:text-[var(--mint-secondary)] transition-colors">Personal</a>
-                <a href="institution.html" class="nav-link hover:text-[var(--mint-secondary)] transition-colors">Institution</a>
+                <a href="index.html" class="nav-link">Personal</a>
+                <a href="institution.html" class="nav-link">Institution</a>
                 <a href="about.html" class="nav-link text-[var(--mint-secondary)] border-b-2 border-[var(--mint-secondary)] pb-1">About</a>
-                <a href="contact.html" class="nav-link hover:text-[var(--mint-secondary)] transition-colors">Contact</a>
+                <a href="contact.html" class="nav-link">Contact</a>
             </div>
-            <a href="https://mymint.co.za" class="bg-white text-black px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--mint-primary)] hover:text-white transition-all shadow-xl">Go to MINT</a>
+            <a href="https://mymint.co.za" class="bg-white text-black px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[var(--mint-primary)] hover:text-white transition-all">Go to MINT</a>
         </nav>
     </header>
 
-    <div id="main-wrapper">
+    <div id="main-stage">
         
-        <section class="section-panel active" id="hero">
-            <video autoplay muted loop playsinline class="video-bg">
+        <section class="stage-panel active" id="hero">
+            <video autoplay muted loop playsinline class="hero-video">
                 <source src="videos/Abouthero.mp4" type="video/mp4">
             </video>
-            <div class="hero-overlay"></div>
-            <div class="max-w-7xl w-full px-6 md:px-10 relative z-10">
-                <div class="max-w-3xl text-left">
-                    <span class="text-white/40 font-bold text-[11px] uppercase tracking-[0.4em] mb-6 block">About Us</span>
-                    <h1 class="text-6xl md:text-8xl font-medium text-white tracking-tight leading-[1.05] mb-8 uppercase">
-                        We architect the way <br>you <span class="shimmer-text">do capital.</span>
+            <div class="hero-tint"></div>
+            <div class="max-w-7xl w-full px-6 md:px-10 relative z-10 text-left">
+                <div class="max-w-4xl">
+                    <span class="text-white/40 font-bold text-[11px] uppercase tracking-[0.5em] mb-6 block">About us</span>
+                    <h1 class="text-6xl md:text-9xl font-medium text-white tracking-tight leading-[0.95] mb-8 uppercase">
+                        Architecting <br>the <span class="shimmer-text">capital</span> loop.
                     </h1>
-                    <p class="text-white/80 text-xl md:text-2xl font-light leading-relaxed max-w-2xl">
-                        MINT is a regulated wealthtech platform building the infrastructure for the future of personal finance in South Africa and beyond[cite: 2].
+                    <p class="text-white/70 text-xl md:text-2xl font-light leading-relaxed max-w-2xl">
+                        MINT is a regulated wealthtech platform building the infrastructure for the future of personal finance in South Africa and beyond.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section class="section-panel bg-white text-black" id="who-we-are">
-            <div class="mesh-bg opacity-40"></div>
-            <div class="max-w-7xl w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
+        <section class="stage-panel bg-white text-black" id="manifesto">
+            <div class="max-w-7xl w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                <div class="space-y-10">
                     <span class="text-[var(--mint-primary)] font-bold text-[11px] uppercase tracking-[0.4em] block">Who We Are</span>
-                    <h2 class="text-4xl md:text-6xl font-light tracking-tighter leading-tight uppercase">Building for modern <br>Financial Sovereignty.</h2>
+                    <h2 class="text-4xl md:text-6xl font-light tracking-tighter leading-tight uppercase italic">Built on alignment <br>& fair access.</h2>
                     <p class="text-gray-500 text-lg font-light leading-relaxed">
-                        MINT is a modern private wealth platform built on alignment and fair access. We exist to redefine how ambitious individuals grow, manage and leverage capital.
+                        MINT exists to redefine how ambitious individuals grow, manage and leverage capital. We combine disciplined investment strategies, transparent data and intelligent technology.
                     </p>
-                    <div class="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100">
-                        <p class="text-sm italic text-gray-600 leading-relaxed font-light">
+                    <div class="bg-gray-50 p-10 rounded-[3rem] border-l-4 border-[var(--mint-primary)]">
+                        <p class="text-sm italic text-gray-700 leading-relaxed font-light">
                             "At our core, we believe wealth management should be performance-driven, not product-driven. That is why we operate on a performance-only fee model. We earn when you earn. No hidden incentives. No unnecessary complexity."
                         </p>
                     </div>
                 </div>
-                <div class="space-y-6 text-sm md:text-base text-gray-500 font-light leading-relaxed">
-                    <p>We combine disciplined investment strategies, transparent data and intelligent technology to provide structured access across asset classes, including public markets, private opportunities and alternative investments, without the traditional opacity of asset management.</p>
-                    <p>Through curated OpenStrategies, real-time tracking tools, portfolio-backed lending and seamless capital mobility, MINT delivers more than investment access. We provide financial architecture. A system designed to help you grow capital, access liquidity when needed, allocate into private and alternative opportunities, and build long-term financial sovereignty.</p>
-                    <p class="text-black font-bold uppercase tracking-tight">MINT is not just an investment platform. It is a capital infrastructure for modern wealth on the go.</p>
+                <div class="space-y-8 text-sm md:text-base text-gray-600 font-light leading-relaxed pt-4 lg:pt-24">
+                    <p>Through curated OpenStrategies, real-time tracking tools, portfolio-backed lending and seamless capital mobility, MINT delivers more than investment access. We provide financial architecture.</p>
+                    <p>A system designed to help you grow capital, access liquidity when needed, allocate into private and alternative opportunities, and build long-term financial sovereignty.</p>
+                    <p class="text-black font-bold uppercase tracking-tight text-xl pt-4">MINT is not just an investment platform. It is a capital infrastructure for modern wealth on the go.</p>
                 </div>
             </div>
         </section>
 
-        <section class="section-panel bg-[#f8f9fc] text-black" id="team">
-            <div class="max-w-7xl w-full px-6 md:px-10">
+        <section class="stage-panel bg-[#f8f9fc] text-black" id="founders">
+            <div class="max-w-7xl w-full px-6 md:px-10 text-left">
                 <div class="mb-16">
                     <h2 class="text-4xl md:text-6xl font-light tracking-tight uppercase">The Architects.</h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="p-12 glass-card border-gray-200 text-center flex flex-col items-center">
-                        <div class="w-40 h-40 rounded-full overflow-hidden mb-8 shadow-2xl border-4 border-white">
-                            <img src="images/Lonwabo.png" alt="Lonwabo Damane" class="w-full h-full object-cover">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white p-12 rounded-[4rem] flex flex-col items-center text-center shadow-sm">
+                        <div class="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-gray-50 shadow-xl">
+                            <img src="images/Lonwabo.png" alt="Lonwabo Damane" class="director-img w-full h-full object-cover">
                         </div>
                         <h3 class="text-2xl font-bold">Lonwabo Damane, CA(SA)</h3>
-                        <p class="text-[10px] font-bold text-[var(--mint-primary)] uppercase tracking-widest mt-2">Co-founder & CEO [cite: 155]</p>
-                        <p class="text-gray-400 text-sm mt-6 font-light max-w-xs">Leading the vision for integrated wealth infrastructure and capital formation.</p>
+                        <p class="text-[10px] font-bold text-[var(--mint-primary)] uppercase tracking-widest mt-2">Co-founder & CEO</p>
                     </div>
-                    <div class="p-12 glass-card border-gray-200 text-center flex flex-col items-center">
-                        <div class="w-40 h-40 rounded-full overflow-hidden mb-8 shadow-2xl border-4 border-white">
-                            <img src="images/Mihle.png" alt="Mihle Matimba" class="w-full h-full object-cover">
+                    <div class="bg-white p-12 rounded-[4rem] flex flex-col items-center text-center shadow-sm">
+                        <div class="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-gray-50 shadow-xl">
+                            <img src="images/Mihle.png" alt="Mihle Matimba" class="director-img w-full h-full object-cover">
                         </div>
                         <h3 class="text-2xl font-bold">Mihle Matimba</h3>
-                        <p class="text-[10px] font-bold text-[var(--mint-primary)] uppercase tracking-widest mt-2">Co-founder & CTO [cite: 158]</p>
-                        <p class="text-gray-400 text-sm mt-6 font-light max-w-xs">Architecting the proprietary financial technology powering the MINT ecosystem.</p>
+                        <p class="text-[10px] font-bold text-[var(--mint-primary)] uppercase tracking-widest mt-2">Co-founder & CTO</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-panel bg-black text-white" id="board">
+        <section class="stage-panel bg-black text-white" id="board">
             <div class="max-w-7xl w-full px-6 md:px-10">
-                <div class="text-center mb-20">
-                    <span class="text-[var(--mint-secondary)] font-bold text-[10px] uppercase tracking-[0.6em] mb-4 block">Governance</span>
+                <div class="text-center mb-16">
+                    <span class="text-white/40 font-bold text-[10px] uppercase tracking-[0.6em] mb-4 block">Independent Oversight</span>
                     <h2 class="text-5xl md:text-8xl font-light tracking-tight uppercase">The Board.</h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all group">
-                        <h4 class="text-xl font-bold mb-1">Boitumelo Mokete</h4>
-                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Board Chair</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">CA(SA), CFA, Oxford MBA. Portfolio Manager at 360NE Asset Management[cite: 171, 172, 173].</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all group">
-                        <h4 class="text-xl font-bold mb-1">Khaya Sithole</h4>
-                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Governance specialist</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">Chartered Accountant and governance specialist with extensive board experience in JSE-listed companies[cite: 174, 175, 176].</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all group">
-                        <h4 class="text-xl font-bold mb-1">Kgomotso Maphai</h4>
-                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Growth Strategy</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">MD of Elderberry ZA with 20+ years across industrial development and advertising-led growth[cite: 177, 178, 179].</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all group lg:col-span-2">
-                        <div class="flex flex-col md:flex-row gap-10 items-center">
-                            <div class="flex-1">
-                                <h4 class="text-2xl font-bold mb-1">Rufaro Mapanda</h4>
-                                <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Markets Specialist</p>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">Head of Equity Trading at Absa. Harvard Fellow and co-founder of leading African payment solution providers[cite: 180, 181, 182, 183].</p>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="text-2xl font-bold mb-1">Siliziwe Mafika</h4>
-                                <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Banking Strategy</p>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">CA(SA) and Partner at Deloitte. Leader in Pan-African banking strategy and transformation[cite: 184, 185, 186, 187].</p>
-                            </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div class="glass-bento p-6 text-center">
+                        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white/20">
+                            <img src="images/Boitumelo.png" alt="Boitumelo Mokete" class="director-img w-full h-full object-cover">
                         </div>
+                        <h4 class="text-xs font-bold mb-1 leading-tight">Boitumelo Mokete</h4>
+                        <p class="text-[8px] font-bold text-[var(--mint-secondary)] uppercase tracking-widest">Chairperson</p>
+                    </div>
+                    <div class="glass-bento p-6 text-center">
+                        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white/20">
+                            <img src="images/Khaya.png" alt="Khaya Sithole" class="director-img w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xs font-bold mb-1 leading-tight">Khaya Sithole</h4>
+                        <p class="text-[8px] font-bold text-[var(--mint-secondary)] uppercase tracking-widest">Governance</p>
+                    </div>
+                    <div class="glass-bento p-6 text-center">
+                        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white/20">
+                            <img src="images/Kgomotso.png" alt="Kgomotso Maphai" class="director-img w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xs font-bold mb-1 leading-tight">Kgomotso Maphai</h4>
+                        <p class="text-[8px] font-bold text-[var(--mint-secondary)] uppercase tracking-widest">Growth</p>
+                    </div>
+                    <div class="glass-bento p-6 text-center">
+                        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white/20">
+                            <img src="images/Rufaro.png" alt="Rufaro Mapanda" class="director-img w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xs font-bold mb-1 leading-tight">Rufaro Mapanda</h4>
+                        <p class="text-[8px] font-bold text-[var(--mint-secondary)] uppercase tracking-widest">Markets</p>
+                    </div>
+                    <div class="glass-bento p-6 text-center">
+                        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white/20">
+                            <img src="images/Siliziwe.png" alt="Siliziwe Mafika" class="director-img w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xs font-bold mb-1 leading-tight">Siliziwe Mafika</h4>
+                        <p class="text-[8px] font-bold text-[var(--mint-secondary)] uppercase tracking-widest">Banking</p>
                     </div>
                 </div>
-                <div class="mt-20 text-center opacity-30">
-                    <p class="text-[9px] uppercase tracking-[0.5em]">Authorised Financial Services Provider (FSP 55118) | NCRCP22892 [cite: 2]</p>
+                <div class="mt-20 text-center opacity-30 text-[9px] uppercase tracking-[0.5em]">
+                    FSP 55118 | NCRCP22892
                 </div>
             </div>
         </section>
@@ -237,14 +241,11 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        const panels = gsap.utils.toArray(".section-panel");
-        const viewport = document.getElementById("main-wrapper");
-
-        // --- Cross-Fade Navigation Logic ---
+        const panels = gsap.utils.toArray(".stage-panel");
         let currentIndex = 0;
         let isAnimating = false;
 
-        const goToSection = (index) => {
+        const navigateTo = (index) => {
             if (isAnimating || index === currentIndex) return;
             isAnimating = true;
 
@@ -255,60 +256,53 @@
                 onComplete: () => {
                     isAnimating = false;
                     currentIndex = index;
-                    // Fully hide outgoing section
-                    gsap.set(outgoing, { visibility: "hidden", display: "none" });
+                    gsap.set(outgoing, { visibility: "hidden", className: "stage-panel" });
                 }
             });
 
             // Prepare incoming
             gsap.set(incoming, { 
                 visibility: "visible", 
-                display: "flex", 
                 opacity: 0, 
-                scale: 1.1,
-                y: 50
+                xPercent: 100,
+                filter: "blur(20px)" 
             });
 
             // Transition
             tl.to(outgoing, {
                 opacity: 0,
-                y: -50,
-                scale: 0.9,
-                duration: 0.8,
-                ease: "power3.inOut"
+                xPercent: -30,
+                filter: "blur(10px)",
+                duration: 1,
+                ease: "expo.inOut"
             })
             .to(incoming, {
                 opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 1,
-                ease: "power4.out"
-            }, "-=0.6");
+                xPercent: 0,
+                filter: "blur(0px)",
+                duration: 1.2,
+                ease: "expo.out"
+            }, "-=0.8");
 
-            // Header Logic based on background
+            // Toggle Header Theme
             const header = document.getElementById('main-header');
-            if (index === 0 || index === 3) { // Hero or Board (Dark)
-                header.classList.remove('header-light');
-            } else { // White sections
-                header.classList.add('header-light');
+            if (index === 1 || index === 2) {
+                header.classList.add('light-mode');
+            } else {
+                header.classList.remove('light-mode');
             }
         };
 
-        // --- Scroll Listener for Transitions ---
         window.addEventListener("wheel", (e) => {
             if (isAnimating) return;
-            if (e.deltaY > 0 && currentIndex < panels.length - 1) {
-                goToSection(currentIndex + 1);
-            } else if (e.deltaY < 0 && currentIndex > 0) {
-                goToSection(currentIndex - 1);
-            }
+            if (e.deltaY > 0 && currentIndex < panels.length - 1) navigateTo(currentIndex + 1);
+            else if (e.deltaY < 0 && currentIndex > 0) navigateTo(currentIndex - 1);
         });
 
-        // Initial setup for panels
+        // Initial setup
         panels.forEach((p, i) => {
-            if (i !== 0) gsap.set(p, { visibility: "hidden", display: "none" });
+            if (i !== 0) gsap.set(p, { visibility: "hidden" });
         });
-
     </script>
 </body>
 </html>
