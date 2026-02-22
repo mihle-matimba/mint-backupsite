@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About MINT | The Architects of Capital</title>
+    <title>About MINT | The Architects of Wealth Infrastructure</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,39 +21,49 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--mint-bg);
             color: #111;
+            margin: 0;
             overflow-x: hidden;
         }
 
-        /* --- Panel Scrolling (Rimac Inspo) --- */
-        .panel {
-            position: fixed;
+        /* --- Panel Transitions (Rimac Style) --- */
+        #panels-container {
             width: 100%;
             height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel {
+            position: absolute;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            visibility: hidden;
+            will-change: transform, clip-path;
         }
 
-        .panel-content {
-            z-index: 2;
-            width: 100%;
-            max-width: 1280px;
-            padding: 0 2rem;
-        }
-
-        /* --- Dynamic Mesh Background --- */
+        /* --- Design Language --- */
         .mesh-bg {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(92, 59, 207, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, #ffffff 0%, transparent 100%);
-            z-index: 1;
+                radial-gradient(circle at 10% 20%, rgba(92, 59, 207, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, #ffffff 0%, transparent 100%),
+                radial-gradient(circle at 80% 20%, rgba(221, 195, 87, 0.05) 0%, transparent 30%);
             filter: blur(80px);
+            z-index: -1;
+        }
+
+        .glass-bento {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 2.5rem;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .shimmer-text {
@@ -61,31 +71,19 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 5s linear infinite;
+            animation: shimmer 4s linear infinite;
         }
         @keyframes shimmer { to { background-position: 200% center; } }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 3rem;
-        }
-
-        /* --- Stats Bento (Revolut Inspo) --- */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
+        #main-header .logo-img { filter: brightness(0); }
     </style>
 </head>
 <body>
 
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-[100] transition-all duration-500">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
-                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="h-4 w-auto brightness-0"> 
+                <img src="images/LOGO 2 MINT.png" alt="MINT" class="h-4 w-auto logo-img"> 
             </a>
             <div class="hidden lg:flex items-center gap-12 text-[10px] font-bold tracking-[0.3em] uppercase">
                 <a href="index.html" class="hover:text-[var(--mint-primary)]">Personal</a>
@@ -97,119 +95,120 @@
         </nav>
     </header>
 
-    <div id="panel-container" class="relative">
-
-        <section class="panel" style="visibility: visible; z-index: 5;">
+    <div id="panels-container">
+        
+        <section class="panel p1 bg-[#fdfcff]" style="z-index: 5;">
             <div class="mesh-bg"></div>
-            <div class="panel-content text-center">
+            <div class="max-w-6xl px-10 text-center">
                 <span class="text-[var(--mint-primary)] font-bold text-[10px] uppercase tracking-[0.6em] mb-12 block">The Resurrection</span>
-                <h1 class="text-6xl md:text-9xl font-light tracking-tighter leading-[0.9] mb-12">
-                    Architecting <br><span class="shimmer-text">Capital Assets.</span>
+                <h1 class="text-6xl md:text-9xl font-light tracking-tighter leading-[0.9] mb-12 uppercase">
+                    Architecting <br><span class="shimmer-text">Modern Capital.</span>
                 </h1>
-                <p class="text-xl md:text-3xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-16">
-                    MINT is a regulated wealthtech platform building the infrastructure for the future of personal finance[cite: 532].
+                <p class="text-xl md:text-2xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto">
+                    MINT is a regulated wealthtech platform building the infrastructure for personal finance in South Africa and beyond[cite: 20].
                 </p>
-                <div class="max-w-xl mx-auto glass-card p-8 text-left">
-                    <p class="text-gray-600 text-sm md:text-base font-light">
-                        In a high-debt economy (>60% debt-to-income) with negative savings rates (-1.20%), the ability to integrate investing and credit is a necessity, not a convenience[cite: 539, 546].
-                    </p>
+                <div class="mt-16 flex flex-wrap justify-center gap-4">
+                    <div class="px-8 py-4 glass-bento text-left">
+                        <span class="text-[var(--mint-primary)] font-bold text-3xl">-1.20%</span>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-400 mt-1">National Savings Rate [cite: 73]</p>
+                    </div>
+                    <div class="px-8 py-4 glass-bento text-left">
+                        <span class="text-black font-bold text-3xl">>60%</span>
+                        <p class="text-[9px] uppercase tracking-widest text-gray-400 mt-1">Debt-to-Income Ratio [cite: 27]</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="panel" style="z-index: 4;">
-            <div class="bg-white w-full h-full absolute"></div>
-            <div class="panel-content">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    <div>
-                        <h2 class="text-5xl md:text-7xl font-light tracking-tight mb-8">The Architects.</h2>
-                        <p class="text-gray-500 text-xl font-light mb-12">Building a unified financial ecosystem where users invest, borrow, and transact from a single wallet[cite: 594, 595].</p>
-                        
-                        <div class="flex gap-10">
-                            <div class="group">
-                                <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-gray-100 group-hover:border-[var(--mint-primary)] transition-all">
-                                    <img src="images/Lonwabo.png" alt="Lonwabo Damane" class="w-full h-full object-cover">
-                                </div>
-                                <h4 class="font-bold text-sm">Lonwabo Damane, CA(SA)</h4>
-                                <p class="text-[10px] uppercase text-gray-400 font-bold tracking-widest">Co-founder & CEO [cite: 667]</p>
-                            </div>
-                            <div class="group">
-                                <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-gray-100 group-hover:border-[var(--mint-primary)] transition-all">
-                                    <img src="images/Mihle.png" alt="Mihle Matimba" class="w-full h-full object-cover">
-                                </div>
-                                <h4 class="font-bold text-sm">Mihle Matimba</h4>
-                                <p class="text-[10px] uppercase text-gray-400 font-bold tracking-widest">Co-founder & CTO [cite: 670]</p>
-                            </div>
+        <section class="panel p2 bg-white" style="z-index: 4;">
+            <div class="max-w-7xl px-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10">
+                    <h2 class="text-5xl md:text-7xl font-light tracking-tight leading-none uppercase">The Loop.</h2>
+                    <p class="text-gray-600 text-lg md:text-xl font-light leading-relaxed">
+                        We rebuild the financial stack from first principles. Our ecosystem creates a continuous loop where assets unlock liquidity and credit supports progress[cite: 89].
+                    </p>
+                    <div class="flex flex-col gap-6">
+                        <div class="flex items-center gap-6">
+                            <span class="w-10 h-10 rounded-full bg-[var(--mint-primary)] text-white flex items-center justify-center font-bold">1</span>
+                            <p class="text-sm font-medium">Invest: Build wealth through institutional strategies[cite: 90].</p>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <span class="w-10 h-10 rounded-full bg-[var(--mint-primary)] text-white flex items-center justify-center font-bold">2</span>
+                            <p class="text-sm font-medium">Borrow: Access flexible, investment-backed credit[cite: 92].</p>
                         </div>
                     </div>
-                    <div class="relative">
-                                            </div>
+                </div>
+                <div class="relative">
+                    <img src="images/Invest3.png" alt="App Interface" class="w-full h-auto drop-shadow-2xl">
                 </div>
             </div>
         </section>
 
-        <section class="panel" style="z-index: 3;">
-            <div class="bg-[#f8f9fc] w-full h-full absolute"></div>
-            <div class="panel-content">
+        <section class="panel p3 bg-[#f8f9fc]" style="z-index: 3;">
+            <div class="max-w-7xl px-10">
+                <div class="mb-12">
+                    <h2 class="text-4xl md:text-6xl font-light tracking-tight uppercase">Meet the Team.</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <div class="glass-bento p-8 text-center col-span-2">
+                        <div class="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white shadow-md">
+                            <img src="images/Lonwabo.png" alt="Lonwabo Damane" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-sm">Lonwabo Damane, CA(SA)</h4>
+                        <p class="text-[9px] uppercase font-bold text-[var(--mint-primary)] tracking-widest">Co-founder & CEO [cite: 155]</p>
+                    </div>
+                    <div class="glass-bento p-8 text-center col-span-2">
+                        <div class="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-2 border-white shadow-md">
+                            <img src="images/Mihle.png" alt="Mihle Matimba" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="font-bold text-sm">Mihle Matimba</h4>
+                        <p class="text-[9px] uppercase font-bold text-[var(--mint-primary)] tracking-widest">Co-founder & CTO [cite: 158]</p>
+                    </div>
+                    <div class="glass-bento p-4 text-center">
+                        <h5 class="text-[10px] font-bold">Mufaro Ncube</h5>
+                        <p class="text-[8px] uppercase text-gray-400">Developer [cite: 159]</p>
+                    </div>
+                    <div class="glass-bento p-4 text-center">
+                        <h5 class="text-[10px] font-bold">Eletu Silo, CA(SA)</h5>
+                        <p class="text-[8px] uppercase text-gray-400">CFO [cite: 168]</p>
+                    </div>
+                    <div class="glass-bento p-4 text-center">
+                        <h5 class="text-[10px] font-bold">Kevin Pillay</h5>
+                        <p class="text-[8px] uppercase text-gray-400">Compliance (KI) [cite: 164]</p>
+                    </div>
+                    <div class="glass-bento p-4 text-center">
+                        <h5 class="text-[10px] font-bold">Kurt</h5>
+                        <p class="text-[8px] uppercase text-gray-400">Developer [cite: 160]</p>
+                    </div>
+                    <div class="glass-bento p-4 text-center">
+                        <h5 class="text-[10px] font-bold">Anthony Boateng</h5>
+                        <p class="text-[8px] uppercase text-gray-400">Biz Dev [cite: 169]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel p4 bg-black text-white" style="z-index: 2;">
+            <div class="max-w-7xl px-10">
                 <div class="text-center mb-16">
-                    <span class="text-[var(--mint-primary)] font-bold text-[10px] uppercase tracking-[0.6em] mb-4 block">Institutional Trust</span>
-                    <h2 class="text-4xl md:text-6xl font-light tracking-tight">The Board of Directors.</h2>
+                    <span class="text-[var(--mint-secondary)] font-bold text-[10px] uppercase tracking-[0.6em] mb-4 block">Independent Oversight</span>
+                    <h2 class="text-5xl md:text-8xl font-light tracking-tight uppercase">The Board.</h2>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all">
-                        <h4 class="text-lg font-bold mb-1">Boitumelo Mokete</h4>
-                        <p class="text-[var(--mint-primary)] text-[9px] font-bold uppercase tracking-widest mb-4">Board Chair [cite: 683]</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">CA(SA), CFA, Oxford MBA. Portfolio Manager at 360NE Asset Management[cite: 684, 685].</p>
+                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all">
+                        <h4 class="text-xl font-bold mb-1">Boitumelo Mokete</h4>
+                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Board Chair</p>
+                        <p class="text-xs text-gray-400 leading-relaxed font-light">CA(SA), CFA, Oxford MBA. Portfolio Manager at 360NE Asset Management [cite: 171-173].</p>
                     </div>
-
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all">
-                        <h4 class="text-lg font-bold mb-1">Khaya Sithole</h4>
-                        <p class="text-[var(--mint-primary)] text-[9px] font-bold uppercase tracking-widest mb-4">Governance [cite: 686]</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">Chartered Accountant and governance specialist with extensive board experience in JSE-listed companies[cite: 687, 688].</p>
+                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all">
+                        <h4 class="text-xl font-bold mb-1">Khaya Sithole</h4>
+                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Governance</p>
+                        <p class="text-xs text-gray-400 leading-relaxed font-light">Chartered Accountant and governance specialist with extensive board experience in JSE-listed companies [cite: 174-176].</p>
                     </div>
-
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all">
-                        <h4 class="text-lg font-bold mb-1">Rufaro Mapanda</h4>
-                        <p class="text-[var(--mint-primary)] text-[9px] font-bold uppercase tracking-widest mb-4">Strategy [cite: 692]</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">Head of Equity Trading at Absa. Harvard Fellow and African payment co-founder[cite: 693, 695].</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all">
-                        <h4 class="text-lg font-bold mb-1">Kgomotso Maphai</h4>
-                        <p class="text-[var(--mint-primary)] text-[9px] font-bold uppercase tracking-widest mb-4">Growth [cite: 689]</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">Industrialist and MD of Elderberry ZA with 20+ years in global trade and advertising[cite: 690, 691].</p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all">
-                        <h4 class="text-lg font-bold mb-1">Siliziwe Mafika</h4>
-                        <p class="text-[var(--mint-primary)] text-[9px] font-bold uppercase tracking-widest mb-4">Transformation [cite: 696]</p>
-                        <p class="text-xs text-gray-400 leading-relaxed font-light">Partner at Deloitte. Recognized leader in Pan-African banking strategy and modernizeation[cite: 697, 698].</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel" style="z-index: 2;">
-            <div class="bg-black w-full h-full absolute"></div>
-            <div class="panel-content text-center text-white">
-                <h2 class="text-5xl md:text-8xl font-light tracking-tighter mb-20 uppercase">Positioned to Scale.</h2>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-12">
-                    <div class="space-y-4">
-                        <div class="text-5xl font-bold text-[var(--mint-secondary)]">100+</div>
-                        <p class="text-[10px] uppercase tracking-widest text-gray-500">Active Users acquired <br>in under 100 days [cite: 659]</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="text-5xl font-bold text-[var(--mint-secondary)]">R10m</div>
-                        <p class="text-[10px] uppercase tracking-widest text-gray-500">Raise accelerating <br>distribution [cite: 535, 536]</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="text-5xl font-bold text-[var(--mint-secondary)]">10</div>
-                        <p class="text-[10px] uppercase tracking-widest text-gray-500">Cross-functional team <br>members [cite: 663]</p>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="text-5xl font-bold text-[var(--mint-secondary)]">2</div>
-                        <p class="text-[10px] uppercase tracking-widest text-gray-500">Core Licenses: <br>FSCA & NCR [cite: 537]</p>
+                    <div class="bg-white/5 border border-white/10 p-10 rounded-[3rem] hover:bg-white/10 transition-all">
+                        <h4 class="text-xl font-bold mb-1">Rufaro Mapanda</h4>
+                        <p class="text-[var(--mint-secondary)] text-[9px] font-bold uppercase tracking-widest mb-6">Markets Specialist</p>
+                        <p class="text-xs text-gray-400 leading-relaxed font-light">Head of Equity Trading at Absa. Harvard Fellow and African payment solution co-founder [cite: 180-183].</p>
                     </div>
                 </div>
             </div>
@@ -221,39 +220,48 @@
         gsap.registerPlugin(ScrollTrigger);
 
         const panels = gsap.utils.toArray(".panel");
-        
-        // --- Panel Scrubbing Animation (Rimac-style Layering) ---
-        gsap.set(panels, { visibility: "visible" });
+        const container = document.querySelector("#panels-container");
 
-        panels.forEach((panel, i) => {
-            if (i === 0) return; // Skip first panel as it's our starting view
+        // --- Panel Scrubbing Sequence ---
+        // Each panel except the first starts hidden at the bottom
+        gsap.set(panels.slice(1), { yPercent: 100 });
 
-            gsap.fromTo(panel, 
-                { yPercent: 100, clipPath: "inset(0% 0% 0% 0%)" }, 
-                { 
-                    yPercent: 0, 
-                    duration: 1, 
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: "#panel-container",
-                        start: () => i * window.innerHeight,
-                        end: () => (i + 1) * window.innerHeight,
-                        scrub: true,
-                    }
-                }
-            );
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: container,
+                start: "top top",
+                end: () => `+=${panels.length * 100}%`,
+                scrub: 1,
+                pin: true,
+                anticipatePin: 1
+            }
         });
 
-        // Set the height of the container to enable scrolling
-        document.getElementById('panel-container').style.height = `${panels.length * 100}vh`;
+        panels.forEach((panel, i) => {
+            if (i === 0) return;
+            
+            // Animation for current panel entering
+            tl.to(panel, {
+                yPercent: 0,
+                ease: "none",
+                duration: 1
+            });
 
-        // --- Header Theme Logic ---
+            // Subtle scale out for the previous panel
+            tl.to(panels[i-1], {
+                scale: 0.85,
+                opacity: 0,
+                duration: 0.5
+            }, `-=1`);
+        });
+
+        // --- Header Theme Swapping ---
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.scrollY > 50) {
-                header.classList.add('bg-white/70', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
+                header.classList.add('bg-white/80', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
             } else {
-                header.classList.remove('bg-white/70', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
+                header.classList.remove('bg-white/80', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
             }
         });
     </script>
