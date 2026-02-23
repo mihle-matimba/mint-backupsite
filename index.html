@@ -126,12 +126,14 @@
 
         .hero-initial {
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 50%; 
+            left: 0;
+            transform: translateY(-50%); /* Removed horizontal translate */
             z-index: 20;
             width: 100%;
             max-width: 1000px;
-            text-align: center;
+            text-align: left; /* Left align text */
+            padding-left: 8%; /* Added breathing room from the edge */
         }
 
         .hero-bg-image {
@@ -391,36 +393,36 @@
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-initial px-6">
-            <h1 class="text-5xl lg:text-7xl font-light leading-tight mb-8 shimmer-text text-white">
-                Elevate your<br>
-                Investment Portfolio<br> 
-                <span class="font-normal text-white">With MINT</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-2xl mx-auto">
-                Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.
-            </p>
+    <h1 class="text-5xl lg:text-7xl font-light leading-tight mb-8 shimmer-text text-white">
+        Elevate your<br>
+        Investment Portfolio<br> 
+        <span class="font-normal text-white">With MINT</span>
+    </h1>
+    
+    <p class="text-lg md:text-xl text-gray-200 mb-10 font-light max-w-2xl text-left ml-0">
+        Invest, Borrow, and Transact in one place. Unlock the value of your portfolio without selling your assets.
+    </p>
 
-            <button onclick="checkDevice()" class="mint-cta-btn group mx-auto inline-flex" style="width: fit-content;">
-                <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
-                <div class="mint-cta-icon">
-                    <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                    <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                </div>
-            </button>
-
-            <div class="flex items-center justify-center gap-4 mt-12 opacity-90">
-                <div class="flex -space-x-3">
-                    <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white/20">
-                    <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white/20">
-                    <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white/20">
-                </div>
-                <div class="text-left">
-                    <div class="text-xl font-medium text-white">200+</div>
-                    <p class="text-[10px] text-gray-300 uppercase tracking-wider">Early Users</p>
-                </div>
-            </div>
+    <button onclick="checkDevice()" class="mint-cta-btn group ml-0 inline-flex" style="width: fit-content;">
+        <span class="text-sm font-semibold text-[var(--mint-primary-purple)]">Go to Mint</span>
+        <div class="mint-cta-icon">
+            <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+            <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
         </div>
+    </button>
+
+    <div class="flex items-center justify-start gap-4 mt-12 opacity-90">
+        <div class="flex -space-x-3">
+            <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white/20">
+            <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white/20">
+            <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white/20">
+        </div>
+        <div class="text-left">
+            <div class="text-xl font-medium text-white">200+</div>
+            <p class="text-[10px] text-gray-300 uppercase tracking-wider">Early Users</p>
+        </div>
+    </div>
+</div>
 
         <div class="hero-final opacity-0 pointer-events-none">
             <div class="max-w-7xl mx-auto w-full px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center h-full">
@@ -916,69 +918,69 @@
 
 
         // --- GSAP ANIMATION LOGIC ---
-       gsap.registerPlugin(ScrollTrigger);
-
-// INITIAL POSITIONS
-gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
-gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
-gsap.set("#investTitleWrapper", { y: window.innerHeight });
-gsap.set("#investLeft", { xPercent: -150 });
-gsap.set("#investRight", { xPercent: 150 });
-
-// 1. Define Autoplay Function First
-let currentTextIndex = 0;
-const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
-
-function startAutoplay() {
-    if (window.slotInterval) clearInterval(window.slotInterval);
-    
-    window.slotInterval = setInterval(() => {
-        let prev = texts[currentTextIndex];
-        currentTextIndex = (currentTextIndex + 1) % texts.length;
-        let next = texts[currentTextIndex];
-
-        gsap.to(prev, { yPercent: -150, filter: "blur(15px)", duration: 1.2, ease: "power2.inOut" });
-        gsap.set(next, { yPercent: 150 }); 
-        gsap.to(next, { yPercent: 0, filter: "blur(0px)", duration: 1.2, ease: "power2.inOut" });
-    }, 3000); 
-}
-
-// 2. Initialize the Single Timeline
-const tl = gsap.timeline({
-    scrollTrigger: {
-        trigger: "#pinContainer",
-        start: "top top",      
-        end: "+=4500", 
-        scrub: 1,              
-        pin: true,             
-        anticipatePin: 1, // Fixed: Added missing comma
-        onStart: () => {
-            // Trigger automatic phone slide-in
-            gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
-            gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
-            gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
-            
-            if (!window.slotStarted) {
-                startAutoplay();
-                window.slotStarted = true;
-            }
+       // --- GSAP ANIMATION LOGIC ---
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // 1. Set Initial Positions
+        gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
+        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
+        gsap.set("#investTitleWrapper", { y: window.innerHeight });
+        gsap.set("#investLeft", { xPercent: -150 });
+        gsap.set("#investRight", { xPercent: 150 });
+        
+        // 2. Define Autoplay Function
+        let currentTextIndex = 0;
+        const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
+        
+        function startAutoplay() {
+            if (window.slotInterval) clearInterval(window.slotInterval);
+            window.slotInterval = setInterval(() => {
+                let prev = texts[currentTextIndex];
+                currentTextIndex = (currentTextIndex + 1) % texts.length;
+                let next = texts[currentTextIndex];
+        
+                gsap.to(prev, { yPercent: -150, filter: "blur(15px)", duration: 1.2, ease: "power2.inOut" });
+                gsap.set(next, { yPercent: 150 }); 
+                gsap.to(next, { yPercent: 0, filter: "blur(0px)", duration: 1.2, ease: "power2.inOut" });
+            }, 3000); 
         }
-    }
-});
-
-// STEP 1: Fade Out Initial Center Text
-tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
-
-// STEP 2: REVEAL BACKGROUND
-tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
-tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
-
-// Header transition
-tl.to("#main-header", {
-    onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
-    onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
-    duration: 0.1
-}, "reveal+=1.5");
+        
+        // 3. Single Unified Timeline (Fixed Redefinition Error)
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#pinContainer",
+                start: "top top",      
+                end: "+=4500", 
+                scrub: 1,              
+                pin: true,             
+                anticipatePin: 1,
+                onStart: () => {
+                    // Automatic slide-ins for UI elements
+                    gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
+                    gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
+                    gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
+                    
+                    if (!window.slotStarted) {
+                        startAutoplay();
+                        window.slotStarted = true;
+                    }
+                }
+            }
+        });
+        
+        // STEP 1: Fade Out Initial Center Text
+        tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
+        
+        // STEP 2: Reveal background & Slot machine container
+        tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
+        tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
+        
+        // Header theme change
+        tl.to("#main-header", {
+            onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
+            onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
+            duration: 0.1
+        }, "reveal+=1.5");
 
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
