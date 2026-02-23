@@ -944,17 +944,17 @@
             }, 3000); 
         }
         
-        // 3. Unified Timeline
+        // 3. Single Unified Timeline
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=3000", // Reduced distance to make second section reachable faster
+                end: "+=3000", 
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1,
                 onStart: () => {
-                    // Automatic slide-ins for phones (NOT tied to scroll progress)
+                    // Automatic phone slide-ins (independent of scroll speed)
                     gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
                     gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
                     gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
@@ -967,14 +967,11 @@
             }
         });
         
-        // STEP 1: Fade out content
+        // Animations tied to the scroll
         tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
-        
-        // STEP 2: Reveal Transition
         tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
-        // Header theme change
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
