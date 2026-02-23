@@ -905,8 +905,12 @@
                 onComplete: () => {
                     document.body.style.overflow = "auto";
                     window.preloaderFinished = true; 
-   
                     
+                    // 1. START THE SLOT MACHINE HERE
+                    startAutoplay();
+                    window.slotStarted = true;
+        
+                    // 2. Animate the hero text only (No tl.play() here!)
                     gsap.from(".hero-initial", {
                         y: 30,
                         opacity: 0,
