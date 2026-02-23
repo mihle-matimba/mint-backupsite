@@ -26,17 +26,18 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER STYLES (Sync from index.html) --- */
+        /* --- SHARED HEADER STYLES --- */
+        #main-header { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         #main-header.header-hidden { transform: translateY(-100%); }
+        
         #main-header.header-dark {
             background-color: rgba(255, 255, 255, 0.9);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(12px);
         }
         #main-header.header-dark .nav-link { color: #4b5563; }
-        #main-header.header-dark .nav-link:hover { color: #000000; }
-        #main-header.header-dark #mobile-menu-btn { color: #000000; }
         #main-header.header-dark .logo-img { filter: brightness(0) !important; }
+        #main-header.header-dark #mobile-menu-btn { color: #000; }
 
         .mint-cta-btn {
             display: inline-flex;
@@ -63,53 +64,63 @@
         .mint-cta-btn:hover .mint-cta-icon svg:first-child { transform: translate(2rem, -2rem); }
         .mint-cta-btn:hover .mint-cta-icon svg:last-child { transform: translate(0, 0); }
 
-        /* --- CONTACT PAGE SPECIFIC (Inspired by Screenshot) --- */
+        /* --- CONTACT SPECIFIC --- */
         .contact-grid-bg {
             background-image: 
                 linear-gradient(to right, rgba(92, 59, 207, 0.03) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(92, 59, 207, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-size: 60px 60px;
         }
 
-        .contact-card {
+        .glass-form {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(92, 59, 207, 0.1);
+        }
+
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
             background: white;
-            border: 1px solid #f1f1f1;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid #e5e7eb;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
         }
 
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(92, 59, 207, 0.06);
-            border-color: var(--mint-secondary);
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--mint-primary-purple);
+            box-shadow: 0 0 0 4px rgba(92, 59, 207, 0.05);
         }
 
-        .icon-box {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            border: 1px solid #f1f1f1;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--mint-primary-purple);
-            margin-bottom: 32px;
+        .glow-accent {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(92, 59, 207, 0.08) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
         }
+
+        #mobile-menu { background: white; z-index: 100; }
     </style>
 </head>
-<body>
+<body class="contact-grid-bg">
 
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 header-dark transition-all duration-300">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 header-dark">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain transition-all duration-300"> 
             </a>
             
-            <button id="mobile-menu-btn" class="lg:hidden p-2 text-black focus:outline-none z-50 transition-colors duration-300">
+            <button id="mobile-menu-btn" class="lg:hidden p-2 text-black focus:outline-none z-50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
 
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
-                <a href="index.html" class="nav-link hover:text-black transition-all text-sm">Personal</a>
-                <a href="institution.html" class="nav-link hover:text-black transition-all text-sm">Business</a>
-                <a href="about.html" class="nav-link hover:text-black transition-all text-sm">About</a>
-                <a href="contact.html" class="nav-link text-[var(--mint-primary-purple)] font-bold transition-all text-sm border-b-2 border-[var(--mint-primary-purple)]">Contact</a>
+                <a href="index.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">Personal</a>
+                <a href="institution.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">Business</a>
+                <a href="about.html" class="nav-link hover:text-[var(--mint-primary-purple)] transition-all text-sm">About</a>
+                <a href="contact.html" class="nav-link text-[var(--mint-primary-purple)] font-bold transition-all text-sm">Contact</a>
             </div>
 
             <div class="hidden lg:block">
@@ -122,61 +133,136 @@
                 </a>
             </div>
         </nav>
+
+        <div id="mobile-menu" class="hidden fixed inset-0 h-screen w-full flex-col items-center justify-center gap-8 text-black uppercase tracking-widest text-sm">
+            <a href="index.html">Personal</a>
+            <a href="institution.html">Business</a>
+            <a href="about.html">About</a>
+            <a href="contact.html" class="text-[var(--mint-primary-purple)] font-bold">Contact</a>
+            <a href="https://mymint.co.za" class="mt-4 px-8 py-3 bg-[var(--mint-primary-purple)] text-white rounded-full">Go to Mint</a>
+        </div>
     </header>
 
-    <main class="pt-40 pb-24 contact-grid-bg min-h-screen">
-        <section class="max-w-7xl mx-auto px-6 md:px-10 text-center mb-24">
-            <div class="flex justify-center mb-10">
-                <div class="w-12 h-12 bg-[var(--mint-bg)] rounded-xl flex items-center justify-center border border-gray-100 shadow-sm">
-                    <img src="images/LOGO 2 MINT.png" alt="MINT" class="h-4 grayscale opacity-40">
-                </div>
+    <main class="pt-32 pb-24 relative">
+        <div class="glow-accent top-0 right-0"></div>
+        <div class="glow-accent bottom-0 left-0"></div>
+
+        <section class="max-w-7xl mx-auto px-6 md:px-10 mb-20 text-center lg:text-left">
+            <div class="inline-flex items-center gap-3 px-4 py-2 bg-purple-50 rounded-full mb-6">
+                <span class="w-2 h-2 bg-[var(--mint-primary-purple)] rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest">Connect with our architects</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-semibold text-gray-900 tracking-tight mb-8">Contact our friendly team</h1>
-            <p class="text-xl text-gray-500 font-light max-w-2xl mx-auto leading-relaxed">Let us know how we can help. Our team is dedicated to providing capital infrastructure and support for your financial future.</p>
+            <h1 class="text-5xl md:text-8xl font-light tracking-tighter text-gray-900 leading-[0.9] uppercase mb-8">
+                Build your <br><span class="italic font-serif text-[var(--mint-primary-purple)]">capital</span> legacy.
+            </h1>
+            <p class="text-gray-500 text-lg md:text-xl font-light max-w-2xl leading-relaxed">
+                Whether you're an individual investor or an institution, MINT provides the infrastructure for seamless wealth expansion. Reach out to our team today.
+            </p>
         </section>
 
-        <section class="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="contact-card p-10 rounded-3xl">
-                <div class="icon-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-3">Chat to sales</h3>
-                <p class="text-base text-gray-500 mb-8 font-light leading-relaxed">Speak to our team about investment strategies.</p>
-                <a href="mailto:info@mymint.co.za" class="text-base font-semibold text-[var(--mint-primary-purple)] hover:underline">info@mymint.co.za</a>
-            </div>
+        <section class="max-w-7xl mx-auto px-6 md:px-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                
+                <div class="lg:col-span-4 space-y-12">
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-4">Location</h4>
+                            <p class="text-xl font-light">3 Gwen Ln, Sandown,<br>Sandton, 2031</p>
+                            <a href="#" class="inline-block mt-4 text-sm font-semibold text-[var(--mint-primary-purple)] hover:translate-x-1 transition-transform">Get Directions →</a>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-4">Inquiries</h4>
+                            <p class="text-xl font-light">info@mymint.co.za</p>
+                            <p class="text-xl font-light">+27 10 276 0531</p>
+                        </div>
 
-            <div class="contact-card p-10 rounded-3xl">
-                <div class="icon-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <h3 class="text-xl font-semibold mb-3">Chat to support</h3>
-                <p class="text-base text-gray-500 mb-8 font-light leading-relaxed">We're here to help with your account or wallet.</p>
-                <a href="mailto:info@mymint.co.za" class="text-base font-semibold text-[var(--mint-primary-purple)] hover:underline">info@mymint.co.za</a>
-            </div>
+                        <div>
+                            <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-4">Social</h4>
+                            <div class="flex gap-4 mt-2">
+                                <a href="https://www.instagram.com/mymint_africa/" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] hover:text-white hover:border-[var(--mint-primary-purple)] transition-all">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                </a>
+                                <a href="https://www.linkedin.com/company/mint-platforms/" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] hover:text-white hover:border-[var(--mint-primary-purple)] transition-all">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="contact-card p-10 rounded-3xl">
-                <div class="icon-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div class="p-8 bg-black rounded-[2rem] text-white">
+                        <h4 class="text-[10px] font-bold text-[var(--mint-secondary)] uppercase tracking-[0.3em] mb-4">Institutional</h4>
+                        <p class="text-sm font-light text-gray-400 mb-6 leading-relaxed">For SME capital solutions, family offices, or institutional mandates, please request a Consultation Architecture directly.</p>
+                        <a href="mailto:institution@mymint.co.za" class="text-sm font-bold border-b border-[var(--mint-secondary)] pb-1 hover:text-[var(--mint-secondary)] transition-colors">Contact Institution Team →</a>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Visit us</h3>
-                <p class="text-base text-gray-500 mb-8 font-light leading-relaxed">3 Gwen Ln, Sandown, Sandton, 2031</p>
-                <a href="https://www.google.com/maps/search/3+Gwen+Ln,+Sandown,+Sandton,+2031" target="_blank" class="text-base font-semibold text-[var(--mint-primary-purple)] hover:underline">View on Google Maps</a>
-            </div>
 
-            <div class="contact-card p-10 rounded-3xl">
-                <div class="icon-box">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <div class="lg:col-span-8">
+                    <div class="glass-form p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-purple-500/5">
+                        <form class="space-y-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="input-group">
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Full Name</label>
+                                    <input type="text" placeholder="John Doe" required>
+                                </div>
+                                <div class="input-group">
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Email Address</label>
+                                    <input type="email" placeholder="john@company.com" required>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="input-group">
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Inquiry Type</label>
+                                    <select>
+                                        <option>Personal Wealth</option>
+                                        <option>Business/Institution</option>
+                                        <option>Technical Support</option>
+                                        <option>Partnerships</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Phone Number</label>
+                                    <input type="tel" placeholder="+27 ...">
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Your Message</label>
+                                <textarea rows="5" placeholder="Tell us how we can help you architect your future..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-[var(--mint-primary-purple)] text-white py-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-[var(--mint-dark-purple)] hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300">
+                                Send Inquiry
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Call us</h3>
-                <p class="text-base text-gray-500 mb-8 font-light leading-relaxed">Mon-Fri from 8am to 5pm.</p>
-                <a href="tel:+27102760531" class="text-base font-semibold text-[var(--mint-primary-purple)] hover:underline">+27 10 276 0531</a>
+
             </div>
         </section>
 
-        <section class="max-w-7xl mx-auto px-6 md:px-10 mt-40">
-            <div class="border-t border-gray-100 pt-20">
-                <h2 class="text-5xl font-semibold text-gray-900 tracking-tight text-center mb-4">Frequently asked questions</h2>
-                <p class="text-center text-gray-500 font-light mb-20">Everything you need to know about the platform.</p>
+        <section class="max-w-4xl mx-auto px-6 md:px-10 mt-40">
+            <h2 class="text-4xl font-light tracking-tight text-center mb-16 uppercase">Common <span class="italic font-serif">Infrastructure</span> Questions</h2>
+            <div class="space-y-4">
+                <div class="faq-item group border-b border-gray-100 pb-6">
+                    <button class="flex items-center justify-between w-full text-left py-4">
+                        <span class="text-lg md:text-xl font-light group-hover:text-[var(--mint-primary-purple)] transition-colors">How do I start investing with MINT?</span>
+                        <svg class="w-5 h-5 text-gray-300 transition-transform group-focus:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                    </button>
+                    <div class="hidden text-gray-500 font-light leading-relaxed">
+                        Simply go to our platform via the "Go to Mint" button, register your account, and complete our digital KYC process. Once verified, you can choose from our curated OpenStrategies.
+                    </div>
+                </div>
+                <div class="faq-item group border-b border-gray-100 pb-6">
+                    <button class="flex items-center justify-between w-full text-left py-4">
+                        <span class="text-lg md:text-xl font-light group-hover:text-[var(--mint-primary-purple)] transition-colors">Is MINT regulated?</span>
+                        <svg class="w-5 h-5 text-gray-300 transition-transform group-focus:rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                    </button>
+                    <div class="hidden text-gray-500 font-light leading-relaxed">
+                        Yes, MINT is an authorised Financial Services Provider (FSP 55118) and a registered Credit Provider (NCRCP22892).
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -187,37 +273,30 @@
                 <div class="space-y-6">
                     <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">The all-in-one solution for moving your money through investing, borrowing, and transacting.</p>
-                    <div class="flex gap-4">
-                        <a href="https://www.instagram.com/mymint_africa/" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--mint-primary-purple)] transition-colors">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                    </div>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-6">Quick Links</h4>
+                    <h4 class="text-white font-semibold mb-6">Explore</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
                         <li><a href="index.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Personal</a></li>
                         <li><a href="institution.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Institution</a></li>
                         <li><a href="about.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-[var(--mint-primary-purple)] transition-colors font-bold text-white">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-semibold mb-6">Contact</h4>
+                    <h4 class="text-white font-semibold mb-6">Compliance</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-[var(--mint-primary-purple)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>3 Gwen Ln, Sandown,<br>Sandton, 2031</span>
-                        </li>
+                        <li>FSP 55118</li>
+                        <li>NCRCP22892</li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
                     <h4 class="text-white font-semibold mb-2">Ready to start?</h4>
-                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] hover:bg-[#4a2fb3] text-white py-3 px-6 rounded-full text-sm font-semibold transition-all flex items-center justify-center gap-2 group">Go to MINT</a>
+                    <a href="https://www.mymint.co.za/" class="w-full bg-[var(--mint-primary-purple)] hover:bg-[#4a2fb3] text-white py-3 px-6 rounded-full text-sm font-semibold transition-all flex items-center justify-center">Go to MINT</a>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-10 text-[10px] text-gray-500 text-justify opacity-60">
-                <p>MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) regulated by the Financial Sector Conduct Authority and a registered Credit Provider (NCRCP22892) under the National Credit Act. All investment activity carries risk.</p>
+                <p>MINT (Pty) Ltd is an authorised Financial Services Provider (FSP 55118) and registered Credit Provider. &copy; 2026 MINT. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -235,17 +314,30 @@
             lastScroll = currentScroll;
         });
 
-        // Scroll Reveal Animations for Cards
-        gsap.from(".contact-card", {
-            y: 40,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: ".contact-card",
-                start: "top 85%"
-            }
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            document.body.style.overflow = menu.classList.contains('flex') ? 'hidden' : 'auto';
+        });
+
+        // FAQ Logic
+        document.querySelectorAll('.faq-item button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                content.classList.toggle('hidden');
+            });
+        });
+
+        // Entrance Animations
+        gsap.from("h1, main p", {
+            y: 30, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power3.out"
+        });
+
+        gsap.from(".glass-form", {
+            scale: 0.95, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.5
         });
     </script>
 </body>
