@@ -916,18 +916,17 @@
         }
 
 
-        // --- GSAP ANIMATION LOGIC ---
        // --- GSAP ANIMATION LOGIC ---
-       gsap.registerPlugin(ScrollTrigger);
-
-        // 1. Initial State
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // 1. Set Initial States
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
         gsap.set(".txt-inv", { yPercent: 0, filter: "blur(0px)" }); 
         gsap.set("#investTitleWrapper", { y: window.innerHeight });
         gsap.set("#investLeft", { xPercent: -150 });
         gsap.set("#investRight", { xPercent: 150 });
         
-        // 2. Autoplay Logic
+        // 2. Autoplay Function for Text
         let currentTextIndex = 0;
         const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
         
@@ -944,17 +943,17 @@
             }, 3000); 
         }
         
-        // 3. Single Unified Timeline
+        // 3. Unified Timeline (Restores Second Section Flow)
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=3000", 
+                end: "+=3000", // Matches index(70) timing to release pin correctly
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1,
                 onStart: () => {
-                    // Automatic phone slide-ins (independent of scroll speed)
+                    // AUTOMATIC ANIMATIONS (Not tied to scroll progress)
                     gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
                     gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
                     gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
@@ -967,17 +966,18 @@
             }
         });
         
-        // Animations tied to the scroll
+        // SCRUBBED ANIMATIONS (Tied to the user's scroll)
         tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
         tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
         tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
         
+        // Header theme change
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
             duration: 0.1
         }, "reveal+=1.5");
-
+       
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
         const mainHeader = document.getElementById('main-header');
