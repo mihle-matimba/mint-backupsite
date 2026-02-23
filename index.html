@@ -903,58 +903,52 @@
         gsap.set("#investLeft", { xPercent: -150 });
         gsap.set("#investRight", { xPercent: 150 });
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#pinContainer",
-                start: "top top",      
-                end: "+=6000", 
-                scrub: 1,              
-                pin: true,             
-                anticipatePin: 1
-            }
-        });
+        // --- INITIAL STATE FOR 3-STEP SLOT MACHINE ---
+// Ensure "Invest" is visible at start and "Features" is ignored
+gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
+gsap.set(".txt-inv", { yPercent: 0, filter: "blur(0px)" }); // Start on Invest
 
-        // STEP 1: Fade Out Initial Center Text
-        tl.to(".hero-initial", { y: -100, opacity: 0, duration: 1 }, "start");
+const tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: "#pinContainer",
+        start: "top top",      
+        end: "+=4500", // Shortened distance since we removed the Split Hero steps
+        scrub: 1,              
+        pin: true,             
+        anticipatePin: 1
+    }
+});
 
-        // STEP 2: Fade In Split Text (Left/Right)
-        tl.to(".hero-final", { opacity: 1, pointerEvents: "all", duration: 0.1 }, "start+=0.5");
-        tl.from(".final-left", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
-        tl.from(".final-right", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start+=0.5");
+// STEP 1: Fade Out Initial Center Text
+tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
 
-        // STEP 3: Slide Center Image Up 
-        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "+=0.5"); 
-        tl.to(".hero-final", { opacity: 0.3, duration: 2 }, "<+=0.5");
+// STEP 2: IMMEDIATE REVEAL (Phone & Side Images)
+// We skip the 'Split Hero' text and go straight to the phone reveal
+tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
+tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
 
-        // STEP 4: Video Swipes Up & Side Images Slide In
-        tl.to(".video-bg-container", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
-        tl.to(".hero-final", { y: "-100%", opacity: 0, duration: 3, ease: "power2.inOut" }, "reveal");
-        
-        // WHITE SCREEN REVEAL
-        tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
-        
-        // Change text to dark but KEEP transparent background when white screen reveals
-        tl.to("#main-header", {
-            onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
-            onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
-            duration: 0.1
-        }, "reveal+=1.5");
+// Header transition to dark text
+tl.to("#main-header", {
+    onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
+    onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
+    duration: 0.1
+}, "reveal+=1.5");
 
-        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
-        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal");
+// Center Phone and Side Images slide in
+tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "reveal+=1");
+tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal+=1");
+tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal+=1");
 
+// STEP 3: 3-STEP SLOT MACHINE (Invest -> Borrow -> Transact)
+// Transition 1: Invest out, Borrow in
+tl.to(".txt-inv", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
+tl.to(".txt-bor", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        // STEP 5: SLOT MACHINE SWAP WITH MOTION BLUR
-        tl.to(".txt-feat", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=0.5");
-        tl.to(".txt-inv", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
+// Transition 2: Borrow out, Transact in
+tl.to(".txt-bor", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
+tl.to(".txt-trans", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
 
-        tl.to(".txt-inv", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
-        tl.to(".txt-bor", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
-
-        tl.to(".txt-bor", { yPercent: -150, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut" }, "+=1");
-        tl.to(".txt-trans", { yPercent: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.inOut" }, "<");
-
-        tl.to({}, { duration: 1.5 });
+tl.to({}, { duration: 1.5 });
 
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
