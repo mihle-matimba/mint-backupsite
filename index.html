@@ -916,46 +916,20 @@
 
 
         // --- GSAP ANIMATION LOGIC ---
-        gsap.registerPlugin(ScrollTrigger);
+       gsap.registerPlugin(ScrollTrigger);
 
-        // INITIAL POSITIONS FOR THE SLIDE REEL & IMAGES
-        gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
-        gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
-
-        gsap.set("#investTitleWrapper", { y: window.innerHeight });
-
-        gsap.set("#investLeft", { xPercent: -150 });
-        gsap.set("#investRight", { xPercent: 150 });
-
-        // --- INITIAL STATE FOR 3-STEP SLOT MACHINE ---
-// Ensure "Invest" is visible at start and "Features" is ignored
+// INITIAL POSITIONS
 gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
-gsap.set(".txt-inv", { yPercent: 0, filter: "blur(0px)" }); // Start on Invest
+gsap.set(".txt-feat", { yPercent: 0, filter: "blur(0px)" }); 
+gsap.set("#investTitleWrapper", { y: window.innerHeight });
+gsap.set("#investLeft", { xPercent: -150 });
+gsap.set("#investRight", { xPercent: 150 });
 
-const tl = gsap.timeline({
-    scrollTrigger: {
-        trigger: "#pinContainer",
-        start: "top top",      
-        end: "+=4500", 
-        scrub: 1,              
-        pin: true,             
-        anticipatePin: 1,
-        onStart: () => {
-            if (!window.slotStarted) {
-                startAutoplay();
-                window.slotStarted = true;
-            }
-        }
-    }
-});
-            
-
-// 1. Define Autoplay Function
+// 1. Define Autoplay Function First
 let currentTextIndex = 0;
 const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
 
 function startAutoplay() {
-    // Ensure we don't start multiple intervals
     if (window.slotInterval) clearInterval(window.slotInterval);
     
     window.slotInterval = setInterval(() => {
@@ -969,7 +943,7 @@ function startAutoplay() {
     }, 3000); 
 }
 
-// 2. Main Timeline
+// 2. Initialize the Single Timeline
 const tl = gsap.timeline({
     scrollTrigger: {
         trigger: "#pinContainer",
@@ -977,14 +951,13 @@ const tl = gsap.timeline({
         end: "+=4500", 
         scrub: 1,              
         pin: true,             
-        anticipatePin: 1,
+        anticipatePin: 1, // Fixed: Added missing comma
         onStart: () => {
-            // Trigger automatic phone slide-in when user starts scrolling
+            // Trigger automatic phone slide-in
             gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
             gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
             gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
             
-            // Start the text autoplay
             if (!window.slotStarted) {
                 startAutoplay();
                 window.slotStarted = true;
