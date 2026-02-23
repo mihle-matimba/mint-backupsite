@@ -679,11 +679,10 @@
 
             <div class="flex justify-center lg:justify-end items-end h-full">
                 <video 
-                    autoplay 
                     muted 
                     loop 
                     playsinline 
-                    class="max-h-[40vh] md:max-h-[50vh] w-auto object-contain transition-all duration-700 opacity-0 transform translate-y-10"
+                    class="max-h-[40vh] md:max-h-[50vh]..."
                     id="borrowVideo"
                 >
                     <source src="videos/Comp 1.mp4" type="video/mp4">
@@ -1057,12 +1056,31 @@
             trigger: "#borrowSection",
             start: "top 80",
             end: "bottom 80",
-            onEnter: () => mainHeader.classList.add('header-dark'),
-            onLeave: () => mainHeader.classList.remove('header-dark'), 
-            onEnterBack: () => mainHeader.classList.add('header-dark'),
-            onLeaveBack: () => mainHeader.classList.remove('header-dark') 
+            onEnter: () => {
+                mainHeader.classList.add('header-dark');
+                const video = document.getElementById('borrowVideo');
+                if (video) {
+                    video.classList.add('reveal');
+                    video.play();
+                }
+            },
+            onLeave: () => {
+                mainHeader.classList.remove('header-dark');
+            },
+            onEnterBack: () => {
+                mainHeader.classList.add('header-dark');
+                const video = document.getElementById('borrowVideo');
+                if (video) video.play();
+            },
+            onLeaveBack: () => {
+                mainHeader.classList.remove('header-dark');
+                const video = document.getElementById('borrowVideo');
+                if (video) {
+                    video.classList.remove('reveal');
+                    video.pause();
+                }
+            }
         });
-        
         ScrollTrigger.create({
             trigger: "#transactSection",
             start: "top 80",
