@@ -198,7 +198,7 @@
         
         .bg-text-layer {
             position: absolute;
-            font-size: 11vw; 
+            font-size: 8vw; 
             color: #000000;
             font-weight: 500;
             white-space: nowrap;
@@ -208,14 +208,19 @@
             will-change: transform, filter;
             filter: blur(0px); 
         }
+        @media (max-width: 768px) {
+            .bg-text-layer {
+                font-size: 12vw;
+            }
+        }
 
         .side-image {
             position: absolute;
-            top: 50%; 
-            transform: translateY(-50%); 
-            width: 22vw; 
-            max-width: 300px;
-            z-index: 15; 
+            top: 65%; 
+            left: 50%;
+            width: 20vw;
+            max-width: 280px;
+            z-index: 15;
             opacity: 0;
             will-change: transform, opacity;
         }
