@@ -154,7 +154,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
+            pointer-events: auto;
             will-change: transform, opacity;
         }
         
@@ -175,12 +175,12 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 14; 
+            z-index: 22; 
             display: flex;
             align-items: center;
             justify-content: center;
             pointer-events: none;
-            background: #ffffff; 
+            background: transparent; 
             will-change: transform;
         }
 
@@ -917,16 +917,17 @@
 
 
        // --- GSAP ANIMATION LOGIC ---
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // 1. Set Initial States
+      gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Initial States
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
         gsap.set(".txt-inv", { yPercent: 0, filter: "blur(0px)" }); 
-        gsap.set("#investTitleWrapper", { y: window.innerHeight });
-        gsap.set("#investLeft", { xPercent: -150 });
-        gsap.set("#investRight", { xPercent: 150 });
+        gsap.set("#investTitleWrapper", { y: "100%" }); // Use string percent for reliability
+        gsap.set("#investLeft", { xPercent: -150, opacity: 0 });
+        gsap.set("#investRight", { xPercent: 150, opacity: 0 });
+        gsap.set(".hero-final", { opacity: 0, y: 30 }); // Start slightly lower for a lift effect
         
-        // 2. Autoplay Function for Text
+        // 2. Slot Machine Autoplay Function
         let currentTextIndex = 0;
         const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
         
@@ -943,21 +944,16 @@
             }, 3000); 
         }
         
-        // 3. Unified Timeline (Restores Second Section Flow)
+        // 3. The Refactored Timeline
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=3000", // Matches index(70) timing to release pin correctly
+                end: "+=3500", // Slightly longer to allow text to be readable
                 scrub: 1,              
                 pin: true,             
                 anticipatePin: 1,
-                onStart: () => {
-                    // AUTOMATIC ANIMATIONS (Not tied to scroll progress)
-                    gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
-                    gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
-                    gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
-                    
+                onEnter: () => {
                     if (!window.slotStarted) {
                         startAutoplay();
                         window.slotStarted = true;
@@ -966,17 +962,32 @@
             }
         });
         
-        // SCRUBBED ANIMATIONS (Tied to the user's scroll)
-        tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
-        tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
-        tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
+        // Step A: Hide the initial Hero content
+        tl.to(".hero-initial", { y: -100, opacity: 0, duration: 2 }, "start");
         
-        // Header theme change
+        // Step B: Slide up the background curtain and show the Slot Machine
+        tl.to(".hero-bg-image", { y: "-100%", duration: 4, ease: "power2.inOut" }, "reveal");
+        tl.to("#investTitleWrapper", { y: "0%", duration: 4, ease: "power2.inOut" }, "reveal");
+        
+        // Step C: Bring in the secondary phone UI elements
+        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2 }, "reveal+=1");
+        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2, ease: "power3.out" }, "reveal+=1.5");
+        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 2, ease: "power3.out" }, "reveal+=1.5");
+        
+        // Step D: REVEAL THE FINAL UI (The part that was missing)
+        tl.to(".hero-final", { 
+            opacity: 1, 
+            y: 0, 
+            duration: 2, 
+            pointerEvents: "auto" // Makes buttons clickable again
+        }, "reveal+=2.5");
+        
+        // Step E: Header Theme Toggle
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
             duration: 0.1
-        }, "reveal+=1.5");
+        }, "reveal+=2");
        
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
