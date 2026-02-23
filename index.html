@@ -976,6 +976,10 @@
                 pin: true,             
                 anticipatePin: 1,
                 onEnter: () => {
+                    if (!window.slotStarted && window.preloaderFinished) { 
+                        startAutoplay(); 
+                        window.slotStarted = true;
+                    }
                 }
             }
         });
