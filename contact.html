@@ -106,6 +106,16 @@
 </head>
 <body class="contact-grid-bg">
 
+    <div id="preloader" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#000000]">
+        <div class="relative flex flex-col items-center">
+            <img src="images/LOGO 2 MINT.png" alt="MINT" class="logo-loader h-4 w-auto object-contain brightness-0 invert opacity-0">
+            
+            <div class="mt-8 h-[1px] w-32 bg-white/10 overflow-hidden">
+                <div id="preloader-bar" class="h-full w-0 bg-[var(--mint-primary-purple)]"></div>
+            </div>
+        </div>
+    </div>
+    
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 header-dark">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
@@ -322,6 +332,32 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
+
+        document.body.style.overflow = "hidden"; // Lock scroll immediately
+
+        window.addEventListener('load', () => {
+            const preloaderTl = gsap.timeline();
+        
+            preloaderTl.to(".logo-loader", { 
+                opacity: 1, 
+                duration: 0.8, 
+                ease: "power2.out" 
+            })
+            .to("#preloader-bar", { 
+                width: "100%", 
+                duration: 0.6, 
+                ease: "expo.inOut" 
+            }, "-=0.4")
+            .to("#preloader", {
+                opacity: 0,
+                display: "none",
+                duration: 0.8,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    document.body.style.overflow = "auto"; /
+                }
+            });
+        });
 
         // Header Transformation Logic
         let lastScroll = window.scrollY;
