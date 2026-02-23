@@ -138,11 +138,11 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;      
+            height: 100vh;      
             background-image: url('images/iINDEXHero.jpeg');
-            background-size: cover;
-            background-position: center;
+            background-size: cover;    
+            background-position: center; 
             background-repeat: no-repeat;
             z-index: 10;
             will-change: transform;
@@ -950,44 +950,62 @@ const tl = gsap.timeline({
 });
             
 
-
-// STEP 1: Fade Out Initial Center Text
-tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
-
-// STEP 2: IMMEDIATE REVEAL (Phone & Side Images)
-// We skip the 'Split Hero' text and go straight to the phone reveal
-tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
-tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
-
-// Header transition to dark text
-tl.to("#main-header", {
-    onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
-    onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
-    duration: 0.1
-}, "reveal+=1.5");
-
-// Center Phone and Side Images slide in
-tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2.5, ease: "power3.out" }, "reveal+=1");
-tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal+=1");
-tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 3, ease: "power3.out" }, "reveal+=1");
-
+// 1. Define Autoplay Function
 let currentTextIndex = 0;
 const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
 
 function startAutoplay() {
-    setInterval(() => {
+    // Ensure we don't start multiple intervals
+    if (window.slotInterval) clearInterval(window.slotInterval);
+    
+    window.slotInterval = setInterval(() => {
         let prev = texts[currentTextIndex];
         currentTextIndex = (currentTextIndex + 1) % texts.length;
         let next = texts[currentTextIndex];
 
         gsap.to(prev, { yPercent: -150, filter: "blur(15px)", duration: 1.2, ease: "power2.inOut" });
-        gsap.set(next, { yPercent: 150 }); // Reset next text to bottom
+        gsap.set(next, { yPercent: 150 }); 
         gsap.to(next, { yPercent: 0, filter: "blur(0px)", duration: 1.2, ease: "power2.inOut" });
-    }, 3000); // Changes every 3 seconds
+    }, 3000); 
 }
 
+// 2. Main Timeline
+const tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: "#pinContainer",
+        start: "top top",      
+        end: "+=4500", 
+        scrub: 1,              
+        pin: true,             
+        anticipatePin: 1,
+        onStart: () => {
+            // Trigger automatic phone slide-in when user starts scrolling
+            gsap.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2, ease: "power3.out" });
+            gsap.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
+            gsap.to("#investRight", { xPercent: 0, opacity: 1, duration: 2.5, ease: "power3.out", delay: 0.2 });
+            
+            // Start the text autoplay
+            if (!window.slotStarted) {
+                startAutoplay();
+                window.slotStarted = true;
+            }
+        }
+    }
+});
 
-startAutoplay();
+// STEP 1: Fade Out Initial Center Text
+tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
+
+// STEP 2: REVEAL BACKGROUND
+tl.to(".hero-bg-image", { y: "-100%", duration: 3, ease: "power2.inOut" }, "reveal");
+tl.to("#investTitleWrapper", { y: 0, duration: 3, ease: "power2.inOut" }, "reveal");
+
+// Header transition
+tl.to("#main-header", {
+    onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
+    onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
+    duration: 0.1
+}, "reveal+=1.5");
 
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
