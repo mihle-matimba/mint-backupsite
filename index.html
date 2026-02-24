@@ -35,6 +35,7 @@
         padding: 0;
     }
     /* Slot-style Preloader CSS */
+    /* Updated White Preloader CSS */
     #preloader {
         position: fixed;
         inset: 0;
@@ -43,12 +44,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: #000000;
+        background-color: #ffffff;
     }
     
     .brand-logo-loader {
         width: 40px; height: auto; margin-bottom: 30px;
-        filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(92, 59, 207, 0.5));
+        filter: brightness(0) drop-shadow(0 0 10px rgba(92, 59, 207, 0.2));
     }
     
     .loader-viz { position: relative; display: flex; flex-direction: column; align-items: center; }
@@ -60,22 +61,21 @@
     .column-2 { animation-delay: 0.1s; }
     .column-3 { animation-delay: 0.2s; }
     .segment { height: 60px; width: 100%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .icon-part { width: 100%; border-radius: 20px; background-color: #f8fafc; opacity: 0.1; }
-    .active .icon-part { background-color: #5c3bcf; opacity: 1; box-shadow: 0 0 20px rgba(92, 59, 207, 0.6); }
+    .icon-part { width: 100%; border-radius: 20px; background-color: #e2e8f0; opacity: 0.3; }
+    .active .icon-part { background-color: #5c3bcf; opacity: 1; box-shadow: 0 0 20px rgba(92, 59, 207, 0.3); }
     
     @keyframes slideUp { 0% { transform: translateY(0); } 100% { transform: translateY(-180px); } }
     
     .brackets {
         position: absolute; top: 50%; left: -30px; right: -30px; height: 36px;
-        transform: translateY(-50%); border-top: 1px solid rgba(92, 59, 207, 0.2);
-        border-bottom: 1px solid rgba(92, 59, 207, 0.2); pointer-events: none;
+        transform: translateY(-50%); border-top: 1px solid rgba(92, 59, 207, 0.1);
+        border-bottom: 1px solid rgba(92, 59, 207, 0.1); pointer-events: none;
     }
     .brackets::before, .brackets::after { content: ''; position: absolute; top: -1px; width: 4px; height: calc(100% + 2px); background: #5c3bcf; }
     .brackets::before { left: 0; } .brackets::after { right: 0; }
     
-    .brand-name-loader { font-size: 11px; font-weight: 300; letter-spacing: 0.8em; text-transform: uppercase; margin: 50px 0 12px; color: #f8fafc; opacity: 0.4; }
+    .brand-name-loader { font-size: 11px; font-weight: 300; letter-spacing: 0.8em; text-transform: uppercase; margin: 50px 0 12px; color: #1e293b; opacity: 0.6; }
     .status-line { font-size: 10px; font-weight: 700; color: #5c3bcf; text-transform: uppercase; letter-spacing: 0.3em; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
 
     /* --- HEADER AUTO-HIDE & THEME --- */
     #main-header.header-hidden { transform: translateY(-100%); }
@@ -278,12 +278,16 @@
         .side-image { width: 30vw; max-width: 150px; }
         #investLeft { left: 5%; }
         #investRight { right: 5%; }
-        
-        #borrowSection .aspect-[12/5] {
+
+        #borrowSection .aspect-\[4\/5\], 
+        #borrowSection .aspect-\[12\/5\] {
             aspect-ratio: 4/5 !important;
-            min-height: 450px;
+            min-height: 500px;
         }
-        #borrowSection img { object-position: center; }
+        #borrowSection img, #transactSection {
+            object-position: right center !important;
+            background-position: right center !important;
+        }
         .borrow-label-container { transform: translateY(-160px) !important; }
     }
 
@@ -969,13 +973,13 @@
         }
         
         // 3. The Refactored Timeline
+        // 3. Optimized Timeline (Shortened to remove double-scroll and locking feel)
         const tl = gsap.timeline({
-            paused: true,
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=3500", // Slightly longer to allow text to be readable
-                scrub: 1,              
+                end: "+=1200", // Much shorter scroll distance
+                scrub: 0.8,    // More responsive tracking
                 pin: true,             
                 anticipatePin: 1,
                 onEnter: () => {
@@ -988,32 +992,31 @@
         });
         
         // Step A: Hide the initial Hero content
-        tl.to(".hero-initial", { y: -100, opacity: 0, duration: 2 }, "start");
+        tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
         
         // Step B: Slide up the background curtain and show the Slot Machine
-        tl.to(".hero-bg-image", { y: "-100%", duration: 4, ease: "power2.inOut" }, "reveal");
-        tl.to("#investTitleWrapper", { y: "0%", duration: 4, ease: "power2.inOut" }, "reveal");
+        tl.to(".hero-bg-image", { y: "-100%", duration: 2, ease: "power2.inOut" }, "reveal");
+        tl.to("#investTitleWrapper", { y: "0%", duration: 2, ease: "power2.inOut" }, "reveal");
         
         // Step C: Bring in the secondary phone UI elements
-        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 2 }, "reveal+=1");
-        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 2, ease: "power3.out" }, "reveal+=1.5");
-        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 2, ease: "power3.out" }, "reveal+=1.5");
+        tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 1 }, "reveal+=0.3");
+        tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 1, ease: "power3.out" }, "reveal+=0.5");
+        tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 1, ease: "power3.out" }, "reveal+=0.5");
         
-        // Step D: REVEAL THE FINAL UI (The part that was missing)
+        // Step D: Reveal the Final UI
         tl.to(".hero-final", { 
             opacity: 1, 
             y: 0, 
-            duration: 2, 
-            pointerEvents: "auto" // Makes buttons clickable again
-        }, "reveal+=2.5");
+            duration: 1, 
+            pointerEvents: "auto" 
+        }, "reveal+=1");
         
         // Step E: Header Theme Toggle
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
             duration: 0.1
-        }, "reveal+=2");
-       
+        }, "reveal+=0.8");
 
         // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
         const mainHeader = document.getElementById('main-header');
@@ -1054,33 +1057,20 @@
 
         ScrollTrigger.create({
             trigger: "#borrowSection",
-            start: "top 80",
-            end: "bottom 80",
+            start: "top 80%",
             onEnter: () => {
                 mainHeader.classList.add('header-dark');
                 const video = document.getElementById('borrowVideo');
                 if (video) {
                     video.classList.add('reveal');
-                    video.play();
+                    video.play(); // Starts once and stays playing
                 }
             },
-            onLeave: () => {
-                mainHeader.classList.remove('header-dark');
-            },
-            onEnterBack: () => {
-                mainHeader.classList.add('header-dark');
-                const video = document.getElementById('borrowVideo');
-                if (video) video.play();
-            },
-            onLeaveBack: () => {
-                mainHeader.classList.remove('header-dark');
-                const video = document.getElementById('borrowVideo');
-                if (video) {
-                    video.classList.remove('reveal');
-                    video.pause();
-                }
-            }
+            onEnterBack: () => mainHeader.classList.add('header-dark'),
+            onLeave: () => mainHeader.classList.remove('header-dark'),
+            onLeaveBack: () => mainHeader.classList.remove('header-dark')
         });
+        
         ScrollTrigger.create({
             trigger: "#transactSection",
             start: "top 80",
