@@ -27,6 +27,7 @@
             padding: 0;
         }
         /* Slot-style Preloader CSS */
+        /* Slot-style Preloader CSS - Updated for White Theme */
         #preloader {
             position: fixed;
             inset: 0;
@@ -35,12 +36,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #000000;
+            background-color: #ffffff; /* Flipped to White */
         }
         
         .brand-logo-loader {
             width: 40px; height: auto; margin-bottom: 30px;
-            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(92, 59, 207, 0.5));
+            /* Removed invert(1) so the logo is dark/visible on white */
+            filter: brightness(0) drop-shadow(0 0 10px rgba(92, 59, 207, 0.2));
         }
         
         .loader-viz { position: relative; display: flex; flex-direction: column; align-items: center; }
@@ -52,22 +54,26 @@
         .column-2 { animation-delay: 0.1s; }
         .column-3 { animation-delay: 0.2s; }
         .segment { height: 60px; width: 100%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .icon-part { width: 100%; border-radius: 20px; background-color: #f8fafc; opacity: 0.1; }
-        .active .icon-part { background-color: #5c3bcf; opacity: 1; box-shadow: 0 0 20px rgba(92, 59, 207, 0.6); }
+        
+        /* Changed background-color to a light grey for contrast on white */
+        .icon-part { width: 100%; border-radius: 20px; background-color: #e2e8f0; opacity: 0.3; }
+        .active .icon-part { background-color: #5c3bcf; opacity: 1; box-shadow: 0 0 20px rgba(92, 59, 207, 0.4); }
         
         @keyframes slideUp { 0% { transform: translateY(0); } 100% { transform: translateY(-180px); } }
         
         .brackets {
             position: absolute; top: 50%; left: -30px; right: -30px; height: 36px;
-            transform: translateY(-50%); border-top: 1px solid rgba(92, 59, 207, 0.2);
-            border-bottom: 1px solid rgba(92, 59, 207, 0.2); pointer-events: none;
+            transform: translateY(-50%); border-top: 1px solid rgba(92, 59, 207, 0.1);
+            border-bottom: 1px solid rgba(92, 59, 207, 0.1); pointer-events: none;
         }
         .brackets::before, .brackets::after { content: ''; position: absolute; top: -1px; width: 4px; height: calc(100% + 2px); background: #5c3bcf; }
         .brackets::before { left: 0; } .brackets::after { right: 0; }
         
-        .brand-name-loader { font-size: 11px; font-weight: 300; letter-spacing: 0.8em; text-transform: uppercase; margin: 50px 0 12px; color: #f8fafc; opacity: 0.4; }
+        /* Changed brand-name-loader color to dark slate for visibility */
+        .brand-name-loader { font-size: 11px; font-weight: 300; letter-spacing: 0.8em; text-transform: uppercase; margin: 50px 0 12px; color: #1e293b; opacity: 0.6; }
         .status-line { font-size: 10px; font-weight: 700; color: #5c3bcf; text-transform: uppercase; letter-spacing: 0.3em; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
+        
         /* --- NAVBAR LOGIC --- */
         #main-header {
             background-color: transparent !important;
