@@ -435,13 +435,47 @@
             lastScroll = currentScroll;
         });
 
-        // Mobile Menu Logic
+        
+        // Robust Mobile Menu Toggle
         const menuBtn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-            document.body.style.overflow = menu.classList.contains('flex') ? 'hidden' : 'auto';
+        const mobileMenu = document.getElementById('mobile-menu');
+        const headerElement = document.getElementById('main-header');
+        const hamIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.contains('flex');
+                
+                // Toggle classes
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+                headerElement.classList.toggle('menu-open');
+                
+                // Toggle icons
+                hamIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+
+                // Toggle body scroll
+                if (!isOpen) {
+                    document.body.style.overflow = 'hidden';
+                    gsap.from("#mobile-menu a", { y: 20, opacity: 0, stagger: 0.1, duration: 0.4 });
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                headerElement.classList.remove('menu-open');
+                hamIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
         });
 
         // FAQ Logic
