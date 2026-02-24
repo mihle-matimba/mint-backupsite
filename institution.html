@@ -193,19 +193,22 @@
 
         /* Mobile Menu Transitions */
         #mobile-menu {
+            background: #ffffff !important;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
+            transform: translateY(-10px);
             pointer-events: none;
         }
 
         #mobile-menu.flex {
             opacity: 1;
+            transform: translateY(0);
             pointer-events: auto;
         }
 
-        /* Ensure header items are visible over white menu */
         #main-header.menu-open .logo-img { filter: brightness(0) !important; z-index: 60; }
-        #main-header.menu-open #mobile-menu-btn { color: #000 !important; z-index: 60; }
+        #main-header.menu-open #mobile-menu-btn { color: #000000 !important; z-index: 60; }
+        #main-header.menu-open .nav-link { color: #000000; }
         
     </style>
 </head>
@@ -239,14 +242,19 @@
         <div class="status-line">Money in Transit</div>
     </div>
         
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
             </a>
             
-            <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50 transition-colors duration-300">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50">
+                <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
             </button>
 
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
@@ -264,12 +272,16 @@
             </a>
         </nav>
 
-        <div id="mobile-menu" class="hidden fixed inset-0 h-screen w-full flex-col items-center justify-center gap-8 text-white uppercase tracking-widest text-sm z-40">
-            <a href="index.html" class="hover:text-[var(--mint-primary-purple)]">Personal</a>
-            <a href="institution.html" class="text-[var(--mint-primary-purple)] font-bold">Business</a>
-            <a href="about.html" class="hover:text-[var(--mint-primary-purple)]">About</a>
-            <a href="contact.html" class="hover:text-[var(--mint-primary-purple)]">Contact</a>
-            <a href="https://mymint.co.za" class="mt-4 px-8 py-3 bg-[var(--mint-primary-purple)] text-white rounded-full">Go to Mint</a>
+        <div id="mobile-menu" class="hidden absolute top-0 left-0 w-full bg-white shadow-2xl rounded-b-[2rem] p-8 pt-24 flex-col gap-8 lg:hidden z-40 border-t border-gray-100">
+            <div class="flex flex-col gap-6 text-center text-sm font-medium text-gray-800 uppercase tracking-[0.3em]">
+                <a href="index.html" class="hover:text-[var(--mint-primary-purple)] py-3 border-b border-gray-50 transition-colors">Personal</a>
+                <a href="institution.html" class="text-[var(--mint-primary-purple)] font-bold py-3 border-b border-gray-50">Business</a>
+                <a href="about.html" class="hover:text-[var(--mint-primary-purple)] py-3 border-b border-gray-50 transition-colors">About</a>
+                <a href="contact.html" class="hover:text-[var(--mint-primary-purple)] py-3 transition-colors">Contact</a>
+            </div>
+            <button onclick="window.location.href='https://mymint.co.za'" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-4 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-lg">
+                Go to Mint
+            </button>
         </div>
     </header>
 
@@ -487,33 +499,39 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. SELECTORS & VARIABLES (Declared at the top to avoid ReferenceErrors)
+        const header = document.getElementById('main-header');
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        const pillars = document.querySelectorAll('.pillar');
+        const carouselItems = document.querySelectorAll('.carousel-item');
         
+        // Lock scroll immediately while loading
         document.body.style.overflow = "hidden";
-    
-        
+
+        // 2. PRELOADER LOGIC (Fixed selectors for brand-logo-loader)
         window.addEventListener('load', () => {
             const preloaderTl = gsap.timeline();
-    
-            preloaderTl.to(".logo-loader", { 
+
+            preloaderTl.to(".brand-logo-loader", { 
                 opacity: 1, 
                 duration: 0.8, 
                 ease: "power2.out" 
             })
-            .to("#preloader-bar", { 
-                width: "100%", 
-                duration: 0.6, 
-                ease: "expo.inOut" 
-            }, "-=0.4")
+            // Note: #preloader-bar removed as per your mismatch note. 
+            // If you have a different progress bar, update the ID here.
             .to("#preloader", {
                 opacity: 0,
                 display: "none",
                 duration: 0.8,
                 ease: "power4.inOut",
                 onComplete: () => {
-
                     document.body.style.overflow = "auto";
-
+                    
+                    // Hero Animation
                     gsap.from("#heroSection h1", {
                         y: 40,
                         opacity: 0,
@@ -523,81 +541,121 @@
                 }
             });
         });
-            const header = document.getElementById('main-header');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuBtn = document.getElementById('mobile-menu-btn');
-            
-            gsap.registerPlugin(ScrollTrigger);
 
-            // --- HEADER HIDE ON SCROLL ---
-            let lastScroll = window.scrollY;
-            window.addEventListener('scroll', () => {
-                const currentScroll = window.scrollY;
-                if (currentScroll > lastScroll && currentScroll > 100) header.classList.add('header-hidden');
-                else header.classList.remove('header-hidden');
-                lastScroll = currentScroll;
-            });
-
-            // Mobile Menu Toggle
+        // 3. ROBUST MOBILE MENU (Using the consolidated 'header' variable)
+        if(menuBtn && mobileMenu) {
             menuBtn.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.contains('flex');
+                
                 mobileMenu.classList.toggle('hidden');
                 mobileMenu.classList.toggle('flex');
-                if(!mobileMenu.classList.contains('hidden')) {
+                header.classList.toggle('menu-open');
+                
+                hamIcon.classList.toggle('hidden');
+                closeIcon.classList.toggle('hidden');
+
+                if (!isOpen) {
                     document.body.style.overflow = 'hidden';
+                    gsap.from("#mobile-menu a", { 
+                        y: 20, 
+                        opacity: 0, 
+                        stagger: 0.1, 
+                        duration: 0.4 
+                    });
                 } else {
                     document.body.style.overflow = 'auto';
                 }
             });
+        }
 
-            // Adaptive Header Item Color
-            const whiteSections = ["#synergySection", "#opportunitySection"];
-            whiteSections.forEach(selector => {
-                ScrollTrigger.create({
-                    trigger: selector, start: "top 80", end: "bottom 80",
-                    onEnter: () => header.classList.add('header-dark-items'),
-                    onLeave: () => header.classList.remove('header-dark-items'),
-                    onEnterBack: () => header.classList.add('header-dark-items'),
-                    onLeaveBack: () => header.classList.remove('header-dark-items')
-                });
+        // Close menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                header.classList.remove('menu-open');
+                hamIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = 'auto';
             });
+        });
 
-            // Buildings Animation
-            gsap.to("#cornerBuildings", {
-                opacity: 1, scale: 1.1, y: 0, duration: 1.5,
-                scrollTrigger: { trigger: "#synergySection", start: "top 60%", toggleActions: "play none none reverse" }
+        // 4. ADAPTIVE HEADER COLOR (ScrollTrigger)
+        const whiteSections = ["#synergySection", "#opportunitySection"];
+        whiteSections.forEach(selector => {
+            ScrollTrigger.create({
+                trigger: selector, 
+                start: "top 80", 
+                end: "bottom 80",
+                onEnter: () => header.classList.add('header-dark-items'),
+                onLeave: () => header.classList.remove('header-dark-items'),
+                onEnterBack: () => header.classList.add('header-dark-items'),
+                onLeaveBack: () => header.classList.remove('header-dark-items')
             });
+        });
 
-            // Pillar Logic (Touch & Desktop)
-            const pillars = document.querySelectorAll('.pillar');
-            pillars.forEach(pillar => {
-                const triggerEvent = window.innerWidth > 768 ? 'mouseenter' : 'click';
-                pillar.addEventListener(triggerEvent, () => {
-                    pillars.forEach(p => p.classList.remove('active'));
-                    pillar.classList.add('active');
-                });
-            });
-
-            if(window.innerWidth > 768) {
-                document.getElementById('pillarContainer').addEventListener('mouseleave', () => {
-                    pillars.forEach(p => p.classList.remove('active'));
-                    pillars[0].classList.add('active'); // Keep first open by default
-                });
+        // 5. BUILDINGS ANIMATION
+        gsap.to("#cornerBuildings", {
+            opacity: 1, 
+            scale: 1.1, 
+            y: 0, 
+            duration: 1.5,
+            scrollTrigger: { 
+                trigger: "#synergySection", 
+                start: "top 60%", 
+                toggleActions: "play none none reverse" 
             }
         });
 
-        // Carousel Logic
+        // 6. PILLAR LOGIC
+        pillars.forEach(pillar => {
+            const triggerEvent = window.innerWidth > 768 ? 'mouseenter' : 'click';
+            pillar.addEventListener(triggerEvent, () => {
+                pillars.forEach(p => p.classList.remove('active'));
+                pillar.classList.add('active');
+            });
+        });
+
+        if(window.innerWidth > 768) {
+            const pillarContainer = document.getElementById('pillarContainer');
+            if(pillarContainer) {
+                pillarContainer.addEventListener('mouseleave', () => {
+                    pillars.forEach(p => p.classList.remove('active'));
+                    if(pillars[0]) pillars[0].classList.add('active'); 
+                });
+            }
+        }
+
+        // 7. CAROUSEL LOGIC
         let currentIndex = 0;
-        const items = document.querySelectorAll('.carousel-item');
+        
         function updateCarousel() {
-            items.forEach((item, i) => {
+            carouselItems.forEach((item, i) => {
                 item.classList.remove('active', 'prev', 'next');
-                if (i === currentIndex) item.classList.add('active');
-                else if (i === (currentIndex - 1 + items.length) % items.length) item.classList.add('prev');
-                else if (i === (currentIndex + 1) % items.length) item.classList.add('next');
+                if (i === currentIndex) {
+                    item.classList.add('active');
+                } else if (i === (currentIndex - 1 + carouselItems.length) % carouselItems.length) {
+                    item.classList.add('prev');
+                } else if (i === (currentIndex + 1) % carouselItems.length) {
+                    item.classList.add('next');
+                }
             });
         }
-        function nextCarousel() { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); }
-        function prevCarousel() { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); }
-    </script>
+
+        // Expose functions to global scope for button onclick attributes
+        window.nextCarousel = () => { 
+            currentIndex = (currentIndex + 1) % carouselItems.length; 
+            updateCarousel(); 
+        };
+        window.prevCarousel = () => { 
+            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length; 
+            updateCarousel(); 
+        };
+        
+        // Initial carousel call
+        if(carouselItems.length > 0) updateCarousel();
+    });
+</script>
+    
 </body>
 </html>
