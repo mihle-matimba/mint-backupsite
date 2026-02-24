@@ -278,19 +278,42 @@
         .side-image { width: 30vw; max-width: 150px; }
         #investLeft { left: 5%; }
         #investRight { right: 5%; }
-
-        #borrowSection .aspect-\[4\/5\], 
-        #borrowSection .aspect-\[12\/5\] {
+        
+        /* Borrow Section Mobile Adjustments */
+        #borrowSection .aspect-\[12\/5\], 
+        #borrowSection .aspect-\[4\/5\] {
             aspect-ratio: 4/5 !important;
             min-height: 500px;
         }
-        #borrowSection img, #transactSection {
-            object-position: right center !important;
-            background-position: right center !important;
+        
+        /* Anchor Borrow image to the right */
+        #borrowSection img.object-cover { 
+            object-position: right center !important; 
         }
+
+        /* Move Borrow UI card to the right side on mobile */
+        #borrowSection .absolute.left-6.top-1\/2 {
+            left: auto !important;
+            right: 1.5rem !important;
+            width: 85% !important;
+            max-width: 300px;
+        }
+
+        /* Transact Section Mobile Crop */
+        #transactSection {
+            /* 75% anchors the image toward the right but pulls the phone slightly toward center */
+            background-position: 75% center !important; 
+            background-size: cover;
+            min-height: 85vh;
+        }
+
+        /* Lighten Transact overlay on mobile so phone is more visible */
+        #transactSection .absolute.inset-0.bg-black\/45 {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+        }
+
         .borrow-label-container { transform: translateY(-160px) !important; }
     }
-
     /* --- NAV DROPDOWN --- */
     .nav-dropdown {
         opacity: 0;
