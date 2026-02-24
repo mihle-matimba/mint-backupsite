@@ -157,7 +157,11 @@
             object-position: top;
         }
 
-        .architect-row:hover .director-portrait,
+        .architect-row:hover .director-portrait {
+            filter: grayscale(0%);
+            transform: none;
+        }
+        
         .director-card:hover .director-portrait {
             filter: grayscale(0%);
             transform: scale(1.05);
