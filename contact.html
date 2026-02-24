@@ -149,7 +149,21 @@
             pointer-events: none;
         }
 
-        #mobile-menu { background: white; z-index: 100; }
+        /* Mobile Menu Transitions */
+        #mobile-menu {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #mobile-menu.flex {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Ensure header items are visible over white menu */
+        #main-header.menu-open .logo-img { filter: brightness(0) !important; z-index: 60; }
+        #main-header.menu-open #mobile-menu-btn { color: #000 !important; z-index: 60; }
     </style>
 </head>
 <body class="contact-grid-bg">
@@ -182,14 +196,19 @@
         <div class="status-line">Money in Transit</div>
     </div>
     
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 header-dark">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 header-dark transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
             <a href="index.html">
                 <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain transition-all duration-300"> 
             </a>
             
             <button id="mobile-menu-btn" class="lg:hidden p-2 text-black focus:outline-none z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
             </button>
 
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
@@ -210,12 +229,12 @@
             </div>
         </nav>
 
-        <div id="mobile-menu" class="hidden fixed inset-0 h-screen w-full flex-col items-center justify-center gap-8 text-black uppercase tracking-widest text-sm">
-            <a href="index.html">Personal</a>
-            <a href="institution.html">Business</a>
-            <a href="about.html">About</a>
+        <div id="mobile-menu" class="hidden fixed inset-0 h-screen w-full bg-white flex-col items-center justify-center gap-8 text-black uppercase tracking-[0.3em] text-sm z-40">
+            <a href="index.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Personal</a>
+            <a href="institution.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">Business</a>
+            <a href="about.html" class="hover:text-[var(--mint-primary-purple)] transition-colors">About</a>
             <a href="contact.html" class="text-[var(--mint-primary-purple)] font-bold">Contact</a>
-            <a href="https://mymint.co.za" class="mt-4 px-8 py-3 bg-[var(--mint-primary-purple)] text-white rounded-full">Go to Mint</a>
+            <a href="https://mymint.co.za" class="mt-4 px-8 py-4 bg-[var(--mint-primary-purple)] text-white rounded-full font-bold shadow-lg">Go to Mint</a>
         </div>
     </header>
 
