@@ -391,9 +391,9 @@
                     Retail clients evolve into business owners, capital allocators, and family office structures. Commercial clients deploy employee investment solutions and <strong>leverage retail rails for treasury mobility.</strong>
                 </p>
                 <div class="flex flex-wrap gap-4 md:gap-6">
-                    <a href="https://app.mymint.co.za" target="_blank" class="bg-black text-white px-8 md:px-12 py-3 md:py-4 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">
+                   <button onclick="checkDevice()" class="bg-black text-white px-8 md:px-12 py-3 md:py-4 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">
                         Get Started
-                    </a>
+                    </button>
                     
                     <a href="mailto:info@mymint.co.za?subject=Speak%20to%20Sales" class="border border-black/10 px-8 md:px-12 py-3 md:py-4 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-black/5 transition-all">
                         Speak to Sales
@@ -533,6 +533,24 @@
         
         // Lock scroll immediately while loading
         document.body.style.overflow = "hidden";
+
+        function checkDevice() {
+        
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                            || window.innerWidth <= 1024;
+        
+            if (isMobile) {
+                window.location.href = "https://app.mymint.co.za/";
+            } else {
+                const toast = document.getElementById('mobile-only-toast');
+                if (toast) {
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 4000);
+                }
+            }
+        }
 
         // 2. PRELOADER LOGIC (Fixed selectors for brand-logo-loader)
         window.addEventListener('load', () => {
@@ -678,25 +696,7 @@
         if(carouselItems.length > 0) updateCarousel();
     });
 
-        function checkDevice() {
-        // Detect mobile by user agent or screen width (tablet/mobile range)
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                        || window.innerWidth <= 1024;
-    
-        if (isMobile) {
-            window.location.href = "https://app.mymint.co.za/";
-        } else {
-            const toast = document.getElementById('mobile-only-toast');
-            if (toast) {
-                toast.classList.add('show');
-                
-                // Hide after 4 seconds
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
-            }
-        }
-    }
+        
 </script>
     
 </body>
