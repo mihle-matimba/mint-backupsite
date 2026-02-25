@@ -521,8 +521,38 @@
     </footer>
 
     <script>
+    /**
+     * 1. GLOBAL SCOPE FUNCTIONS
+     * These must sit outside DOMContentLoaded so HTML 'onclick' attributes can find them.
+     */
+    function checkDevice() {
+        // Detects mobile devices via user agent or screen width (tablet/mobile range)
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                        || window.innerWidth <= 1024;
+
+        if (isMobile) {
+            window.location.href = "https://app.mymint.co.za/";
+        } else {
+            const toast = document.getElementById('mobile-only-toast');
+            if (toast) {
+                toast.classList.add('show');
+                // Auto-hide toast after 4 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        }
+    }
+
+    // Carousel navigation functions exposed to global scope
+    window.nextCarousel = () => { if (window.triggerNext) window.triggerNext(); };
+    window.prevCarousel = () => { if (window.triggerPrev) window.triggerPrev(); };
+
+    /**
+     * 2. DOM CONTENT LOADED
+     * Handles internal logic, GSAP animations, and event listeners.
+     */
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. SELECTORS & VARIABLES (Declared at the top to avoid ReferenceErrors)
         const header = document.getElementById('main-header');
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -531,11 +561,10 @@
         const pillars = document.querySelectorAll('.pillar');
         const carouselItems = document.querySelectorAll('.carousel-item');
         
-        // Lock scroll immediately while loading
+        // Lock scroll immediately while preloader is active
         document.body.style.overflow = "hidden";
 
-
-        // 2. PRELOADER LOGIC (Fixed selectors for brand-logo-loader)
+        // --- PRELOADER LOGIC ---
         window.addEventListener('load', () => {
             const preloaderTl = gsap.timeline();
 
@@ -544,16 +573,14 @@
                 duration: 0.8, 
                 ease: "power2.out" 
             })
-            // Note: #preloader-bar removed as per your mismatch note. 
             .to("#preloader", {
                 opacity: 0,
                 display: "none",
                 duration: 0.8,
                 ease: "power4.inOut",
                 onComplete: () => {
+                    // Unlock scroll and trigger hero entrance
                     document.body.style.overflow = "auto";
-                    
-                    // Hero Animation
                     gsap.from("#heroSection h1", {
                         y: 40,
                         opacity: 0,
@@ -564,7 +591,7 @@
             });
         });
 
-        // 3. ROBUST MOBILE MENU (Using the consolidated 'header' variable)
+        // --- MOBILE MENU LOGIC ---
         if(menuBtn && mobileMenu) {
             menuBtn.addEventListener('click', () => {
                 const isOpen = mobileMenu.classList.contains('flex');
@@ -590,7 +617,7 @@
             });
         }
 
-        // Close menu on link click
+        // Close mobile menu on any link click
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -602,7 +629,7 @@
             });
         });
 
-        // 4. ADAPTIVE HEADER COLOR (ScrollTrigger)
+        // --- ADAPTIVE HEADER COLOR (ScrollTrigger) ---
         const whiteSections = ["#synergySection", "#opportunitySection"];
         whiteSections.forEach(selector => {
             ScrollTrigger.create({
@@ -616,7 +643,7 @@
             });
         });
 
-        // 5. BUILDINGS ANIMATION
+        // --- BUILDINGS ANIMATION ---
         gsap.to("#cornerBuildings", {
             opacity: 1, 
             scale: 1.1, 
@@ -629,7 +656,7 @@
             }
         });
 
-        // 6. PILLAR LOGIC
+        // --- PILLAR INTERACTION LOGIC ---
         pillars.forEach(pillar => {
             const triggerEvent = window.innerWidth > 768 ? 'mouseenter' : 'click';
             pillar.addEventListener(triggerEvent, () => {
@@ -638,6 +665,7 @@
             });
         });
 
+        // Reset to first pillar when mouse leaves the container (Desktop only)
         if(window.innerWidth > 768) {
             const pillarContainer = document.getElementById('pillarContainer');
             if(pillarContainer) {
@@ -648,7 +676,7 @@
             }
         }
 
-        // 7. CAROUSEL LOGIC
+        // --- CAROUSEL INTERNAL LOGIC ---
         let currentIndex = 0;
         
         function updateCarousel() {
@@ -664,40 +692,20 @@
             });
         }
 
-        // Expose functions to global scope for button onclick attributes
-        window.nextCarousel = () => { 
+        // Linking global window functions to internal carousel state
+        window.triggerNext = () => { 
             currentIndex = (currentIndex + 1) % carouselItems.length; 
             updateCarousel(); 
         };
-        window.prevCarousel = () => { 
+        window.triggerPrev = () => { 
             currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length; 
             updateCarousel(); 
         };
         
-        // Initial carousel call
         if(carouselItems.length > 0) updateCarousel();
     });
-
-    function checkDevice() {
-        
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                            || window.innerWidth <= 1024;
-        
-            if (isMobile) {
-                window.location.href = "https://app.mymint.co.za/";
-            } else {
-                const toast = document.getElementById('mobile-only-toast');
-                if (toast) {
-                    toast.classList.add('show');
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 4000);
-                }
-            }
-        }
-
-        
 </script>
+    
     
 </body>
 </html>
