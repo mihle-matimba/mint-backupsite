@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mymint.co.za/sitemap.xml
