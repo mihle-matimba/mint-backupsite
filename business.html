@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MINT | Institutional Capital Solutions</title>
-    <link rel="icon" type="image/png" href="images/Mint%20Favicon.png">
+    <link rel="icon" type="image/png" href="/images/Mint%20Favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
     
@@ -26,7 +26,8 @@
             margin: 0;
             padding: 0;
         }
-        /* Slot-style Preloader CSS */
+
+        /* --- SLOT-STYLE PRELOADER --- */
         #preloader {
             position: fixed;
             inset: 0;
@@ -35,12 +36,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #ffffff; /* Flipped to White */
+            background-color: #ffffff;
         }
         
         .brand-logo-loader {
             width: 40px; height: auto; margin-bottom: 30px;
-            /* Removed invert(1) so the logo is dark/visible on white */
             filter: brightness(0) drop-shadow(0 0 10px rgba(92, 59, 207, 0.2));
         }
         
@@ -53,8 +53,6 @@
         .column-2 { animation-delay: 0.1s; }
         .column-3 { animation-delay: 0.2s; }
         .segment { height: 60px; width: 100%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        
-        /* Changed background-color to a light grey for contrast on white */
         .icon-part { width: 100%; border-radius: 20px; background-color: #e2e8f0; opacity: 0.3; }
         .active .icon-part { background-color: #5c3bcf; opacity: 1; box-shadow: 0 0 20px rgba(92, 59, 207, 0.4); }
         
@@ -68,12 +66,11 @@
         .brackets::before, .brackets::after { content: ''; position: absolute; top: -1px; width: 4px; height: calc(100% + 2px); background: #5c3bcf; }
         .brackets::before { left: 0; } .brackets::after { right: 0; }
         
-        /* Changed brand-name-loader color to dark slate for visibility */
         .brand-name-loader { font-size: 11px; font-weight: 300; letter-spacing: 0.8em; text-transform: uppercase; margin: 50px 0 12px; color: #1e293b; opacity: 0.6; }
         .status-line { font-size: 10px; font-weight: 700; color: #5c3bcf; text-transform: uppercase; letter-spacing: 0.3em; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
-        
-        /* --- NAVBAR LOGIC --- */
+
+        /* --- NAVBAR & HEADER LOGIC --- */
         #main-header {
             background-color: transparent !important;
             border-bottom: none !important;
@@ -81,13 +78,35 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #main-header.header-hidden { transform: translateY(-100%); }
+        
+        /* Header items visibility/colors */
         #main-header .logo-img { filter: brightness(0) invert(1) !important; transition: filter 0.3s ease; }
         #main-header .nav-link { color: #ffffff; transition: color 0.3s ease; }
         #main-header #mobile-menu-btn { color: #ffffff; transition: color 0.3s ease; }
 
+        /* Logic for white sections (ScrollTrigger) */
         #main-header.header-dark-items .nav-link { color: #000000; }
         #main-header.header-dark-items .logo-img { filter: brightness(0) !important; }
         #main-header.header-dark-items #mobile-menu-btn { color: #000000; }
+
+        /* MOBILE MENU OPEN STATE: Fix colors for the white dropdown */
+        #main-header.menu-open #mobile-menu-btn { color: #000000 !important; }
+        #main-header.menu-open .logo-img { filter: brightness(0) !important; }
+
+        /* --- MOBILE MENU DROPDOWN --- */
+        #mobile-menu {
+            top: 5rem; /* Matches top-20 in HTML */
+            background: #ffffff !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        #mobile-menu.flex {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
 
         /* --- CTA DESIGN --- */
         .mint-cta-btn {
@@ -113,7 +132,7 @@
         .mint-cta-btn:hover .mint-cta-icon svg:first-child { transform: translate(2rem, -2rem); }
         .mint-cta-btn:hover .mint-cta-icon svg:last-child { transform: translate(0, 0); }
 
-        /* --- PILLAR SYSTEM (RESPONSIVE) --- */
+        /* --- PILLAR SYSTEM --- */
         .pillar-container { display: flex; width: 100%; height: 100vh; overflow: hidden; background-color: var(--mint-black); border-top: 1px solid rgba(255,255,255,0.05); }
         .pillar { flex: 1; height: 100%; position: relative; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer; overflow: hidden; background-color: var(--mint-black); border-right: 1px solid rgba(255,255,255,0.1); }
         
@@ -138,12 +157,9 @@
         .pillar-content-open { opacity: 0; padding: 8rem 4rem; height: 100%; display: flex; flex-direction: column; transition: opacity 0.2s ease-in; pointer-events: none; position: relative; z-index: 20; color: #000000; }
         .pillar:hover .pillar-content-open, .pillar.active .pillar-content-open { opacity: 1; transition: opacity 0.5s ease-out 0.4s; pointer-events: auto; }
 
-        /* --- WHITE METAL CAROUSEL --- */
+        /* --- CAROUSEL SECTION --- */
         #carouselSection { perspective: 1500px; height: 100vh; min-height: 800px; display: flex; flex-direction: column; justify-content: space-between; padding: 80px 0 40px; }
-        
-        @media (max-width: 768px) {
-            #carouselSection { height: auto; min-height: 700px; padding: 60px 0; }
-        }
+        @media (max-width: 768px) { #carouselSection { height: auto; min-height: 700px; padding: 60px 0; } }
 
         .carousel-item { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease; transform-style: preserve-3d; position: absolute; width: 340px; opacity: 0; pointer-events: none; }
         @media (max-width: 480px) { .carousel-item { width: 280px; } }
@@ -152,31 +168,16 @@
         .carousel-item.prev { opacity: 0.3; transform: translateX(-110%) rotateY(45deg) scale(0.8); z-index: 20; }
         .carousel-item.next { opacity: 0.3; transform: translateX(110%) rotateY(-45deg) scale(0.8); z-index: 20; }
         
-        @media (max-width: 768px) {
-            .carousel-item.prev { transform: translateX(-80%) rotateY(30deg) scale(0.7); }
-            .carousel-item.next { transform: translateX(80%) rotateY(-30deg) scale(0.7); }
-        }
-
         .carousel-card {
             background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 50%, #e6e9ef 100%);
-            border: 1px solid #fff;
-            border-radius: 2.5rem;
-            padding: 2.5rem;
-            height: 420px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
-            color: #000;
-            position: relative;
-            overflow: hidden;
+            border: 1px solid #fff; border-radius: 2.5rem; padding: 2.5rem;
+            height: 420px; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2); color: #000; position: relative; overflow: hidden;
         }
-
         .metal-shine {
             position: absolute; top: 0; left: 0; width: 200%; height: 100%;
             background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.8) 50%, transparent 60%);
-            animation: shine 8s infinite linear;
-            pointer-events: none;
+            animation: shine 8s infinite linear; pointer-events: none;
         }
         @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
@@ -190,37 +191,13 @@
         .shimmer-text { background: linear-gradient(110deg, #ffffff 30%, #a78bfa 45%, #ffffff 50%, #a78bfa 55%, #ffffff 70%); background-size: 250% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 5s linear infinite; }
         @keyframes shimmer { to { background-position: -250% center; } }
 
-        /* Mobile Menu Transitions */
-        #mobile-menu {
-            background: #ffffff !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-        }
-
-        #mobile-menu.flex {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        #main-header.menu-open .logo-img { filter: brightness(0) !important; z-index: 60; }
-        #main-header.menu-open #mobile-menu-btn { color: #000000 !important; z-index: 60; }
-        #main-header.menu-open .nav-link { color: #000000; }
-
-        #mobile-only-toast.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
-            pointer-events: auto;
-        }
-            
+        #mobile-only-toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
     </style>
 </head>
 <body>
 
     <div id="preloader">
-        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon" class="brand-logo-loader">
+        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon" loading="lazy" class="brand-logo-loader">
         
         <div class="loader-viz">
             <div class="brackets"></div>
@@ -247,20 +224,12 @@
         <div class="status-line">Money in Transit</div>
     </div>
         
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+   <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
-            <a href="index.html">
-                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain"> 
-            </a>
             
-            <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50">
-                <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-                <svg id="close-icon" class="hidden w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
+            <a href="index.html">
+                <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain brightness-0 invert transition-all duration-300"> 
+            </a>
 
             <div class="hidden lg:flex items-center gap-12 text-xs font-light tracking-widest uppercase">
                 <a href="index.html" class="nav-link hover:text-gray-400 transition-all text-sm">Personal</a>
@@ -268,31 +237,38 @@
                 <a href="about.html" class="nav-link hover:text-gray-400 transition-all text-sm">About</a>
                 <a href="contact.html" class="nav-link hover:text-gray-400 transition-all text-sm">Contact</a>
             </div>
-            
-            <button onclick="checkDevice()" class="mint-cta-btn group">
-                <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Go to Mint</span>
-                <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
-                    <svg class="transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                    <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
-                </div>
-            </button>
-            
-        </nav>
 
-        <div id="mobile-menu" class="hidden absolute top-0 left-0 w-full bg-white shadow-2xl rounded-b-[2rem] p-8 pt-24 flex-col gap-8 lg:hidden z-40 border-t border-gray-100">
-            <div class="flex flex-col gap-6 text-center text-sm font-medium text-gray-800 uppercase tracking-[0.3em]">
-                <a href="index.html" class="hover:text-[var(--mint-primary-purple)] py-3 border-b border-gray-50 transition-colors">Personal</a>
-                <a href="institution.html" class="text-[var(--mint-primary-purple)] font-bold py-3 border-b border-gray-50">Business</a>
-                <a href="about.html" class="hover:text-[var(--mint-primary-purple)] py-3 border-b border-gray-50 transition-colors">About</a>
-                <a href="contact.html" class="hover:text-[var(--mint-primary-purple)] py-3 transition-colors">Contact</a>
+            <div class="hidden lg:block">
+                <button onclick="checkDevice()" class="mint-cta-btn group">
+                    <span class="text-xs font-bold text-[var(--mint-primary-purple)] uppercase tracking-wide">Go to Mint</span>
+                    <div class="mint-cta-icon" style="width: 2rem; height: 2rem;">
+                        <svg class="transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l10-10M7 7h10v10"/></svg>
+                    </div>
+                </button>
             </div>
-            <button onclick="window.location.href='https://app.mymint.co.za'" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-4 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-lg">
-                Go to Mint
+
+            <button id="mobile-menu-btn" class="lg:hidden p-2 focus:outline-none z-50 transition-colors duration-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
-        </div>
+
+            <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white shadow-xl rounded-b-2xl p-6 flex-col gap-6 lg:hidden z-40 border-t border-gray-100">
+                <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-800 uppercase tracking-widest">
+                    <a href="index.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Personal</a>
+                    <a href="business.html" class="text-purple-600 py-2 border-b border-gray-50">Business</a>
+                    <a href="about.html" class="hover:text-purple-600 py-2 border-b border-gray-50">About</a>
+                    <a href="contact.html" class="hover:text-purple-600 py-2 border-b border-gray-50">Contact</a>
+                </div>
+                <button onclick="checkDevice()" class="w-full flex justify-center items-center gap-2 bg-[var(--mint-primary-purple)] text-white px-7 py-3 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                    Go to Mint
+                </button>
+            </div>
+        </nav>
     </header>
 
-   <section id="heroSection" class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center" style="background-image: url('images/Institutionhero.webp');">
+   <section id="heroSection" class="min-h-screen relative flex items-center overflow-hidden z-20 bg-cover bg-center" style="background-image: url('images/Institutionhero.avif');">
         <div class="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/70 to-transparent z-10"></div>
 
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-20 w-full">
@@ -320,7 +296,7 @@
 
     <section class="pillar-container" id="pillarContainer">
         <div class="pillar active">
-            <img src="images/INVESTMANDATE.webp" class="pillar-bg">
+            <img src="images/INVESTMANDATE.avif" loading="lazy" class="pillar-bg">
             <div class="pillar-content-closed"><span>01 — Investment Mandates</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
@@ -331,7 +307,7 @@
             </div>
         </div>
         <div class="pillar">
-            <img src="images/FUNDSTRUCTURING.webp" class="pillar-bg">
+            <img src="images/FUNDSTRUCTURING.avif" loading="lazy" class="pillar-bg">
             <div class="pillar-content-closed"><span>02 — Fund Structuring</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
@@ -342,7 +318,7 @@
             </div>
         </div>
         <div class="pillar">
-            <img src="images/INSTITUTIONALEXECUTION.webp" class="pillar-bg">
+            <img src="images/INSTITUTIONALEXECUTION.avif" loading="lazy" class="pillar-bg">
             <div class="pillar-content-closed"><span>03 — Institutional Execution</span></div>
             <div class="pillar-content-open">
                 <div class="max-w-3xl">
@@ -400,7 +376,7 @@
                 </div>
             </div>
             <div class="relative flex items-end justify-end">
-                <img id="cornerBuildings" src="images/Buildings.webp" alt="Buildings" class="w-full max-w-2xl h-auto object-contain z-20 opacity-0 transform translate-y-12">
+                <img id="cornerBuildings" src="images/Buildings.avif" alt="Buildings" loading="lazy" class="w-full max-w-2xl h-auto object-contain z-20 opacity-0 transform translate-y-12">
             </div>
         </div>
     </section>
@@ -449,7 +425,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                 
                 <div class="space-y-6">
-                    <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
+                    <img src="/images/LOGO 2 WHITE MINT.png" alt="MINT Logo" loading="lazy" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">
                         The all-in-one solution for moving your money through investing, borrowing, and transacting.
                     </p>

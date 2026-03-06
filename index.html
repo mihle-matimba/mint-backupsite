@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
     <title>MINT | Invest, Borrow & Transact | Wealth-as-a-Service South Africa</title>
     <meta name="description" content="Unlock the value of your portfolio without selling assets. MINT is an all-in-one financial platform for Institutional-grade investing, smarter borrowing, and real-time transacting. FSCA & NCR regulated.">
     <meta name="keywords" content="Fintech South Africa, Portfolio-backed credit, Wealth management app, MINT app, Borrow against investments, Sandton financial services, JSE investing app, Generational wealth">
     <link rel="canonical" href="https://mymint.co.za/">
+    <link rel="preload" as="image" href="/images/iINDEXHero.avif">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://unpkg.com">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mymint.co.za/">
     <meta property="og:title" content="MINT | Elevate Your Investment Portfolio">
     <meta property="og:description" content="Invest, Borrow, and Transact in one place. Access portfolio-backed credit and Institutional-grade strategies without selling your assets.">
-    <meta property="og:image" content="https://mymint.co.za/images/iINDEXHero.jpeg">
+    <meta property="og:image" content="https://mymint.co.za/images/iINDEXHero.avif">
     <meta property="og:site_name" content="MINT">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MINT | The Future of Finance in Africa">
     <meta name="twitter:description" content="Precision asset deployment and smarter credit tools for the modern investor. Join early users building wealth with MINT.">
-    <meta name="twitter:image" content="https://mymint.co.za/images/iINDEXHero.jpeg">
+    <meta name="twitter:image" content="https://mymint.co.za/images/iINDEXHero.avif">
 
     <script type="application/ld+json">
     {
@@ -44,19 +47,9 @@
       }
     }
     </script>
-
-    <link rel="icon" type="image/png" href="images/Mint%20Favicon.png">
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/png" href="/images/Mint%20Favicon.png">
 
     <style>
     :root {
@@ -220,7 +213,7 @@
         left: 0;
         width: 100vw;      
         height: 100vh;      
-        background-image: url('images/iINDEXHero.jpeg');
+        background-image: url('/images/iINDEXHero.avif');
         background-size: cover;    
         background-position: center; 
         background-repeat: no-repeat;
@@ -392,8 +385,8 @@
 <body>
 
     <div id="preloader">
-        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon" class="brand-logo-loader">
-        
+        <img src="https://static.wixstatic.com/media/f82622_7f62923a65f94af5b36b7958980b9ebc~mv2.png" alt="MINT Icon"  class="brand-logo-loader">
+
         <div class="loader-viz">
             <div class="brackets"></div>
             <div class="slot-container">
@@ -421,7 +414,7 @@
 
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-transparent border-b border-transparent transition-all duration-300">
         <nav class="flex items-center justify-between px-6 md:px-10 py-6 max-w-7xl mx-auto">
-            <img src="images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain brightness-0 invert transition-all duration-300"> 
+            <img src="/images/LOGO 2 MINT.png" alt="MINT Logo" class="logo-img h-3.5 w-auto object-contain brightness-0 invert transition-all duration-300"> 
             
             <button id="mobile-menu-btn" class="lg:hidden p-2 text-white focus:outline-none z-50 transition-colors duration-300">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -506,9 +499,9 @@
         
                     <div class="flex items-center justify-start gap-4 mt-12 opacity-90">
                         <div class="flex -space-x-3">
-                            <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white/20">
-                            <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white/20">
-                            <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white/20">
+                            <img src="https://i.pravatar.cc/100?u=1" loading="lazy" class="w-10 h-10 rounded-full border-2 border-white/20">
+                            <img src="https://i.pravatar.cc/100?u=2" loading="lazy" class="w-10 h-10 rounded-full border-2 border-white/20">
+                            <img src="https://i.pravatar.cc/100?u=3" loading="lazy"class="w-10 h-10 rounded-full border-2 border-white/20">
                         </div>
                         <div class="text-left">
                             <div class="text-xl font-medium text-white">200+</div>
@@ -529,15 +522,15 @@
         </div>
 
         <div class="hero-image-slide">
-            <img src="images/Invest1.webp" alt="App Interface" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
+            <img src="/images/Invest1.avif" alt="App Interface" loading="lazy" class="h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-2xl">
         </div>
 
         <div id="investLeft" class="side-image left-[10%]">
-            <img src="images/Invest3.webp" class="w-full h-auto drop-shadow-2xl rounded-xl">
+            <img src="/images/Invest3.avif" loading="lazy" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
         <div id="investRight" class="side-image right-[10%]">
-            <img src="images/Invest2.webp" class="w-full h-auto drop-shadow-2xl rounded-xl">
+            <img src="/images/Invest2.avif" loading="lazy" class="w-full h-auto drop-shadow-2xl rounded-xl">
         </div>
 
     </div>
@@ -562,9 +555,9 @@
 
             <div class="flex justify-center lg:justify-end mt-12 lg:mt-0 relative z-30">
                 <div class="relative w-full max-w-md">
-                    <img src="images/Section rocks phone.webp" alt="Phone on Rocks" class="relative z-10 w-full object-contain">
-                    <img src="images/rock.webp" alt="Rock" class="absolute top-0 -right-2 w-24 md:w-32 z-20 floating-rock-1">
-                    <img src="images/rock.webp" alt="Rock" class="absolute bottom-0 -left-2 w-24 md:w-32 z-20 floating-rock-2">
+                    <img src="/images/Section rocks phone.avif" alt="Phone on Rocks" loading="lazy" class="relative z-10 w-full object-contain">
+                    <img src="/images/rock.avif" alt="Rock" loading="lazy" class="absolute top-0 -right-2 w-24 md:w-32 z-20 floating-rock-1">
+                    <img src="/images/rock.avif" alt="Rock" loading="lazy" class="absolute bottom-0 -left-2 w-24 md:w-32 z-20 floating-rock-2">
                 </div>
             </div>
 
@@ -601,9 +594,9 @@
                     </div>
                     <div class="mt-8 flex items-center gap-4">
                         <div class="flex -space-x-3">
-                            <img src="https://i.pravatar.cc/100?u=4" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
-                            <img src="https://i.pravatar.cc/100?u=5" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
-                            <img src="https://i.pravatar.cc/100?u=6" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
+                            <img src="https://i.pravatar.cc/100?u=4" loading="lazy" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
+                            <img src="https://i.pravatar.cc/100?u=5" loading="lazy" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
+                            <img src="https://i.pravatar.cc/100?u=6" loading="lazy" class="w-10 h-10 rounded-full border-2 border-[var(--mint-dark-purple)]">
                         </div>
                         <div>
                             <div class="font-bold text-sm">Join a growing community of</div>
@@ -613,7 +606,7 @@
                 </div>
 
                 <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-cover bg-center relative overflow-hidden shadow-sm hover:-translate-y-2 transition-transform duration-300" 
-                     style="background-image: url('images/porfolioimage.webp');">
+                     style="background-image: url('/images/porfolioimage.avif');">
                     
                     <div class="absolute inset-0 bg-black/10 pointer-events-none"></div>
                 
@@ -645,11 +638,11 @@
 
                 <div class="rounded-[2rem] overflow-hidden relative shadow-sm aspect-[4/5] group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
                     <div class="absolute inset-0 z-10 pointer-events-none transition-colors duration-500 group-hover:bg-black/10" style="background-color: rgba(0,0,0,0.17);"></div>
-                    <img src="images/Invest.webp" alt="Invest Environment" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 relative z-0">
+                    <img src="/images/Invest.avif" alt="Invest Environment" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 relative z-0">
                     
                     <div class="absolute bottom-6 left-6 z-20">
                         <div class="bg-white px-5 py-3 rounded-xl shadow-md inline-flex items-center justify-center gap-2">
-                            <img src="images/LOGO 2 MINT.png" alt="MINT" class="h-3.5 object-contain">
+                            <img src="/images/LOGO 2 MINT.png" alt="MINT" loading="lazy" class="h-3.5 object-contain">
                         </div>
                     </div>
                 </div>
@@ -696,12 +689,12 @@
                 <span id="leftBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">OPEN</span>
                 <span id="rightBgText" class="text-[50px] md:text-[220px] font-bold text-gray-400 opacity-[0.03] whitespace-nowrap select-none">STRATEGIES</span>
             </div>
-            <div class="relative z-10 mb-16" id="heroTarget"><img src="images/HERO MAIN IMG.webp" alt="App Interface" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);"></div>
+            <div class="relative z-10 mb-16" id="heroTarget"><img src="/images/HERO MAIN IMG.avif" alt="App Interface" loading="lazy" class="w-[200px] md:w-[280px] drop-shadow-2xl rounded-[2rem] md:rounded-[3rem] transform will-change-transform" style="transform: scale(2.5);"></div>
             <div class="text-center relative z-10 px-6"><h2 class="text-4xl md:text-6xl font-normal text-gray-900 tracking-tight">Experience The <br><span class="text-[var(--mint-primary-purple)]">Future of Finance</span></h2></div>
         </div>
     </section>
 
-    <section id="assetDeploymentSection" class="relative py-24 md:py-32 overflow-hidden bg-cover bg-center" style="background-image: url('images/Mint%20Background.jpg');">
+    <section id="assetDeploymentSection" class="relative py-24 md:py-32 overflow-hidden bg-cover bg-center" style="background-image: url('/images/Mint%20Background.avif');">
         <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             <div class="relative w-full h-[500px] lg:h-[700px] flex items-center justify-center">
@@ -774,6 +767,7 @@
                     muted 
                     loop 
                     playsinline 
+                    preload="none"
                     class="max-h-[40vh] md:max-h-[50vh]..."
                     id="borrowVideo"
                 >
@@ -784,7 +778,7 @@
 
         <div class="w-full rounded-[2rem] overflow-hidden relative shadow-sm aspect-[4/5] md:aspect-[12/5] group cursor-pointer hover:-translate-y-2 transition-transform duration-500 z-20">
             <div class="absolute inset-0 z-10 pointer-events-none transition-colors duration-500 group-hover:bg-black/10" style="background-color: rgba(0,0,0,0.17);"></div>
-            <img src="images/Borrow Image.webp" alt="Borrow Portfolio" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 relative z-0">
+            <img src="/images/Borrow Image.avif" alt="Borrow Portfolio" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 relative z-0">
 
             <div class="absolute left-6 md:left-10 top-1/2 -translate-y-[140px] md:-translate-y-[220px] z-30 pointer-events-none select-none">
                 <div class="flex items-center gap-4">
@@ -829,7 +823,7 @@
         </div>
     </div>
 </section>
-    <section id="transactSection" class="min-h-screen relative bg-cover bg-center bg-no-repeat flex items-center overflow-hidden z-20" style="background-image: url('images/TransactBG.webp');">
+    <section id="transactSection" class="min-h-screen relative bg-cover bg-center bg-no-repeat flex items-center overflow-hidden z-20" style="background-image: url('/images/TransactBG.avif');">
     
         <div class="absolute inset-0 bg-black/45"></div>
     
@@ -883,7 +877,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                 
                 <div class="space-y-6">
-                    <img src="images/LOGO 2 WHITE MINT.png" alt="MINT Logo" class="h-10 w-auto opacity-90">
+                    <img src="/images/LOGO 2 WHITE MINT.png" alt="MINT Logo" loading="lazy" class="h-10 w-auto opacity-90">
                     <p class="text-gray-400 text-sm leading-relaxed">
                         The all-in-one solution for moving your money through investing, borrowing, and transacting.
                     </p>
@@ -952,41 +946,57 @@
             </div>
         </div>
     </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
         function switchTab(tabId) {
-            // Hide all tab contents and remove animation class
+          
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.add('hidden');
                 el.classList.remove('block', 'animate-fade-in');
             });
             
-            // Show the active tab content and add the fade-in animation
+     
             const activeContent = document.getElementById('content-' + tabId);
             if(activeContent) {
                 activeContent.classList.remove('hidden');
-                // Trigger reflow to restart animation
+  
                 void activeContent.offsetWidth; 
                 activeContent.classList.add('block', 'animate-fade-in');
             }
 
-            // Reset all pill buttons to inactive state (transparent with white border)
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('border-white', 'bg-white', 'text-black', 'shadow-md');
                 btn.classList.add('border-white/30', 'bg-transparent', 'text-white');
             });
 
-            // Set active pill button to filled state (white background, black text)
             const activeBtn = document.getElementById('tab-' + tabId);
             if(activeBtn) {
                 activeBtn.classList.remove('border-white/30', 'bg-transparent', 'text-white');
                 activeBtn.classList.add('border-white', 'bg-white', 'text-black', 'shadow-md');
             }
         }
+
+        function checkDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                            || window.innerWidth <= 1024;
+        
+            if (isMobile) {
+                window.location.href = "https://app.mymint.co.za/";
+            } else {
+                const toast = document.getElementById('mobile-only-toast');
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }
+        }
     </script>
 
     <script>
-        
         document.body.style.overflow = "hidden";
         window.preloaderFinished = false; 
         
@@ -1012,11 +1022,10 @@
                     document.body.style.overflow = "auto";
                     window.preloaderFinished = true; 
                     
-                    // 1. START THE SLOT MACHINE HERE
+                    
                     startAutoplay();
                     window.slotStarted = true;
-        
-                    // 2. Animate the hero text only (No tl.play() here!)
+    
                     gsap.from(".hero-initial", {
                         y: 30,
                         opacity: 0,
@@ -1026,7 +1035,8 @@
                 }
             });
         });
-        // --- HEADER SCROLL HIDE LOGIC ---
+
+        
         let lastScroll = window.scrollY;
         window.addEventListener('scroll', () => {
             const currentScroll = window.scrollY;
@@ -1046,19 +1056,17 @@
             btn.addEventListener('click', () => { menu.classList.toggle('hidden'); menu.classList.toggle('flex'); });
         }
 
+       
+        gsap.registerPlugin(ScrollTrigger);
 
-       // --- GSAP ANIMATION LOGIC ---
-      gsap.registerPlugin(ScrollTrigger);
-
-        // 1. Initial States
+       
         gsap.set(".bg-text-layer", { yPercent: 150, filter: "blur(12px)" }); 
         gsap.set(".txt-inv", { yPercent: 0, filter: "blur(0px)" }); 
-        gsap.set("#investTitleWrapper", { y: "100%" }); // Use string percent for reliability
+        gsap.set("#investTitleWrapper", { y: "100%" }); 
         gsap.set("#investLeft", { xPercent: -150, opacity: 0 });
         gsap.set("#investRight", { xPercent: 150, opacity: 0 });
-        gsap.set(".hero-final", { opacity: 0, y: 30 }); // Start slightly lower for a lift effect
         
-        // 2. Slot Machine Autoplay Function
+        
         let currentTextIndex = 0;
         const texts = [".txt-inv", ".txt-bor", ".txt-trans"];
         
@@ -1075,14 +1083,13 @@
             }, 3000); 
         }
         
-        // 3. The Refactored Timeline
-        // 3. Optimized Timeline (Shortened to remove double-scroll and locking feel)
+        
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#pinContainer",
                 start: "top top",      
-                end: "+=1200", // Much shorter scroll distance
-                scrub: 0.8,    // More responsive tracking
+                end: "+=1200", 
+                scrub: 0.8,    
                 pin: true,             
                 anticipatePin: 1,
                 onEnter: () => {
@@ -1094,34 +1101,21 @@
             }
         });
         
-        // Step A: Hide the initial Hero content
         tl.to(".hero-initial", { y: -50, opacity: 0, duration: 1 }, "start");
-        
-        // Step B: Slide up the background curtain and show the Slot Machine
         tl.to(".hero-bg-image", { y: "-100%", duration: 2, ease: "power2.inOut" }, "reveal");
         tl.to("#investTitleWrapper", { y: "0%", duration: 2, ease: "power2.inOut" }, "reveal");
-        
-        // Step C: Bring in the secondary phone UI elements
         tl.to(".hero-image-slide", { y: "75px", opacity: 1, duration: 1 }, "reveal+=0.3");
         tl.to("#investLeft", { xPercent: 0, opacity: 1, duration: 1, ease: "power3.out" }, "reveal+=0.5");
         tl.to("#investRight", { xPercent: 0, opacity: 1, duration: 1, ease: "power3.out" }, "reveal+=0.5");
+
         
-        // Step D: Reveal the Final UI
-        tl.to(".hero-final", { 
-            opacity: 1, 
-            y: 0, 
-            duration: 1, 
-            pointerEvents: "auto" 
-        }, "reveal+=1");
-        
-        // Step E: Header Theme Toggle
         tl.to("#main-header", {
             onStart: () => document.getElementById('main-header').classList.add('header-hero-dark-text'),
             onReverseComplete: () => document.getElementById('main-header').classList.remove('header-hero-dark-text'),
             duration: 0.1
         }, "reveal+=0.8");
 
-        // --- DYNAMIC HEADER COLOR FOR OTHER SECTIONS ---
+        
         const mainHeader = document.getElementById('main-header');
         
         ScrollTrigger.create({
@@ -1149,6 +1143,8 @@
             },
             onLeaveBack: () => mainHeader.classList.add('header-dark')
         });
+
+        
         gsap.to("#borrowVideo", {
             scrollTrigger: {
                 trigger: "#borrowSection",
@@ -1166,7 +1162,7 @@
                 const video = document.getElementById('borrowVideo');
                 if (video) {
                     video.classList.add('reveal');
-                    video.play(); // Starts once and stays playing
+                    video.play();
                 }
             },
             onEnterBack: () => mainHeader.classList.add('header-dark'),
@@ -1194,7 +1190,7 @@
             }
         });
         
-        // --- LINES ANIMATION ---
+        
         function drawConnectingLines() {
             const canvas = document.getElementById('lineCanvas');
             const section = document.getElementById('stepsSection');
@@ -1233,292 +1229,7 @@
         window.addEventListener('resize', drawConnectingLines);
     </script>
 
-    <script type="text/babel">
-        const { useEffect, useRef, useState } = React;
-
-        const SUPABASE_URL = "https://aazofjsssobejhkyyiqv.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhem9manNzc29iZWpoa3l5aXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxMTI1NDUsImV4cCI6MjA3MzY4ODU0NX0.guYlxaV5RwTlTVFoUhpER0KWEIGPay8svLsxMwyRUyM";
-        const supabase = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const TRADING_LOGOS_KEY = "ah_trading_universe_logos";
-
-        const defaultSphereImages = [
-            { id: "apple", src: "https://logo.clearbit.com/apple.com" },
-            { id: "microsoft", src: "https://logo.clearbit.com/microsoft.com" },
-            { id: "google", src: "https://logo.clearbit.com/google.com" },
-            { id: "amazon", src: "https://logo.clearbit.com/amazon.com" },
-            { id: "nvidia", src: "https://logo.clearbit.com/nvidia.com" },
-            { id: "meta", src: "https://logo.clearbit.com/meta.com" },
-            { id: "visa", src: "https://logo.clearbit.com/visa.com" },
-            { id: "netflix", src: "https://logo.clearbit.com/netflix.com" },
-            { id: "jpmorgan", src: "https://logo.clearbit.com/jpmorganchase.com" },
-            { id: "coca-cola", src: "https://logo.clearbit.com/coca-cola.com" },
-            { id: "nike", src: "https://logo.clearbit.com/nike.com" },
-            { id: "disney", src: "https://logo.clearbit.com/disney.com" },
-            { id: "naspers", src: "https://s3-symbol-logo.tradingview.com/naspers--big.svg" },
-            { id: "capitec", src: "https://s3-symbol-logo.tradingview.com/capitec-bank-hldgs-ltd--big.svg" },
-            { id: "mtn", src: "https://logo.clearbit.com/mtn.com" },
-            { id: "vodacom", src: "https://s3-symbol-logo.tradingview.com/vodafone--big.svg" },
-            { id: "discovery", src: "https://logo.clearbit.com/discovery.co.za" },
-            { id: "bitcoin", src: "https://cryptologos.cc/logos/bitcoin-btc-logo.png" },
-            { id: "ethereum", src: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },
-            { id: "solana", src: "https://cryptologos.cc/logos/solana-sol-logo.png" },
-            { id: "shoprite", src: "https://logo.clearbit.com/shoprite.co.za" },
-            { id: "picknpay", src: "https://logo.clearbit.com/picknpay.co.za" },
-            { id: "woolworths", src: "https://logo.clearbit.com/woolworths.co.za" },
-            { id: "sasol", src: "https://logo.clearbit.com/sasol.com" },
-            { id: "anglo-american", src: "https://logo.clearbit.com/angloamerican.com" },
-            { id: "sanlam", src: "https://logo.clearbit.com/sanlam.co.za" },
-            { id: "bidvest", src: "https://logo.clearbit.com/bidvest.com" },
-            { id: "mastercard", src: "https://logo.clearbit.com/mastercard.com" },
-        ];
-
-        const normalizeLogos = (rows) => {
-            const seen = new Set();
-            return rows
-                .map((row) => ({
-                    id: (row.symbol || `logo-${row.id}`).toLowerCase(),
-                    src: row.logo,
-                }))
-                .filter((row) => typeof row.src === 'string' && row.src.trim().startsWith('http'))
-                .filter(({ src }) => {
-                    if (seen.has(src)) return false;
-                    seen.add(src);
-                    return true;
-                });
-        };
-
-        const fetchCachedLogos = () => {
-            try {
-                const cached = sessionStorage.getItem(TRADING_LOGOS_KEY);
-                if (!cached) return null;
-                const parsed = JSON.parse(cached);
-                const cachedLogos = normalizeLogos(
-                    parsed?.source === 'trading_universe' && Array.isArray(parsed.logos) ? parsed.logos : []
-                );
-                return cachedLogos.length ? cachedLogos : null;
-            } catch (err) {
-                return null;
-            }
-        };
-
-        async function fetchTradingLogos() {
-            const cached = fetchCachedLogos();
-            if (cached) return cached;
-            if (!supabase) return defaultSphereImages;
-
-            const { data, error } = await supabase
-                .from('trading_universe')
-                .select('id, symbol, logo')
-                .not('logo', 'is', null)
-                .neq('logo', '')
-                .order('symbol', { ascending: true })
-                .limit(120);
-
-            if (error || !data?.length) return defaultSphereImages;
-
-            const logos = normalizeLogos(data);
-            if (logos.length) {
-                try {
-                    sessionStorage.setItem(TRADING_LOGOS_KEY, JSON.stringify({ source: 'trading_universe', logos }));
-                } catch (err) {}
-            }
-            return logos.length ? logos : defaultSphereImages;
-        }
-
-        const Sphere = ({ images, size = 760 }) => {
-            const [rot, setRot] = useState({ x: 15, y: 0 });
-            const [vel, setVel] = useState({ x: 0, y: 0 });
-            const [dragging, setDragging] = useState(false);
-            const [points, setPoints] = useState([]);
-            const last = useRef({ x: 0, y: 0 });
-
-            const radius = size * 0.45;
-            const baseSize = size * 0.14;
-
-            useEffect(() => {
-                const pts = [];
-                const count = images.length;
-                const phi = Math.PI * (3 - Math.sqrt(5));
-
-                for (let i = 0; i < count; i++) {
-                    const y = 1 - (i / (count - 1)) * 2;
-                    const r = Math.sqrt(1 - y * y);
-                    const theta = phi * i;
-                    pts.push({
-                        x: Math.cos(theta) * r * radius,
-                        y: y * radius,
-                        z: Math.sin(theta) * r * radius,
-                    });
-                }
-                setPoints(pts);
-            }, [images.length, radius]);
-
-            useEffect(() => {
-                let id;
-                const loop = () => {
-                    if (!dragging) {
-                        setVel((v) => ({ x: v.x * 0.97, y: v.y * 0.97 }));
-                        setRot((r) => ({
-                            x: r.x + vel.x,
-                            y: r.y + vel.y + 0.1,
-                        }));
-                    }
-                    id = requestAnimationFrame(loop);
-                };
-                id = requestAnimationFrame(loop);
-                return () => cancelAnimationFrame(id);
-            }, [dragging, vel.x, vel.y]);
-
-            const start = (e) => {
-                setDragging(true);
-                setVel({ x: 0, y: 0 });
-                const x = e.clientX || e.touches?.[0]?.clientX || 0;
-                const y = e.clientY || e.touches?.[0]?.clientY || 0;
-                last.current = { x, y };
-            };
-
-            const move = (e) => {
-                if (!dragging) return;
-                const x = e.clientX || e.touches?.[0]?.clientX || 0;
-                const y = e.clientY || e.touches?.[0]?.clientY || 0;
-                const dx = x - last.current.x;
-                const dy = y - last.current.y;
-
-                setRot((r) => ({
-                    x: r.x - dy * 0.45,
-                    y: r.y + dx * 0.45,
-                }));
-                setVel({ x: -dy * 0.35, y: dx * 0.35 });
-                last.current = { x, y };
-            };
-
-            const end = () => setDragging(false);
-
-            const project = (p) => {
-                let { x, y, z } = p;
-                const rx = (rot.x * Math.PI) / 180;
-                const ry = (rot.y * Math.PI) / 180;
-
-                const tx = x * Math.cos(ry) + z * Math.sin(ry);
-                z = -x * Math.sin(ry) + z * Math.cos(ry);
-                x = tx;
-
-                const ty = y * Math.cos(rx) - z * Math.sin(rx);
-                z = y * Math.sin(rx) + z * Math.cos(rx);
-                y = ty;
-
-                const scale = 1 + z / (radius * 3);
-                
-                return {
-                    x,
-                    y,
-                    scale: Math.max(0.45, scale),
-                    visible: true, 
-                    opacity: Math.max(0.3, (z + radius) / (radius * 1.5)), 
-                    zIndex: Math.round(z),
-                };
-            };
-
-            return (
-                <div
-                    className={`relative ${dragging ? "cursor-grabbing" : "cursor-grab"} select-none`}
-                    style={{ width: size, height: size }}
-                    onMouseDown={start}
-                    onMouseMove={move}
-                    onMouseUp={end}
-                    onMouseLeave={end}
-                    onTouchStart={start}
-                    onTouchMove={move}
-                    onTouchEnd={end}
-                >
-                    {points.map((p, i) => {
-                        const proj = project(p);
-                        if (!proj.visible) return null;
-                        const s = baseSize * proj.scale;
-
-                        return (
-                            <div
-                                key={images[i].id}
-                                className="absolute"
-                                style={{
-                                    width: s,
-                                    height: s,
-                                    left: size / 2 + proj.x,
-                                    top: size / 2 + proj.y,
-                                    transform: "translate(-50%, -50%)",
-                                    opacity: proj.opacity,
-                                    zIndex: 1000 + proj.zIndex, 
-                                }}
-                            >
-                                <div className="w-full h-full rounded-full overflow-hidden shadow-2xl bg-white border border-slate-200 flex items-center justify-center">
-                                    <img
-                                        src={images[i].src}
-                                        className="w-full h-full object-cover"
-                                        draggable={false}
-                                        loading="lazy"
-                                        alt={images[i].id}
-                                    />
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            );
-        };
-
-        const getSphereSize = () => {
-            const width = window.innerWidth;
-            if (width >= 1280) return 600; 
-            if (width >= 1024) return 500;
-            if (width >= 768) return 520;
-            return Math.min(width - 40, 380);
-        };
-
-        const SphereWrapper = () => {
-            const [size, setSize] = useState(getSphereSize());
-            const [images, setImages] = useState(defaultSphereImages);
-
-            useEffect(() => {
-                const handleResize = () => setSize(getSphereSize());
-                window.addEventListener('resize', handleResize);
-                return () => window.removeEventListener('resize', handleResize);
-            }, []);
-
-            useEffect(() => {
-                let isMounted = true;
-                fetchTradingLogos().then((logos) => {
-                    if (isMounted && logos?.length) {
-                        setImages(logos);
-                    }
-                }).catch(() => {});
-                return () => { isMounted = false; };
-            }, []);
-
-            return <Sphere images={images} size={size} />;
-        };
-
-        const mountNode = document.getElementById('logoSphere');
-        if (mountNode) {
-            ReactDOM.createRoot(mountNode).render(<SphereWrapper />);
-        }
-
-        function checkDevice() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-                            || window.innerWidth <= 1024;
-        
-            if (isMobile) {
-                window.location.href = "https://app.mymint.co.za/";
-            } else {
-                const toast = document.getElementById('mobile-only-toast');
-                toast.classList.add('show');
-                
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
-            }
-        }
-    </script>
+    <script type="module" src="/src/main.jsx"></script>
     
 </body>
 </html>
