@@ -612,27 +612,34 @@
                     </div>
                 </div>
 
-                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-[#f5f2ff] text-black shadow-sm hover:-translate-y-2 transition-transform duration-300">
-                    <div>
+                <div class="rounded-[2rem] p-8 flex flex-col justify-between aspect-[4/5] bg-cover bg-center relative overflow-hidden shadow-sm hover:-translate-y-2 transition-transform duration-300" 
+                     style="background-image: url('images/porfolioimage.webp');">
+                    
+                    <div class="absolute inset-0 bg-black/10 pointer-events-none"></div>
+                
+                    <div class="relative z-10">
                         <div class="flex items-center justify-between mb-4">
                             <div class="bg-white p-2.5 rounded-xl shadow-sm">
-                                <svg class="w-5 h-5 text-[var(--mint-primary-purple)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                <svg class="w-5 h-5 text-[var(--mint-primary-purple)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                </svg>
                             </div>
-                            <div class="text-3xl font-medium tracking-tight">R 1.25M</div>
+                            <div class="text-3xl font-medium tracking-tight text-white drop-shadow-md">R 1.25M</div>
                         </div>
-                        <p class="text-sm font-medium text-gray-500 mb-8">Portfolio Value</p>
+                        <p class="text-sm font-medium text-white/80 mb-8 drop-shadow-sm">Portfolio Value</p>
                     </div>
-                    <div class="mt-auto h-32 flex items-end gap-[6px]">
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[30%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[40%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[35%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[60%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[50%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[75%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[65%]"></div>
-                        <div class="w-full bg-purple-200 rounded-t-sm h-[90%]"></div>
-                        <div class="w-full bg-[var(--mint-primary-purple)] rounded-t-sm h-[80%]"></div>
-                        <div class="w-full bg-[var(--mint-primary-purple)] rounded-t-sm h-[85%]"></div>
+                
+                    <div class="mt-auto h-32 flex items-end gap-[6px] relative z-10">
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[30%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[40%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[35%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[60%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[50%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[75%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[65%]"></div>
+                        <div class="w-full bg-purple-200/20 rounded-t-sm h-[90%]"></div>
+                        <div class="w-full bg-[var(--mint-primary-purple)]/20 rounded-t-sm h-[80%]"></div>
+                        <div class="w-full bg-[var(--mint-primary-purple)]/20 rounded-t-sm h-[85%]"></div>
                     </div>
                 </div>
 
