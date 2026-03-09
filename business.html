@@ -192,6 +192,86 @@
         @keyframes shimmer { to { background-position: -250% center; } }
 
         #mobile-only-toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+
+        /* --- UPDATED MODAL & GALLERY STYLING --- */
+        #gallerySection { background-color: #ffffff; color: #000000; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+        @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .gallery-item {
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f9fafb;
+        }
+        .gallery-item:hover { transform: translateY(-8px); }
+        .gallery-img-container { aspect-ratio: 4/5; width: 100%; overflow: hidden; }
+        .gallery-img-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.6s ease; }
+        .gallery-item:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Side Modal Styling */
+        #modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px); z-index: 90; opacity: 0; pointer-events: none;
+        }
+
+        #article-drawer {
+            position: fixed; top: 0; right: 0; height: 100vh; width: 100%; 
+            background: #ffffff; z-index: 100; transform: translateX(100%);
+            overflow-y: auto; touch-action: pan-y; /* Required for swipe gesture */
+            box-shadow: -20px 0 60px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 1024px) { #article-drawer { width: 66.66%; } }
+
+        .article-content { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; position: relative; }
+        .article-header-num { font-size: 8rem; font-weight: 900; color: #f3f4f6; line-height: 0.8; margin-bottom: -1.5rem; }
+        .article-tag { color: var(--mint-primary-purple); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 1rem; display: block; }
+        .article-title { font-size: 3rem; font-weight: 300; margin-bottom: 2rem; color: #111827; line-height: 1.1; }
+        .article-body { font-size: 1.25rem; line-height: 1.7; color: #4b5563; font-weight: 300; margin-bottom: 3rem; }
+
+        .article-list-item {
+            display: flex; align-items: center; gap: 1rem; padding: 1rem 0;
+            border-bottom: 1px solid #f9fafb; font-weight: 500; color: #1f2937;
+        }
+        .article-list-item::before { content: ''; width: 6px; height: 6px; background: var(--mint-primary-purple); border-radius: 50%; }
+
+        .close-modal-btn {
+        position: fixed; 
+        top: 2rem; 
+        right: 2rem; 
+        z-index: 110;
+        background: #ffffff; 
+        border: 1px solid rgba(92, 59, 207, 0.2); 
+        border-radius: 99px;
+        padding: 0.6rem 1.8rem; 
+        font-size: 11px; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        letter-spacing: 0.15em;
+        color: var(--mint-primary-purple); 
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .close-modal-btn:hover {
+        background: var(--mint-primary-purple);
+        color: #ffffff;
+        border-color: var(--mint-primary-purple);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(92, 59, 207, 0.2);
+    }
+
+       
+        .swipe-indicator {
+            width: 40px; height: 4px; background: #e5e7eb; border-radius: 2px;
+            margin: 1rem auto -3rem; display: block;
+        }
+        @media (min-width: 1024px) { .swipe-indicator { display: none; } }
     </style>
 </head>
 <body>
@@ -294,41 +374,54 @@
         </div>
     </section>
 
-    <section class="pillar-container" id="pillarContainer">
-        <div class="pillar active">
-            <img src="images/INVESTMANDATE.avif" loading="lazy" class="pillar-bg">
-            <div class="pillar-content-closed"><span>01 — Investment Mandates</span></div>
-            <div class="pillar-content-open">
-                <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 block">Custom Investment Mandates</span>
-                    <h2 class="text-4xl md:text-6xl font-light text-black mb-6 md:mb-8 tracking-tighter">Investment Mandates</h2>
-                    <p class="text-gray-600 text-base md:text-lg leading-relaxed">Bespoke strategies: multi-asset construction, liquidity management, treasury allocation frameworks, risk-optimised mandates, structured overlays, alternative exposure. Ongoing reporting, governance alignment, mandate oversight.</p>
+    <section id="gallerySection" class="py-24 md:py-40">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="max-w-2xl">
+                    <span class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase tracking-[0.4em] mb-4 block">Institutional Capabilities</span>
+                    <h2 class="text-4xl md:text-7xl font-light text-black tracking-tighter leading-none uppercase">A Modular Approach to <br>Capital & Technology.</h2>
                 </div>
             </div>
-        </div>
-        <div class="pillar">
-            <img src="images/FUNDSTRUCTURING.avif" loading="lazy" class="pillar-bg">
-            <div class="pillar-content-closed"><span>02 — Fund Structuring</span></div>
-            <div class="pillar-content-open">
-                <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 block">Fund Structuring & Management</span>
-                    <h2 class="text-4xl md:text-6xl font-light text-black mb-6 md:mb-8 tracking-tighter">Fund Structuring</h2>
-                    <p class="text-gray-600 text-base md:text-lg leading-relaxed">Customised vehicles: SPVs, co-investment structures, white-label funds, private pooled vehicles, custom mandate funds. Services: vehicle structuring, regulatory alignment, portfolio oversight.</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openArticle(0)">
+                    <div class="gallery-img-container"><img src="images/Software.avif" alt="BizTech"></div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">01 — Architecture</span>
+                        <h3 class="text-xl font-medium">BizTech & Software</h3>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="pillar">
-            <img src="images/INSTITUTIONALEXECUTION.avif" loading="lazy" class="pillar-bg">
-            <div class="pillar-content-closed"><span>03 — Institutional Execution</span></div>
-            <div class="pillar-content-open">
-                <div class="max-w-3xl">
-                    <span class="text-[var(--mint-primary-purple)] text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 block">Institutional Execution & Optimisation</span>
-                    <h2 class="text-4xl md:text-6xl font-light text-black mb-6 md:mb-8 tracking-tighter">Execution Policy</h2>
-                    <p class="text-gray-600 text-base md:text-lg leading-relaxed">Best execution analysis, broker route benchmarking, liquidity mapping, cost analysis and slippage reduction, smart routing advisory, trade performance analytics.</p>
+                <div class="gallery-item" onclick="openArticle(1)">
+                    <div class="gallery-img-container"><img src="images/Data&Intel.avif" alt="Data"></div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">02 — Intelligence</span>
+                        <h3 class="text-xl font-medium">Data & Intelligence</h3>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openArticle(2)">
+                    <div class="gallery-img-container"><img src="images/InvestmentStrats.avif" alt="Investment"></div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">03 — Mandates</span>
+                        <h3 class="text-xl font-medium">Investment Strategies</h3>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openArticle(3)">
+                    <div class="gallery-img-container"><img src="images/Capital&Credite.avif" alt="Capital"></div>
+                    <div class="p-6">
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">04 — Solutions</span>
+                        <h3 class="text-xl font-medium">Capital & Credit</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div id="modal-overlay" onclick="closeArticle()"></div>
+    <div id="article-drawer">
+        <div class="swipe-indicator"></div>
+        <button class="close-modal-btn" onclick="closeArticle()">Close Selection</button>
+        <div id="article-target-content" class="article-content"></div>
+    </div>
 
     <section id="carouselSection" class="bg-[#050505] relative overflow-hidden">
         <div class="text-center w-full px-6">
@@ -496,10 +589,82 @@
     </footer>
 
     <script>
-    /**
-     * 1. GLOBAL SCOPE FUNCTIONS
-     * These must sit outside DOMContentLoaded so HTML 'onclick' attributes can find them.
-     */
+
+    const articleData = [
+        {
+            num: "01",
+            tag: "Custom Business Technology Solutions",
+            title: "BizTech & Software Development",
+            body: "We build systems that improve decision making, reduce manual friction, and human error, and unlock scalability for your business.",
+            items: ["Automation architecture", "Cloud infrastructure design", "CRM implementation and optimisation", "Financial systems design and integration", "Data intelligence and reporting frameworks", "Custom systems, portals and loyalty mechanisms"]
+        },
+        {
+            num: "02",
+            tag: "Turning Data into Strategic Advantage",
+            title: "Data & Intelligence",
+            body: "Data is treated as a strategic asset, not an afterthought.",
+            items: ["Business intelligence dashboards", "Financial performance analytics", "Customer behaviour analysis", "Revenue optimisation modelling", "Integrated reporting ecosystems"]
+        },
+        {
+            num: "03",
+            tag: "Mandate Led Investment Solutions",
+            title: "Investment Strategies",
+            body: "We design and execute custom investment strategies based on client mandates. Every portfolio is structured around clearly defined investment parameters including risk tolerance, return targets, liquidity requirements and time horizon. No off the shelf products.",
+            items: ["Objective driven", "Risk calibrated", "Mandate specific", "Actively managed", "Transparent in construction and reporting"]
+        },
+        {
+            num: "04",
+            tag: "Structured Capital for Businesses",
+            title: "Capital & Credit Solutions",
+            body: "We structure capital to align with business cash flow realities and long term objectives.",
+            items: ["Business credit solutions", "Growth capital structuring", "Private capital opportunities", "Strategic funding advisory"]
+        }
+    ];
+
+    function openArticle(index) {
+        const drawer = document.getElementById('article-drawer');
+        const overlay = document.getElementById('modal-overlay');
+        const container = document.getElementById('article-target-content');
+        const data = articleData[index];
+
+        let itemsHtml = data.items.map(item => `<div class="article-list-item">${item}</div>`).join('');
+        
+        container.innerHTML = `
+            <div class="article-header-num">${data.num}.</div>
+            <span class="article-tag">${data.tag}</span>
+            <h2 class="article-title">${data.title}</h2>
+            <p class="article-body">${data.body}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 mt-10">${itemsHtml}</div>
+        `;
+
+        document.body.style.overflow = 'hidden';
+        overlay.style.pointerEvents = 'auto';
+        gsap.to(overlay, { opacity: 1, duration: 0.4 });
+        gsap.to(drawer, { x: 0, duration: 0.8, ease: "power4.out" });
+    }
+
+    function closeArticle() {
+        const drawer = document.getElementById('article-drawer');
+        const overlay = document.getElementById('modal-overlay');
+        gsap.to(drawer, { x: '100%', duration: 0.6, ease: "power4.in" });
+        gsap.to(overlay, { opacity: 0, duration: 0.4, onComplete: () => {
+            overlay.style.pointerEvents = 'none';
+            document.body.style.overflow = 'auto';
+        }});
+    }
+
+    // SWIPE DOWN TO CLOSE GESTURE
+    let touchStartY = 0;
+    const drawer = document.getElementById('article-drawer');
+
+    drawer.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, {passive: true});
+    drawer.addEventListener('touchmove', e => {
+        const touchY = e.touches[0].clientY;
+        const diff = touchY - touchStartY;
+        // If swiping down and at the top of the modal
+        if (diff > 100 && drawer.scrollTop <= 0) { closeArticle(); }
+    }, {passive: true});
+
     function checkDevice() {
         // Detects mobile devices via user agent or screen width (tablet/mobile range)
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
