@@ -198,7 +198,7 @@
         #gallerySection { background-color: #ffffff; color: #000000; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
-        @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .gallery-item {
             cursor: pointer;
@@ -391,24 +391,18 @@
                         <h3 class="text-xl font-medium">BizTech & Software</h3>
                     </div>
                 </div>
+                
                 <div class="gallery-item" onclick="openArticle(1)">
-                    <div class="gallery-img-container"><img src="images/Data&Intel.avif" alt="Data"></div>
-                    <div class="p-6">
-                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">02 — Intelligence</span>
-                        <h3 class="text-xl font-medium">Data & Intelligence</h3>
-                    </div>
-                </div>
-                <div class="gallery-item" onclick="openArticle(2)">
                     <div class="gallery-img-container"><img src="images/InvestmentStrats.avif" alt="Investment"></div>
                     <div class="p-6">
-                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">03 — Mandates</span>
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">02 — Mandates</span>
                         <h3 class="text-xl font-medium">Investment Strategies</h3>
                     </div>
                 </div>
-                <div class="gallery-item" onclick="openArticle(3)">
+                <div class="gallery-item" onclick="openArticle(2)">
                     <div class="gallery-img-container"><img src="images/Capital&Credite.avif" alt="Capital"></div>
                     <div class="p-6">
-                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">04 — Solutions</span>
+                        <span class="text-[10px] font-bold text-[var(--mint-primary-purple)] uppercase tracking-widest mb-2 block">03 — Solutions</span>
                         <h3 class="text-xl font-medium">Capital & Credit</h3>
                     </div>
                 </div>
@@ -429,14 +423,35 @@
             <h2 class="text-3xl md:text-6xl font-light text-white tracking-tighter uppercase">Why businesses work with MINT:</h2>
         </div>
         
-        <div class="relative w-full h-[450px] flex justify-center items-center overflow-hidden">
-            <div class="carousel-item active"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Overview</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Digital Capital Infrastructure</h3><p class="text-gray-500 text-xs leading-relaxed">MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.</p></div></div>
-            <div class="carousel-item next"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 01</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Investment Strategy & Execution</h3><p class="text-gray-500 text-xs leading-relaxed">Custom-crafted investment strategies aligned to client objectives, supported by disciplined execution, portfolio construction, and performance monitoring.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 02</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">CRM & Workflow</h3><p class="text-gray-500 text-xs leading-relaxed">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 03</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Treasury & Capital</h3><p class="text-gray-500 text-xs leading-relaxed">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 01</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Strategic Capital Advisory</h3><p class="text-gray-500 text-xs leading-relaxed">For enterprises and family offices: capital allocation optimisation, balance sheet strategy, investment committee advisory.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 02</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Governance Architecture</h3><p class="text-gray-500 text-xs leading-relaxed">Portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.</p></div></div>
-            <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Platforms</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Implementation</h3><p class="text-gray-500 text-xs leading-relaxed">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
+       <div class="relative w-full h-[450px] flex justify-center items-center overflow-hidden">
+    
+        <div class="carousel-item active">
+                <div class="carousel-card">
+                    <div class="metal-shine"></div>
+                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">1</h4>
+                    <h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Bespoke Strategic Solutions</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Every business operates within a unique financial and operational environment. MINT designs custom advisory and investment strategies tailored to each client’s objectives, capital structure, and long-term growth ambitions. No generic frameworks — only solutions built for your business.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item next">
+                <div class="carousel-card">
+                    <div class="metal-shine"></div>
+                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">2</h4>
+                    <h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Institutional-Grade Technology Development</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">MINT designs and builds custom technology platforms for businesses across financial and operational environments. From digital financial platforms and investment infrastructure to internal business systems and automation tools, we develop purpose-built technology solutions that solve real operational challenges and unlock scale.</p>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="carousel-card">
+                    <div class="metal-shine"></div>
+                    <h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">3</h4>
+                    <h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Strategy That Gets Implemented</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Many advisory firms deliver recommendations. MINT delivers working solutions. We partner with businesses from strategy through execution — implementing investment strategies, deploying technology platforms, and building systems that enable better financial and operational decision-making.</p>
+                </div>
+            </div>
+
         </div>
 
         <div class="flex flex-col items-center gap-8 md:gap-12 w-full px-6">
@@ -595,24 +610,18 @@
             tag: "Custom Business Technology Solutions",
             title: "BizTech & Software Development",
             body: "We build systems that improve decision making, reduce manual friction, and human error, and unlock scalability for your business.",
-            items: ["Automation architecture", "Cloud infrastructure design", "CRM implementation and optimisation", "Financial systems design and integration", "Data intelligence and reporting frameworks", "Custom systems, portals and loyalty mechanisms"]
+            items: ["Automation architecture", "Cloud infrastructure design", "CRM implementation and optimisation", "Financial systems design and integration", "Data intelligence and reporting frameworks", "Custom systems, portals and loyalty mechanisms", "Business intelligence dashboards", "Financial performance analytics", "Customer behaviour analysis", "Revenue optimisation modelling", "Integrated reporting ecosystems"]
         },
+        
         {
             num: "02",
-            tag: "Turning Data into Strategic Advantage",
-            title: "Data & Intelligence",
-            body: "Data is treated as a strategic asset, not an afterthought.",
-            items: ["Business intelligence dashboards", "Financial performance analytics", "Customer behaviour analysis", "Revenue optimisation modelling", "Integrated reporting ecosystems"]
-        },
-        {
-            num: "03",
             tag: "Mandate Led Investment Solutions",
             title: "Investment Strategies",
             body: "We design and execute custom investment strategies based on client mandates. Every portfolio is structured around clearly defined investment parameters including risk tolerance, return targets, liquidity requirements and time horizon. No off the shelf products.",
             items: ["Objective driven", "Risk calibrated", "Mandate specific", "Actively managed", "Transparent in construction and reporting"]
         },
         {
-            num: "04",
+            num: "03",
             tag: "Structured Capital for Businesses",
             title: "Capital & Credit Solutions",
             body: "We structure capital to align with business cash flow realities and long term objectives.",
