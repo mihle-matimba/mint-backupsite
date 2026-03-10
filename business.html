@@ -431,13 +431,12 @@
         
         <div class="relative w-full h-[450px] flex justify-center items-center overflow-hidden">
             <div class="carousel-item active"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Overview</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Digital Capital Infrastructure</h3><p class="text-gray-500 text-xs leading-relaxed">MINT delivers structured, tailored capital solutions across investment, execution and infrastructure.</p></div></div>
-            <div class="carousel-item next"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 01</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Investment & Execution</h3><p class="text-gray-500 text-xs leading-relaxed">OMS integration, trade lifecycle automation, portfolio management systems, smart routing, reporting dashboards.</p></div></div>
+            <div class="carousel-item next"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 01</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Investment Strategy & Execution</h3><p class="text-gray-500 text-xs leading-relaxed">Custom-crafted investment strategies aligned to client objectives, supported by disciplined execution, portfolio construction, and performance monitoring.</p></div></div>
             <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 02</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">CRM & Workflow</h3><p class="text-gray-500 text-xs leading-relaxed">Client onboarding, digital KYC, investor reporting portals, capital tracking, fund administration.</p></div></div>
             <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">System 03</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Treasury & Capital</h3><p class="text-gray-500 text-xs leading-relaxed">Cash flow dashboards, liquidity forecasting, API integrations, multi-account consolidation.</p></div></div>
             <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 01</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Strategic Capital Advisory</h3><p class="text-gray-500 text-xs leading-relaxed">For enterprises and family offices: capital allocation optimisation, balance sheet strategy, investment committee advisory.</p></div></div>
             <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Advisory 02</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Governance Architecture</h3><p class="text-gray-500 text-xs leading-relaxed">Portfolio restructuring, governance framework design, risk architecture. Long-term capital partners.</p></div></div>
             <div class="carousel-item"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Platforms</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Implementation</h3><p class="text-gray-500 text-xs leading-relaxed">Custom Platforms: White-label investment platforms, internal digital capital portals, data aggregation.</p></div></div>
-            <div class="carousel-item prev"><div class="carousel-card"><div class="metal-shine"></div><h4 class="text-[var(--mint-primary-purple)] font-bold text-[10px] uppercase mb-4">Economics</h4><h3 class="text-lg md:text-xl font-semibold mb-4 text-black">Revenue & Retainers</h3><p class="text-gray-500 text-xs leading-relaxed">Revenue: implementation fees, system licensing, support retainers, project-based structuring mandates.</p></div></div>
         </div>
 
         <div class="flex flex-col items-center gap-8 md:gap-12 w-full px-6">
@@ -653,7 +652,7 @@
         }});
     }
 
-    // SWIPE DOWN TO CLOSE GESTURE
+    
     let touchStartY = 0;
     const drawer = document.getElementById('article-drawer');
 
@@ -661,12 +660,10 @@
     drawer.addEventListener('touchmove', e => {
         const touchY = e.touches[0].clientY;
         const diff = touchY - touchStartY;
-        // If swiping down and at the top of the modal
         if (diff > 100 && drawer.scrollTop <= 0) { closeArticle(); }
     }, {passive: true});
 
     function checkDevice() {
-        // Detects mobile devices via user agent or screen width (tablet/mobile range)
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
                         || window.innerWidth <= 1024;
 
@@ -684,14 +681,9 @@
         }
     }
 
-    // Carousel navigation functions exposed to global scope
     window.nextCarousel = () => { if (window.triggerNext) window.triggerNext(); };
     window.prevCarousel = () => { if (window.triggerPrev) window.triggerPrev(); };
 
-    /**
-     * 2. DOM CONTENT LOADED
-     * Handles internal logic, GSAP animations, and event listeners.
-     */
     document.addEventListener('DOMContentLoaded', () => {
         const header = document.getElementById('main-header');
         const menuBtn = document.getElementById('mobile-menu-btn');
@@ -700,11 +692,9 @@
         const closeIcon = document.getElementById('close-icon');
         const pillars = document.querySelectorAll('.pillar');
         const carouselItems = document.querySelectorAll('.carousel-item');
-        
-        // Lock scroll immediately while preloader is active
+
         document.body.style.overflow = "hidden";
 
-        // --- PRELOADER LOGIC ---
         window.addEventListener('load', () => {
             const preloaderTl = gsap.timeline();
 
@@ -719,7 +709,7 @@
                 duration: 0.8,
                 ease: "power4.inOut",
                 onComplete: () => {
-                    // Unlock scroll and trigger hero entrance
+                    
                     document.body.style.overflow = "auto";
                     gsap.from("#heroSection h1", {
                         y: 40,
