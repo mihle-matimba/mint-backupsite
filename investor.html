@@ -1235,15 +1235,44 @@
             clonedElement.style.overflowY = 'visible';
             clonedElement.style.overflow = 'visible';
 
-            // Add signature image to the PDF
-            const signatureImg = document.createElement('div');
-            signatureImg.style.cssText = 'text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #5c3bcf;';
-            signatureImg.innerHTML = '<p style="margin: 12px 0; font-weight: 700;">SUBSCRIBER SIGNATURE</p>';
-            const img = document.createElement('img');
-            img.src = signatureCanvas.toDataURL('image/png');
-            img.style.cssText = 'max-width: 250px; border: 1px solid #ccc; display: block; margin: 15px auto; padding: 5px;';
-            signatureImg.appendChild(img);
-            clonedElement.appendChild(signatureImg);
+            // Get subscriber details
+            const subscriberName = document.getElementById('fullName').value;
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-ZA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+            // Find and fill the signature blocks in the cloned element
+            const signatureBlocks = clonedElement.querySelectorAll('[style*="text-align: center"][style*="margin-top: 40px"]');
+
+            signatureBlocks.forEach((block, index) => {
+                if (index === 1) { // Second signature block (FOR: THE SUBSCRIBER)
+                    // Find the signature line and replace with actual signature image
+                    const lines = block.querySelectorAll('p');
+
+                    // Create signature image
+                    const signatureDiv = document.createElement('div');
+                    signatureDiv.style.cssText = 'text-align: center; margin: 20px 0;';
+                    const img = document.createElement('img');
+                    img.src = signatureCanvas.toDataURL('image/png');
+                    img.style.cssText = 'max-width: 250px; height: auto; display: block; margin: 0 auto;';
+                    signatureDiv.appendChild(img);
+
+                    // Replace signature line with image
+                    if (lines[1]) {
+                        lines[1].innerHTML = '';
+                        lines[1].appendChild(signatureDiv);
+                    }
+
+                    // Fill in name
+                    if (lines[2]) {
+                        lines[2].innerHTML = `Name: <strong>${subscriberName}</strong>`;
+                    }
+
+                    // Fill in date
+                    if (lines[3]) {
+                        lines[3].innerHTML = `Date: <strong>${dateStr}</strong>`;
+                    }
+                }
+            });
 
             const options = {
                 margin: [10, 10, 10, 10],
