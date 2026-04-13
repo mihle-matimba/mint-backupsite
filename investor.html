@@ -1122,6 +1122,7 @@
         let signatureCanvas, signatureCtx;
         let isDrawing = false;
         let contractDownloaded = false;
+        let signatureDrawn = false;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1166,6 +1167,7 @@
             signatureCtx.lineCap = 'round';
             signatureCtx.lineJoin = 'round';
             signatureCtx.stroke();
+            signatureDrawn = true;
         }
 
         function stopDrawing() {
@@ -1182,6 +1184,7 @@
         function clearSignature() {
             signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
             contractDownloaded = false;
+            signatureDrawn = false;
         }
 
         function updateShareCount() {
@@ -1218,18 +1221,12 @@
         }
 
         function downloadContract() {
-            if (signatureCanvas.toDataURL().includes('data:image/png;base64,iVBORw0KGgo')) {
+            if (!signatureDrawn) {
                 alert('Please draw your signature before downloading');
                 return;
             }
 
             const element = document.getElementById('contractDisplay');
-            const signatureImg = signatureCanvas.toDataURL('image/png');
-
-            // Add signature to contract display temporarily
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = element.innerHTML;
-            const signingSection = tempDiv.querySelector('p:contains("FOR: THE SUBSCRIBER")');
 
             const opt = {
                 margin: 10,
@@ -1240,9 +1237,10 @@
                 pagebreak: { mode: ['css', 'legacy'] }
             };
 
-            html2pdf().set(opt).addHTML(element).thenOpen(function() {
+            html2pdf().set(opt).addHTML(element).then(function() {
                 contractDownloaded = true;
                 alert('Contract downloaded successfully! You can now proceed.');
+                document.getElementById('reviewedAgreement').disabled = false;
             });
         }
 
