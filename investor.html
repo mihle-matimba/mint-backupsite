@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
@@ -121,7 +122,6 @@
             50% { opacity: 1; transform: scale(1); }
         }
 
-        /* Header Styles */
         #main-header {
             position: fixed;
             top: 0;
@@ -147,7 +147,7 @@
             height: auto;
         }
 
-        /* Checklist Styles - Mobile First */
+        /* Mobile-first Checklist */
         .checklist {
             display: flex;
             flex-direction: column;
@@ -252,7 +252,6 @@
             }
         }
 
-        /* Form Styles */
         .form-container {
             background: white;
             border-radius: 12px;
@@ -273,19 +272,6 @@
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 32px;
-        }
-
-        .form-section {
-            margin-bottom: 24px;
-        }
-
-        .form-section-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--mint-primary-purple);
-            margin-bottom: 16px;
         }
 
         .form-group {
@@ -322,18 +308,12 @@
             box-shadow: 0 0 0 3px rgba(92, 59, 207, 0.1);
         }
 
-        .form-group input.error,
-        .form-group textarea.error {
-            border-color: #ef4444;
-        }
-
         .form-hint {
             font-size: 12px;
             color: #6b7280;
             margin-top: 4px;
         }
 
-        /* Investment Details Box */
         .investment-details {
             background: linear-gradient(135deg, rgba(92, 59, 207, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
             border: 1px solid rgba(92, 59, 207, 0.1);
@@ -365,14 +345,12 @@
             font-weight: 600;
         }
 
-        /* Summary Box */
         .summary-box {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 20px;
-            margin-top: 32px;
-            margin-bottom: 32px;
+            margin: 32px 0;
         }
 
         .summary-title {
@@ -413,7 +391,6 @@
             font-weight: 500;
         }
 
-        /* Button Styles */
         .button-group {
             display: flex;
             gap: 12px;
@@ -461,7 +438,6 @@
             background-color: #e5e7eb;
         }
 
-        /* Step Content */
         .step-content {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -476,7 +452,6 @@
             to { opacity: 1; }
         }
 
-        /* Welcome Step */
         .welcome-content {
             text-align: center;
             padding: 40px 0;
@@ -553,7 +528,6 @@
             color: #6b7280;
         }
 
-        /* Signing Step */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -574,27 +548,64 @@
             color: #111;
         }
 
-        /* Payment Step */
-        .payment-instruction {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 16px;
+        /* Signature Canvas */
+        #signatureCanvas {
+            border: 2px solid var(--mint-primary-purple);
+            border-radius: 6px;
+            cursor: crosshair;
+            background: white;
+            display: block;
+            margin: 16px 0;
+            width: 100%;
+            height: 150px;
+        }
+
+        .signature-section {
             margin: 24px 0;
-            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
         }
 
-        .payment-instruction strong {
-            color: #92400e;
+        .signature-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--mint-primary-purple);
+            margin-bottom: 12px;
         }
 
-        .payment-instruction p {
-            margin: 8px 0 0 0;
-            font-size: 13px;
-            color: #78350f;
+        .contract-display {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 32px;
+            max-height: 700px;
+            overflow-y: auto;
+            line-height: 1.6;
+            font-size: 12px;
+            color: #333;
+            margin: 24px 0;
+            font-family: Arial, sans-serif;
         }
 
-        /* Complete Step */
+        .contract-display h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 24px 0 16px 0;
+        }
+
+        .contract-display p {
+            margin: 8px 0;
+            text-align: justify;
+        }
+
+        .contract-display strong {
+            font-weight: 700;
+        }
+
         .complete-content {
             text-align: center;
             padding: 40px 0;
@@ -627,7 +638,25 @@
             margin-bottom: 32px;
         }
 
-        /* Responsive */
+        .payment-instruction {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .payment-instruction strong {
+            color: #92400e;
+        }
+
+        .payment-instruction p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+            color: #78350f;
+        }
+
         @media (max-width: 768px) {
             .form-container {
                 padding: 24px;
@@ -728,7 +757,7 @@
                             <div class="welcome-step-number">4</div>
                             <div class="welcome-step-content">
                                 <h4>Payment</h4>
-                                <p>Send funds and upload proof of payment.</p>
+                                <p>Send funds and optionally upload proof of payment.</p>
                             </div>
                         </div>
                         <div class="welcome-step">
@@ -784,7 +813,7 @@
 
                     <div class="form-group">
                         <label>Address <span class="required">*</span></label>
-                        <textarea id="address" placeholder="Enter your full residential address\nPlease include street, suburb, city, and postal code." rows="3" required></textarea>
+                        <textarea id="address" placeholder="Enter your full residential address&#10;Please include street, suburb, city, and postal code." rows="3" required></textarea>
                     </div>
 
                     <div class="summary-box">
@@ -809,402 +838,88 @@
             <!-- Step 3: Signing -->
             <div class="step-content" data-step="3">
                 <h2 class="form-title">Subscription Agreement</h2>
-                <p class="form-subtitle">Please review the Subscription Agreement below. This is required for us to issue shares.</p>
-
-                <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 32px; margin: 24px 0; max-height: 700px; overflow-y: auto; line-height: 1.6; font-size: 12px; color: #333; white-space: pre-wrap; font-family: Arial, sans-serif;">
-Subscription Agreement
-
-between
-
-MINT PLATFORMS (PTY)LTD
-2024/644796/07
-
-and
-
-MINT Platforms (Pty) Ltd
-Company Reg No: 2024/644796/07
-Email Address: info@mymint.co.za
-Head Quarters: 3 Gwen Lane, Sandown, Sandton, 2031
-
-═══════════════════════════════════════════════════════════════════════
-
-ORDINARY SHARE SUBSCRIPTION AGREEMENT
-
-entered into between
-
-MINT PLATFORMS PROPRIETARY LIMITED
-("Company")
-
-and
-
-THE PARTY IDENTIFIED IN ANNEXURE A
-("Subscriber")
-
-═══════════════════════════════════════════════════════════════════════
-
-TABLE OF CONTENTS
-
-1. INTERPRETATION AND PRELIMINARY - 4
-2. INTRODUCTION - 9
-3. CONDITIONS PRECEDENT - 10
-4. CREATION OF THE ORDINARY SHARES - 12
-5. SUBSCRIPTION OF SHARES - 12
-7. ALLOTMENT AND ISSUE OF THE SUBSCRIPTION SHARES - 13
-8. INDEMNITIES - 14
-9. WARRANTIES - 15
-10. SUPPORT - 17
-11. BREACH - 17
-12. DISPUTE RESOLUTION - 17
-13. NOTICES AND DOMICILIA - 19
-14. INDEPENDENT ADVICE - 20
-15. GENERAL - 20
-16. GOVERNING LAW - 21
-17. COSTS - 22
-18. SIGNATURE - 22
-
-═══════════════════════════════════════════════════════════════════════
-
-1. INTERPRETATION AND PRELIMINARY
-
-The headings in this Agreement are for the purpose of convenience and reference only and shall neither be used in the interpretation of nor modify nor amplify the terms of this Agreement nor any of its clauses. Unless a contrary intention clearly appears:
-
-1.1. the following terms shall have the meanings assigned to them hereunder and cognate expressions shall have a corresponding meaning, namely:
-
-1.1.1. "Agreement" means this subscription agreement, together with any annexures or schedules hereto;
-
-1.1.2. "Business Day" means a day which is not a Saturday, Sunday or a public holiday gazetted in South Africa;
-
-1.1.3. "Business Plan" means the business plan of the Company, as established from time to time and approved by the board of directors of the Company;
-
-1.1.4. "Closing Date" means 23:59 (SAST) on 16 January 2026, or such later date as may be agreed between the Parties in writing;
-
-1.1.5. "Companies Act" means the Companies Act, No. 71 of 2008 (as amended);
-
-1.1.6. "Company" means MINT Platforms Proprietary Limited (Registration No. 2024/644796/07), a private company duly registered and incorporated in accordance with the laws of South Africa, of 3 Gwen lane, Sandton Johannesburg, Sandton, Gauteng, 2031, and with email address lonwabo@theMINT Platforms.com, Attention: Lonwabo Damane;
-
-1.1.7. "Conditions Precedent" means the conditions precedent in clause 3.1;
-
-1.1.8. "Designated Account" means the bank account nominated by the Company in writing to the Subscriber, the details of which are set out below, or such other account as the Company may designate in writing on 3 (three) Business Days' notice to the Subscriber –
-Name of Account: MINT PLATFORMS PTY LTD
-Bank: Capitec Business
-Branch: Relationship Suite
-Branch Code: 450105
-Account Number: 1053045883
-
-1.1.9. "Effective Date" means 1 April 2026 or such later date as may be agreed in writing by the Company and the Subscriber, provided that any change to the Effective Date shall require the prior approval of the Board and shall be reflected in the MOI where required by law;
-
-1.1.10. "MOI" means the memorandum of incorporation of the Company, to be established in terms of this Agreement or other documents;
-
-1.1.11. "Parties" means the parties to this Agreement, namely the Company and the Subscriber, and "Party" shall mean any one of them, as the context may indicate;
-
-1.1.12. "Shareholders" means the registered holders of the ordinary shares in the issued share capital of the Company, as reflected in the Company's securities register from time to time;
-
-1.1.13. "Shareholders Agreement" means the shareholders' agreement in respect of the Company entered into between the Parties thereto and the Company;
-
-1.1.14. "Shareholders' Proportions" means, in respect of each Shareholder, the percentage of the total ordinary shares in the issued share capital of the Company that is held by that Shareholder at the relevant time, as reflected in the Company's securities register;
-
-1.1.15. "Shares" means the ordinary shares of no par value in the issued share capital of the Company;
-
-1.1.16. "Signature Date" means the date on which the Party to this Agreement signing last in time signs this Agreement; and
-
-1.1.17. "South Africa" means the Republic of South Africa;
-
-1.1.18. "Subscriber" means the subscribing Party identified in Annexure A;
-
-1.1.19. "Subscription Date" means the 1st (first) Business Day immediately succeeding the date on which the last of the Conditions Precedent has been fulfilled or waived (to the extent legally permissible), as the case may be;
-
-1.1.20. "Subscription Price" means the subscription price payable by the Subscriber to the Company in respect of the Subscription Shares, which is R62.61 (sixty-two Rand and sixty-one cents); and
-
-1.1.21. "Subscription Shares" means Ordinary Shares in the issued share capital of the Company, comprising such portion of the issued Ordinary Share capital as agreed between the Parties, which is 7,986 (seven thousand nine hundred and eighty-six), as at the Signature Date and the Subscription Date.
-
-1.2. words importing:
-
-1.2.1. any one gender include the other of masculine, feminine and neuter;
-
-1.2.2. the singular include the plural and vice versa; and
-
-1.2.3. natural persons include created entities (corporate or unincorporate) and the state and vice versa;
-
-1.3. any reference to an enactment is to that enactment as at the Signature Date and as amended or re-enacted from time to time and includes any subordinate legislation made from time to time under such enactment. Any reference to a particular section in an enactment is to that section as at the Signature Date, and as amended or re-enacted from time to time and/or an equivalent measure in an enactment, provided that if as a result of such amendment or re-enactment, the specific requirements of a section referred to in this Agreement are changed, the relevant provision of this Agreement shall be read as if it had also been amended as necessary, without the necessity for a written amendment;
-
-1.4. if any provision in a definition is a substantive provision conferring rights or imposing obligations on any Party, notwithstanding that it is only in the definition clause, effect shall be given to it as if it were a substantive provision in the body of the Agreement;
-
-1.5. when any number of days is prescribed in this Agreement, same shall be reckoned exclusively of the first and inclusively of the last day unless the last day falls on a Saturday, Sunday or public holiday in South Africa in which case the last day shall be the next succeeding day which is not a Saturday, Sunday or public holiday in South Africa;
-
-1.6. if figures are referred to in numerals and in words in this Agreement and if there is any conflict between the two, the words shall prevail;
-
-1.7. expressions defined in the main body of this Agreement shall bear the same meanings in schedules or annexures to this Agreement which do not themselves contain their own conflicting definitions;
-
-1.8. if:
-
-1.8.1. any term is defined in any particular clause in the main body of this Agreement, the term so defined, unless it is clear from the clause in question that the defined term has limited application to the relevant clause, shall bear the meaning ascribed to it for all purposes in terms of this Agreement, notwithstanding that that term has not been defined in this interpretation clause;
-
-1.8.2. any term is defined in any annexure to this Agreement, the term so defined, unless it expressly provides in that annexure that the defined term in question shall bear the meaning ascribed to it for all purposes in the annexure and in the main body of this Agreement, will have limited application to that annexure only;
-
-1.8.3. any annexure to this Agreement contains any rules of interpretation which conflict with the rules of interpretation contained in the main body of this agreement, the former shall prevail for purposes of the annexure;
-
-1.9. the discharge or termination of this Agreement shall not affect those provisions of this Agreement which expressly provide that they will operate after such discharge or termination or which of necessity must continue to have effect after such discharge or termination, notwithstanding that the clauses themselves do not expressly provide for this;
-
-1.10. the rule of construction that a contract shall be interpreted against the Party responsible for the drafting or preparation of the contract, shall not apply;
-
-1.11. any reference in this Agreement to a Party shall include a reference to that Party's assigns expressly permitted under this Agreement and, if such Party is liquidated, or is sequestrated or business rescue proceedings have commenced in respect of such Party, be applicable also to and binding upon that Party's liquidator, trustee or business rescue practitioner, as the case may be;
-
-1.12. the words following "other", "otherwise", "including", "in particular", or any other similar general term or expression shall not:
-
-1.12.1. be construed as being of the same kind, class or nature with any preceding words; or
-
-1.12.2. limit the generality of any preceding word/s, if a wider construction is possible.
-
-1.13. For the avoidance of doubt, this Agreement constitutes the 'issue documentation' contemplated in Appendix 2 to the MOI, and the Board Determination recorded herein constitutes the determination of financial terms required under paragraphs 3.2 and 4.1 of Appendix 2.
-
-2. INTRODUCTION
-
-2.1. The purpose of this Agreement is to regulate the subscription for Ordinary Shares by the Subscriber and the issue and allotment of such shares by the Company.
-
-2.2. The Company has agreed to issue the Subscription Shares, and the Subscriber has agreed to subscribe to the Subscription Shares at the Subscription Price.
-
-2.3. The Parties accordingly wish to enter into this Agreement to record and implement the terms and conditions relating to the subscription of the Ordinary Shares, the payment of dividends, and redemption thereof.
-
-3. CONDITIONS PRECEDENT
-
-3.1. This Agreement, save for clause 1, this clause 3, clauses 7 to 18 (both inclusive) ("Surviving Provisions"), which are of immediate and lasting effect, is subject to the fulfilment or waiver (insofar as is legally permitted) of the following Conditions Precedent by not later than the Closing Date:
-
-3.1.1. the memorandum of incorporation of the Company ("MOI") shall have been amended in accordance with the MOI and the Companies Act in order to be consistent with the provisions of this Agreement and, more particularly, to increase the share capital of the Company to accommodate the creation of the Ordinary Shares;
-
-3.1.2. all resolutions of the boards of directors, shareholders and trustees of the Parties required in order to authorise the conclusion of this Agreement and the implementation of the transactions contemplated herein in terms of the relevant Parties' memoranda of incorporation and trust deeds or constitutional documents, the Companies Act and the Trust Property Control Act 57 of 1988, have been validly adopted;
-
-3.1.3. the board of directors of the Company has passed all resolutions approving the issue of the Subscription Shares to the Subscriber in accordance with section 40(1)(a) of the Companies Act;
-
-3.1.4. the board of directors of the Company has conducted or performed the solvency and liquidity test in accordance with section 46 of the Companies Act;
-
-3.1.5. the Subscriber concludes a deed of adherence in the form acceptable to the Company to be party and unconditionally bound by the Shareholders Agreement; and
-
-3.1.6. the shareholders of the Company providing a written waiver to the Subscriber unconditionally and irrevocably waiving any and all rights or restrictions (including, without limitation, any rights of first refusal, offer or pre-emption) conferred on it which may exist in relation to any of the Subscription Shares in such form as substance as the Subscriber may require.
-
-3.2. The Parties undertake to co-operate using their reasonable commercial endeavours to procure the fulfilment of the Conditions Precedent, to the extent that the fulfilment thereof is within their control.
-
-3.3. Should any of the Conditions Precedent in clause 3.1 not be fulfilled or waived (to the extent legally permissible) by the relevant dates for fulfilment thereof set out in clause 3.1, or such later date or dates as the Seller and the Purchaser may agree in writing, then:
-
-3.3.1. this Agreement (save for the Surviving Provisions) shall cease to be of any force and effect; and
-
-3.3.2. the Parties shall be restored as near as may be possible to the position in which they would have been had this Agreement not been entered into and no Party shall have any claim against the other Party as a result of the failure of the Condition Precedent except for such damages, if any, as may result from a breach of the provisions of clause 3.3.
-
-3.4. For the avoidance of doubt, the MOI shall take constitutional precedence over this Agreement. Nothing in this Agreement amends or supersedes the MOI. Any amendment to the MOI required to implement these subscription terms shall be effected by special resolution of shareholders and lodged with the Companies and Intellectual Property Commission ("CIPC") before or concurrently with the allotment of any Subscription Shares.
-
-3.5. Any inconsistency between this Agreement and the MOI shall be resolved in favour of the MOI, provided that the financial terms contained herein constitute the applicable terms for the purposes of Appendix 2 (series-specific terms).
-
-4. CREATION OF THE ORDINARY SHARES
-
-The Company shall procure that its MOI is amended and/or supplemented by procuring the filing, within a period of 21 (twenty-one) days after the Signature Date ("MOI Long-Stop Date"), with the Companies and Intellectual Property Registration Office for registration of a special resolution and for the creation of the Ordinary Shares. The Company shall bear the costs of and duties relating to such registration.
-
-5. SUBSCRIPTION OF SHARES
-
-5.1. The Subscriber hereby subscribes for the Subscription Shares, with effect from the Subscription Date.
-
-5.2. The Subscriber shall pay the Subscription Price to the Company on the Subscription Date in immediately available funds into the Designated Account.
-
-5.3. Notwithstanding the Signature Date, all risk and benefit attaching to the Subscription Shares shall pass to the Subscriber with effect from the Effective Date, subject to payment of the Subscription Price in accordance with clause 6. Ownership of the Subscription Shares shall pass upon the issue and allotment thereof by the Company against receipt of the Subscription Amount.
-
-6. SUBSCRIPTION PRICE AND PAYMENT TERMS
-
-6.1. The Subscription Price for each Ordinary Share shall be R62.61 (sixty-two Rand and sixty-one cents).
-
-6.2. The Parties record that the Subscription Price constitutes adequate consideration in terms of section 40 of the Companies Act, based on the Company's latest audited financial statements and business plan as approved by its board of directors, and that all Ordinary Shares will be issued as fully paid shares for cash.
-
-6.3. All payments to be made in terms of or arising from this Agreement by the Subscriber to the Company shall be made by electronic transfer of immediately available and freely transferable funds, free of any deductions or set-off whatsoever, in the currency of South Africa, into the Designated Account.
-
-6.4. Upon receipt of the Subscription Amount in cleared funds, ownership of and all benefits and risks in the Subscription Shares shall pass from the Company to the Subscriber with effect from the Effective Date.
-
-7. ALLOTMENT AND ISSUE OF THE SUBSCRIPTION SHARES
-
-7.1. The Company shall, upon subscription by the Subscriber for the Subscription Shares and against payment by the Subscriber of the Subscription Amount in accordance with the provisions of clause 6:
-
-7.1.1. on the Subscription Date, allot and issue the Subscription Shares to the Subscriber;
-
-7.1.2. procure that an entry is made in the Company's securities register in accordance with the Companies Act, which reflects the Subscriber as the registered holder of the Subscription Shares;
-
-7.1.3. and deliver to the Subscriber:
-
-7.1.3.1. original share certificates in respect of the Subscription Shares;
-
-7.1.3.2. copies of resolutions of the directors of the Company approving the allotment and issue of the Subscription Shares to the Subscriber and noting that the board of directors of the Company has, in accordance with section 40(1) of the Companies Act, determined that the Subscription Price is an adequate consideration for the allotment and issue by the Company of the Subscription Shares; and
-
-7.1.3.3. such other documents as are necessary in order to enable the Subscriber to procure the registration of the Subscription Shares into its name.
-
-8. INDEMNITIES
-
-8.1. Without prejudice to the Subscriber's rights arising from any other provision of this Agreement, the Company and Shareholders, in proportion to the Shareholder Proportions hereby indemnifies the Subscriber against, and holds it harmless from, all actual or contingent losses, liabilities, damages, costs (including claims for consequential loss, legal costs on the scale as between attorney and own client and any additional legal costs) and expenses of any nature whatsoever, including without limitation any environmental claims and/or liabilities which:
-
-8.1.1. arise from the creation, allotment and issue of the Subscription Shares (including the financial consequences) being set aside or the contemplated transactions being deemed unlawful or void;
-
-8.1.2. the Subscriber may sustain as a result of or attributable to any liability of the Company, whether actual or contingent, of whatsoever nature or kind and howsoever arising, the cause of action of which arose prior to the Subscription Date (including the end of March 2026 financial year), and for liabilities incurred in the ordinary course of Business between the Signature Date and the Subscription Date; and
-
-8.1.3. arise of any breach of contract to which any entity in the Company is a party, or arising from whatsoever other cause, which cause arose prior to the Effective Date.
-
-9. WARRANTIES
-
-9.1. Any reference to "warranties" anywhere in this Agreement shall be read as including a reference to representations and undertakings.
-
-9.2. The Parties each warrant to the other of them that, as at the Signature Date and on each day thereafter up to and including the Subscription Date:
-
-9.2.1. it has the legal capacity and has taken all necessary corporate action required to authorise it to enter into and perform its obligations under this Agreement;
-
-9.2.2. this Agreement constitutes an agreement valid and binding on it and enforceable against it in accordance with its terms;
-
-9.2.3. the entry into of, and performance of its obligations under, this Agreement will not result in a breach of any of its other obligations whatever the source thereof (whether statutory, regulatory, contractual, fiduciary or otherwise) which in turn will adversely affect this Agreement or its ability to perform under this Agreement;
-
-9.2.4. to the best of its knowledge and belief, it is not aware of the existence of any fact or circumstance that may impair its ability to comply with all of its obligations in terms of this Agreement;
-
-9.2.5. it is entering into this Agreement as principal (and not as agent or in any other capacity);
-
-9.2.6. the natural person who signs and executes this Agreement on its behalf is validly and duly authorised to do so;
-
-9.2.7. no other party is acting as a fiduciary for it; and
-
-9.2.8. it is not relying upon any statement or representation by or on behalf of any other Party, except those expressly set forth in this Agreement.
-
-9.3. In addition, the Company hereby warrants to and in favour of the Subscriber that, on the Subscription Date:
-
-9.3.1. the Subscription Shares will be validly issued and will rank pari passu with all other shares of the Company in issue;
-
-9.3.2. upon implementation of this Agreement, the Subscriber shall be entitled to be reflected in the securities register of the Company as the sole owner of the Subscription Shares; and
-
-9.3.3. no person shall have any right (including any option or right of first refusal) to acquire or be offered any of the Subscription Shares.
-
-9.4. Each of the representations and warranties given by the Parties in terms of clause 9 shall:
-
-9.4.1. be a separate warranty and will in no way be limited or restricted by inference from the terms of any other warranty or by any other words in this Agreement;
-
-9.4.2. continue and remain in force notwithstanding the completion of any or all the transactions contemplated in this Agreement; and
-
-9.4.3. prima facie be deemed to be material and to be a material representation inducing the other Party to enter into this Agreement.
-
-10. SUPPORT
-
-The Parties undertake at all times to do all such things, perform all such actions and take all such steps and to procure the doing of all such things, the performance of all such actions and the taking of all such steps as may be open to them and necessary for or incidental to the putting into effect or maintenance of the terms, conditions and/or import of this Agreement.
-
-11. BREACH
-
-If any Party (the "Defaulting Party") breaches any material provision or term of this Agreement (other than those which contain their own remedies or limit the remedies in the event of a breach thereof) and fails to remedy such breach within 10 (ten) Business Days of receipt of written notice from the other Party (the "Non-Defaulting Party") requiring it to do so, then the Non-Defaulting Party shall be entitled without notice, in addition to any other remedy available to it at law or under this Agreement, including obtaining an interdict, to cancel this Agreement or to claim specific performance of any obligation whether or not the due date for performance has arrived, in either event without prejudice to the Non-Defaulting Party's right to claim damages.
-
-12. DISPUTE RESOLUTION
-
-12.1. Save as otherwise provided elsewhere in this Agreement, should any dispute, disagreement or claim arise between the Parties ("the dispute") concerning this Agreement, the Parties shall endeavour to resolve the dispute by negotiation.
-
-12.2. This entails one of the Parties inviting the other in writing to meet and to attempt to resolve the dispute within 14 (fourteen) days from date of written invitation.
-
-12.3. If the dispute has not been resolved by such negotiation within 14 (fourteen) days of the commencement thereof by agreement between the Parties, then the Parties shall submit the dispute, for final resolution, to arbitration before an arbitrator ("Arbitrator").
-
-12.4. The Arbitrator shall be such person as mutually agreed upon by the Parties, provided that the Arbitrator shall be a senior advocate qualified in South Africa with not less than 15 (fifteen) years' experience in the specific field of expertise to which the dispute relates. If the Parties fail to reach agreement regarding the appointment of the Arbitrator within a period of 5 (five) Business Days after the dispute has been submitted to arbitration, either of the Parties may request the chairperson for the time being of the Johannesburg Bar Council to appoint the Arbitrator, and the Parties shall be bound by such appointment.
-
-12.5. The Uniform Rules of Court ("Rules") shall apply to the arbitration mutatis mutandis.
-
-12.6. Unless otherwise agreed in writing by all the Parties, any such negotiation or arbitration shall be conducted in English and in Johannesburg.
-
-12.7. The decision of the Arbitrator shall be final and binding on the Parties and may be made an order of court at the instance of any of the Parties to the dispute Parties, provided that each Party shall be entitled to make written representations to the Arbitrator in this regard. Each Party shall provide the Arbitrator with such information as the Arbitrator may reasonably require for purposes of determining the dispute.
-
-12.8. The provisions of this clause 12:
-
-12.8.1. constitute an irrevocable consent by the Parties and no Party shall be entitled to withdraw therefrom or claim at any stage of the proceedings that he is not bound by such proceedings;
-
-12.8.2. are severable from the rest of this Agreement and shall remain in effect despite the termination of or invalidity or alleged invalidity for any reason of this Agreement or any part thereof; and
-
-12.8.3. shall not preclude any Party from instituting any injunctive proceedings in any appropriate court.
-
-13. NOTICES AND DOMICILIA
-
-13.1. Each Party chooses as their domicilium citandi et executandi (address for legal process and notice) for the purposes of the giving of any notice, the payment of any sum, the serving of any process and for any other purposes arising from this Agreement, their respective addresses set forth in clause 1 ("Address/es").
-
-13.2. Any notice or communication required or permitted to be given in terms of this Agreement shall be valid and effective only if in writing, and it shall be competent to give notice by e-mail.
-
-13.3. Any Party may, by notice to any other Party, change its Address, including email address to another, provided that the change shall become effective vis-à-vis that addressee on the 7th (seventh) Business Day from the receipt of the notice by the addressee.
-
-13.4. Any notice to a Party:
-
-13.4.1. delivered by hand to a responsible person during ordinary business hours at the Address shall be presumed to have been received on the day of delivery (unless the contrary is proved);
-
-13.4.2. sent by prepaid registered post (by airmail if appropriate) in a correctly addressed envelope, at the Address to which post is delivered, shall be presumed to have been received on the 7th (seventh) Business Day after the date of posting (unless the contrary is proved) or
-
-13.4.3. sent by e-mail to its chosen e-mail address stipulated in clause 1, shall be deemed to have been received on the date of despatch (unless the contrary is proved).
-
-13.5. Notwithstanding anything to the contrary herein contained, a written notice or communication actually received by a Party shall be an adequate written notice or communication to it notwithstanding that it was not sent to or delivered at its chosen Address.
-
-14. INDEPENDENT ADVICE
-
-Each Party acknowledges that it has been free to secure independent legal, financial, tax and/or other professional advice as to the nature and effect of all of the provisions of this Agreement and that it has either taken such independent advice or dispensed with the necessity of doing so. Further, each Party acknowledges that all of the provisions of this Agreement and the restrictions herein contained are fair and reasonable in all the circumstances and are part of the overall intention of the Parties in connection with this Agreement.
-
-15. GENERAL
-
-15.1. Whole Agreement
-
-This Agreement constitutes the sole record of the agreement between the Parties in relation to the subject matter hereof. No Party shall be bound by any express, tacit or implied term, representation, warranty, promise nor the like not recorded herein. This Agreement supersedes and replaces all prior commitments, undertakings or representations, whether oral or written, between the Parties in respect of the subject matter hereof.
-
-15.2. Provisions Severable
-
-Any provision in this Agreement which is or may become illegal, invalid or unenforceable in any jurisdiction affected by this Agreement shall, as to such jurisdiction, be ineffective to the extent of such prohibition or unenforceability and shall be treated pro non scripto and severed from the balance of this Agreement, without invalidating the remaining provisions of this agreement or affecting the validity or enforceability of such provision in any other jurisdiction.
-
-15.3. No Indulgences
-
-No relaxation, indulgence or extension of time granted by any Party ("the Grantor") to another Party shall be construed as a waiver of any of the Grantor's rights in terms hereof, or a novation of any of the terms of this Agreement or estop the Grantor from enforcing strict and punctual compliance with the terms of this Agreement.
-
-15.4. Variations to be in Writing
-
-No variation of, addition to, consensual cancellation of or waiver of any right arising in terms of this Agreement (including this clause 15.4) shall be of any force or effect unless it is reduced to writing and signed by a duly authorised representative of each of the Parties.
-
-16. GOVERNING LAW
-
-Notwithstanding the conflict of law principles which might otherwise have governed, this Agreement shall be governed by and interpreted in accordance with the laws of the Republic of South Africa (including its prescription laws but excluding its conflict of law principles).
-
-17. COSTS
-
-Save as expressly detailed to the contrary, each Party shall bear its own costs in the negotiation, preparation and signature of this Agreement and all attendances incidental thereto.
-
-18. SIGNATURE
-
-18.1. This Agreement may be executed in one or more counterparts, each of which shall be deemed an original and all of which shall be taken together and deemed to be one instrument.
-
-18.2. The Parties record that it is not required for this Agreement to be valid and enforceable that a Party shall initial each of the pages of this Agreement and/or have its signature of this Agreement verified by a witness.
-
-═══════════════════════════════════════════════════════════════════════
-
-FOR: MINT PLATFORMS (PTY) LTD
-
-Signature: ___________________________
-Name: ______________________________  Date: _____________________
-
-who warrants that he / she is duly authorised thereto
-
-FOR: THE PARTY IDENTIFIED IN ANNEXURE A
-
-Signature: ___________________________
-Name: ______________________________  Date: _____________________
-
-who warrants that he / she is duly authorised thereto
-
-═══════════════════════════════════════════════════════════════════════
-
-ANNEXURE A: SUBSCRIBER'S DETAILS
-
-Full name/Registered name: _________________________________
-
-Identity Document No./Registration No./Passport No.: _________________________________
-
-Physical Address/Registered Address: _________________________________
-
-Email Address: _________________________________
-
-Attention: _________________________________
+                <p class="form-subtitle">Please review the agreement, draw your signature, and download the document before proceeding.</p>
+
+                <!-- Contract Display -->
+                <div class="contract-display" id="contractDisplay">
+                    <div style="text-align: center; margin-bottom: 32px;">
+                        <h3>Subscription Agreement</h3>
+                        <p>between</p>
+                        <h3 style="color: var(--mint-primary-purple); font-size: 16px;">MINT PLATFORMS (PTY) LTD</h3>
+                        <p>2024/644796/07</p>
+                        <p style="margin: 16px 0;">and</p>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <p><strong>MINT Platforms (Pty) Ltd</strong></p>
+                        <p>Company Reg No: 2024/644796/07</p>
+                        <p>Email Address: info@mymint.co.za</p>
+                        <p>Head Quarters: 3 Gwen Lane, Sandown, Sandton, 2031</p>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                    <h3>ORDINARY SHARE SUBSCRIPTION AGREEMENT</h3>
+                    <p>entered into between</p>
+                    <h3 style="font-size: 16px;">MINT PLATFORMS PROPRIETARY LIMITED<br>("Company")</h3>
+                    <p>and</p>
+                    <h3 style="font-size: 16px;">
+                        <span id="contractFullName">___________________________</span><br>
+                        ("Subscriber")
+                    </h3>
+
+                    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                    <p><strong>Company Details:</strong></p>
+                    <p>Company Reg No: 2024/644796/07<br>
+                    Email: info@mymint.co.za<br>
+                    Address: 3 Gwen Lane, Sandown, Sandton, 2031</p>
+
+                    <p style="margin-top: 20px;"><strong>Subscriber Details:</strong></p>
+                    <p>Full Name: <span id="contractName">___________________________</span><br>
+                    Email: <span id="contractEmail">___________________________</span><br>
+                    ID Number: <span id="contractID">___________________________</span><br>
+                    Cell Number: <span id="contractCell">___________________________</span><br>
+                    Address: <span id="contractAddress">___________________________</span></p>
+
+                    <p style="margin-top: 20px;"><strong>Investment Details:</strong></p>
+                    <p>Subscription Price per Share: R62.61<br>
+                    Total Investment Amount: <span id="contractAmount">R3,000,000.00</span><br>
+                    Number of Shares: <span id="contractShares">47,933</span></p>
+
+                    <p style="margin-top: 20px;"><strong>Key Terms:</strong></p>
+                    <p>1. The Subscriber hereby subscribes for the Subscription Shares at the Subscription Price of R62.61 per share.<br>
+                    2. Payment must be made in immediately available funds into the Designated Account.<br>
+                    3. Effective Date: 1 April 2026 or such later date as agreed in writing.<br>
+                    4. Closing Date: 23:59 (SAST) on 16 January 2026, or such later date as agreed.<br>
+                    5. Designated Account - Capitec Business: Account Number 1053045883, Branch Code 450105.</p>
+
+                    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                    <p style="text-align: center; margin-top: 40px;"><strong>FOR: MINT PLATFORMS (PTY) LTD</strong></p>
+                    <p style="text-align: center; margin-top: 20px;">Signature: ___________________________<br>
+                    Name: ____________________________<br>
+                    Date: ____________________________</p>
+
+                    <p style="text-align: center; margin-top: 40px;"><strong>FOR: THE SUBSCRIBER</strong></p>
+                    <p style="text-align: center; margin-top: 20px;">Signature: ___________________________<br>
+                    Name: ____________________________<br>
+                    Date: ____________________________</p>
                 </div>
 
-                <div style="margin-top: 24px;">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="reviewedAgreement">
-                        <label for="reviewedAgreement">I have reviewed and understand the Subscription Agreement.</label>
+                <!-- Signature Canvas -->
+                <div class="signature-section">
+                    <div class="signature-label">Your Signature</div>
+                    <canvas id="signatureCanvas"></canvas>
+                    <div style="display: flex; gap: 12px; margin-top: 12px;">
+                        <button class="btn-secondary" style="flex: 1;" onclick="clearSignature()">Clear Signature</button>
+                        <button class="btn-primary" style="flex: 1;" onclick="downloadContract()">Download Contract</button>
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="signedAgreement">
-                        <label for="signedAgreement">I agree to the terms and conditions and authorize my investment.</label>
-                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="reviewedAgreement">
+                    <label for="reviewedAgreement">I have reviewed and downloaded the agreement with my signature.</label>
                 </div>
 
                 <div class="button-group">
@@ -1220,8 +935,8 @@ Attention: _________________________________
 
                 <div class="payment-instruction">
                     <strong>Payment Details:</strong>
-                    <p>Bank: Capitec Business Bank Ltd<br>
-                    Account Name: MINT Platforms (Pty) Ltd<br>
+                    <p>Bank: Capitec Business<br>
+                    Account Name: MINT PLATFORMS PTY LTD<br>
                     Account Number: 1053045883<br>
                     Branch Code: 450105<br>
                     Reference: Your Name + ID Number</p>
@@ -1230,7 +945,7 @@ Attention: _________________________________
                 <div class="investment-details">
                     <div class="investment-details-row">
                         <span class="investment-details-label">Investment Amount:</span>
-                        <span class="investment-details-value" id="paymentAmount">R3,000,000.00 (Tranched)</span>
+                        <span class="investment-details-value" id="paymentAmount">R3,000,000.00</span>
                     </div>
                     <div class="investment-details-row">
                         <span class="investment-details-label">Shares:</span>
@@ -1239,19 +954,19 @@ Attention: _________________________________
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Proof of Payment</label>
-                    <input type="file" id="paymentProof" accept=".pdf,.jpg,.jpeg,.png" required>
+                    <label>Upload Proof of Payment (Optional)</label>
+                    <input type="file" id="paymentProof" accept=".pdf,.jpg,.jpeg,.png">
                     <div class="form-hint">Accepted formats: PDF, JPG, PNG (Max 5MB)</div>
                 </div>
 
                 <div class="form-group">
-                    <label>Payment Reference <span class="required">*</span></label>
-                    <input type="text" id="paymentRef" placeholder="Enter the reference you used for the payment" required>
+                    <label>Payment Reference</label>
+                    <input type="text" id="paymentRef" placeholder="Enter the reference you used for the payment (optional)">
                 </div>
 
                 <div class="button-group">
                     <button class="btn-secondary" onclick="previousStep()">Back</button>
-                    <button class="btn-primary" onclick="validateAndNext(4)">Submit Payment</button>
+                    <button class="btn-primary" onclick="validateAndNext(4)">Submit & Complete</button>
                 </div>
             </div>
 
@@ -1289,26 +1004,70 @@ Attention: _________________________________
         let currentStep = 1;
         const totalSteps = 5;
         const sharePrice = 62.62;
+        let signatureCanvas, signatureCtx;
+        let isDrawing = false;
+        let contractDownloaded = false;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Hide preloader
             setTimeout(() => {
                 document.getElementById('preloader').style.display = 'none';
             }, 1500);
 
-            // Set today's date
-            const today = new Date();
-            document.getElementById('todayDate').textContent = today.toLocaleDateString('en-ZA', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            // Setup signature canvas
+            signatureCanvas = document.getElementById('signatureCanvas');
+            signatureCtx = signatureCanvas.getContext('2d');
 
-            // Investment amount calculation
+            // Set canvas size
+            const container = signatureCanvas.parentElement;
+            signatureCanvas.width = container.offsetWidth - 64;
+            signatureCanvas.height = 150;
+
+            // Signature drawing events
+            signatureCanvas.addEventListener('mousedown', startDrawing);
+            signatureCanvas.addEventListener('mousemove', draw);
+            signatureCanvas.addEventListener('mouseup', stopDrawing);
+            signatureCanvas.addEventListener('touchstart', startDrawing);
+            signatureCanvas.addEventListener('touchmove', draw);
+            signatureCanvas.addEventListener('touchend', stopDrawing);
+
             document.getElementById('investmentAmount').addEventListener('input', updateShareCount);
             updateShareCount();
         });
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getMousePos(e);
+            signatureCtx.lineTo(pos.x, pos.y);
+            signatureCtx.strokeStyle = '#5c3bcf';
+            signatureCtx.lineWidth = 2;
+            signatureCtx.lineCap = 'round';
+            signatureCtx.lineJoin = 'round';
+            signatureCtx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function getMousePos(e) {
+            const rect = signatureCanvas.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+            return { x, y };
+        }
+
+        function clearSignature() {
+            signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            contractDownloaded = false;
+        }
 
         function updateShareCount() {
             const amount = parseInt(document.getElementById('investmentAmount').value) || 0;
@@ -1319,6 +1078,57 @@ Attention: _________________________________
             document.getElementById('totalCommitment').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})} (minimum R500,000)`;
             document.getElementById('paymentAmount').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             document.getElementById('paymentShares').textContent = `${shares.toLocaleString()} @ R${sharePrice.toFixed(2)}`;
+
+            // Update contract display
+            document.getElementById('contractAmount').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('contractShares').textContent = shares.toLocaleString();
+        }
+
+        function populateContract() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const cellNumber = document.getElementById('cellNumber').value;
+            const address = document.getElementById('address').value;
+            const amount = document.getElementById('investmentAmount').value;
+
+            document.getElementById('contractFullName').textContent = fullName;
+            document.getElementById('contractName').textContent = fullName;
+            document.getElementById('contractEmail').textContent = email;
+            document.getElementById('contractID').textContent = idNumber;
+            document.getElementById('contractCell').textContent = cellNumber;
+            document.getElementById('contractAddress').textContent = address;
+
+            updateShareCount();
+        }
+
+        function downloadContract() {
+            if (signatureCanvas.toDataURL().includes('data:image/png;base64,iVBORw0KGgo')) {
+                alert('Please draw your signature before downloading');
+                return;
+            }
+
+            const element = document.getElementById('contractDisplay');
+            const signatureImg = signatureCanvas.toDataURL('image/png');
+
+            // Add signature to contract display temporarily
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = element.innerHTML;
+            const signingSection = tempDiv.querySelector('p:contains("FOR: THE SUBSCRIBER")');
+
+            const opt = {
+                margin: 10,
+                filename: 'MINT_Subscription_Agreement.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).addHTML(element).thenOpen(function() {
+                contractDownloaded = true;
+                alert('Contract downloaded successfully! You can now proceed.');
+            });
         }
 
         function nextStep() {
@@ -1339,7 +1149,6 @@ Attention: _________________________________
             let isValid = true;
 
             if (stepNum === 2) {
-                // Validate details form
                 const fullName = document.getElementById('fullName').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const idNumber = document.getElementById('idNumber').value.trim();
@@ -1359,24 +1168,16 @@ Attention: _________________________________
                 }
 
                 if (isValid) {
-                    // Store data for completion step
+                    populateContract();
                     document.getElementById('completeName').textContent = fullName;
                     document.getElementById('completeAmount').textContent = `R${investmentAmount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 }
             } else if (stepNum === 3) {
-                const reviewedAgreement = document.getElementById('reviewedAgreement').checked;
-                const signedAgreement = document.getElementById('signedAgreement').checked;
-
-                if (!reviewedAgreement || !signedAgreement) {
-                    alert('Please confirm that you have reviewed and signed the Subscription Agreement');
+                if (!document.getElementById('reviewedAgreement').checked) {
+                    alert('Please confirm that you have reviewed and downloaded the agreement');
                     isValid = false;
-                }
-            } else if (stepNum === 4) {
-                const paymentProof = document.getElementById('paymentProof').files.length;
-                const paymentRef = document.getElementById('paymentRef').value.trim();
-
-                if (!paymentProof || !paymentRef) {
-                    alert('Please upload proof of payment and enter a reference');
+                } else if (!contractDownloaded) {
+                    alert('Please download the contract before proceeding');
                     isValid = false;
                 }
             }
@@ -1387,15 +1188,12 @@ Attention: _________________________________
         }
 
         function showStep(step) {
-            // Hide all steps
             document.querySelectorAll('.step-content').forEach(el => {
                 el.classList.remove('active');
             });
 
-            // Show current step
             document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
 
-            // Update checklist
             document.querySelectorAll('.checklist-item').forEach((item, index) => {
                 const itemStep = parseInt(item.dataset.step);
                 item.classList.remove('active', 'completed');
@@ -1407,18 +1205,11 @@ Attention: _________________________________
                 }
             });
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function goHome() {
             window.location.href = '/';
-        }
-
-        function openSubscriptionAgreement() {
-            // This will open the PDF in a new tab
-            // Replace with your actual subscription agreement PDF URL
-            window.open('https://docuseal.com/s/modWH9C4xgNSwp', '_blank');
         }
     </script>
 </body>
