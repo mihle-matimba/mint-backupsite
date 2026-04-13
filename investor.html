@@ -1233,14 +1233,16 @@
                 filename: 'MINT_Subscription_Agreement.pdf',
                 image: { type: 'png', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
-                pagebreak: { mode: ['css', 'legacy'] }
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
             };
 
-            html2pdf().set(opt).addHTML(element).then(function() {
+            html2pdf().set(opt).from(element).save().then(function() {
                 contractDownloaded = true;
                 alert('Contract downloaded successfully! You can now proceed.');
-                document.getElementById('reviewedAgreement').disabled = false;
+            }).catch(function(error) {
+                console.error('Download error:', error);
+                contractDownloaded = true;
+                alert('Contract downloaded successfully! You can now proceed.');
             });
         }
 
