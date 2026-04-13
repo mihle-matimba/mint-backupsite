@@ -147,84 +147,53 @@
             height: auto;
         }
 
-        /* Checklist Styles */
+        /* Checklist Styles - Mobile First */
         .checklist {
             display: flex;
-            gap: 0;
+            flex-direction: column;
+            gap: 20px;
             margin-bottom: 48px;
-            flex-wrap: nowrap;
-            justify-content: center;
-            align-items: flex-start;
-            position: relative;
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         .checklist-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             position: relative;
-            flex: 1;
-            min-width: 100px;
         }
 
         .checklist-item::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background-color: #d1d5db;
-            top: 36px;
-            left: 50%;
-            z-index: 0;
-        }
-
-        .checklist-item:last-child::after {
             display: none;
         }
 
-        .checklist-item.completed::after,
-        .checklist-item.active::after {
-            background-color: var(--mint-primary-purple);
-        }
-
         .checklist-number {
-            width: 72px;
-            height: 72px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            background-color: #d1d5db;
+            background-color: var(--mint-primary-purple);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            color: #6b7280;
-            font-size: 28px;
+            color: white;
+            font-size: 24px;
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
             flex-shrink: 0;
         }
 
-        .checklist-item.active .checklist-number {
-            background-color: var(--mint-primary-purple);
-            color: white;
-            box-shadow: 0 4px 12px rgba(92, 59, 207, 0.3);
-        }
-
         .checklist-item.completed .checklist-number {
             background-color: var(--mint-primary-purple);
-            color: white;
+            opacity: 0.7;
         }
 
         .checklist-label {
             font-size: 14px;
             font-weight: 500;
             color: #6b7280;
-            text-align: center;
-            max-width: 100px;
-            position: relative;
-            z-index: 1;
+            text-align: left;
         }
 
         .checklist-item.active .checklist-label {
@@ -234,6 +203,53 @@
 
         .checklist-item.completed .checklist-label {
             color: var(--mint-primary-purple);
+        }
+
+        /* Desktop Checklist */
+        @media (min-width: 769px) {
+            .checklist {
+                flex-direction: row;
+                gap: 0;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 0 20px;
+            }
+
+            .checklist-item {
+                flex-direction: column;
+                flex: 1;
+                min-width: 100px;
+                gap: 16px;
+            }
+
+            .checklist-item::after {
+                display: block;
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background-color: var(--mint-primary-purple);
+                top: 28px;
+                left: 50%;
+                z-index: 0;
+            }
+
+            .checklist-item:last-child::after {
+                display: none;
+            }
+
+            .checklist-number {
+                width: 72px;
+                height: 72px;
+                font-size: 28px;
+                margin: 0 auto;
+            }
+
+            .checklist-label {
+                text-align: center;
+                max-width: 100px;
+                margin: 0 auto;
+            }
         }
 
         /* Form Styles */
@@ -613,31 +629,6 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .checklist {
-                gap: 0;
-                padding: 0 10px;
-            }
-
-            .checklist-item {
-                min-width: 80px;
-            }
-
-            .checklist-number {
-                width: 56px;
-                height: 56px;
-                font-size: 20px;
-            }
-
-            .checklist-item::after {
-                top: 28px;
-            }
-
-            .checklist-label {
-                font-size: 12px;
-                max-width: 70px;
-                gap: 12px;
-            }
-
             .form-container {
                 padding: 24px;
             }
