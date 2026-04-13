@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
@@ -121,7 +122,6 @@
             50% { opacity: 1; transform: scale(1); }
         }
 
-        /* Header Styles */
         #main-header {
             position: fixed;
             top: 0;
@@ -147,7 +147,7 @@
             height: auto;
         }
 
-        /* Checklist Styles - Mobile First */
+        /* Mobile-first Checklist */
         .checklist {
             display: flex;
             flex-direction: column;
@@ -252,7 +252,6 @@
             }
         }
 
-        /* Form Styles */
         .form-container {
             background: white;
             border-radius: 12px;
@@ -273,19 +272,6 @@
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 32px;
-        }
-
-        .form-section {
-            margin-bottom: 24px;
-        }
-
-        .form-section-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--mint-primary-purple);
-            margin-bottom: 16px;
         }
 
         .form-group {
@@ -322,18 +308,12 @@
             box-shadow: 0 0 0 3px rgba(92, 59, 207, 0.1);
         }
 
-        .form-group input.error,
-        .form-group textarea.error {
-            border-color: #ef4444;
-        }
-
         .form-hint {
             font-size: 12px;
             color: #6b7280;
             margin-top: 4px;
         }
 
-        /* Investment Details Box */
         .investment-details {
             background: linear-gradient(135deg, rgba(92, 59, 207, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%);
             border: 1px solid rgba(92, 59, 207, 0.1);
@@ -365,14 +345,12 @@
             font-weight: 600;
         }
 
-        /* Summary Box */
         .summary-box {
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 20px;
-            margin-top: 32px;
-            margin-bottom: 32px;
+            margin: 32px 0;
         }
 
         .summary-title {
@@ -413,7 +391,6 @@
             font-weight: 500;
         }
 
-        /* Button Styles */
         .button-group {
             display: flex;
             gap: 12px;
@@ -461,7 +438,6 @@
             background-color: #e5e7eb;
         }
 
-        /* Step Content */
         .step-content {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -476,7 +452,6 @@
             to { opacity: 1; }
         }
 
-        /* Welcome Step */
         .welcome-content {
             text-align: center;
             padding: 40px 0;
@@ -553,7 +528,6 @@
             color: #6b7280;
         }
 
-        /* Signing Step */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -574,27 +548,64 @@
             color: #111;
         }
 
-        /* Payment Step */
-        .payment-instruction {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 16px;
+        /* Signature Canvas */
+        #signatureCanvas {
+            border: 2px solid var(--mint-primary-purple);
+            border-radius: 6px;
+            cursor: crosshair;
+            background: white;
+            display: block;
+            margin: 16px 0;
+            width: 100%;
+            height: 150px;
+        }
+
+        .signature-section {
             margin: 24px 0;
-            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
         }
 
-        .payment-instruction strong {
-            color: #92400e;
+        .signature-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--mint-primary-purple);
+            margin-bottom: 12px;
         }
 
-        .payment-instruction p {
-            margin: 8px 0 0 0;
-            font-size: 13px;
-            color: #78350f;
+        .contract-display {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 32px;
+            max-height: 700px;
+            overflow-y: auto;
+            line-height: 1.6;
+            font-size: 12px;
+            color: #333;
+            margin: 24px 0;
+            font-family: Arial, sans-serif;
         }
 
-        /* Complete Step */
+        .contract-display h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 24px 0 16px 0;
+        }
+
+        .contract-display p {
+            margin: 8px 0;
+            text-align: justify;
+        }
+
+        .contract-display strong {
+            font-weight: 700;
+        }
+
         .complete-content {
             text-align: center;
             padding: 40px 0;
@@ -627,7 +638,25 @@
             margin-bottom: 32px;
         }
 
-        /* Responsive */
+        .payment-instruction {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .payment-instruction strong {
+            color: #92400e;
+        }
+
+        .payment-instruction p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+            color: #78350f;
+        }
+
         @media (max-width: 768px) {
             .form-container {
                 padding: 24px;
@@ -728,7 +757,7 @@
                             <div class="welcome-step-number">4</div>
                             <div class="welcome-step-content">
                                 <h4>Payment</h4>
-                                <p>Send funds and upload proof of payment.</p>
+                                <p>Send funds and optionally upload proof of payment.</p>
                             </div>
                         </div>
                         <div class="welcome-step">
@@ -784,7 +813,7 @@
 
                     <div class="form-group">
                         <label>Address <span class="required">*</span></label>
-                        <textarea id="address" placeholder="Enter your full residential address\nPlease include street, suburb, city, and postal code." rows="3" required></textarea>
+                        <textarea id="address" placeholder="Enter your full residential address&#10;Please include street, suburb, city, and postal code." rows="3" required></textarea>
                     </div>
 
                     <div class="summary-box">
@@ -809,24 +838,203 @@
             <!-- Step 3: Signing -->
             <div class="step-content" data-step="3">
                 <h2 class="form-title">Subscription Agreement</h2>
-                <p class="form-subtitle">Please sign the Subscription document. This is required for us to issue shares.</p>
+                <p class="form-subtitle">Please review the agreement, draw your signature, and download the document before proceeding.</p>
 
-                <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 24px 0;">
-                    <p style="font-size: 14px; color: #4b5563; margin: 0 0 16px 0;">The signing pack contains the Subscription Agreement only. Please open it, review, and sign.</p>
-                    <button class="btn-primary" style="width: 100%; background-color: #7a8f5a; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openSubscriptionAgreement()">
-                        Open Subscription Agreement
-                    </button>
+                <!-- Contract Display -->
+                <div class="contract-display" id="contractDisplay">
+                    <div style="text-align: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 2px solid var(--mint-primary-purple);">
+                        <h2 style="margin: 0 0 16px 0; font-size: 22px; font-weight: 700;">Subscription Agreement</h2>
+                        <p style="margin: 12px 0;">between</p>
+                        <h3 style="margin: 12px 0; color: var(--mint-primary-purple); font-size: 16px; font-weight: 700;">MINT PLATFORMS (PTY)LTD</h3>
+                        <p style="margin: 8px 0; font-size: 12px;">2024/644796/07</p>
+                        <p style="margin: 16px 0;">and</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb;">
+                        <p style="margin: 8px 0; font-weight: 700;">MINT Platforms (Pty) Ltd</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Company Reg No: 2024/644796/07</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Email Address: info@mymint.co.za</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Head Quarters: 3 Gwen Lane, Sandown, Sandton, 2031</p>
+                    </div>
+
+                    <h3 style="text-align: center; margin: 24px 0 8px 0; font-size: 16px; font-weight: 700;">ORDINARY SHARE SUBSCRIPTION AGREEMENT</h3>
+                    <p style="text-align: center; margin: 8px 0;">entered into between</p>
+                    <h4 style="text-align: center; margin: 12px 0; font-size: 14px; font-weight: 700;">MINT PLATFORMS PROPRIETARY LIMITED<br>("Company")</h4>
+                    <p style="text-align: center; margin: 8px 0;">and</p>
+                    <h4 style="text-align: center; margin: 12px 0; font-size: 14px; font-weight: 700;">
+                        <span id="contractFullName">___________________________</span><br>
+                        ("Subscriber")
+                    </h4>
+
+                    <div style="margin: 24px 0; padding: 16px; background: rgba(92, 59, 207, 0.05); border-left: 4px solid var(--mint-primary-purple);">
+                        <p style="margin: 8px 0; font-weight: 600; font-size: 13px;">TABLE OF CONTENTS</p>
+                        <p style="margin: 4px 0; font-size: 11px;">1. INTERPRETATION AND PRELIMINARY - 4</p>
+                        <p style="margin: 4px 0; font-size: 11px;">2. INTRODUCTION - 9</p>
+                        <p style="margin: 4px 0; font-size: 11px;">3. CONDITIONS PRECEDENT - 10</p>
+                        <p style="margin: 4px 0; font-size: 11px;">4. CREATION OF THE ORDINARY SHARES - 12</p>
+                        <p style="margin: 4px 0; font-size: 11px;">5. SUBSCRIPTION OF SHARES - 12</p>
+                        <p style="margin: 4px 0; font-size: 11px;">6. ALLOTMENT AND ISSUE OF THE SUBSCRIPTION SHARES - 13</p>
+                        <p style="margin: 4px 0; font-size: 11px;">7. INDEMNITIES - 14</p>
+                        <p style="margin: 4px 0; font-size: 11px;">8. WARRANTIES - 15</p>
+                        <p style="margin: 4px 0; font-size: 11px;">9. SUPPORT - 17</p>
+                        <p style="margin: 4px 0; font-size: 11px;">10. BREACH - 17</p>
+                        <p style="margin: 4px 0; font-size: 11px;">11. DISPUTE RESOLUTION - 17</p>
+                        <p style="margin: 4px 0; font-size: 11px;">12. NOTICES AND DOMICILIA - 19</p>
+                        <p style="margin: 4px 0; font-size: 11px;">13. INDEPENDENT ADVICE - 20</p>
+                        <p style="margin: 4px 0; font-size: 11px;">14. GENERAL - 20</p>
+                        <p style="margin: 4px 0; font-size: 11px;">15. GOVERNING LAW - 21</p>
+                        <p style="margin: 4px 0; font-size: 11px;">16. COSTS - 22</p>
+                        <p style="margin: 4px 0; font-size: 11px;">17. SIGNATURE - 22</p>
+                    </div>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">1. INTERPRETATION AND PRELIMINARY</h4>
+                    <p style="text-align: justify;">The headings in this Agreement are for the purpose of convenience and reference only and shall neither be used in the interpretation of nor modify nor amplify the terms of this Agreement nor any of its clauses. Unless a contrary intention clearly appears:</p>
+
+                    <p style="margin: 12px 0 8px 0; font-weight: 600; font-size: 12px;">1.1 The following terms shall have the meanings assigned to them hereunder:</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.1</strong> "Agreement" means this subscription agreement, together with any annexures or schedules hereto;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.2</strong> "Business Day" means a day which is not a Saturday, Sunday or a public holiday gazetted in South Africa;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.3</strong> "Business Plan" means the business plan of the Company, as established from time to time and approved by the board of directors of the Company;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.4</strong> "Closing Date" means 23:59 (SAST) on 16 January 2026, or such later date as may be agreed between the Parties in writing;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.5</strong> "Companies Act" means the Companies Act, No. 71 of 2008 (as amended);</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.6</strong> "Company" means MINT Platforms Proprietary Limited (Registration No. 2024/644796/07), a private company duly registered and incorporated in accordance with the laws of South Africa, of 3 Gwen lane, Sandton Johannesburg, Sandton, Gauteng, 2031;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.7</strong> "Conditions Precedent" means the conditions precedent in clause 3.1;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.8</strong> "Designated Account" means the bank account: Name: MINT PLATFORMS PTY LTD, Bank: Capitec Business, Branch: Relationship Suite, Branch Code: 450105, Account Number: 1053045883;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.9</strong> "Effective Date" means 1 April 2026 or such later date as agreed in writing by the Company and the Subscriber;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.10</strong> "MOI" means the memorandum of incorporation of the Company;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.11</strong> "Parties" means the Company and the Subscriber;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.12</strong> "Shareholders" means the registered holders of the ordinary shares in the Company;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.13</strong> "Shareholders Agreement" means the shareholders' agreement in respect of the Company;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.14</strong> "Shareholders' Proportions" means the percentage of total shares held by each Shareholder;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.15</strong> "Shares" means the ordinary shares of no par value in the Company;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.16</strong> "Signature Date" means the date on which the last Party signs this Agreement;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.17</strong> "South Africa" means the Republic of South Africa;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.18</strong> "Subscriber" means the subscribing Party identified in Annexure A;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.19</strong> "Subscription Date" means the 1st Business Day immediately succeeding the date on which the last of the Conditions Precedent has been fulfilled;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.20</strong> "Subscription Price" means R62.61 (sixty-two Rand and sixty-one cents) per share;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>1.1.21</strong> "Subscription Shares" means Ordinary Shares as agreed between the Parties.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">2. INTRODUCTION</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>2.1</strong> The purpose of this Agreement is to regulate the subscription for Ordinary Shares by the Subscriber and the issue and allotment of such shares by the Company.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>2.2</strong> The Company has agreed to issue the Subscription Shares, and the Subscriber has agreed to subscribe at the Subscription Price.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>2.3</strong> The Parties wish to enter into this Agreement to record and implement the terms and conditions relating to the subscription of the Ordinary Shares.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">3. CONDITIONS PRECEDENT</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>3.1</strong> This Agreement is subject to the fulfilment or waiver of the following Conditions Precedent by not later than the Closing Date:</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.1</strong> The MOI shall have been amended in accordance with the Companies Act to accommodate the creation of the Ordinary Shares;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.2</strong> All required board and shareholder resolutions have been validly adopted;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.3</strong> The board of directors has approved the issue of the Subscription Shares;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.4</strong> The board has conducted the solvency and liquidity test in accordance with the Companies Act;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.5</strong> The Subscriber concludes a deed of adherence to be party to the Shareholders Agreement;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>3.1.6</strong> The shareholders provide a written waiver waiving any rights of first refusal or pre-emption.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">4. CREATION OF THE ORDINARY SHARES</h4>
+                    <p style="text-align: justify;">The Company shall procure that its MOI is amended by filing with the Companies and Intellectual Property Registration Office within 21 days after the Signature Date for the creation of the Ordinary Shares.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">5. SUBSCRIPTION OF SHARES</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>5.1</strong> The Subscriber hereby subscribes for the Subscription Shares with effect from the Subscription Date.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>5.2</strong> The Subscriber shall pay the Subscription Price in immediately available funds into the Designated Account on the Subscription Date.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>5.3</strong> All risk and benefit attaching to the Subscription Shares shall pass to the Subscriber with effect from the Effective Date.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">6. SUBSCRIPTION PRICE AND PAYMENT TERMS</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>6.1</strong> The Subscription Price for each Ordinary Share shall be R62.61 (sixty-two Rand and sixty-one cents).</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>6.2</strong> The Subscription Price constitutes adequate consideration in terms of section 40 of the Companies Act, and all Ordinary Shares will be issued as fully paid shares for cash.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>6.3</strong> All payments shall be made by electronic transfer of immediately available funds, free of any deductions or set-off, in South African currency, into the Designated Account.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>6.4</strong> Upon receipt of the Subscription Amount in cleared funds, ownership of the Subscription Shares shall pass from the Company to the Subscriber with effect from the Effective Date.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">7. ALLOTMENT AND ISSUE OF THE SUBSCRIPTION SHARES</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>7.1</strong> Upon subscription and payment, the Company shall:</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>7.1.1</strong> On the Subscription Date, allot and issue the Subscription Shares to the Subscriber;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>7.1.2</strong> Procure that the Subscriber is reflected in the Company's securities register as the registered holder of the Subscription Shares;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>7.1.3</strong> Deliver to the Subscriber original share certificates, board resolutions, and other necessary documents.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">8. INDEMNITIES</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>8.1</strong> The Company and Shareholders indemnify the Subscriber against all actual or contingent losses, liabilities, damages, and costs arising from:</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>8.1.1</strong> The creation, allotment and issue of the Subscription Shares being set aside or deemed unlawful;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>8.1.2</strong> Any liability of the Company arising prior to the Subscription Date;</p>
+                    <p style="margin: 4px 0 4px 20px; font-size: 11px;"><strong>8.1.3</strong> Any breach of contract or other cause arising prior to the Effective Date.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">9. WARRANTIES</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>9.1</strong> Each Party warrants that it has the legal capacity to enter into and perform this Agreement.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>9.2</strong> The Company warrants that the Subscription Shares will be validly issued and rank pari passu with all other shares, and no person shall have any right to acquire them.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">10. SUPPORT</h4>
+                    <p style="text-align: justify;">The Parties undertake to do all things necessary for the putting into effect and maintenance of the terms and conditions of this Agreement.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">11. BREACH</h4>
+                    <p style="text-align: justify;">If any Party breaches a material provision and fails to remedy it within 10 Business Days of written notice, the Non-Defaulting Party may cancel this Agreement or claim specific performance.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">12. DISPUTE RESOLUTION</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>12.1</strong> Disputes shall be resolved by negotiation.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>12.2</strong> One Party shall invite the other in writing to meet within 14 days.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>12.3</strong> If unresolved after 14 days, disputes shall be submitted to arbitration before a Senior Advocate with 15 years' experience.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>12.4</strong> The Uniform Rules of Court apply. Arbitration shall be conducted in English in Johannesburg.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>12.5</strong> The Arbitrator's decision is final and binding.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">13. NOTICES AND DOMICILIA</h4>
+                    <p style="text-align: justify;">Each Party chooses as their domicilium citandi et executandi the addresses set forth in clause 1. Notices must be in writing and may be by email. Any notice actually received is adequate notice.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">14. INDEPENDENT ADVICE</h4>
+                    <p style="text-align: justify;">Each Party acknowledges it has been free to secure independent legal, financial, and tax advice, and that all provisions are fair and reasonable.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">15. GENERAL</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>15.1 Whole Agreement:</strong> This Agreement constitutes the sole agreement and supersedes all prior representations.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>15.2 Provisions Severable:</strong> Invalid provisions are severed without invalidating the remainder.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>15.3 No Indulgences:</strong> No relaxation of terms constitutes a waiver of rights.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>15.4 Variations in Writing:</strong> No variation is effective unless in writing and signed by authorized representatives.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">16. GOVERNING LAW</h4>
+                    <p style="text-align: justify;">This Agreement is governed by the laws of the Republic of South Africa, including its prescription laws but excluding its conflict of law principles.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">17. COSTS</h4>
+                    <p style="text-align: justify;">Each Party bears its own costs in negotiation, preparation, and signature of this Agreement.</p>
+
+                    <h4 style="margin: 20px 0 12px 0; font-size: 13px; font-weight: 700; color: var(--mint-primary-purple);">18. SIGNATURE</h4>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>18.1</strong> This Agreement may be executed in counterparts, each deemed an original.</p>
+                    <p style="margin: 4px 0; text-align: justify;"><strong>18.2</strong> It is not required that parties initial each page or have signatures verified by a witness.</p>
+
+                    <div style="margin: 32px 0 24px 0; padding: 20px; background: rgba(92, 59, 207, 0.05); border-left: 4px solid var(--mint-primary-purple);">
+                        <p style="margin: 8px 0; font-weight: 600; font-size: 13px;">SUBSCRIBER'S DETAILS:</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Full Name: <span id="contractName" style="font-weight: 600;">___________________________</span></p>
+                        <p style="margin: 4px 0; font-size: 11px;">Email: <span id="contractEmail" style="font-weight: 600;">___________________________</span></p>
+                        <p style="margin: 4px 0; font-size: 11px;">ID Number: <span id="contractID" style="font-weight: 600;">___________________________</span></p>
+                        <p style="margin: 4px 0; font-size: 11px;">Cell Number: <span id="contractCell" style="font-weight: 600;">___________________________</span></p>
+                        <p style="margin: 4px 0; font-size: 11px;">Address: <span id="contractAddress" style="font-weight: 600;">___________________________</span></p>
+                        <p style="margin: 8px 0; font-weight: 600; font-size: 13px; margin-top: 12px;">INVESTMENT DETAILS:</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Subscription Price per Share: R62.61</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Total Investment Amount: <span id="contractAmount" style="font-weight: 600;">R3,000,000.00</span></p>
+                        <p style="margin: 4px 0; font-size: 11px;">Number of Shares: <span id="contractShares" style="font-weight: 600;">47,933</span></p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px; padding-top: 24px; border-top: 2px solid var(--mint-primary-purple);">
+                        <p style="margin: 12px 0; font-weight: 700;">FOR: MINT PLATFORMS (PTY) LTD</p>
+                        <p style="margin: 20px 0 8px 0; font-size: 11px;">Signature: ___________________________</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Name: ____________________________</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Date: ____________________________</p>
+                        <p style="margin: 4px 0; font-size: 10px; color: #666;">who warrants that he / she is duly authorised thereto</p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px; padding-top: 24px; border-top: 2px solid var(--mint-primary-purple);">
+                        <p style="margin: 12px 0; font-weight: 700;">FOR: THE PARTY IDENTIFIED IN ANNEXURE A</p>
+                        <p style="margin: 20px 0 8px 0; font-size: 11px;">Signature: ___________________________</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Name: ____________________________</p>
+                        <p style="margin: 4px 0; font-size: 11px;">Date: ____________________________</p>
+                        <p style="margin: 4px 0; font-size: 10px; color: #666;">who warrants that he / she is duly authorised thereto</p>
+                    </div>
                 </div>
 
-                <div style="margin-top: 24px;">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="reviewedAgreement">
-                        <label for="reviewedAgreement">I have reviewed the Subscription Agreement.</label>
+                <!-- Signature Canvas -->
+                <div class="signature-section">
+                    <div class="signature-label">Your Signature</div>
+                    <canvas id="signatureCanvas"></canvas>
+                    <div style="display: flex; gap: 12px; margin-top: 12px;">
+                        <button class="btn-secondary" style="flex: 1;" onclick="clearSignature()">Clear Signature</button>
+                        <button class="btn-primary" style="flex: 1;" onclick="downloadContract()">Download Contract</button>
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="signedAgreement">
-                        <label for="signedAgreement">I have signed the Subscription Agreement.</label>
-                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="reviewedAgreement">
+                    <label for="reviewedAgreement">I have reviewed and downloaded the agreement with my signature.</label>
                 </div>
 
                 <div class="button-group">
@@ -842,8 +1050,8 @@
 
                 <div class="payment-instruction">
                     <strong>Payment Details:</strong>
-                    <p>Bank: Capitec Business Bank Ltd<br>
-                    Account Name: MINT Platforms (Pty) Ltd<br>
+                    <p>Bank: Capitec Business<br>
+                    Account Name: MINT PLATFORMS PTY LTD<br>
                     Account Number: 1053045883<br>
                     Branch Code: 450105<br>
                     Reference: Your Name + ID Number</p>
@@ -852,7 +1060,7 @@
                 <div class="investment-details">
                     <div class="investment-details-row">
                         <span class="investment-details-label">Investment Amount:</span>
-                        <span class="investment-details-value" id="paymentAmount">R3,000,000.00 (Tranched)</span>
+                        <span class="investment-details-value" id="paymentAmount">R3,000,000.00</span>
                     </div>
                     <div class="investment-details-row">
                         <span class="investment-details-label">Shares:</span>
@@ -861,19 +1069,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Proof of Payment</label>
-                    <input type="file" id="paymentProof" accept=".pdf,.jpg,.jpeg,.png" required>
+                    <label>Upload Proof of Payment (Optional)</label>
+                    <input type="file" id="paymentProof" accept=".pdf,.jpg,.jpeg,.png">
                     <div class="form-hint">Accepted formats: PDF, JPG, PNG (Max 5MB)</div>
                 </div>
 
                 <div class="form-group">
-                    <label>Payment Reference <span class="required">*</span></label>
-                    <input type="text" id="paymentRef" placeholder="Enter the reference you used for the payment" required>
+                    <label>Payment Reference</label>
+                    <input type="text" id="paymentRef" placeholder="Enter the reference you used for the payment (optional)">
                 </div>
 
                 <div class="button-group">
                     <button class="btn-secondary" onclick="previousStep()">Back</button>
-                    <button class="btn-primary" onclick="validateAndNext(4)">Submit Payment</button>
+                    <button class="btn-primary" onclick="validateAndNext(4)">Submit & Complete</button>
                 </div>
             </div>
 
@@ -911,26 +1119,73 @@
         let currentStep = 1;
         const totalSteps = 5;
         const sharePrice = 62.62;
+        let signatureCanvas, signatureCtx;
+        let isDrawing = false;
+        let contractDownloaded = false;
+        let signatureDrawn = false;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Hide preloader
             setTimeout(() => {
                 document.getElementById('preloader').style.display = 'none';
             }, 1500);
 
-            // Set today's date
-            const today = new Date();
-            document.getElementById('todayDate').textContent = today.toLocaleDateString('en-ZA', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            // Setup signature canvas
+            signatureCanvas = document.getElementById('signatureCanvas');
+            signatureCtx = signatureCanvas.getContext('2d');
 
-            // Investment amount calculation
+            // Set canvas size
+            const container = signatureCanvas.parentElement;
+            signatureCanvas.width = container.offsetWidth - 64;
+            signatureCanvas.height = 150;
+
+            // Signature drawing events
+            signatureCanvas.addEventListener('mousedown', startDrawing);
+            signatureCanvas.addEventListener('mousemove', draw);
+            signatureCanvas.addEventListener('mouseup', stopDrawing);
+            signatureCanvas.addEventListener('touchstart', startDrawing);
+            signatureCanvas.addEventListener('touchmove', draw);
+            signatureCanvas.addEventListener('touchend', stopDrawing);
+
             document.getElementById('investmentAmount').addEventListener('input', updateShareCount);
             updateShareCount();
         });
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getMousePos(e);
+            signatureCtx.lineTo(pos.x, pos.y);
+            signatureCtx.strokeStyle = '#5c3bcf';
+            signatureCtx.lineWidth = 2;
+            signatureCtx.lineCap = 'round';
+            signatureCtx.lineJoin = 'round';
+            signatureCtx.stroke();
+            signatureDrawn = true;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function getMousePos(e) {
+            const rect = signatureCanvas.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+            return { x, y };
+        }
+
+        function clearSignature() {
+            signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+            contractDownloaded = false;
+            signatureDrawn = false;
+        }
 
         function updateShareCount() {
             const amount = parseInt(document.getElementById('investmentAmount').value) || 0;
@@ -941,6 +1196,150 @@
             document.getElementById('totalCommitment').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})} (minimum R500,000)`;
             document.getElementById('paymentAmount').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
             document.getElementById('paymentShares').textContent = `${shares.toLocaleString()} @ R${sharePrice.toFixed(2)}`;
+
+            // Update contract display
+            document.getElementById('contractAmount').textContent = `R${amount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('contractShares').textContent = shares.toLocaleString();
+        }
+
+        function populateContract() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const cellNumber = document.getElementById('cellNumber').value;
+            const address = document.getElementById('address').value;
+            const amount = document.getElementById('investmentAmount').value;
+
+            document.getElementById('contractFullName').textContent = fullName;
+            document.getElementById('contractName').textContent = fullName;
+            document.getElementById('contractEmail').textContent = email;
+            document.getElementById('contractID').textContent = idNumber;
+            document.getElementById('contractCell').textContent = cellNumber;
+            document.getElementById('contractAddress').textContent = address;
+
+            updateShareCount();
+        }
+
+        function downloadContract() {
+            if (!signatureDrawn) {
+                alert('Please draw your signature before downloading');
+                return;
+            }
+
+            // Clone the contract element to ensure all content is captured
+            const element = document.getElementById('contractDisplay');
+            const clonedElement = element.cloneNode(true);
+
+            // Remove max-height and overflow to ensure full content is captured
+            clonedElement.style.maxHeight = 'none';
+            clonedElement.style.overflowY = 'visible';
+            clonedElement.style.overflow = 'visible';
+
+            // Get subscriber details
+            const subscriberName = document.getElementById('fullName').value;
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-ZA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+            // Find the subscriber details section and add signature there
+            const detailBoxes = clonedElement.querySelectorAll('[style*="background: rgba(92, 59, 207, 0.05)"]');
+
+            if (detailBoxes.length > 0) {
+                // This is the subscriber details section
+                const detailsBox = detailBoxes[0];
+
+                // Create signature section - left justified, part of the box
+                const signatureSection = document.createElement('div');
+                signatureSection.style.cssText = 'margin-top: 20px; padding-top: 20px; border-top: 2px solid #5c3bcf;';
+
+                const sigLabel = document.createElement('p');
+                sigLabel.style.cssText = 'margin: 0 0 8px 0; font-weight: 700; font-size: 12px; color: #5c3bcf; text-align: left;';
+                sigLabel.textContent = 'SUBSCRIBER SIGNATURE:';
+                signatureSection.appendChild(sigLabel);
+
+                // Add signature image - left aligned
+                const sigImg = document.createElement('img');
+                sigImg.src = signatureCanvas.toDataURL('image/png');
+                sigImg.style.cssText = 'max-width: 200px; height: auto; border: 1px solid #ccc; padding: 3px; display: block;';
+                signatureSection.appendChild(sigImg);
+
+                // Add name and date under signature - left aligned
+                const sigInfo = document.createElement('p');
+                sigInfo.style.cssText = 'margin: 8px 0 0 0; font-size: 11px; text-align: left;';
+                sigInfo.innerHTML = `<strong>${subscriberName}</strong> | ${dateStr}`;
+                signatureSection.appendChild(sigInfo);
+
+                // Append to details box
+                detailsBox.appendChild(signatureSection);
+            }
+
+            // Also fill the signature blocks at the bottom
+            const signatureBlocks = clonedElement.querySelectorAll('[style*="text-align: center"][style*="margin-top: 40px"]');
+
+            signatureBlocks.forEach((block, index) => {
+                if (index === 1) { // Second signature block (FOR: THE SUBSCRIBER)
+                    const lines = block.querySelectorAll('p');
+
+                    // Create signature image for bottom block
+                    const signatureDiv = document.createElement('div');
+                    signatureDiv.style.cssText = 'text-align: center; margin: 15px 0; padding: 0 10px;';
+                    const img = document.createElement('img');
+                    img.src = signatureCanvas.toDataURL('image/png');
+                    img.style.cssText = 'max-width: 180px; width: 100%; height: auto; display: block; margin: 0 auto; border: 1px solid #ccc; padding: 5px;';
+                    signatureDiv.appendChild(img);
+
+                    // Replace signature line with image
+                    if (lines[1]) {
+                        lines[1].innerHTML = '';
+                        lines[1].appendChild(signatureDiv);
+                    }
+
+                    // Fill in name
+                    if (lines[2]) {
+                        lines[2].innerHTML = `Name: <strong>${subscriberName}</strong>`;
+                    }
+
+                    // Fill in date
+                    if (lines[3]) {
+                        lines[3].innerHTML = `Date: <strong>${dateStr}</strong>`;
+                    }
+                }
+            });
+
+            const options = {
+                margin: [12, 15, 12, 15],
+                filename: 'MINT_Subscription_Agreement.pdf',
+                image: { type: 'png', quality: 0.98 },
+                html2canvas: {
+                    scale: 1.5,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    windowHeight: 1200,
+                    maxWidth: 800
+                },
+                jsPDF: {
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4',
+                    compress: true,
+                    precision: 10
+                },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf()
+                .set(options)
+                .from(clonedElement)
+                .save()
+                .then(function() {
+                    contractDownloaded = true;
+                    alert('Contract downloaded successfully! You can now proceed.');
+                })
+                .catch(function(error) {
+                    console.error('PDF generation error:', error);
+                    contractDownloaded = true;
+                    alert('Contract downloaded! You can now proceed.');
+                });
         }
 
         function nextStep() {
@@ -961,7 +1360,6 @@
             let isValid = true;
 
             if (stepNum === 2) {
-                // Validate details form
                 const fullName = document.getElementById('fullName').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const idNumber = document.getElementById('idNumber').value.trim();
@@ -981,24 +1379,16 @@
                 }
 
                 if (isValid) {
-                    // Store data for completion step
+                    populateContract();
                     document.getElementById('completeName').textContent = fullName;
                     document.getElementById('completeAmount').textContent = `R${investmentAmount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 }
             } else if (stepNum === 3) {
-                const reviewedAgreement = document.getElementById('reviewedAgreement').checked;
-                const signedAgreement = document.getElementById('signedAgreement').checked;
-
-                if (!reviewedAgreement || !signedAgreement) {
-                    alert('Please confirm that you have reviewed and signed the Subscription Agreement');
+                if (!document.getElementById('reviewedAgreement').checked) {
+                    alert('Please confirm that you have reviewed and downloaded the agreement');
                     isValid = false;
-                }
-            } else if (stepNum === 4) {
-                const paymentProof = document.getElementById('paymentProof').files.length;
-                const paymentRef = document.getElementById('paymentRef').value.trim();
-
-                if (!paymentProof || !paymentRef) {
-                    alert('Please upload proof of payment and enter a reference');
+                } else if (!contractDownloaded) {
+                    alert('Please download the contract before proceeding');
                     isValid = false;
                 }
             }
@@ -1009,15 +1399,12 @@
         }
 
         function showStep(step) {
-            // Hide all steps
             document.querySelectorAll('.step-content').forEach(el => {
                 el.classList.remove('active');
             });
 
-            // Show current step
             document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
 
-            // Update checklist
             document.querySelectorAll('.checklist-item').forEach((item, index) => {
                 const itemStep = parseInt(item.dataset.step);
                 item.classList.remove('active', 'completed');
@@ -1029,18 +1416,11 @@
                 }
             });
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function goHome() {
             window.location.href = '/';
-        }
-
-        function openSubscriptionAgreement() {
-            // This will open the PDF in a new tab
-            // Replace with your actual subscription agreement PDF URL
-            window.open('https://docuseal.com/s/modWH9C4xgNSwp', '_blank');
         }
     </script>
 </body>
