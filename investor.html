@@ -522,22 +522,6 @@
         }
 
         /* Signing Step */
-        .document-review {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 24px 0;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .document-text {
-            font-size: 12px;
-            line-height: 1.6;
-            color: #4b5563;
-        }
-
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -805,41 +789,30 @@
 
             <!-- Step 3: Signing -->
             <div class="step-content" data-step="3">
-                <h2 class="form-title">Review & Sign</h2>
-                <p class="form-subtitle">Please review and sign the subscription agreement.</p>
+                <h2 class="form-title">Subscription Agreement</h2>
+                <p class="form-subtitle">Please sign the Subscription document. This is required for us to issue shares.</p>
 
-                <div class="document-review">
-                    <div class="document-text">
-                        <strong>MINT INVESTMENT SUBSCRIPTION AGREEMENT</strong>
-                        <br><br>
-                        This Investment Subscription Agreement ("Agreement") is entered into on <span id="todayDate"></span> between MINT Platforms (Pty) Ltd ("Company") and the undersigned investor ("Investor").
-                        <br><br>
-                        <strong>Terms and Conditions:</strong>
-                        <br><br>
-                        1. The Investor agrees to invest the specified amount in accordance with the terms outlined in this agreement.
-                        <br><br>
-                        2. The Company is a regulated Financial Services Provider (FSP 55118) and registered Credit Provider (NCRCP22892).
-                        <br><br>
-                        3. All investments are subject to the applicable laws of South Africa and the Financial Intelligence Centre Act (FICA).
-                        <br><br>
-                        4. The Investor acknowledges that they have received all necessary documentation and understand the risks associated with this investment.
-                        <br><br>
-                        5. Payment must be received within 7 business days of signing this agreement.
-                        <br><br>
-                        6. The Company reserves the right to decline any application at its sole discretion.
-                        <br><br>
-                        By signing below, the Investor confirms that they have read, understood, and agree to all terms and conditions outlined in this agreement.
-                    </div>
+                <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 24px 0;">
+                    <p style="font-size: 14px; color: #4b5563; margin: 0 0 16px 0;">The signing pack contains the Subscription Agreement only. Please open it, review, and sign.</p>
+                    <button class="btn-primary" style="width: 100%; background-color: #7a8f5a; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openSubscriptionAgreement()">
+                        Open Subscription Agreement
+                    </button>
                 </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="agreeTerms">
-                    <label for="agreeTerms">I have read and agree to the terms and conditions</label>
+                <div style="margin-top: 24px;">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="reviewedAgreement">
+                        <label for="reviewedAgreement">I have reviewed the Subscription Agreement.</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="signedAgreement">
+                        <label for="signedAgreement">I have signed the Subscription Agreement.</label>
+                    </div>
                 </div>
 
                 <div class="button-group">
                     <button class="btn-secondary" onclick="previousStep()">Back</button>
-                    <button class="btn-primary" onclick="validateAndNext(3)">Proceed to Payment</button>
+                    <button class="btn-primary" onclick="validateAndNext(3)">Proceed to Payment →</button>
                 </div>
             </div>
 
@@ -994,8 +967,11 @@
                     document.getElementById('completeAmount').textContent = `R${investmentAmount.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 }
             } else if (stepNum === 3) {
-                if (!document.getElementById('agreeTerms').checked) {
-                    alert('Please agree to the terms and conditions');
+                const reviewedAgreement = document.getElementById('reviewedAgreement').checked;
+                const signedAgreement = document.getElementById('signedAgreement').checked;
+
+                if (!reviewedAgreement || !signedAgreement) {
+                    alert('Please confirm that you have reviewed and signed the Subscription Agreement');
                     isValid = false;
                 }
             } else if (stepNum === 4) {
@@ -1040,6 +1016,12 @@
 
         function goHome() {
             window.location.href = '/';
+        }
+
+        function openSubscriptionAgreement() {
+            // This will open the PDF in a new tab
+            // Replace with your actual subscription agreement PDF URL
+            window.open('/documents/subscription-agreement.pdf', '_blank');
         }
     </script>
 </body>
