@@ -1247,24 +1247,24 @@
                 // This is the subscriber details section
                 const detailsBox = detailBoxes[0];
 
-                // Create signature section
+                // Create signature section - left justified, part of the box
                 const signatureSection = document.createElement('div');
-                signatureSection.style.cssText = 'margin-top: 20px; padding-top: 20px; border-top: 2px solid #5c3bcf; text-align: center;';
+                signatureSection.style.cssText = 'margin-top: 20px; padding-top: 20px; border-top: 2px solid #5c3bcf;';
 
                 const sigLabel = document.createElement('p');
-                sigLabel.style.cssText = 'margin: 0 0 12px 0; font-weight: 700; font-size: 12px; color: #5c3bcf;';
+                sigLabel.style.cssText = 'margin: 0 0 8px 0; font-weight: 700; font-size: 12px; color: #5c3bcf; text-align: left;';
                 sigLabel.textContent = 'SUBSCRIBER SIGNATURE:';
                 signatureSection.appendChild(sigLabel);
 
-                // Add signature image
+                // Add signature image - left aligned
                 const sigImg = document.createElement('img');
                 sigImg.src = signatureCanvas.toDataURL('image/png');
-                sigImg.style.cssText = 'max-width: 200px; width: 100%; height: auto; margin: 0 auto; display: block; border: 1px solid #ccc; padding: 3px;';
+                sigImg.style.cssText = 'max-width: 200px; height: auto; border: 1px solid #ccc; padding: 3px; display: block;';
                 signatureSection.appendChild(sigImg);
 
-                // Add name and date under signature
+                // Add name and date under signature - left aligned
                 const sigInfo = document.createElement('p');
-                sigInfo.style.cssText = 'margin: 10px 0 0 0; font-size: 11px;';
+                sigInfo.style.cssText = 'margin: 8px 0 0 0; font-size: 11px; text-align: left;';
                 sigInfo.innerHTML = `<strong>${subscriberName}</strong> | ${dateStr}`;
                 signatureSection.appendChild(sigInfo);
 
