@@ -1240,15 +1240,46 @@
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-ZA', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
-            // Find and fill the signature blocks in the cloned element
+            // Find the subscriber details section and add signature there
+            const detailBoxes = clonedElement.querySelectorAll('[style*="background: rgba(92, 59, 207, 0.05)"]');
+
+            if (detailBoxes.length > 0) {
+                // This is the subscriber details section
+                const detailsBox = detailBoxes[0];
+
+                // Create signature section
+                const signatureSection = document.createElement('div');
+                signatureSection.style.cssText = 'margin-top: 20px; padding-top: 20px; border-top: 2px solid #5c3bcf; text-align: center;';
+
+                const sigLabel = document.createElement('p');
+                sigLabel.style.cssText = 'margin: 0 0 12px 0; font-weight: 700; font-size: 12px; color: #5c3bcf;';
+                sigLabel.textContent = 'SUBSCRIBER SIGNATURE:';
+                signatureSection.appendChild(sigLabel);
+
+                // Add signature image
+                const sigImg = document.createElement('img');
+                sigImg.src = signatureCanvas.toDataURL('image/png');
+                sigImg.style.cssText = 'max-width: 200px; width: 100%; height: auto; margin: 0 auto; display: block; border: 1px solid #ccc; padding: 3px;';
+                signatureSection.appendChild(sigImg);
+
+                // Add name and date under signature
+                const sigInfo = document.createElement('p');
+                sigInfo.style.cssText = 'margin: 10px 0 0 0; font-size: 11px;';
+                sigInfo.innerHTML = `<strong>${subscriberName}</strong> | ${dateStr}`;
+                signatureSection.appendChild(sigInfo);
+
+                // Append to details box
+                detailsBox.appendChild(signatureSection);
+            }
+
+            // Also fill the signature blocks at the bottom
             const signatureBlocks = clonedElement.querySelectorAll('[style*="text-align: center"][style*="margin-top: 40px"]');
 
             signatureBlocks.forEach((block, index) => {
                 if (index === 1) { // Second signature block (FOR: THE SUBSCRIBER)
-                    // Find the signature line and replace with actual signature image
                     const lines = block.querySelectorAll('p');
 
-                    // Create signature image - scaled down for PDF
+                    // Create signature image for bottom block
                     const signatureDiv = document.createElement('div');
                     signatureDiv.style.cssText = 'text-align: center; margin: 15px 0; padding: 0 10px;';
                     const img = document.createElement('img');
