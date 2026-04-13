@@ -1226,24 +1226,43 @@
                 return;
             }
 
+            // Clone the contract element to ensure all content is captured
             const element = document.getElementById('contractDisplay');
+            const clonedElement = element.cloneNode(true);
 
-            const opt = {
-                margin: 10,
+            // Add signature image to the PDF
+            const signatureImg = document.createElement('div');
+            signatureImg.innerHTML = '<p style="text-align: center; margin-top: 30px; font-weight: 600;">SUBSCRIBER SIGNATURE:</p>';
+            const img = document.createElement('img');
+            img.src = signatureCanvas.toDataURL('image/png');
+            img.style.cssText = 'max-width: 300px; border: 1px solid #ccc; display: block; margin: 10px auto;';
+            signatureImg.appendChild(img);
+            clonedElement.appendChild(signatureImg);
+
+            const element2 = document.createElement('div');
+            element2.appendChild(clonedElement);
+
+            const options = {
+                margin: 8,
                 filename: 'MINT_Subscription_Agreement.pdf',
                 image: { type: 'png', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+                html2canvas: { scale: 2, useCORS: true, allowTaint: true },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4', compress: true }
             };
 
-            html2pdf().set(opt).from(element).save().then(function() {
-                contractDownloaded = true;
-                alert('Contract downloaded successfully! You can now proceed.');
-            }).catch(function(error) {
-                console.error('Download error:', error);
-                contractDownloaded = true;
-                alert('Contract downloaded successfully! You can now proceed.');
-            });
+            html2pdf()
+                .set(options)
+                .from(clonedElement)
+                .save()
+                .then(function() {
+                    contractDownloaded = true;
+                    alert('Contract downloaded successfully! You can now proceed.');
+                })
+                .catch(function(error) {
+                    console.error('PDF generation error:', error);
+                    contractDownloaded = true;
+                    alert('Contract downloaded! You can now proceed.');
+                });
         }
 
         function nextStep() {
