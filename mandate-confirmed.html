@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <title>Mandate Confirmed | MINT</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/images/Mint%20Favicon.png">
+
+    <style>
+        :root {
+            --mint-dark-purple: #31005e;
+            --mint-primary-purple: #5c3bcf;
+            --mint-gold: #ddc357;
+            --mint-black: #000000;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--mint-black);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mint-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: #f5f2ff;
+            padding: 0.35rem 0.35rem 0.35rem 1.5rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(92, 59, 207, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .mint-cta-btn:hover {
+            box-shadow: 0 10px 25px -5px rgba(92, 59, 207, 0.2);
+            transform: scale(1.02);
+        }
+        
+        .mint-cta-icon {
+            background-color: var(--mint-primary-purple);
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mint-cta-btn:hover .mint-cta-icon svg:first-child { 
+            transform: translate(2rem, -2rem); 
+        }
+        
+        .mint-cta-btn:hover .mint-cta-icon svg:last-child { 
+            transform: translate(0, 0); 
+        }
+
+        .path-circle {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+        }
+        
+        .path-check {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat" style="background-image: url('/images/mandatebg.avif');">
+
+    <div class="absolute inset-0 bg-black/20 z-0 backdrop-blur-[2px]"></div>
+
+    <div id="confirmation-card" class="relative z-10 w-full max-w-lg mx-6 opacity-0 translate-y-8">
+        
+        <div class="flex justify-center mb-10">
+            <img src="/images/LOGO 2 MINT.png" alt="MINT Logo" class="h-5 w-auto object-contain brightness-0 invert opacity-90 drop-shadow-md">
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] p-10 md:p-14 text-center shadow-[0_20px_60px_rgba(0,0,0,0.15)] relative overflow-hidden">
+            
+            <div class="flex justify-center mb-8 relative">
+                <svg id="success-icon" class="w-20 h-20 text-emerald-500 relative z-10" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                    <circle class="path-circle" cx="50" cy="50" r="45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path class="path-check" d="M30 50L45 65L70 35" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-light text-black tracking-tight mb-4 leading-none">
+                Thank You.
+            </h1>
+            
+            <p class="text-gray-500 text-base md:text-lg font-light leading-relaxed mb-10 max-w-sm mx-auto">
+                Your payment mandate has been securely captured and approved.
+            </p>
+
+            <div class="flex justify-center">
+                <a href="https://app.mymint.co.za/" class="mint-cta-btn group inline-flex">
+                    <span class="text-sm font-semibold text-[var(--mint-primary-purple)] tracking-wide">Return to MINT</span>
+                    <div class="mint-cta-icon">
+                        <svg class="transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg class="absolute -translate-x-8 translate-y-8 transition-transform duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline({ delay: 0.2 });
+
+            tl.to("#confirmation-card", {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power3.out"
+            })
+            .to(".path-circle", {
+                strokeDashoffset: 0,
+                duration: 0.8,
+                ease: "power2.inOut"
+            }, "-=0.2")
+            .to(".path-check", {
+                strokeDashoffset: 0,
+                duration: 0.5,
+                ease: "power2.out"
+            }, "-=0.3")
+            .to("#success-icon", {
+                scale: 1.15,
+                duration: 0.15,
+                yoyo: true,
+                repeat: 1,
+                ease: "power1.inOut"
+            }, "-=0.1");
+        });
+    </script>
+</body>
+</html>

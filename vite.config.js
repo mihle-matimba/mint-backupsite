@@ -10,7 +10,7 @@ export default defineConfig({
         business: './business.html',
         about: './about.html',
         contact: './contact.html',
-        investor: './investor.html',
+        mandate: './mandate-confirmed.html'
       },
     },
   },
